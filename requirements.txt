@@ -1,0 +1,8 @@
+tgcrypto
+pyrogram
+requests
+urllib3
+speedtest-cli
+python-dotenv
+pymongo
+dnspython
