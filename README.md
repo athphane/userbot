@@ -28,6 +28,11 @@ pip install -r requirements.txt
 python -m userbot.
 ```
 
+Also you need to open file.txt, remove EVERYTHING in that file and only put in ```{}```. That's it.
+That file is used for the [picture.py](/userbot/plugins/pictures.py) module so that it can send the
+images a second time much faster rather than to upload them again.
+
+
 ## Credits, and Thanks to
 * [Dan](https://t.me/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
 * [Colin Shark](https://t.me/ColinShark) for his [PyroBot](https://git.colinshark.de/PyroBot/PyroBot) which helped with
