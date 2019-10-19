@@ -9,8 +9,8 @@ You're gonna need to get the following programs and services either installed on
 or signed up for.
 
 * `virtualenv` installed so that the packages don't interfere with other system packages.
-* [MongoDB]("https://www.mongodb.com") on your server or a free server from 
-[MongoDB Atlas]("https://www.mongodb.com/cloud/atlas"). (I recommend Atlast as I used it during
+* [MongoDB](https://www.mongodb.com) on your server or a free server from 
+[MongoDB Atlas](https://www.mongodb.com/cloud/atlas). (I recommend Atlast as I used it during
 development with no issues.)
 
 ## Installing
@@ -20,7 +20,7 @@ There is no one click deploy.. It was all a ruse. You have to deploy like how I 
 
 *The way I deploy*
 ```bash
-git https://github.com/athphane/userbot.git
+git clone https://github.com/athphane/userbot.git
 cd userbot
 virtualenv venv
 source venv/bin/acticate
