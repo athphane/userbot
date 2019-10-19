@@ -1,6 +1,7 @@
 import datetime
 import math
 import time
+import uuid
 from random import randint
 
 
@@ -27,3 +28,11 @@ def random_interval():
     rand_value = randint(14400, 43200)
     delta = (time.time() + rand_value) - time.time()
     return int(delta)
+
+
+def get_random_hex(chars=4):
+    """ Generate random hex. limited to chars provided.
+        If chars not provided then limit to 4
+    """
+    my_hex = uuid.uuid4().hex[:chars]
+    return my_hex

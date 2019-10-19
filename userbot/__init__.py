@@ -38,3 +38,6 @@ BOT = Client(
     system_version=str(__version__),
     workers=20,
 )
+
+# Global Variables
+CMD_HELP = {}
