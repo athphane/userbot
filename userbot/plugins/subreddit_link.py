@@ -7,7 +7,7 @@ the_regex = "^r\/([^\s\/])+"
 
 # Generate full Reddit link with subreddit
 @BOT.on_message(Filters.regex(the_regex) & Filters.me)
-def _subreddit_link(bot: BOT, message: Message):
+def subreddit_link(bot: BOT, message: Message):
     html = "<a href='{link}'>{string}</a>"
     message.delete()
     BOT.send_message(

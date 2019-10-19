@@ -46,7 +46,7 @@ def remind(bot: BOT, message: Message):
 
 
 @BOT.on_message(Filters.command("reminder", "!") & Filters.me)
-def delete_remind(bot: BOT, message: Message):
+def delete_reminder(bot: BOT, message: Message):
     cmd = message.command
     reminder_id = ""
     if len(cmd) > 1:

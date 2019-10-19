@@ -10,7 +10,7 @@ def fast(bot: BOT, message: Message):
 
 
 @BOT.on_message(Filters.command(['tfb', 'tbf'], ".") & Filters.me)
-def fast(bot: BOT, message: Message):
+def tfb(bot: BOT, message: Message):
     send_saved_image(message, "tfb_image", "tfb.jpg")
     message.delete()
 
@@ -22,12 +22,12 @@ def kill(bot: BOT, message: Message):
 
 
 @BOT.on_message(Filters.command("dmf", ".") & Filters.me)
-def _help(bot: BOT, message: Message):
+def dmf(bot: BOT, message: Message):
     send_saved_animation(message, "dmf_image", "dmf.gif")
     message.delete()
 
 
 @BOT.on_message(Filters.command(['smart', 'intelligence'], ".") & Filters.me)
-def _help(bot: BOT, message: Message):
+def smart(bot: BOT, message: Message):
     send_saved_image(message, "intelligence_image", "intelligence.jpg")
     message.delete()

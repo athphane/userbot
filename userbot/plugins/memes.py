@@ -51,7 +51,7 @@ def cat(bot: BOT, message: Message):
 
 
 @BOT.on_message(Filters.command(["nice"], ".") & Filters.me)
-def reverse(bot: BOT, message: Message):
+def nice(bot: BOT, message: Message):
     BOT.send_message(
         chat_id=message.chat.id,
         text="NICENICENICENICE",
@@ -103,7 +103,7 @@ def mock_people(bot: BOT, message: Message):
 
 
 @BOT.on_message(Filters.command("animegirl", ".") & Filters.me)
-def mock_people(bot: BOT, message: Message):
+def anime_girl(bot: BOT, message: Message):
     cmd = message.command
 
     if len(cmd) > 1:
@@ -189,7 +189,7 @@ def slap(bot: BOT, message: Message):
             message.edit("`Can't slap this person, need to fetch some sticks and stones!!`")
 
 
-@BOT.on_message(Filters.command("-_-", "") & Filters.me)
+@BOT.on_message(Filters.command("-_-", "") | Filters.command("ok", ".") & Filters.me)
 def ok(bot: BOT, message: Message):
     okay = "-_-"
     for i in range(10):
