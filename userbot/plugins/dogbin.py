@@ -1,6 +1,7 @@
 from userbot import BOT
 from pyrogram import Filters, Message
 import requests
+from userbot.plugins.help import add_command_help
 
 DOGBIN = "https://del.dog/"
 
@@ -16,3 +17,12 @@ def dogbin(bot: BOT, message: Message):
         print(e)
     else:
         message.edit_text(f"{DOGBIN}/{paste}", disable_web_page_preview=True)
+
+
+add_command_help(
+    'dogbin', [
+        ['.dogbin', 'Show the creator of this userbot.'],
+        ['.bin', 'Show the creator of this userbot.'],
+        ['.paste', 'Show the creator of this userbot.'],
+    ]
+)
