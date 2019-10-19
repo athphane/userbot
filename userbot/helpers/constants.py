@@ -2,7 +2,7 @@ class First:
     ALIVE = "`I'm Alive, Master :3`"
 
 
-class www:
+class WWW:
     SpeedTest = (
         "Speedtest started at `{start}`\n\n"
         "Ping:\n{ping} ms\n\n"

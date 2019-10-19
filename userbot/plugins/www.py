@@ -7,7 +7,7 @@ from pyrogram.api import functions
 from userbot import BOT
 
 from userbot.helpers.PyroHelpers import SpeedConvert
-from userbot.helpers.constants import www
+from userbot.helpers.constants import WWW
 
 
 @BOT.on_message(Filters.command("speed", ".") & Filters.me)
@@ -37,7 +37,7 @@ def speed_test(bot: BOT, message: Message):
     results = spd.results.dict()
 
     message.edit(
-        www.SpeedTest.format(
+        WWW.SpeedTest.format(
             start=results['timestamp'],
             ping=results['ping'],
             download=SpeedConvert(results['downloads']),
@@ -47,18 +47,18 @@ def speed_test(bot: BOT, message: Message):
 
 
 @BOT.on_message(Filters.command("dc", ".") & Filters.me)
-def neardc(bot: BOT, message: Message):
+def nearest_dc(bot: BOT, message: Message):
     dc = BOT.send(
         functions.help.GetNearestDc())
     message.edit(
-        www.NearestDC.format(
+        WWW.NearestDC.format(
             dc.country,
             dc.nearest_dc,
             dc.this_dc))
 
 
 @BOT.on_message(Filters.command("ping", ".") & Filters.me)
-def pingme(bot: BOT, message: Message):
+def ping_me(bot: BOT, message: Message):
     start = datetime.now()
     message.edit('`Pong!`')
     end = datetime.now()

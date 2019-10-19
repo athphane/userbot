@@ -203,7 +203,7 @@ def moon(bot: BOT, message: Message):
     try:
         for x in range(32):
             sleep(0.2)
-            message.edit("".join(deq))
+            message.edit("".join(deq), parse_mode=None)
             deq.rotate(1)
     except:
         message.delete()
@@ -215,7 +215,7 @@ def clock(bot: BOT, message: Message):
     try:
         for x in range(32):
             sleep(0.2)
-            message.edit("".join(deq))
+            message.edit("".join(deq), parse_mode=None)
             deq.rotate(1)
     except:
         message.delete()
