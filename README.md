@@ -9,8 +9,8 @@ You're gonna need to get the following programs and services either installed on
 or signed up for.
 
 * `virtualenv` installed so that the packages don't interfere with other system packages.
-* [MongoDB]("https://www.mongodb.com") on your server or a free server from 
-[MongoDB Atlas]("https://www.mongodb.com/cloud/atlas"). (I recommend Atlast as I used it during
+* [MongoDB](https://www.mongodb.com) on your server or a free server from 
+[MongoDB Atlas](https://www.mongodb.com/cloud/atlas). (I recommend Atlast as I used it during
 development with no issues.)
 
 ## Installing
