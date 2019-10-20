@@ -3,6 +3,7 @@ A Telegram Userbot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
 
 Development in progress.
 
+I assume you will read this whole README.md file before continuing.
 
 ## Requirements
 You're gonna need to get the following programs and services either installed on your server
@@ -12,6 +13,15 @@ or signed up for.
 * [MongoDB](https://www.mongodb.com) on your server or a free server from 
 [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). (I recommend Atlast as I used it during
 development with no issues.)
+* [carbon-now-cli](https://github.com/mixn/carbon-now-cli) on your server too generate code images for the
+[carbon.py](/userbot/plugins/carbon.py) module. I use this CLI tool cause I don't know and couldn't get selenium
+and chromedriver to work nicely on my server/code. I'll be nice and even give you the command to install this.
+I assume you already have NPM installed. 
+    ```
+    Windows: npm install -g carbon-now-cli
+    Linux: sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
+    MacOS: I assume almost the same as linux ¯\_(ツ)_/¯
+    ``` 
 
 ## Installing
 *One Click Deploy*
@@ -28,9 +38,13 @@ pip install -r requirements.txt
 python -m userbot.
 ```
 
-Also you need to open file.txt, remove EVERYTHING in that file and only put in ```{}```. That's it.
+
+###Some more setup needed
+
+* Open file.txt, remove EVERYTHING in that file and only put in ```{}```. That's it.
 That file is used for the [picture.py](/userbot/plugins/pictures.py) module so that it can send the
-images a second time much faster rather than to upload them again.
+images a second time much faster rather than to upload them again. In a later life I will make
+this file create itself.
 
 
 ## Credits, and Thanks to
