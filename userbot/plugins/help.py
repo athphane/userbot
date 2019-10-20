@@ -21,14 +21,12 @@ def module_help(bot: BOT, message: Message):
         return
 
     if help_arg:
-        print(CMD_HELP)
         if help_arg in CMD_HELP:
             commands: dict = CMD_HELP[help_arg]
             this_command = ""
             this_command += f"Help for {str(help_arg)} module\n\n"
 
             for x in commands:
-                print(x)
                 this_command += f"{str(commands[x]['command'])}: {str(commands[x]['description'])}\n\n"
 
             message.edit(this_command)
