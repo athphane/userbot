@@ -54,6 +54,8 @@ def auto_approve_user_on_message(bot: BOT, message: Message):
 def approve(bot: BOT, message: Message):
     PmPermit().approve(message.chat.id)
     message.edit("You have been approved to PM me. Please continue on with your story.")
+    sleep(3)
+    message.delete()
 
 
 @BOT.on_message(Filters.command('block', '.') & Filters.me)
