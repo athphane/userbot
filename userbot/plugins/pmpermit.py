@@ -63,10 +63,11 @@ def block(bot: BOT, message: Message):
     BOT.block_user(message.chat.id)
 
 
-add_command_help(
-    'pmpermit',
-    [
-        ['.approve', "Approves the current chat to PM.\nUsage: `.approve`"],
-        ['.block', "Blocks the current chat to PM.\nUsage: `.block`"],
-    ]
-)
+if PM_PERMIT:
+    add_command_help(
+        'pmpermit',
+        [
+            ['.approve', "Approves the current chat to PM.\nUsage: `.approve`"],
+            ['.block', "Blocks the current chat to PM.\nUsage: `.block`"],
+        ]
+    )
