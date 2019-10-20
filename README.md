@@ -39,7 +39,7 @@ python -m userbot.
 ```
 
 
-###Some more setup needed
+### Some more setup needed
 
 * Open file.txt, remove EVERYTHING in that file and only put in ```{}```. That's it.
 That file is used for the [picture.py](/userbot/plugins/pictures.py) module so that it can send the
