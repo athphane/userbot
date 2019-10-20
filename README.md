@@ -1,17 +1,17 @@
 # Pyrogram Userbot
 A Telegram Userbot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
 
-Development in progress.
-
 I assume you will read this whole README.md file before continuing.
+
+Development in progress.
 
 ## Requirements
 You're gonna need to get the following programs and services either installed on your server
-or signed up for.
+or signed up for. You must do all. It is a cardinal sin if you don't.
 
 * `virtualenv` installed so that the packages don't interfere with other system packages.
 * [MongoDB](https://www.mongodb.com) on your server or a free server from 
-[MongoDB Atlas](https://www.mongodb.com/cloud/atlas). (I recommend Atlast as I used it during
+[MongoDB Atlas](https://www.mongodb.com/cloud/atlas). (I recommend Atlas as I used it during
 development with no issues.)
 * [carbon-now-cli](https://github.com/mixn/carbon-now-cli) on your server too generate code images for the
 [carbon.py](/userbot/plugins/carbon.py) module. I use this CLI tool cause I don't know and couldn't get selenium
@@ -33,7 +33,7 @@ There is no one click deploy.. It was all a ruse. You have to deploy like how I 
 git clone https://github.com/athphane/userbot.git
 cd userbot
 virtualenv venv
-source venv/bin/acticate
+source venv/bin/activate
 pip install -r requirements.txt
 python -m userbot.
 ```
@@ -51,5 +51,6 @@ this file create itself.
 * [Dan](https://t.me/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
 * [Colin Shark](https://t.me/ColinShark) for his [PyroBot](https://git.colinshark.de/PyroBot/PyroBot) which helped with
 most of the useful functions used.
+* The people at [MyPaperPlane](https://github.com/MyPaperPlane) for their [Telegram-UserBot](https://github.com/MyPaperPlane/Telegram-UserBot)
+that gave a ton of ideas on how and what modules to include in this userbot. 
 * [Baivaru](https://github.com/baivaru) for the ton of help that got me this far into making this repo. 
-

@@ -2,6 +2,7 @@ from pyrogram import Client
 import logging
 import os
 import dotenv
+from distutils.util import strtobool
 import sys
 
 # We need logging so early
@@ -26,6 +27,8 @@ dotenv.load_dotenv()
 # Get the Values from our .env
 API_ID = os.environ.get("API_ID")
 API_HASH = os.environ.get("API_HASH")
+PM_PERMIT = strtobool(os.environ.get("PM_PERMIT"))
+PM_LIMIT = int(os.environ.get("PM_LIMIT"))
 
 # Create the client
 BOT = Client(
