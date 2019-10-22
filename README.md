@@ -54,3 +54,6 @@ most of the useful functions used.
 * The people at [MyPaperPlane](https://github.com/MyPaperPlane) for their [Telegram-UserBot](https://github.com/MyPaperPlane/Telegram-UserBot)
 that gave a ton of ideas on how and what modules to include in this userbot. 
 * [Baivaru](https://github.com/baivaru) for the ton of help that got me this far into making this repo. 
+
+---
+Made with love from the Maldives <3
