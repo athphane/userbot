@@ -1,3 +1,5 @@
+# CURRENTLY BROKEN. UPGRADE IN PROGRESS
+
 # Pyrogram Userbot
 A Telegram Userbot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
 

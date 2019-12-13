@@ -4,3 +4,4 @@ venv/
 *.session
 *.session-journal
 __pycache__/
+userbot.ini
