@@ -1,5 +1,5 @@
 class First:
-    ALIVE = "`I'm Alive, Master :3`"
+    ALIVE = "`Baka! Anata wa watashi ga shinu to omotta?`"
 
 
 class WWW:

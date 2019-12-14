@@ -3,7 +3,7 @@ import re
 from time import sleep
 from random import choice
 from collections import deque
-from userbot import BOT
+from userbot import UserBot
 from pyrogram import Filters, Message
 from userbot.helpers.constants import MEMES
 from userbot.helpers.PyroHelpers import ReplyCheck, GetUserMentionable
@@ -28,50 +28,48 @@ def _prep_cat():
     return cat_pic
 
 
-@BOT.on_message(Filters.command(["dog", "doggo"], "") & Filters.me)
-def dog(bot: BOT, message: Message):
-    BOT.send_photo(
+@UserBot.on_message(Filters.command(["dog", "doggo"], "") & Filters.me)
+async def dog(bot: UserBot, message: Message):
+    await message.delete()
+    await UserBot().send_photo(
         chat_id=message.chat.id,
         photo=_prep_dog(),
-        caption="doggo",
         reply_to_message_id=ReplyCheck(message)
     )
-    message.delete()
 
 
-@BOT.on_message(Filters.command(["cat", "catto"], "") & Filters.me)
-def cat(bot: BOT, message: Message):
-    BOT.send_photo(
+@UserBot.on_message(Filters.command(["cat", "catto"], "") & Filters.me)
+async def cat(bot: UserBot, message: Message):
+    await message.delete()
+    await UserBot().send_photo(
         chat_id=message.chat.id,
         photo=_prep_cat(),
-        caption="catto",
         reply_to_message_id=ReplyCheck(message)
     )
-    message.delete()
 
 
-@BOT.on_message(Filters.command(["nice"], ".") & Filters.me)
-def nice(bot: BOT, message: Message):
-    BOT.send_message(
+@UserBot.on_message(Filters.command(["nice"], ".") & Filters.me)
+async def nice(bot: UserBot, message: Message):
+    await message.delete()
+    await UserBot().send_message(
         chat_id=message.chat.id,
         text="NICENICENICENICE",
         reply_to_message_id=ReplyCheck(message)
     )
-    message.delete()
 
 
-@BOT.on_message(Filters.command(["reverse"], ".") & Filters.me)
-def reverse(bot: BOT, message: Message):
-    BOT.send_message(
+@UserBot.on_message(Filters.command(["reverse"], ".") & Filters.me)
+async def reverse(bot: UserBot, message: Message):
+    await message.delete()
+    await UserBot().send_message(
         chat_id=message.chat.id,
         text=MEMES.REVERSE,
         reply_to_message_id=ReplyCheck(message)
     )
-    message.delete()
 
 
-@BOT.on_message(Filters.command("mock", ".") & Filters.me)
-def mock_people(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("mock", ".") & Filters.me)
+async def mock_people(bot: UserBot, message: Message):
     cmd = message.command
 
     if len(cmd) > 1:
@@ -79,31 +77,31 @@ def mock_people(bot: BOT, message: Message):
     elif message.reply_to_message and len(cmd) is 1:
         mock_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) is 1:
-        message.edit("gIvE sOMEtHInG tO MoCk")
+        await message.edit("gIvE sOMEtHInG tO MoCk")
         sleep(2)
-        message.delete()
+        await message.delete()
         return
 
-    mock_results = BOT.get_inline_bot_results(
+    mock_results = await UserBot().get_inline_bot_results(
         "stickerizerbot",
         "#7" + mock_text)
 
     try:
-        BOT.send_inline_bot_result(
+        await UserBot().send_inline_bot_result(
             chat_id=message.chat.id,
             query_id=mock_results.query_id,
             result_id=mock_results.results[0].id,
             reply_to_message_id=ReplyCheck(message),
             hide_via=True)
     except TimeoutError:
-        message.edit("@StickerizerBot didn't respond in time.")
+        await message.edit("@StickerizerBot didn't respond in time.")
         sleep(2)
 
-    message.delete()
+    await message.delete()
 
 
-@BOT.on_message(Filters.command("animegirl", ".") & Filters.me)
-def anime_girl(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("animegirl", ".") & Filters.me)
+async def anime_girl(bot: UserBot, message: Message):
     cmd = message.command
 
     if len(cmd) > 1:
@@ -111,30 +109,30 @@ def anime_girl(bot: BOT, message: Message):
     elif message.reply_to_message and len(cmd) is 1:
         anime_girl_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) is 1:
-        message.edit("`Senpai I need something to say :(`")
+        await message.edit("`Senpai I need something to say :(`")
         sleep(2)
-        message.delete()
+        await message.delete()
         return
 
-    mock_results = BOT.get_inline_bot_results(
+    mock_results = await UserBot().get_inline_bot_results(
         "stickerizerbot",
         "#32" + anime_girl_text)
 
     try:
-        BOT.send_inline_bot_result(
+        await UserBot().send_inline_bot_result(
             chat_id=message.chat.id,
             query_id=mock_results.query_id,
             result_id=mock_results.results[0].id,
             reply_to_message_id=ReplyCheck(message),
             hide_via=True)
     except TimeoutError:
-        message.edit("@StickerizerBot didn't respond in time.")
+        await message.edit("@StickerizerBot didn't respond in time.")
         sleep(2)
-    message.delete()
+    await message.delete()
 
 
-@BOT.on_message(Filters.command("ggl", ".") & Filters.me)
-def google_sticker(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("ggl", ".") & Filters.me)
+async def google_sticker(bot: UserBot, message: Message):
     cmd = message.command
 
     if len(cmd) > 1:
@@ -142,31 +140,31 @@ def google_sticker(bot: BOT, message: Message):
     elif message.reply_to_message and len(cmd) == 1:
         ggl_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        message.edit("I need something to google")
+        await message.edit("I need something to google")
         sleep(2)
-        message.delete()
+        await message.delete()
         return
 
-    ggl_result = BOT.get_inline_bot_results(
+    ggl_result = await UserBot().get_inline_bot_results(
         "stickerizerbot",
         "#12" + ggl_text)
     try:
-        BOT.send_inline_bot_result(
+        await UserBot().send_inline_bot_result(
             chat_id=message.chat.id,
             query_id=ggl_result.query_id,
             result_id=ggl_result.results[0].id,
             reply_to_message_id=ReplyCheck(message),
             hide_via=True)
     except TimeoutError:
-        message.edit("@StickerizerBot didn't respond in time.")
+        await message.edit("@StickerizerBot didn't respond in time.")
         sleep(2)
-    message.delete()
+    await message.delete()
 
 
-@BOT.on_message(Filters.command("slap", ".") & Filters.me)
-def slap(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("slap", ".") & Filters.me)
+async def slap(bot: UserBot, message: Message):
     if message.reply_to_message is None:
-        message.delete()
+        await message.delete()
     else:
         replied_user = message.reply_to_message.from_user
 
@@ -184,45 +182,45 @@ def slap(bot: BOT, message: Message):
         caption = temp.format(victim=slapped, item=item, hits=hit, throws=throw, where=where)
 
         try:
-            message.edit(caption)
+            await message.edit(caption)
         except:
-            message.edit("`Can't slap this person, need to fetch some sticks and stones!!`")
+            await message.edit("`Can't slap this person, need to fetch some sticks and stones!!`")
 
 
-@BOT.on_message(Filters.command("-_-", "") | Filters.command("ok", ".") & Filters.me)
-def ok(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("-_-", "") | Filters.command("ok", ".") & Filters.me)
+async def ok(bot: UserBot, message: Message):
     okay = "-_-"
     for i in range(10):
         okay = okay[:-1] + "_-"
-        message.edit(okay, parse_mode=None)
+        await message.edit(okay, parse_mode=None)
 
 
-@BOT.on_message(Filters.command("moon", ".") & Filters.me)
-def moon(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("moon", ".") & Filters.me)
+async def moon(bot: UserBot, message: Message):
     deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
     try:
         for x in range(32):
             sleep(0.2)
-            message.edit("".join(deq), parse_mode=None)
+            await message.edit("".join(deq), parse_mode=None)
             deq.rotate(1)
     except:
-        message.delete()
+        await message.delete()
 
 
-@BOT.on_message(Filters.command("clock", ".") & Filters.me)
-def clock(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("clock", ".") & Filters.me)
+async def clock(bot: UserBot, message: Message):
     deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
     try:
         for x in range(32):
             sleep(0.2)
-            message.edit("".join(deq), parse_mode=None)
+            await message.edit("".join(deq), parse_mode=None)
             deq.rotate(1)
     except:
-        message.delete()
+        await message.delete()
 
 
-@BOT.on_message(Filters.command("vapor", ".") & Filters.me)
-def vapor(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("vapor", ".") & Filters.me)
+async def vapor(bot: UserBot, message: Message):
     cmd = message.command
 
     if len(cmd) > 1:
@@ -230,9 +228,9 @@ def vapor(bot: BOT, message: Message):
     elif message.reply_to_message and len(cmd) == 1:
         vapor_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        message.edit("`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
+        await message.edit("`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
         sleep(2)
-        message.delete()
+        await message.delete()
         return
 
     reply_text = list()
@@ -244,4 +242,4 @@ def vapor(bot: BOT, message: Message):
         else:
             reply_text.append(char)
 
-    message.edit("".join(reply_text))
+    await message.edit("".join(reply_text))

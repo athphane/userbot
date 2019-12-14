@@ -1,0 +1,9 @@
+[pyrogram]
+api_id = 123456
+api_hash = your-hash
+
+[mongo]
+url = localhost
+db_name = userbot
+db_username =
+db_password =

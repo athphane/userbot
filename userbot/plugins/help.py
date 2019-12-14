@@ -1,9 +1,9 @@
-from userbot import BOT, CMD_HELP
+from userbot import UserBot, CMD_HELP
 from pyrogram import Filters, Message
 
 
-@BOT.on_message(Filters.command("help", ".") & Filters.me)
-def module_help(bot: BOT, message: Message):
+@UserBot.on_message(Filters.command("help", ".") & Filters.me)
+async def module_help(bot: UserBot, message: Message):
     cmd = message.command
 
     if len(cmd) > 1:
@@ -11,13 +11,13 @@ def module_help(bot: BOT, message: Message):
     elif message.reply_to_message and len(cmd) is 1:
         help_arg = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) is 1:
-        message.edit("Please specify which module you want help for!! \nUsage: .help <module_name>", parse_mode=None)
+        await message.edit("Please specify which module you want help for!! \nUsage: .help <module_name>", parse_mode=None)
 
         all_commands = ""
         for x in CMD_HELP:
             all_commands += f"`{str(x)}`\n"
 
-        message.reply(all_commands)
+        await message.reply(all_commands)
         return
 
     if help_arg:
@@ -29,9 +29,9 @@ def module_help(bot: BOT, message: Message):
             for x in commands:
                 this_command += f"{str(commands[x]['command'])}: {str(commands[x]['description'])}\n\n"
 
-            message.edit(this_command)
+            await message.edit(this_command)
         else:
-            message.edit('`Please specify a valid module name.`')
+            await message.edit('`Please specify a valid module name.`')
 
 
 def add_command_help(module_name: str, commands: list):

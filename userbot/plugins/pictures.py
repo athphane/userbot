@@ -1,33 +1,33 @@
 from pyrogram import Filters, Message
-from userbot import BOT
+from userbot import UserBot
 from userbot.helpers.file_sending_helpers import send_saved_image, send_saved_animation
 
 
-@BOT.on_message(Filters.command("fast", ".") & Filters.me)
-def fast(bot: BOT, message: Message):
-    message.edit("Gotta go fast")
-    send_saved_image(message, "fast_image", "fast.jpg")
+@UserBot.on_message(Filters.command("fast", ".") & Filters.me)
+async def fast(bot: UserBot, message: Message):
+    await message.edit("Gotta go fast")
+    await send_saved_image(message, "fast_image", "fast.jpg")
 
 
-@BOT.on_message(Filters.command(['tfb', 'tbf'], ".") & Filters.me)
-def tfb(bot: BOT, message: Message):
-    send_saved_image(message, "tfb_image", "tfb.jpg")
-    message.delete()
+@UserBot.on_message(Filters.command(['tfb', 'tbf'], ".") & Filters.me)
+async def tfb(bot: UserBot, message: Message):
+    await send_saved_image(message, "tfb_image", "tfb.jpg")
+    await message.delete()
 
 
-@BOT.on_message(Filters.command("kill", ".") & Filters.me)
-def kill(bot: BOT, message: Message):
-    message.edit("I will kill you")
-    send_saved_animation(message, "kill_image", "killua.gif")
+@UserBot.on_message(Filters.command("kill", ".") & Filters.me)
+async def kill(bot: UserBot, message: Message):
+    await message.edit("I will kill you")
+    await send_saved_animation(message, "kill_image", "killua.gif")
 
 
-@BOT.on_message(Filters.command("dmf", ".") & Filters.me)
-def dmf(bot: BOT, message: Message):
-    send_saved_animation(message, "dmf_image", "dmf.gif")
-    message.delete()
+@UserBot.on_message(Filters.command("dmf", ".") & Filters.me)
+async def dmf(bot: UserBot, message: Message):
+    await send_saved_animation(message, "dmf_image", "dmf.gif")
+    await message.delete()
 
 
-@BOT.on_message(Filters.command(['smart', 'intelligence'], ".") & Filters.me)
-def smart(bot: BOT, message: Message):
-    send_saved_image(message, "intelligence_image", "intelligence.jpg")
-    message.delete()
+@UserBot.on_message(Filters.command(['smart', 'intelligence'], ".") & Filters.me)
+async def smart(bot: UserBot, message: Message):
+    await send_saved_image(message, "intelligence_image", "intelligence.jpg")
+    await message.delete()
