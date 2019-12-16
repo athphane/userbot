@@ -1,14 +1,14 @@
 import pymongo
-import os
+from userbot import MONGO_URL, DB_USERNAME, DB_PASSWORD, DB_NAME
 
-MONGOURL = os.environ.get("MONGO_URL")
-mongo_database_name = os.environ.get("MONGO_DB_NAME")
 
-"""Create Database connection"""
-client = pymongo.MongoClient(
-    MONGOURL,
-)
-
-"""Database Instance"""
-database = client[mongo_database_name]
+def database():
+    """Created Database connection"""
+    client = pymongo.MongoClient(
+        MONGO_URL,
+        username=DB_USERNAME,
+        password=DB_PASSWORD
+    )
+    db = client[DB_NAME]
+    return db
 

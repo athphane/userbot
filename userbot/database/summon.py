@@ -5,7 +5,7 @@ from pymongo import ReturnDocument
 
 class SUMMON:
     def __init__(self):
-        self.summon_table = database['summon']
+        self.summon_table = database()['summon']
 
     def get_chat_ids(self):
         return self.summon_table.find({}, {"chat_id": 1, '_id': 0})

@@ -1,7 +1,7 @@
 from userbot.database import database
 from userbot.helpers.utility import get_random_hex
 
-self_reminders = database['self_reminders']
+self_reminders = database()['self_reminders']
 
 
 class Reminders:

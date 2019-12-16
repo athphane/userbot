@@ -1,12 +1,10 @@
 from userbot.database import database
 from userbot.helpers.utility import get_random_hex
 
-self_reminders = database['self_reminders']
-
 
 class PmPermit:
     def __init__(self):
-        self.pm_table = database['pmpermit']
+        self.pm_table = database()['pmpermit']
 
     def check_if_approved(self, user_id):
         to_check = self.pm_table.find_one({'user_id': user_id})
