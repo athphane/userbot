@@ -1,6 +1,5 @@
 from pyrogram import Client
 from configparser import ConfigParser
-from userbot import __version__
 
 
 class UserBot(Client):
@@ -17,9 +16,9 @@ class UserBot(Client):
             workers=16,
             plugins=dict(root="userbot/plugins"),
             workdir="./",
-            app_version=f"Userbot \U0001f525 v{__version__}",
+            app_version=f"Userbot v0.2",
             device_model="Python",
-            system_version=str(__version__)
+            system_version="v0.2"
         )
 
     async def start(self):

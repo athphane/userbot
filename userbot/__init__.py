@@ -35,8 +35,8 @@ __version__ = '0.2.0'
 __author__ = 'athphane'
 
 # Get the Values from our .env
-PM_PERMIT = strtobool(os.environ.get("PM_PERMIT"))
-PM_LIMIT = int(os.environ.get("PM_LIMIT"))
+PM_PERMIT = config.get('pm_permit', 'pm_permit')
+PM_LIMIT = int(config.get('pm_permit', 'pm_limit'))
 
 # Global Variables
 CMD_HELP = {}
