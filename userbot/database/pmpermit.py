@@ -1,5 +1,4 @@
 from userbot.database import database
-from userbot.helpers.utility import get_random_hex
 
 
 class PmPermit:
@@ -56,8 +55,6 @@ class PmPermit:
             return False
         elif to_check['force_blocked']:
             return True
-
-
 
     def check_if_warned(self, user_id):
         to_check = self.pm_table.find_one({'user_id': user_id})
