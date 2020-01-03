@@ -245,3 +245,30 @@ async def vapor(bot: UserBot, message: Message):
             reply_text.append(char)
 
     await message.edit("".join(reply_text))
+
+
+@UserBot.on_message(Filters.command("flip", prefixes=".") & Filters.me)
+async def flip(bot: UserBot, message: Message):
+    cmd = message.command
+    mock_text = ""
+    if len(cmd) > 1:
+        mock_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) is 1:
+        mock_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) is 1:
+        await message.edit("```Give me something to flip```")
+        sleep(2)
+        await message.delete()
+        return
+
+    final_str = ""
+    for char in mock_text:
+        if char in MEMES.REPLACEMENT_MAP.keys():
+            new_char = MEMES.REPLACEMENT_MAP[char]
+        else:
+            new_char = char
+        final_str += new_char
+    if mock_text != final_str:
+        await message.edit(final_str)
+    else:
+        await message.edit(mock_text)
