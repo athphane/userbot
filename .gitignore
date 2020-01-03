@@ -5,3 +5,4 @@ venv/
 *.session-journal
 __pycache__/
 userbot.ini
+unknown_errors.txt

@@ -31,7 +31,7 @@ def _prep_cat():
 @UserBot.on_message(Filters.command(["dog", "doggo"], "") & Filters.me)
 async def dog(bot: UserBot, message: Message):
     await message.delete()
-    await UserBot().send_photo(
+    await bot.send_photo(
         chat_id=message.chat.id,
         photo=_prep_dog(),
         reply_to_message_id=ReplyCheck(message)
@@ -41,7 +41,7 @@ async def dog(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command(["cat", "catto"], "") & Filters.me)
 async def cat(bot: UserBot, message: Message):
     await message.delete()
-    await UserBot().send_photo(
+    await bot.send_photo(
         chat_id=message.chat.id,
         photo=_prep_cat(),
         reply_to_message_id=ReplyCheck(message)
@@ -51,7 +51,7 @@ async def cat(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command(["nice"], ".") & Filters.me)
 async def nice(bot: UserBot, message: Message):
     await message.delete()
-    await UserBot().send_message(
+    await bot.send_message(
         chat_id=message.chat.id,
         text="NICENICENICENICE",
         reply_to_message_id=ReplyCheck(message)
@@ -61,7 +61,7 @@ async def nice(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command(["reverse"], ".") & Filters.me)
 async def reverse(bot: UserBot, message: Message):
     await message.delete()
-    await UserBot().send_message(
+    await bot.send_message(
         chat_id=message.chat.id,
         text=MEMES.REVERSE,
         reply_to_message_id=ReplyCheck(message)
@@ -82,12 +82,12 @@ async def mock_people(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    mock_results = await UserBot().get_inline_bot_results(
+    mock_results = await bot.get_inline_bot_results(
         "stickerizerbot",
         "#7" + mock_text)
 
     try:
-        await UserBot().send_inline_bot_result(
+        await bot.send_inline_bot_result(
             chat_id=message.chat.id,
             query_id=mock_results.query_id,
             result_id=mock_results.results[0].id,
@@ -104,6 +104,7 @@ async def mock_people(bot: UserBot, message: Message):
 async def anime_girl(bot: UserBot, message: Message):
     cmd = message.command
 
+    anime_girl_text = ''
     if len(cmd) > 1:
         anime_girl_text = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) is 1:
@@ -114,15 +115,15 @@ async def anime_girl(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    mock_results = await UserBot().get_inline_bot_results(
+    anime_girl_results = await bot.get_inline_bot_results(
         "stickerizerbot",
         "#32" + anime_girl_text)
 
     try:
-        await UserBot().send_inline_bot_result(
+        await bot.send_inline_bot_result(
             chat_id=message.chat.id,
-            query_id=mock_results.query_id,
-            result_id=mock_results.results[0].id,
+            query_id=anime_girl_results.query_id,
+            result_id=anime_girl_results.results[0].id,
             reply_to_message_id=ReplyCheck(message),
             hide_via=True)
     except TimeoutError:
@@ -133,6 +134,7 @@ async def anime_girl(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("ggl", ".") & Filters.me)
 async def google_sticker(bot: UserBot, message: Message):
+    await message.delete()
     cmd = message.command
 
     if len(cmd) > 1:
@@ -145,11 +147,11 @@ async def google_sticker(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    ggl_result = await UserBot().get_inline_bot_results(
+    ggl_result = await bot.get_inline_bot_results(
         "stickerizerbot",
         "#12" + ggl_text)
     try:
-        await UserBot().send_inline_bot_result(
+        await bot.send_inline_bot_result(
             chat_id=message.chat.id,
             query_id=ggl_result.query_id,
             result_id=ggl_result.results[0].id,
@@ -158,7 +160,7 @@ async def google_sticker(bot: UserBot, message: Message):
     except TimeoutError:
         await message.edit("@StickerizerBot didn't respond in time.")
         sleep(2)
-    await message.delete()
+        await message.delete()
 
 
 @UserBot.on_message(Filters.command("slap", ".") & Filters.me)

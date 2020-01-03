@@ -27,7 +27,7 @@ async def carbon_test(bot: UserBot, message: Message):
     os.system("carbon-now -h -t userbot/downloads/carbon {}".format(file))
     await message.edit_text("Carbonizing completed...")
     # Send the thing
-    await UserBot().send_document(message.chat.id, 'userbot/downloads/carbon.png')
+    await bot.send_document(message.chat.id, 'userbot/downloads/carbon.png')
     await message.delete()
 
 

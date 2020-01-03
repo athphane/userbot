@@ -16,7 +16,49 @@ async def repo(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("creator", ".") & Filters.me)
 async def repo(bot: UserBot, message: Message):
-    await message.edit("I was created by my master <a href=\"https://github.com/athphane\">Athphane</a> on a rainy day.")
+    await message.edit(
+        "I was created by my master <a href=\"https://github.com/athphane\">Athphane</a> on a rainy day."
+    )
+
+
+@UserBot.on_message(Filters.command("id", ".") & Filters.me)
+async def get_file(bot: UserBot, message: Message):
+    file_id = None
+    user_id = None
+
+    if message.reply_to_message:
+        rep = message.reply_to_message
+        if rep.audio:
+            file_id = rep.audio.file_id
+        elif rep.document:
+            file_id = rep.document.file_id
+        elif rep.photo:
+            file_id = rep.photo.file_id
+        elif rep.sticker:
+            file_id = rep.sticker.file_id
+        elif rep.video:
+            file_id = rep.video.file_id
+        elif rep.animation:
+            file_id = rep.animation.file_id
+        elif rep.voice:
+            file_id = rep.voice.file_id
+        elif rep.video_note:
+            file_id = rep.video_note.file_id
+        elif rep.contact:
+            file_id = rep.contact.file_id
+        elif rep.location:
+            file_id = rep.location.file_id
+        elif rep.venue:
+            file_id = rep.venue.file_id
+        elif rep.from_user:
+            user_id = rep.from_user.id
+
+    if user_id:
+        await message.edit(user_id)
+    elif file_id:
+        await message.edit(file_id)
+    else:
+        await message.edit("This chat's ID:\n`{}`".format(message.chat.id))
 
 
 # Command help section

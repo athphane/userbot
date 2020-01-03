@@ -1,8 +1,9 @@
 from configparser import ConfigParser
 from logging.handlers import TimedRotatingFileHandler
 import logging
-import os
-from distutils.util import strtobool
+
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
 from userbot.userbot import UserBot
 
 # Logging at the start to catch everything
@@ -38,5 +39,9 @@ __author__ = 'athphane'
 PM_PERMIT = config.get('pm_permit', 'pm_permit')
 PM_LIMIT = int(config.get('pm_permit', 'pm_limit'))
 
+# Scheduler
+scheduler = AsyncIOScheduler()
+
 # Global Variables
 CMD_HELP = {}
+client = None

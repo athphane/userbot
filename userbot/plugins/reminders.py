@@ -8,7 +8,7 @@ from userbot.plugins.help import add_command_help
 
 @UserBot.on_message(Filters.command('reminders', '.') & Filters.me)
 async def show_all_reminders(bot: UserBot, message: Message):
-    reminders = Reminders.get_all_reminders()
+    reminders = Reminders().get_all_reminders()
     if len(reminders) != 0:
         send_text = "**==== My Reminders ====** \n"
         for reminder in reminders:
@@ -38,7 +38,7 @@ async def remind(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    Reminders.add_reminder(remind_text)
+    Reminders().add_reminder(remind_text)
     await message.edit("```Reminder added```")
     sleep(2)
     await message.delete()
@@ -58,8 +58,8 @@ async def delete_reminder(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    if Reminders.find_reminder(reminder_id) is not None:
-        Reminders.delete_reminder(reminder_id)
+    if Reminders().find_reminder(reminder_id) is not None:
+        Reminders().delete_reminder(reminder_id)
         await message.edit("```Reminder deleted```")
         sleep(2)
         await message.delete()

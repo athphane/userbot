@@ -11,11 +11,11 @@ class Custom(dict):
 async def word_count(bot: UserBot, message: Message):
     await message.delete()
     words = Custom()
-    progress = await UserBot().send_message(message.chat.id, "`Processed 0 messages...`")
+    progress = await bot.send_message(message.chat.id, "`Processed 0 messages...`")
     total = 0
-    for msg in await UserBot().iter_history(message.chat.id, 2000):
+    async for msg in bot.iter_history(message.chat.id, 1000):
         total += 1
-        if total % 200 == 0:
+        if total % 100 == 0:
             await progress.edit_text(f"`Processed {total} messages...`")
         if msg.text:
             for word in msg.text.split():

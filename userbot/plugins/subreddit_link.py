@@ -10,7 +10,7 @@ the_regex = "^r\/([^\s\/])+"
 async def subreddit_link(bot: UserBot, message: Message):
     html = "<a href='{link}'>{string}</a>"
     await message.delete()
-    await UserBot().send_message(
+    await bot.send_message(
         GetChatID(message),
         html.format(link="https://reddit.com/" + message.text, string=message.text),
         disable_web_page_preview=True,

@@ -6,3 +6,4 @@ speedtest-cli
 python-dotenv
 pymongo
 dnspython
+apscheduler
