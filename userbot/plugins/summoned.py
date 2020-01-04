@@ -3,6 +3,7 @@ from userbot import UserBot
 from userbot.helpers.file_sending_helpers import send_saved_image
 from userbot.helpers.utility import random_interval, human_time
 from userbot.database.summon import SUMMON
+from userbot.plugins.help import add_command_help
 import time
 
 
@@ -81,3 +82,12 @@ async def next_summon(bot: UserBot, message: Message):
             await message.delete()
     else:
         await message.delete()
+
+
+add_command_help(
+    'summon', [
+        ['.summonhere', 'Enables summoning in the group it is activated in.'],
+        ['!summonhere', 'Disables summoning in the group it is activated in.'],
+        ['.nextsummon', 'Show the time left for the next summon that will occur in the group.'],
+    ]
+)
