@@ -6,7 +6,7 @@ class WWW:
     SpeedTest = (
         "Speedtest started at `{start}`\n\n"
         "Ping:\n{ping} ms\n\n"
-        "Download:\n{downloads}\n\n"
+        "Download:\n{download}\n\n"
         "Upload:\n{upload}\n\n"
         "ISP:\n__{isp}__"
     )

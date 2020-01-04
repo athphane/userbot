@@ -7,7 +7,7 @@ from userbot.helpers.PyroHelpers import SpeedConvert
 from userbot.helpers.constants import WWW
 
 
-@UserBot.on_message(Filters.command("speed", ".") & Filters.me)
+@UserBot.on_message(Filters.command(["speed", 'speedtest'], ".") & Filters.me)
 async def speed_test(bot: UserBot, message: Message):
     new_msg = await message.edit(
         "`Running speed test . . .`")
@@ -20,7 +20,7 @@ async def speed_test(bot: UserBot, message: Message):
 
     new_msg = await message.edit(
         f"`{new_msg.text}`\n"
-        "`Testing downloads speed . . .`")
+        "`Testing download speed . . .`")
     spd.download()
 
     new_msg = await message.edit(
@@ -37,7 +37,7 @@ async def speed_test(bot: UserBot, message: Message):
         WWW.SpeedTest.format(
             start=results['timestamp'],
             ping=results['ping'],
-            download=SpeedConvert(results['downloads']),
+            download=SpeedConvert(results['download']),
             upload=SpeedConvert(results['upload']),
             isp=results['client']['isp']
         ))
