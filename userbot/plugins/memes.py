@@ -38,8 +38,9 @@ async def dog(bot: UserBot, message: Message):
     )
 
 
-@UserBot.on_message(Filters.command(["cat", "catto"], "") & Filters.me)
+@UserBot.on_message(Filters.command(["cat", "catto"], ["", '.']) & Filters.me)
 async def cat(bot: UserBot, message: Message):
+    print(message)
     await message.delete()
     await bot.send_photo(
         chat_id=message.chat.id,
@@ -272,3 +273,9 @@ async def flip(bot: UserBot, message: Message):
         await message.edit(final_str)
     else:
         await message.edit(mock_text)
+
+
+@UserBot.on_message(Filters.command("insult", '.'))
+def _insult(bot: UserBot, message: Message):
+    insult = requests.get("https://insult.mattbas.org/api/insult").content
+    message.edit(insult.decode('utf-8'))
