@@ -278,3 +278,11 @@ async def flip(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("insult", '.'))
 async def insult(bot: UserBot, message: Message):
     await message.edit(requests.get("https://insult.mattbas.org/api/insult").content.decode('utf-8'))
+
+
+@UserBot.on_message(Filters.command("joke", '.'))
+async def joke(bot: UserBot, message: Message):
+    the_joke = requests.get("https://icanhazdadjoke.com", headers={
+        'Accept': 'text/plain',
+    }).content.decode('utf-8')
+    await message.edit(the_joke)
