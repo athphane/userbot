@@ -286,3 +286,15 @@ async def joke(bot: UserBot, message: Message):
         'Accept': 'text/plain',
     }).content.decode('utf-8')
     await message.edit(the_joke)
+
+
+@UserBot.on_message(Filters.command(["whatislove", 'wis'], '.') | Filters.command('what is love', ''))
+async def joke(bot: UserBot, message: Message):
+    reply = ("Baby don't hurt me\n"
+             "Don't hurt me\n"
+             "No more")
+
+    if message.from_user.is_self:
+        await message.edit(f"{message.text}\n```{reply}```")
+    else:
+        await message.reply(f"```{reply}```")
