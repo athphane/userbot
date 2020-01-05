@@ -276,5 +276,5 @@ async def flip(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("insult", '.'))
-def insult(bot: UserBot, message: Message):
+async def insult(bot: UserBot, message: Message):
     await message.edit(requests.get("https://insult.mattbas.org/api/insult").content.decode('utf-8'))
