@@ -288,7 +288,7 @@ async def joke(bot: UserBot, message: Message):
     await message.edit(the_joke)
 
 
-@UserBot.on_message(Filters.command(["whatislove", 'wis'], '.') | Filters.command('what is love', ''))
+@UserBot.on_message(~Filters.edited & Filters.command(["whatislove", 'wis'], '.') | Filters.command('what is love', ''))
 async def joke(bot: UserBot, message: Message):
     reply = ("Baby don't hurt me\n"
              "Don't hurt me\n"
