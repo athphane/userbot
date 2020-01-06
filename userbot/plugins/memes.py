@@ -62,6 +62,14 @@ async def nice(bot: UserBot, message: Message):
     )
 
 
+@UserBot.on_message(Filters.command(["compliment"], ".") & Filters.me)
+async def nice(bot: UserBot, message: Message):
+    compliment = requests.get('https://complimentr.com/api').json()['compliment']
+    await message.edit(
+        compliment.capitalize()
+    )
+
+
 @UserBot.on_message(Filters.command(["reverse"], ".") & Filters.me)
 async def reverse(bot: UserBot, message: Message):
     await message.delete()
