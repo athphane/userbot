@@ -28,9 +28,11 @@ def _prep_cat():
     return cat_pic
 
 
-@UserBot.on_message(Filters.command(["dog", "doggo"], "") & Filters.me)
+@UserBot.on_message(Filters.regex("^\.?dog$"))
 async def dog(bot: UserBot, message: Message):
-    await message.delete()
+    if message.from_user.is_self:
+        await message.delete()
+
     await bot.send_photo(
         chat_id=message.chat.id,
         photo=_prep_dog(),
@@ -38,10 +40,11 @@ async def dog(bot: UserBot, message: Message):
     )
 
 
-@UserBot.on_message(Filters.command(["cat", "catto"], ["", '.']) & Filters.me)
+@UserBot.on_message(Filters.regex("^\.?cat$"))
 async def cat(bot: UserBot, message: Message):
-    print(message)
-    await message.delete()
+    if message.from_user.is_self:
+        await message.delete()
+
     await bot.send_photo(
         chat_id=message.chat.id,
         photo=_prep_cat(),
