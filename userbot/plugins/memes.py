@@ -295,6 +295,6 @@ async def joke(bot: UserBot, message: Message):
              "No more")
 
     if message.from_user.is_self:
-        await message.edit(f"{message.text}\n```{reply}```")
+        await message.edit(f"```{message.text}\n```{reply}```")
     else:
         await message.reply(f"```{reply}```")
