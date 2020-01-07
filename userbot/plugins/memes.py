@@ -73,6 +73,17 @@ async def nice(bot: UserBot, message: Message):
         await message.delete()
 
 
+@UserBot.on_message(Filters.command(["devexcuse"], ".") & Filters.me)
+async def dev_excuse(bot: UserBot, message: Message):
+    try:
+        devexcuse = requests.get('https://dev-excuses-api.herokuapp.com/').json()['text']
+        await message.edit(
+            devexcuse.capitalize()
+        )
+    except:
+        await message.delete()
+
+
 @UserBot.on_message(Filters.command(["reverse"], ".") & Filters.me)
 async def reverse(bot: UserBot, message: Message):
     await message.delete()
