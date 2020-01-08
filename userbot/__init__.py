@@ -39,6 +39,8 @@ __author__ = 'athphane'
 PM_PERMIT = config.get('pm_permit', 'pm_permit')
 PM_LIMIT = int(config.get('pm_permit', 'pm_limit'))
 
+LOG_GROUP = config.get('logs', 'log_group')
+
 # Scheduler
 scheduler = AsyncIOScheduler()
 
