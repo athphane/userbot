@@ -25,14 +25,16 @@ async def spamhammer(bot: UserBot, message: Message):
         if the_id not in spam_ids:
             spam_ids.append(the_id)
 
-    await message.edit("```Starting to kick spam accounts```")
+    await message.edit("Starting to kick spam accounts.")
+
     count = 0
     async for member in bot.iter_chat_members(message.chat.id):
         member: ChatMember = member
         if member.user.id in spam_ids:
-            print(f"{member.user.id} is a spam account")
             try:
                 await bot.kick_chat_member(message.chat.id, member.user.id, until_date=0)
+                await message.edit(f"```Kicked {count} spam accounts from here.```")
+                count += 1
             except:
                 ban_message = (
                     f"{member.user.id} could not be banned from Baivaru Requests for some reason."
@@ -44,7 +46,8 @@ async def spamhammer(bot: UserBot, message: Message):
             )
             await bot.send_message(LOG_GROUP, ban_message)
 
-    await message.edit(f"```Kicked {count} spam accounts from here.```")
+    print(f"```Kicked {count} spam accounts from here.```")
+    # await message.edit(f"```Kicked {count} spam accounts from here.```")
 
 
 add_command_help(
