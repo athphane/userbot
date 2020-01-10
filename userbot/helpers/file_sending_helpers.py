@@ -9,6 +9,7 @@ def reset_file_ids():
     f.write(json.dumps({}))
     f.close()
 
+
 async def get_old_message(bot: UserBot, message_id, media_type):
     old_message = await bot.get_messages('self', message_id)
 
@@ -41,7 +42,7 @@ async def send_saved_animation(bot: UserBot, message: Message, name: str, image:
                 old_message.file_id,
                 file_ref=old_message.file_ref,
                 reply_to_message_id=ReplyCheck(message),
-                caption=caption
+                caption=caption if caption is not None else ''
             )
         else:
             # Assume all the saved files are deleted. I mean it doesn't take long anyways
@@ -69,7 +70,7 @@ async def send_saved_image(bot: UserBot, message: Message, name: str, image: str
                 old_message.file_id,
                 file_ref=old_message.file_ref,
                 reply_to_message_id=ReplyCheck(message),
-                caption=caption
+                caption=caption if caption is not None else ''
             )
         else:
             # Assume all the saved files are deleted. I mean it doesn't take long anyways

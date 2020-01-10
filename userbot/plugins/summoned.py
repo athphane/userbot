@@ -48,7 +48,7 @@ async def summoned(bot: UserBot, message: Message):
                 next_send = chat_details['next_send']
 
                 if (time.time() - last_send) >= next_send:
-                    await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg")
+                    await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg", )
                     last_send = time.time()
                     next_send = random_interval()
                     SUMMON().update(message, last_send, next_send)
