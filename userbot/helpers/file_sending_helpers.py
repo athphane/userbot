@@ -4,6 +4,11 @@ from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck, GetChatID
 
 
+def reset_file_ids():
+    f = open("file_ids.txt", "w")
+    f.write(json.dumps({}))
+    f.close()
+
 async def get_old_message(bot: UserBot, message_id, media_type):
     old_message = await bot.get_messages('self', message_id)
 
@@ -25,17 +30,23 @@ def save_media_id(name, media: Message):
 
 
 # Function to reuse to send animation and remember the file_id
-async def send_saved_animation(bot: UserBot, message: Message, name: str, image: str):
+async def send_saved_animation(bot: UserBot, message: Message, name: str, image: str, caption=None):
     id_list = json.load(open("file_ids.txt", "r"))
 
     if name in id_list:
         old_message = await get_old_message(bot, int(id_list[name]), "animation")
-        await bot.send_animation(
-            GetChatID(message),
-            old_message.file_id,
-            file_ref=old_message.file_ref,
-            reply_to_message_id=ReplyCheck(message)
-        )
+        if old_message is not None:
+            await bot.send_animation(
+                GetChatID(message),
+                old_message.file_id,
+                file_ref=old_message.file_ref,
+                reply_to_message_id=ReplyCheck(message),
+                caption=caption
+            )
+        else:
+            # Assume all the saved files are deleted. I mean it doesn't take long anyways
+            reset_file_ids()
+            await send_saved_animation(bot, message, name, image, caption)
     else:
         sent_animation = await bot.send_animation(
             "self",
@@ -43,21 +54,27 @@ async def send_saved_animation(bot: UserBot, message: Message, name: str, image:
             reply_to_message_id=ReplyCheck(message)
         )
         save_media_id(name, sent_animation)
-        await send_saved_animation(bot, message, name, image)
+        await send_saved_animation(bot, message, name, image, caption)
 
 
 # Function to reuse to send image and save file_id
-async def send_saved_image(bot: UserBot, message: Message, name: str, image: str):
+async def send_saved_image(bot: UserBot, message: Message, name: str, image: str, caption=None):
     thing = json.load(open("file_ids.txt", "r"))
 
     if name in thing:
         old_message = await get_old_message(bot, int(thing[name]), "photo")
-        await bot.send_photo(
-            GetChatID(message),
-            old_message.file_id,
-            file_ref=old_message.file_ref,
-            reply_to_message_id=ReplyCheck(message)
-        )
+        if old_message is not None:
+            await bot.send_photo(
+                GetChatID(message),
+                old_message.file_id,
+                file_ref=old_message.file_ref,
+                reply_to_message_id=ReplyCheck(message),
+                caption=caption
+            )
+        else:
+            # Assume all the saved files are deleted. I mean it doesn't take long anyways
+            reset_file_ids()
+            await send_saved_image(bot, message, name, image, caption)
     else:
         sent_photo = await bot.send_photo(
             "self",
@@ -65,4 +82,4 @@ async def send_saved_image(bot: UserBot, message: Message, name: str, image: str
             reply_to_message_id=ReplyCheck(message)
         )
         save_media_id(name, sent_photo)
-        await send_saved_image(bot, message, name, image)
+        await send_saved_image(bot, message, name, image, caption)

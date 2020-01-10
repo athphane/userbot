@@ -1,6 +1,7 @@
 from pyrogram import Filters, Message
 from userbot import UserBot
-from userbot.helpers.PyroHelpers import GetChatID, ReplyCheck
+from userbot.helpers.PyroHelpers import GetChatID
+from userbot.plugins.help import add_command_help
 
 the_regex = "^r\/([^\s\/])+"
 
@@ -9,10 +10,17 @@ the_regex = "^r\/([^\s\/])+"
 @UserBot.on_message(Filters.regex(the_regex) & Filters.me)
 async def subreddit_link(bot: UserBot, message: Message):
     html = "<a href='{link}'>{string}</a>"
-    await message.delete()
-    await bot.send_message(
+    await message.edit(
         GetChatID(message),
         html.format(link="https://reddit.com/" + message.text, string=message.text),
         disable_web_page_preview=True,
-        reply_to_message_id=ReplyCheck(message)
     )
+
+
+# Command help section
+add_command_help(
+    'reddit', [
+        ['r/telegram', 'As long as your message starts with r/, it will automatically generate a subreddit link and '
+                       'hyperlink your message.'],
+    ]
+)

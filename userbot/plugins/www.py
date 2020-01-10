@@ -5,6 +5,7 @@ from pyrogram.api import functions
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import SpeedConvert
 from userbot.helpers.constants import WWW
+from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(["speed", 'speedtest'], ".") & Filters.me)
@@ -45,7 +46,7 @@ async def speed_test(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("dc", ".") & Filters.me)
 async def nearest_dc(bot: UserBot, message: Message):
-    dc = await UserBot().send(
+    dc = await bot.send(
         functions.help.GetNearestDc())
     await message.edit(
         WWW.NearestDC.format(
@@ -61,3 +62,13 @@ async def ping_me(bot: UserBot, message: Message):
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     await message.edit(f"**Pong!**\n`{ms} ms`")
+
+
+add_command_help(
+    'www', [
+        ['.ping', 'Calculates ping time between you and Telegram.'],
+        ['.dc', 'Get\'s your Telegram DC.'],
+        ['.speedtest', 'Runs a speedtest on the server this userbot is hosted.. Flex on them haters. With an in '
+                       'Telegram Speedtest of your server..'],
+    ]
+)

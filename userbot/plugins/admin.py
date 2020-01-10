@@ -51,5 +51,5 @@ async def spamhammer(bot: UserBot, message: Message):
 
 
 add_command_help(
-    'spamhammer', [['.spamhammer', 'Finds scam accounts in groups and destroy them']]
+    'spamhammer', [['.spamhammer', 'Finds spam accounts in groups and incinerates them.']]
 )

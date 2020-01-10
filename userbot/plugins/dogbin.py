@@ -21,8 +21,8 @@ async def dogbin(bot: UserBot, message: Message):
 
 add_command_help(
     'dogbin', [
-        ['.dogbin', 'Show the creator of this userbot.'],
-        ['.bin', 'Show the creator of this userbot.'],
-        ['.paste', 'Show the creator of this userbot.'],
+        ['.dogbin', 'Create a dogbin paste using replied to message.'],
+        ['.bin', 'Alternate command #1'],
+        ['.paste', 'Alternate command #2'],
     ]
 )

@@ -71,7 +71,7 @@ async def next_summon(bot: UserBot, message: Message):
 
                 delta = (last_send + next_send) - time.time()
 
-                await message.edit("'''{}'''".format(human_time(seconds=int(delta))))
+                await message.edit(f"'''{human_time(seconds=int(delta))}'''")
                 time.sleep(6)
                 await message.delete()
             except:

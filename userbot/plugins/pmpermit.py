@@ -78,3 +78,11 @@
 #             ['.block', "Blocks the current chat to PM.\nUsage: `.block`"],
 #         ]
 #     )
+
+# Command help section
+# add_command_help(
+#     'metrics', [
+#         ['.wordcount', 'Finds the 50 most used words in the last 2000 messages in a group or private chat. Use in '
+#                        'chat you want to find the metric in.'],
+#     ]
+# )

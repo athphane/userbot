@@ -6,6 +6,7 @@ from pyrogram import Filters, Message
 async def module_help(bot: UserBot, message: Message):
     cmd = message.command
 
+    help_arg = ""
     if len(cmd) > 1:
         help_arg = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) is 1:
@@ -24,17 +25,17 @@ async def module_help(bot: UserBot, message: Message):
         if help_arg in CMD_HELP:
             commands: dict = CMD_HELP[help_arg]
             this_command = ""
-            this_command += f"Help for {str(help_arg)} module\n\n"
+            this_command += f"--**Help for {str(help_arg)} module**--\n".upper()
 
             for x in commands:
-                this_command += f"{str(commands[x]['command'])}: {str(commands[x]['description'])}\n\n"
+                this_command += f"**{str(commands[x]['command'])}**: ```{str(commands[x]['description'])}```\n"
 
             await message.edit(this_command)
         else:
             await message.edit('`Please specify a valid module name.`')
 
 
-def add_command_help(module_name: str, commands: list):
+def add_command_help(module_name: object, commands: object) -> object:
     """
     Adds a modules help information.
     :param module_name: name of the module

@@ -1,6 +1,8 @@
 from userbot import UserBot
 from pyrogram import Filters, Message
 
+from userbot.plugins.help import add_command_help
+
 
 class Custom(dict):
     def __missing__(self, key):
@@ -29,3 +31,11 @@ async def word_count(bot: UserBot, message: Message):
         out += f"{i + 1}. {words[freq[i]]}: {freq[i]}\n"
 
     await progress.edit_text(out, parse_mode=None)
+
+# Command help section
+add_command_help(
+    'metrics', [
+        ['.wordcount', 'Finds the 50 most used words in the last 2000 messages in a group or private chat. Use in '
+                       'chat you want to find the metric in.'],
+    ]
+)
