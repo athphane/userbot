@@ -6,6 +6,8 @@ from userbot.helpers.PyroHelpers import ReplyCheck
 from time import sleep
 from datetime import datetime
 
+from userbot.plugins.help import add_command_help
+
 WHOIS = (
     "**WHO IS \"{full_name}\"?**\n"
     "[Link to profile](tg://user?id={user_id})\n"
@@ -127,3 +129,11 @@ async def summon_here(bot: UserBot, message: Message):
             file_ref=user_pic[0].file_ref,
         )
         await message.delete()
+
+
+add_command_help(
+    'whois', [
+        ['.whois', 'Finds out who the person is. Reply to message sent by the person'
+                   'you want information from and send the command. Without the dot also works.']
+    ]
+)
