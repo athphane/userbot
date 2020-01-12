@@ -6,7 +6,7 @@ AFK = False
 AFK_REASON = ''
 
 
-@UserBot.on_message(Filters.mentioned | Filters.private & Filters.text & ~Filters.me)
+@UserBot.on_message(Filters.mentioned | Filters.private & Filters.text & ~Filters.me, group=3)
 async def reply_to_mentioned(bot: UserBot, message: Message):
     if AFK:
         text = (
@@ -22,7 +22,7 @@ async def reply_to_mentioned(bot: UserBot, message: Message):
         )
 
 
-@UserBot.on_message(Filters.command("afk", ".") & Filters.me)
+@UserBot.on_message(Filters.command("afk", ".") & Filters.me, group=3)
 async def afk_set(bot: UserBot, message: Message):
     global AFK_REASON, AFK
     cmd = message.command
@@ -39,7 +39,7 @@ async def afk_set(bot: UserBot, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.command("afk", "!") & Filters.me)
+@UserBot.on_message(Filters.command("afk", "!") & Filters.me, group=3)
 async def afk_unset(bot: UserBot, message: Message):
     global AFK, AFK_REASON
     AFK = False
