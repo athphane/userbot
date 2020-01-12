@@ -47,7 +47,7 @@ async def afk_unset(bot: UserBot, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.me & Filters.private | Filters.group)
+@UserBot.on_message(Filters.me & Filters.private | Filters.group, group=3)
 async def back_online(bot: UserBot, message: Message):
     global AFK, AFK_REASON
     if AFK:
