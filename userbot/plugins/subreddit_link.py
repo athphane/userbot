@@ -11,9 +11,9 @@ the_regex = "^r\/([^\s\/])+"
 async def subreddit_link(bot: UserBot, message: Message):
     html = "<a href='{link}'>{string}</a>"
     await message.edit(
-        GetChatID(message),
         html.format(link="https://reddit.com/" + message.text, string=message.text),
         disable_web_page_preview=True,
+        parse_mode="html"
     )
 
 
