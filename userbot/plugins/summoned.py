@@ -3,6 +3,7 @@ from userbot import UserBot
 from userbot.helpers.file_sending_helpers import send_saved_image
 from userbot.helpers.utility import random_interval, human_time
 from userbot.database.summon import SUMMON
+from userbot.plugins.afk import AFK
 from userbot.plugins.help import add_command_help
 import time
 
@@ -43,20 +44,21 @@ async def summoned(bot: UserBot, message: Message):
 
     if chat_details is not None:
         if chat_details['chat_id'] == message.chat.id:
-            try:
-                last_send = chat_details['last_send']
-                next_send = chat_details['next_send']
+            if not AFK:
+                try:
+                    last_send = chat_details['last_send']
+                    next_send = chat_details['next_send']
 
-                if (time.time() - last_send) >= next_send:
-                    await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg", )
+                    if (time.time() - last_send) >= next_send:
+                        await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg", )
+                        last_send = time.time()
+                        next_send = random_interval()
+                        SUMMON().update(message, last_send, next_send)
+                except:
+                    await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg")
                     last_send = time.time()
                     next_send = random_interval()
                     SUMMON().update(message, last_send, next_send)
-            except:
-                await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg")
-                last_send = time.time()
-                next_send = random_interval()
-                SUMMON().update(message, last_send, next_send)
 
 
 @UserBot.on_message(Filters.command('nextsummon', '.') & Filters.me)
