@@ -28,8 +28,13 @@ def SpeedConvert(size):
     return f"{round(size, 2)} {units[zero]}"
 
 
+def GetFromUserID(message: Message):
+    """ Get the user id of the incoming message."""
+    return message.from_user.id
+
+
 def GetChatID(message: Message):
-    """ Get the chat id of the incoming message."""
+    """ Get the group id of the incoming message"""
     return message.chat.id
 
 

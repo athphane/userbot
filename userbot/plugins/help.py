@@ -28,11 +28,11 @@ async def module_help(bot: UserBot, message: Message):
             this_command += f"--**Help for {str(help_arg)} module**--\n".upper()
 
             for x in commands:
-                this_command += f"**{str(commands[x]['command'])}**: ```{str(commands[x]['description'])}```\n"
+                this_command += f"**{str(commands[x]['command'])}**: ```{str(commands[x]['description'])}```\n\n"
 
-            await message.edit(this_command)
+            await message.edit(this_command, parse_mode='markdown')
         else:
-            await message.edit('`Please specify a valid module name.`')
+            await message.edit('`Please specify a valid module name.`', parse_mode='markdown')
 
 
 def add_command_help(module_name: object, commands: object) -> object:

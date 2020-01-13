@@ -1,6 +1,5 @@
 from pyrogram import Filters, Message
 from userbot import UserBot
-from userbot.helpers.PyroHelpers import GetChatID
 from userbot.plugins.help import add_command_help
 
 the_regex = "^r\/([^\s\/])+"
