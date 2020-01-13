@@ -54,7 +54,6 @@ async def afk_group(bot: UserBot, message: Message):
                     reply_to_message_id=message.message_id
                 )
         GROUPS[GetChatID(message)] += 1
-        print(GROUPS)
 
 
 @UserBot.on_message(Filters.private & ~Filters.me, group=3)
@@ -102,7 +101,6 @@ async def afk_private(bot: UserBot, message: Message):
                     reply_to_message_id=message.message_id
                 )
         USERS[GetFromUserID(message)] += 1
-        print(USERS)
 
 
 @UserBot.on_message(Filters.command("afk", ".") & Filters.me, group=3)
