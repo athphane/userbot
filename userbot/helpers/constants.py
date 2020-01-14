@@ -2,6 +2,33 @@ class First:
     ALIVE = "`Baka! Anata wa watashi ga shinu to omotta?`"
 
 
+class Eval:
+    RUNNING = "**Expression:**\n```{}```\n\n**Running...**"
+    ERROR = "**Expression:**\n```{}```\n\n**Error:**\n```{}```"
+    SUCCESS = "**Expression:**\n```{}```\n\n**Success** | `None`"
+    RESULT = "**Expression:**\n```{}```\n\n**Result:**\n```{}```"
+    RESULT_FILE = "**Expression:**\n```{}```\n\n**Result:**\nView `output.txt` below ⤵"
+
+    ERROR_LOG = (
+        "**Evaluation Query**\n"
+        "```{}```\n"
+        "erred in chat \"[{}](t.me/c/{}/{})\" with error\n"
+        "```{}```"
+    )
+
+    SUCCESS_LOG = (
+        "Evaluation Query\n"
+        "```{}```\n"
+        "succeeded in \"[{}](t.me/c/{}/{})\""
+    )
+
+    RESULT_LOG = (
+        "Evaluation Query\n"
+        "```{}```\n"
+        "executed in chat \"[{}](t.me/c/{}/{})\"."
+    )
+
+
 class WWW:
     SpeedTest = (
         "Speedtest started at `{start}`\n\n"
@@ -213,4 +240,3 @@ class MEMES:
         "&": "⅋",
         "_": "‾",
     }
-
