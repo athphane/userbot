@@ -45,7 +45,7 @@ async def execution(bot: UserBot, message: Message):
         expr = await message.reply(Eval.RUNNING.format(cmdstr))
         try:
             exec(
-                'def __ex(bot, message): '
+                'async def __ex(bot, message): '
                 + ''.join(
                     '\n '
                     + l for l in cmdstr.split('\n')))
