@@ -1,11 +1,7 @@
 import re
-from time import sleep
-
 from userbot import UserBot
 from pyrogram import Filters, Message
 import requests
-
-from userbot.helpers.utility import split_list
 from userbot.plugins.help import add_command_help
 
 DOGBIN = "https://del.dog/"
