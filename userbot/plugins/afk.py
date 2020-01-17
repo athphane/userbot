@@ -8,12 +8,10 @@ AFK = False
 AFK_REASON = ''
 USERS = {}
 GROUPS = {}
-MSG_COUNT = 0
 
 
 @UserBot.on_message(Filters.group & Filters.mentioned & ~Filters.me, group=3)
 async def afk_group(bot: UserBot, message: Message):
-    global MSG_COUNT
     if AFK:
         if GetChatID(message) not in GROUPS:
             text = (
@@ -56,13 +54,12 @@ async def afk_group(bot: UserBot, message: Message):
                     text=text,
                     reply_to_message_id=message.message_id
                 )
+
         GROUPS[GetChatID(message)] += 1
-        MSG_COUNT += 1
 
 
 @UserBot.on_message(Filters.private & ~Filters.me, group=3)
 async def afk_private(bot: UserBot, message: Message):
-    global MSG_COUNT
     if AFK:
         if GetFromUserID(message) not in USERS:
             text = (
@@ -105,8 +102,8 @@ async def afk_private(bot: UserBot, message: Message):
                     text=text,
                     reply_to_message_id=message.message_id
                 )
+
         USERS[GetFromUserID(message)] += 1
-        MSG_COUNT += 1
 
 
 @UserBot.on_message(Filters.command("afk", ".") & Filters.me, group=3)
@@ -128,14 +125,17 @@ async def afk_set(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("afk", "!") & Filters.me, group=3)
 async def afk_unset(bot: UserBot, message: Message):
-    global AFK, AFK_REASON, USERS, GROUPS, MSG_COUNT
-    await message.edit(f"While you away, you received {MSG_COUNT} from {len(USERS) + len(GROUPS)}")
-    AFK = False
-    AFK_REASON = ''
-    USERS = {}
-    GROUPS = {}
-    MSG_COUNT = 0
-    sleep(5)
+    global AFK, AFK_REASON, USERS, GROUPS
+
+    if AFK:
+        await message.edit(f"While you were away, you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
+                           f"from {len(USERS) + len(GROUPS)} chats")
+        AFK = False
+        AFK_REASON = ''
+        USERS = {}
+        GROUPS = {}
+        sleep(5)
+
     await message.delete()
 
 
