@@ -96,6 +96,7 @@ async def fact(bot: UserBot, message: Message):
         await message.delete()
         return
 
+    await message.edit(f"```Getting {cmd[1]} fact```")
     link = "https://some-random-api.ml/facts/{animal}"
 
     if cmd[1].lower() in animals:
