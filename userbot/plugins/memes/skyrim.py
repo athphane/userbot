@@ -5,7 +5,7 @@ import os
 import time
 
 
-@UserBot.on_message(Filters.command(["skyrim"], ".") & Filters.me)
+@UserBot.on_message(Filters.command(['skyrim', 'skill'], ".") & Filters.me)
 async def skyrim(bot: UserBot, message: Message):
     if len(message.command) >= 2:
         text = message.command[1]
