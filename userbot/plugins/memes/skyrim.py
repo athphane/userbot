@@ -26,7 +26,10 @@ async def skyrim(bot: UserBot, message: Message):
             time.sleep(2)
 
         try:
-            await message.reply_photo('userbot/downloads/skyrim.png', reply_to_message_id=message.reply_to_message.message_id)
+            await message.reply_photo(
+                'userbot/downloads/skyrim.png',
+                reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None
+            )
             await message.delete()
         except:
             await message.edit("```Failed to send skill```")
