@@ -24,6 +24,7 @@ async def skyrim(bot: UserBot, message: Message):
         except:
             await message.edit("```Failed to generate skill```")
             time.sleep(2)
+            await message.delete()
 
         try:
             await bot.send_photo(
@@ -35,6 +36,7 @@ async def skyrim(bot: UserBot, message: Message):
         except:
             await message.edit("```Failed to send skill```")
             time.sleep(2)
+            await message.delete()
         finally:
             os.remove('userbot/downloads/skyrim.png')
     except Exception as e:
