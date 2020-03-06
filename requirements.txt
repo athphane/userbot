@@ -8,3 +8,4 @@ pymongo
 dnspython
 apscheduler
 cowpy
+Pillow==7.0.0
