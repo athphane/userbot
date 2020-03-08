@@ -18,9 +18,9 @@ async def skyrim(bot: UserBot, message: Message):
     try:
         try:
             if os.name == 'nt':
-                os.system(f"venv\\Scripts\\activate && python userbot\\helpers\\skyrim.py {text} {level}")
+                os.system(f"venv\\Scripts\\activate && python userbot\\helpers\\skyrim.py \"{text}\" {level}")
             else:
-                os.system(f". venv/bin/activate && python userbot//helpers//skyrim.py {text} {level}")
+                os.system(f". venv/bin/activate && python userbot//helpers//skyrim.py \"{text}\" {level}")
         except:
             await message.edit("```Failed to generate skill```")
             time.sleep(2)
