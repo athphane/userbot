@@ -25,7 +25,7 @@ def _prep_cat():
     return cat_pic
 
 
-@UserBot.on_message(Filters.regex("^\.?dog$"))
+@UserBot.on_message(Filters.regex("^\.?dog$") & Filters.me)
 async def dog(bot: UserBot, message: Message):
     if message.from_user.is_self:
         await message.delete()
@@ -37,7 +37,7 @@ async def dog(bot: UserBot, message: Message):
     )
 
 
-@UserBot.on_message(Filters.regex("^\.?cat$"))
+@UserBot.on_message(Filters.regex("^\.?cat$") & Filters.me)
 async def cat(bot: UserBot, message: Message):
     if message.from_user.is_self:
         await message.delete()
