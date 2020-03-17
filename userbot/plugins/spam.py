@@ -29,5 +29,5 @@ async def alive(bot: UserBot, message: Message):
 
 # Command help section
 add_command_help(
-    'spam', [['.spam', '<spam_amount>', '<spam_text>]]
+    'spam', [['.spam', '<spam_amount>', '<spam_text>']]
 )
