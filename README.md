@@ -1,4 +1,7 @@
 # Pyrogram Userbot
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b10d40c60fc549299eeb7bda1c7501aa)](https://app.codacy.com/manual/athphane/userbot?utm_source=github.com&utm_medium=referral&utm_content=athphane/userbot&utm_campaign=Badge_Grade_Settings)
+
 A Telegram Userbot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
 
 I assume you will read this whole README.md file before continuing.
