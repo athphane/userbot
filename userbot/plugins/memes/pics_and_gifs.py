@@ -25,7 +25,8 @@ async def kill(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("lust", ".") & Filters.me)
 async def kill(bot: UserBot, message: Message):
     await message.delete()
-    await send_saved_animation(bot, message, "lust_gif", "lust.gif", caption=f"I wanna do bad things with you {Emoji.SMIRKING_FACE}")
+    await send_saved_animation(bot, message, "lust_gif", "lust.gif",
+                               caption=f"I wanna do bad things with you {Emoji.SMIRKING_FACE}")
 
 
 @UserBot.on_message(Filters.command("dmf", ".") & Filters.me)
@@ -40,6 +41,12 @@ async def smart(bot: UserBot, message: Message):
     await message.delete()
 
 
+@UserBot.on_message(Filters.command("sobimin", ".") & Filters.me)
+async def sob_im_in(bot: UserBot, message: Message):
+    await message.delete()
+    await send_saved_image(bot, message, "sob_im_in_image", "sob_im_in.jpg")
+
+
 # Command help section
 add_command_help(
     'pictures', [
@@ -48,6 +55,7 @@ add_command_help(
         ['.kill', 'Gif of Killua from HunterXHunter with caption "I will kill you"'],
         ['.lust', 'Gif of lustful things.'],
         ['.dmf', 'Syndrome from The Incredible\'s saying "You dense motherfucker".'],
-        ['.smart', 'Press E to use intelligence.']
+        ['.smart', 'Press E to use intelligence.'],
+        ['.sobimin', "Morty - SOB I'm In"]
     ]
 )

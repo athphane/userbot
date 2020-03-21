@@ -11,6 +11,7 @@ ok_exts = ["jpg", "jpeg", "png"]
 
 def _prep_dog():
     ext = ''
+    dog_pic = None
     while ext not in ok_exts:
         dog_pic = requests.get('https://random.dog/woof.json').json()['url']
         ext = re.search(animal, dog_pic).group(1).lower()
@@ -19,6 +20,7 @@ def _prep_dog():
 
 def _prep_cat():
     ext = ''
+    cat_pic = None
     while ext not in ok_exts:
         cat_pic = requests.get('http://aws.random.cat/meow').json()['file']
         ext = re.search(animal, cat_pic).group(1).lower()

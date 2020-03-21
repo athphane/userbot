@@ -35,7 +35,7 @@ async def module_help(bot: UserBot, message: Message):
             await message.edit('`Please specify a valid module name.`', parse_mode='markdown')
 
 
-def add_command_help(module_name: object, commands: object) -> object:
+def add_command_help(module_name, commands):
     """
     Adds a modules help information.
     :param module_name: name of the module
