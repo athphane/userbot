@@ -6,7 +6,7 @@ import time
 
 
 @UserBot.on_message(Filters.command("spam", ".") & Filters.me)
-async def alive(bot: UserBot, message: Message):
+async def spam(bot: UserBot, message: Message):
     # Get current chat and spam to there.
     # if in group and replied to user, then spam replying to user.
     await message.delete()
@@ -19,7 +19,7 @@ async def alive(bot: UserBot, message: Message):
             await bot.send_message(message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message))
             time.sleep(0.15)
 
-    if message.chat.type is "private":
+    if message.chat.type == "private":
         for x in range(int(times)):
             await bot.send_message(message.chat.id, to_spam)
             time.sleep(0.15)

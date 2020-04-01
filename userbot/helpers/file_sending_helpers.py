@@ -32,10 +32,10 @@ def save_media_id(name, media: Message):
 
 # Function to reuse to send animation and remember the file_id
 async def send_saved_animation(bot: UserBot, message: Message, name: str, image: str, caption=None):
-    id_list = json.load(open("file_ids.txt", "r"))
+    files = json.load(open("file_ids.txt", "r"))
 
-    if name in id_list:
-        old_message = await get_old_message(bot, int(id_list[name]), "animation")
+    if name in files:
+        old_message = await get_old_message(bot, int(files[name]), "animation")
         if old_message is not None:
             await bot.send_animation(
                 GetChatID(message),
@@ -45,7 +45,7 @@ async def send_saved_animation(bot: UserBot, message: Message, name: str, image:
                 caption=caption if caption is not None else ''
             )
         else:
-            # Assume all the saved files are deleted. I mean it doesn't take long anyways
+            # Reset file id list because of the one error
             reset_file_ids()
             await send_saved_animation(bot, message, name, image, caption)
     else:
@@ -60,10 +60,10 @@ async def send_saved_animation(bot: UserBot, message: Message, name: str, image:
 
 # Function to reuse to send image and save file_id
 async def send_saved_image(bot: UserBot, message: Message, name: str, image: str, caption=None):
-    thing = json.load(open("file_ids.txt", "r"))
+    files = json.load(open("file_ids.txt", "r"))
 
-    if name in thing:
-        old_message = await get_old_message(bot, int(thing[name]), "photo")
+    if name in files:
+        old_message = await get_old_message(bot, int(files[name]), "photo")
         if old_message is not None:
             await bot.send_photo(
                 GetChatID(message),
@@ -73,8 +73,8 @@ async def send_saved_image(bot: UserBot, message: Message, name: str, image: str
                 caption=caption if caption is not None else ''
             )
         else:
-            # Assume all the saved files are deleted. I mean it doesn't take long anyways
-            reset_file_ids()
+            # Reset file id list because of the one error
+            # reset_file_ids()
             await send_saved_image(bot, message, name, image, caption)
     else:
         sent_photo = await bot.send_photo(
