@@ -70,6 +70,38 @@ async def anime_girl(bot: UserBot, message: Message):
     await message.delete()
 
 
+@UserBot.on_message(Filters.command("animeboy", ".") & Filters.me)
+async def anime_boy(bot: UserBot, message: Message):
+    cmd = message.command
+
+    anime_boy_text = ""
+    if len(cmd) > 1:
+        anime_boy_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) is 1:
+        anime_boy_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) is 1:
+        await message.edit("`Senpai I need something to say :(`")
+        sleep(2)
+        await message.delete()
+        return
+
+    anime_girl_results = await bot.get_inline_bot_results(
+        "stickerizerbot",
+        "#37" + anime_boy_text)
+
+    try:
+        await bot.send_inline_bot_result(
+            chat_id=message.chat.id,
+            query_id=anime_girl_results.query_id,
+            result_id=anime_girl_results.results[0].id,
+            reply_to_message_id=ReplyCheck(message),
+            hide_via=True)
+    except TimeoutError:
+        await message.edit("@StickerizerBot didn't respond in time.")
+        sleep(2)
+    await message.delete()
+
+
 @UserBot.on_message(Filters.command("ggl", ".") & Filters.me)
 async def google_sticker(bot: UserBot, message: Message):
     await message.delete()
@@ -110,6 +142,7 @@ add_command_help(
                   'Reply to a text message with .mock and it will grab the text of that message and generate the meme.'
          ],
         ['.animegirl', 'Sends an anime girl with a card of what you want. Rules apply as above.'],
+        ['.animeboy', 'Sends an anime boy with a card of what you want. Rules apply as above.'],
         ['.ggl', 'Sends google search buttons with the query you give it.. Rules apply as above.'],
     ]
 )
