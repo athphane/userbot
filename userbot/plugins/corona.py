@@ -4,6 +4,7 @@ from userbot import UserBot
 from pyrogram import Filters, Message
 from userbot.plugins.help import add_command_help
 
+
 @UserBot.on_message(Filters.command(["c"], ".") & Filters.me)
 async def corona_all(bot: UserBot, message: Message):
     try:
@@ -14,6 +15,7 @@ async def corona_all(bot: UserBot, message: Message):
         await message.edit("```The corona API could not be reached```")
         sleep(3)
         await message.delete()
+
 
 @UserBot.on_message(Filters.command(["cs"], ".") & Filters.me)
 async def corona_search(bot: UserBot, message: Message):
@@ -42,6 +44,7 @@ async def corona_search(bot: UserBot, message: Message):
 add_command_help(
     'corona', [
         ['.c', 'Sends global corona stats: cases, deaths, recovered, and active cases'],
-        ['.cs Country', 'Sends cases, new cases, deaths, new deaths, recovered, active cases, critical cases, and cases/deaths per one million people for a specific country']
+        ['.cs Country',
+         'Sends cases, new cases, deaths, new deaths, recovered, active cases, critical cases, and cases/deaths per one million people for a specific country']
     ]
 )
