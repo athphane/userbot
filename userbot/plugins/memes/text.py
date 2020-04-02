@@ -21,7 +21,7 @@ async def nice(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command(["compliment"], ".") & Filters.me)
-async def compliment(bot: UserBot, message: Message):
+async def compliment_func(bot: UserBot, message: Message):
     try:
         compliment = requests.get('https://complimentr.com/api').json()['compliment']
         await message.edit(

@@ -27,7 +27,7 @@ async def word_count(bot: UserBot, message: Message):
                 words[word.lower()] += 1
     freq = sorted(words, key=words.get, reverse=True)
     out = "Word Counter\n"
-    for i in range(50):
+    for i in range(25):
         out += f"{i + 1}. {words[freq[i]]}: {freq[i]}\n"
 
     await progress.edit_text(out, parse_mode=None)
@@ -35,7 +35,7 @@ async def word_count(bot: UserBot, message: Message):
 # Command help section
 add_command_help(
     'metrics', [
-        ['.wordcount', 'Finds the 50 most used words in the last 2000 messages in a group or private chat. Use in '
+        ['.wordcount', 'Finds the 25 most used words in the last 1000 messages in a group or private chat. Use in '
                        'chat you want to find the metric in.'],
     ]
 )
