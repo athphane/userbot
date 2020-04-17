@@ -12,7 +12,7 @@ async def spam(bot: UserBot, message: Message):
     await message.delete()
 
     times = message.command[1]
-    to_spam = message.command[2]
+    to_spam = ' '.join(message.command[2:])
 
     if message.chat.type in ['supergroup', 'group'] and message.reply_to_message:
         for x in range(int(times)):

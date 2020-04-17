@@ -19,7 +19,7 @@ async def word_count(bot: UserBot, message: Message):
         total += 1
         if total % 100 == 0:
             await progress.edit_text(f"`Processed {total} messages...`")
-            time.sleep(0.3)
+            time.sleep(0.5)
         if msg.text:
             for word in msg.text.split():
                 words[word.lower()] += 1
@@ -31,7 +31,7 @@ async def word_count(bot: UserBot, message: Message):
     for i in range(25):
         out += f"{i + 1}. **{words[freq[i]]}**: {freq[i]}\n"
 
-    await progress.edit_text(out, parse_mode=None)
+    await progress.edit_text(out)
 
 # Command help section
 add_command_help(
