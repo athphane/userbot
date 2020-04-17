@@ -22,43 +22,39 @@ async def repo(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("id", ".") & Filters.me)
-async def get_file(bot: UserBot, message: Message):
-    file_id = None
-    user_id = None
+async def get_id(bot: UserBot, message: Message):
+    out_str = f"💁 Current Chat ID: `{message.chat.id}`"
 
     if message.reply_to_message:
-        rep = message.reply_to_message
-        if rep.audio:
-            file_id = rep.audio.file_id
-        elif rep.document:
-            file_id = rep.document.file_id
-        elif rep.photo:
-            file_id = rep.photo.file_id
-        elif rep.sticker:
-            file_id = rep.sticker.file_id
-        elif rep.video:
-            file_id = rep.video.file_id
-        elif rep.animation:
-            file_id = rep.animation.file_id
-        elif rep.voice:
-            file_id = rep.voice.file_id
-        elif rep.video_note:
-            file_id = rep.video_note.file_id
-        elif rep.contact:
-            file_id = rep.contact.file_id
-        elif rep.location:
-            file_id = rep.location.file_id
-        elif rep.venue:
-            file_id = rep.venue.file_id
-        elif rep.from_user:
-            user_id = rep.from_user.id
+        out_str += f"`{message.reply_to_message.from_user.id}`"
+        file_id = None
 
-    if user_id:
-        await message.edit(user_id)
-    elif file_id:
-        await message.edit(file_id)
-    else:
-        await message.edit("This chat's ID:\n`{}`".format(message.chat.id))
+        if message.reply_to_message.media:
+            if message.reply_to_message.audio:
+                file_id = message.reply_to_message.audio.file_id
+
+            elif message.reply_to_message.document:
+                file_id = message.reply_to_message.document.file_id
+
+            elif message.reply_to_message.photo:
+                file_id = message.reply_to_message.photo.file_id
+
+            elif message.reply_to_message.sticker:
+                file_id = message.reply_to_message.sticker.file_id
+
+            elif message.reply_to_message.voice:
+                file_id = message.reply_to_message.voice.file_id
+
+            elif message.reply_to_message.video_note:
+                file_id = message.reply_to_message.video_note.file_id
+
+            elif message.reply_to_message.video:
+                file_id = message.reply_to_message.video.file_id
+
+            if file_id is not None:
+                out_str += f"`{file_id}`"
+
+    await message.edit(out_str)
 
 
 # Command help section
@@ -72,4 +68,8 @@ add_command_help(
 
 add_command_help(
     'creator', [['.creator', 'Show the creator of this userbot.']]
+)
+
+add_command_help(
+    'id', [['.id', 'Send id of what you replied to.']]
 )
