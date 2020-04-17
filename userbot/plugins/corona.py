@@ -8,7 +8,7 @@ from userbot.plugins.help import add_command_help
 @UserBot.on_message(Filters.command(["c"], ".") & Filters.me)
 async def corona_all(bot: UserBot, message: Message):
     try:
-        r = requests.get("https://corona.lmao.ninja/all").json()
+        r = requests.get("https://corona.lmao.ninja/v2/all").json()
         all_cases = f"<b>Global Totals</b>\nCases: {r['cases']:,}\nDeaths: {r['deaths']:,}\nRecovered: {r['recovered']:,}\nActive: {r['active']:,}"
         await message.edit(all_cases)
     except:
@@ -31,7 +31,7 @@ async def corona_search(bot: UserBot, message: Message):
     await message.edit(f"```Getting Corona statistics for {country}```")
 
     try:
-        r = requests.get(f"https://corona.lmao.ninja/countries/{country}").json()
+        r = requests.get(f"https://corona.lmao.ninja/v2/countries/{country}").json()
     except:
         await message.edit("```The corona API could not be reached```")
         sleep(3)
