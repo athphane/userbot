@@ -3,6 +3,7 @@ from userbot import UserBot
 from pyrogram import Filters, Message
 from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
+from random import choice
 
 
 @UserBot.on_message(Filters.command("mock", ".") & Filters.me)
@@ -53,9 +54,11 @@ async def anime_girl(bot: UserBot, message: Message):
         await message.delete()
         return
 
+    stickers = [20, 32, 33, 40, 42, 58]
+    sticker = f"#{int(choice(stickers))}"
     anime_girl_results = await bot.get_inline_bot_results(
         "stickerizerbot",
-        "#32" + anime_girl_text)
+        sticker + anime_girl_text)
 
     try:
         await bot.send_inline_bot_result(
@@ -85,9 +88,11 @@ async def anime_boy(bot: UserBot, message: Message):
         await message.delete()
         return
 
+    stickers = [37, 38, 41, 48, 55]
+    sticker = f"#{int(choice(stickers))}"
     anime_girl_results = await bot.get_inline_bot_results(
         "stickerizerbot",
-        "#37" + anime_boy_text)
+        sticker + anime_boy_text)
 
     try:
         await bot.send_inline_bot_result(
