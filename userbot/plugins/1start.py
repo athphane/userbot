@@ -27,43 +27,43 @@ async def repo(bot: UserBot, message: Message):
     )
 
 
-@UserBot.on_message(Filters.command("type", ".") & Filters.me)
-async def typewriter(bot: UserBot, message: Message):
-    text = message.reply_to_message.text
-
-    if not text:
-        await message.edit("input not found")
-        await asyncio.sleep(3)
-        await message.delete()
-        return
-
-    s_time = 0.1
-    typing_symbol = '|'
-    old_text = ''
-
-    await message.edit(typing_symbol)
-    time.sleep(s_time)
-
-    for character in text:
-        s_t = s_time / random.randint(1, 100)
-        old_text += character
-        typing_text = old_text + typing_symbol
-
-        try:
-            try:
-                await message.edit(typing_text)
-                time.sleep(s_t)
-            except:
-                pass
-
-            try:
-                await message.edit(old_text)
-                time.sleep(s_t)
-            except:
-                pass
-
-        except FloodWait as x_e:
-            time.sleep(x_e.x)
+# @UserBot.on_message(Filters.command("type", ".") & Filters.me)
+# async def typewriter(bot: UserBot, message: Message):
+#     text = message.reply_to_message.text
+#
+#     if not text:
+#         await message.edit("input not found")
+#         await asyncio.sleep(3)
+#         await message.delete()
+#         return
+#
+#     s_time = 0.1
+#     typing_symbol = '|'
+#     old_text = ''
+#
+#     await message.edit(typing_symbol)
+#     time.sleep(s_time)
+#
+#     for character in text:
+#         s_t = s_time / random.randint(1, 100)
+#         old_text += character
+#         typing_text = old_text + typing_symbol
+#
+#         try:
+#             try:
+#                 await message.edit(typing_text)
+#                 time.sleep(s_t)
+#             except:
+#                 pass
+#
+#             try:
+#                 await message.edit(old_text)
+#                 time.sleep(s_t)
+#             except:
+#                 pass
+#
+#         except FloodWait as x_e:
+#             time.sleep(x_e.x)
 
 
 @UserBot.on_message(Filters.command("id", ".") & Filters.me)
