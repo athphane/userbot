@@ -1,5 +1,4 @@
 import asyncio
-from time import sleep
 from userbot import UserBot
 from pyrogram import Filters, Message
 from userbot.helpers.PyroHelpers import ReplyCheck
@@ -123,32 +122,36 @@ async def anime_boy(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("ggl", ".") & Filters.me)
 async def google_sticker(bot: UserBot, message: Message):
-    await message.delete()
-    cmd = message.command
-
-    ggl_text = ""
-    if len(cmd) > 1:
-        ggl_text = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) == 1:
-        ggl_text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("I need something to google")
-        await asyncio.sleep(2)
-        await message.delete()
-        return
-
-    ggl_result = await bot.get_inline_bot_results(
-        "stickerizerbot",
-        "#12" + ggl_text)
     try:
-        await bot.send_inline_bot_result(
-            chat_id=message.chat.id,
-            query_id=ggl_result.query_id,
-            result_id=ggl_result.results[0].id,
-            reply_to_message_id=ReplyCheck(message),
-            hide_via=True)
-    except TimeoutError:
-        await message.edit("@StickerizerBot didn't respond in time.")
+        cmd = message.command
+
+        ggl_text = ""
+        if len(cmd) > 1:
+            ggl_text = " ".join(cmd[1:])
+        elif message.reply_to_message and len(cmd) == 1:
+            ggl_text = message.reply_to_message.text
+        elif not message.reply_to_message and len(cmd) == 1:
+            await message.edit("I need something to google")
+            await asyncio.sleep(2)
+            await message.delete()
+            return
+
+        ggl_result = await bot.get_inline_bot_results(
+            "stickerizerbot",
+            "#12" + ggl_text)
+        try:
+            await bot.send_inline_bot_result(
+                chat_id=message.chat.id,
+                query_id=ggl_result.query_id,
+                result_id=ggl_result.results[0].id,
+                reply_to_message_id=ReplyCheck(message),
+                hide_via=True)
+        except TimeoutError:
+            await message.edit("@StickerizerBot didn't respond in time.")
+            await asyncio.sleep(2)
+        await message.delete()
+    except:
+        await message.edit("`Failed to reach Stickerizerbot`")
         await asyncio.sleep(2)
         await message.delete()
 
