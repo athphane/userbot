@@ -163,8 +163,8 @@ add_command_help(
                   '**Usage**:\n```.mock you smell like shit``` will give you the meme that says "You smell like shit"\n'
                   'Reply to a text message with .mock and it will grab the text of that message and generate the meme.'
          ],
-        ['.animegirl', 'Sends an anime girl with a card of what you want. Rules apply as above.'],
-        ['.animeboy', 'Sends an anime boy with a card of what you want. Rules apply as above.'],
+        ['.animegirl', 'Sends a random anime girl with a card of what you want. Rules apply as above.'],
+        ['.animeboy', 'Sends a random boy with a card of what you want. Rules apply as above.'],
         ['.ggl', 'Sends google search buttons with the query you give it.. Rules apply as above.'],
     ]
 )
