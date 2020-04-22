@@ -39,7 +39,7 @@ async def mock_people(bot: UserBot, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.command("animegirl", ".") & Filters.me)
+@UserBot.on_message(Filters.command(["animegirl", 'ag'], ".") & Filters.me)
 async def anime_girl(bot: UserBot, message: Message):
     try:
         await message.delete()
@@ -77,7 +77,7 @@ async def anime_girl(bot: UserBot, message: Message):
         await message.edit("`Failed to reach Stickerizerbot`")
 
 
-@UserBot.on_message(Filters.command("animeboy", ".") & Filters.me)
+@UserBot.on_message(Filters.command(["animeboy", 'ab'], ".") & Filters.me)
 async def anime_boy(bot: UserBot, message: Message):
     try:
         await message.delete()
