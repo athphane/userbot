@@ -1,3 +1,9 @@
+import asyncio
+import random
+import time
+
+from pyrogram.errors import FloodWait
+
 from userbot import UserBot
 from pyrogram import Filters, Message
 from userbot.helpers.constants import First
@@ -19,6 +25,45 @@ async def repo(bot: UserBot, message: Message):
     await message.edit(
         "I was created by my master <a href=\"https://github.com/athphane\">Athphane</a> on a rainy day."
     )
+
+
+@UserBot.on_message(Filters.command("type", ".") & Filters.me)
+async def typewriter(bot: UserBot, message: Message):
+    text = message.reply_to_message.text
+
+    if not text:
+        await message.edit("input not found")
+        await asyncio.sleep(3)
+        await message.delete()
+        return
+
+    s_time = 0.1
+    typing_symbol = '|'
+    old_text = ''
+
+    await message.edit(typing_symbol)
+    time.sleep(s_time)
+
+    for character in text:
+        s_t = s_time / random.randint(1, 100)
+        old_text += character
+        typing_text = old_text + typing_symbol
+
+        try:
+            try:
+                await message.edit(typing_text)
+                time.sleep(s_t)
+            except:
+                pass
+
+            try:
+                await message.edit(old_text)
+                time.sleep(s_t)
+            except:
+                pass
+
+        except FloodWait as x_e:
+            time.sleep(x_e.x)
 
 
 @UserBot.on_message(Filters.command("id", ".") & Filters.me)

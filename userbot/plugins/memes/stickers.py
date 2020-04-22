@@ -54,7 +54,7 @@ async def anime_girl(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    stickers = [20, 32, 33, 40, 42, 58]
+    stickers = [20, 32, 33, 40, 42, 58, 41]
     sticker = f"#{int(choice(stickers))}"
     anime_girl_results = await bot.get_inline_bot_results(
         "stickerizerbot",
@@ -88,7 +88,7 @@ async def anime_boy(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    stickers = [37, 38, 41, 48, 55]
+    stickers = [37, 38, 48, 55]
     sticker = f"#{int(choice(stickers))}"
     anime_girl_results = await bot.get_inline_bot_results(
         "stickerizerbot",
