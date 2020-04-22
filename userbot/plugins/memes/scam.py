@@ -10,25 +10,24 @@ async def scam(bot: UserBot, message: Message):
                'upload_audio', 'upload_document', 'find_location', 'record_video_note',
                'upload_video_note', 'choose_contact', 'playing')
 
-    input_str = message.command[1]
-    args = input_str.split()
+    input_str = message.command
 
-    if len(args) == 0:  # Let bot decide action and time
+    if len(input_str) == 1:  # Let bot decide action and time
         scam_action = choice(options)
         scam_time = randint(30, 60)
 
-    elif len(args) == 1:  # User decides time/action, bot decides the other.
+    elif len(input_str) == 2:  # User decides time/action, bot decides the other.
         try:
-            scam_action = str(args[0]).lower()
+            scam_action = str(input_str[1]).lower()
             scam_time = randint(30, 60)
 
         except ValueError:
             scam_action = choice(options)
-            scam_time = int(args[0])
+            scam_time = int(input_str[1])
 
-    elif len(args) == 2:  # User decides both action and time
-        scam_action = str(args[0]).lower()
-        scam_time = int(args[1])
+    elif len(input_str) == 3:  # User decides both action and time
+        scam_action = str(input_str[1]).lower()
+        scam_time = int(input_str[2])
 
     else:
         await message.edit("`Invalid Syntax !!`")
