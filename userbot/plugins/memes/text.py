@@ -111,6 +111,16 @@ async def fact(bot: UserBot, message: Message):
             await message.edit(fact_text, disable_web_page_preview=True)
 
 
+@UserBot.on_message(Filters.command(["insult"], ".") & Filters.me)
+async def insult(bot: UserBot, message: Message):
+    try:
+        req = requests.get("https://evilinsult.com/generate_insult.php?lang=en&type=json").json()['insult']
+        await message.edit(
+            req
+        )
+    except:
+        await message.delete()
+
 # Command help section
 add_command_help(
     'text', [
@@ -119,6 +129,7 @@ add_command_help(
         ['.devexcuse', 'Replaces command with an excuse that a developer would give.'],
         ['.reverse', 'Sends ASCII version of the Uno reverse card.'],
         ['.slap', 'Sends a randomly generated slap text. Can become very random at some times.'],
+        ['.insult', 'Sends a randomly generated insult. Can become very random at some times.'],
         ['.ok', 'Sends -_____- with a fast animation.'],
         ['-_-', 'Extends to -________-'],
     ]
