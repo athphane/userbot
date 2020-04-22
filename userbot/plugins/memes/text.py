@@ -1,3 +1,4 @@
+import asyncio
 from time import sleep
 import requests
 from random import choice
@@ -120,6 +121,17 @@ async def insult(bot: UserBot, message: Message):
         )
     except:
         await message.delete()
+
+
+@UserBot.on_message(Filters.command(["f"], ".") & Filters.me)
+async def pay_respects(bot: UserBot, message: Message):
+    paytext = "FF"
+    pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
+        paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
+        paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
+        paytext * 2, paytext * 2)
+
+    await message.edit(pay)
 
 # Command help section
 add_command_help(
