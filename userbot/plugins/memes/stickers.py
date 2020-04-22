@@ -41,70 +41,78 @@ async def mock_people(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("animegirl", ".") & Filters.me)
 async def anime_girl(bot: UserBot, message: Message):
-    cmd = message.command
-
-    anime_girl_text = ""
-    if len(cmd) > 1:
-        anime_girl_text = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) is 1:
-        anime_girl_text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) is 1:
-        await message.edit("`Senpai I need something to say :(`")
-        sleep(2)
-        await message.delete()
-        return
-
-    stickers = [20, 32, 33, 40, 42, 58, 41]
-    sticker = f"#{int(choice(stickers))}"
-    anime_girl_results = await bot.get_inline_bot_results(
-        "stickerizerbot",
-        sticker + anime_girl_text)
-
     try:
-        await bot.send_inline_bot_result(
-            chat_id=message.chat.id,
-            query_id=anime_girl_results.query_id,
-            result_id=anime_girl_results.results[0].id,
-            reply_to_message_id=ReplyCheck(message),
-            hide_via=True)
-    except TimeoutError:
-        await message.edit("@StickerizerBot didn't respond in time.")
-        sleep(2)
-    await message.delete()
+        await message.delete()
+        cmd = message.command
+
+        anime_girl_text = ""
+        if len(cmd) > 1:
+            anime_girl_text = " ".join(cmd[1:])
+        elif message.reply_to_message and len(cmd) is 1:
+            anime_girl_text = message.reply_to_message.text
+        elif not message.reply_to_message and len(cmd) is 1:
+            new_message = await message.edit("`Senpai I need something to say :(`")
+            sleep(2)
+            await new_message.delete()
+            return
+
+        stickers = [20, 32, 33, 40, 42, 58, 41]
+        sticker = f"#{int(choice(stickers))}"
+        anime_girl_results = await bot.get_inline_bot_results(
+            "stickerizerbot",
+            sticker + anime_girl_text)
+
+        try:
+            await bot.send_inline_bot_result(
+                chat_id=message.chat.id,
+                query_id=anime_girl_results.query_id,
+                result_id=anime_girl_results.results[0].id,
+                reply_to_message_id=ReplyCheck(message),
+                hide_via=True)
+        except TimeoutError:
+            await message.edit("@StickerizerBot didn't respond in time.")
+            sleep(2)
+        await message.delete()
+    except:
+        await message.edit("`Failed to reach Stickerizerbot`")
 
 
 @UserBot.on_message(Filters.command("animeboy", ".") & Filters.me)
 async def anime_boy(bot: UserBot, message: Message):
-    cmd = message.command
-
-    anime_boy_text = ""
-    if len(cmd) > 1:
-        anime_boy_text = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) is 1:
-        anime_boy_text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) is 1:
-        await message.edit("`Senpai I need something to say :(`")
-        sleep(2)
-        await message.delete()
-        return
-
-    stickers = [37, 38, 48, 55]
-    sticker = f"#{int(choice(stickers))}"
-    anime_girl_results = await bot.get_inline_bot_results(
-        "stickerizerbot",
-        sticker + anime_boy_text)
-
     try:
-        await bot.send_inline_bot_result(
-            chat_id=message.chat.id,
-            query_id=anime_girl_results.query_id,
-            result_id=anime_girl_results.results[0].id,
-            reply_to_message_id=ReplyCheck(message),
-            hide_via=True)
-    except TimeoutError:
-        await message.edit("@StickerizerBot didn't respond in time.")
-        sleep(2)
-    await message.delete()
+        await message.delete()
+        cmd = message.command
+
+        anime_boy_text = ""
+        if len(cmd) > 1:
+            anime_boy_text = " ".join(cmd[1:])
+        elif message.reply_to_message and len(cmd) is 1:
+            anime_boy_text = message.reply_to_message.text
+        elif not message.reply_to_message and len(cmd) is 1:
+            new_message = await message.edit("`Senpai I need something to say :(`")
+            sleep(2)
+            await new_message.delete()
+            return
+
+        stickers = [37, 38, 48, 55]
+        sticker = f"#{int(choice(stickers))}"
+        anime_girl_results = await bot.get_inline_bot_results(
+            "stickerizerbot",
+            sticker + anime_boy_text)
+
+        try:
+            await bot.send_inline_bot_result(
+                chat_id=message.chat.id,
+                query_id=anime_girl_results.query_id,
+                result_id=anime_girl_results.results[0].id,
+                reply_to_message_id=ReplyCheck(message),
+                hide_via=True)
+        except TimeoutError:
+            await message.edit("@StickerizerBot didn't respond in time.")
+            sleep(2)
+        await message.delete()
+    except:
+        await message.edit("`Failed to reach Stickerizerbot`")
 
 
 @UserBot.on_message(Filters.command("ggl", ".") & Filters.me)
