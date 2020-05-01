@@ -1,4 +1,5 @@
 import requests
+from prettytable import PrettyTable
 from time import sleep
 from userbot import UserBot
 from pyrogram import Filters, Message
@@ -30,15 +31,29 @@ async def corona_search(bot: UserBot, message: Message):
     country = cmd[1]
     await message.edit(f"```Getting Corona statistics for {country}```")
 
-    try:
-        r = requests.get(f"https://corona.lmao.ninja/v2/countries/{country}").json()
-    except:
+    
+    r = requests.get(f"https://corona.lmao.ninja/v2/countries/{country}").json()
+    if "cases" not in r:
         await message.edit("```The corona API could not be reached```")
         sleep(3)
         await message.delete()
     else:
-        country_cases = f"<b>Cases for {r['country']}</b>\nCases: {r['cases']:,}\nCases Today: {r['todayCases']:,}\nDeaths: {r['deaths']:,}\nDeaths Today: {r['todayDeaths']:,}\nRecovered: {r['recovered']:,}\nActive: {r['active']:,}\nCritical: {r['critical']:,}\nCases/Mil: {r['casesPerOneMillion']}\nDeaths/Mil: {r['deathsPerOneMillion']}"
-        await message.edit(country_cases)
+        #country_cases = f"<b>Cases for {r['country']}</b>\nCases: {r['cases']:,}\nCases Today: {r['todayCases']:,}\nDeaths: {r['deaths']:,}\nDeaths Today: {r['todayDeaths']:,}\nRecovered: {r['recovered']:,}\nActive: {r['active']:,}\nCritical: {r['critical']:,}\nCases/Mil: {r['casesPerOneMillion']}\nDeaths/Mil: {r['deathsPerOneMillion']}"
+        cs = PrettyTable()
+        cs.header = False
+        cs.title = f"Corona Cases in {r['country']}"
+        cs.add_row(["Cases", r["cases"]])
+        cs.add_row(["Cases Today", r["todayCases"]])
+        cs.add_row(["Deaths", r["deaths"]])
+        cs.add_row(["Deaths Today", r["todayDeaths"]])
+        cs.add_row(["Recovered", r["recovered"]])
+        cs.add_row(["Active", r["active"]])
+        cs.add_row(["Critical", r["critical"]])
+        cs.add_row(["Cases/Million", r["casesPerOneMillion"]])
+        cs.add_row(["Deaths/Million", r["deathsPerOneMillion"]])
+        cs.add_row(["Tests", r["tests"]])
+        cs.add_row(["Tests/Million", r["testsPerOneMillion"]])
+        await message.edit(cs)
 
 
 add_command_help(
