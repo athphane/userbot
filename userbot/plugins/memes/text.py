@@ -133,6 +133,20 @@ async def pay_respects(bot: UserBot, message: Message):
 
     await message.edit(pay)
 
+
+@UserBot.on_message(Filters.command(["F"], ".", case_sensitive=True) & Filters.me)
+async def pay_respects_new(bot: UserBot, message: Message):
+    pay = (
+        "███████╗\n"
+        "██╔════╝\n"
+        "█████╗\n"
+        "██╔══╝\n"
+        "██║\n"
+        "╚═╝"
+    )
+    await message.edit(pay)
+
+
 # Command help section
 add_command_help(
     'text', [
