@@ -158,6 +158,8 @@ add_command_help(
         ['.insult', 'Sends a randomly generated insult. Can become very random at some times.'],
         ['.ok', 'Sends -_____- with a fast animation.'],
         ['-_-', 'Extends to -________-'],
+        ['.f', 'Pay respects'],
+        ['.F', 'Pay respects but filled'],
     ]
 )
 
