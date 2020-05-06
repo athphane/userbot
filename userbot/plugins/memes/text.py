@@ -123,7 +123,7 @@ async def insult(bot: UserBot, message: Message):
         await message.delete()
 
 
-@UserBot.on_message(Filters.command(["f"], ".") & Filters.me)
+@UserBot.on_message(Filters.command(["f"], ".", case_sensitive=True) & Filters.me)
 async def pay_respects(bot: UserBot, message: Message):
     paytext = "FF"
     pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
