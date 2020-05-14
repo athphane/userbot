@@ -146,6 +146,10 @@ async def pay_respects_new(bot: UserBot, message: Message):
     )
     await message.edit(pay)
 
+@UserBot.on_message(Filters.command(["g"], ".") & Filters.me)
+async def gerey(bot: UserBot, message: Message):
+    gerey = "ގެރޭ"
+    await message.edit(gerey)    
 
 # Command help section
 add_command_help(
