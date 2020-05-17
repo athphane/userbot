@@ -18,7 +18,7 @@ async def paste(bot: UserBot, message: Message):
     else:
         url = f'https://nekobin.com/{key}'
         reply_text = f'Nekofied to *Nekobin* : {url}'
-        await message.edit_text(reply_text, parse_mode='markdown', disable_web_page_preview=True)
+        await message.edit_text(reply_text, disable_web_page_preview=True)
 
 
 @UserBot.on_message(Filters.command(['getpaste'], ".") & Filters.me)
