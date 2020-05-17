@@ -17,7 +17,7 @@ async def paste(bot: UserBot, message: Message):
         await message.edit_text("`Pasting failed`")
     else:
         url = f'https://nekobin.com/{key}'
-        reply_text = f'Nekofied to *Nekobin* : {url}'
+        reply_text = f'Nekofied to **Nekobin** : {url}'
         await bot.send_message(
             message.chat.id,
             reply_text,
