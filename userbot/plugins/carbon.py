@@ -13,7 +13,6 @@ async def carbon_test(bot: UserBot, message: Message):
     Receives text and makes a carbon image using the text
     Eg: .carbon your code here (multi line supported)
     """
-
     carbon_text = message.text[8:]
 
     # Write the code to a file cause carbon-now-cli wants a file.
@@ -27,7 +26,7 @@ async def carbon_test(bot: UserBot, message: Message):
     os.system("carbon-now -h -t userbot/downloads/carbon {}".format(file))
     # await message.edit_text("Carbonizing completed...")
     # Send the thing
-    await bot.send_document(message.chat.id, 'userbot/downloads/carbon.png')
+    await bot.send_photo(message.chat.id, 'userbot/downloads/carbon.png')
     await message.delete()
 
 
