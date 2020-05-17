@@ -1,8 +1,8 @@
 from userbot import UserBot
 from pyrogram import Filters, Message
 import os
-from time import sleep
 from userbot.plugins.help import add_command_help
+from asyncio import sleep
 
 CARBON_LANG = "py"
 
@@ -46,13 +46,13 @@ async def update_carbon_lang(bot: UserBot, message: Message):
         type_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) is 1:
         await message.edit("Give me something to carbonize")
-        sleep(2)
+        await sleep(2)
         await message.delete()
         return
 
     CARBON_LANG = type_text
     await message.edit_text("Carbon type set to {}".format(type_text))
-    sleep(2)
+    await sleep(2)
     await message.delete()
 
 
@@ -62,7 +62,7 @@ async def send_carbon_lang(bot: UserBot, message: Message):
     Edits message to show current set carbon language
     """
     await message.edit_text(get_carbon_lang())
-    sleep(5)
+    await sleep(5)
     await message.delete()
 
 
