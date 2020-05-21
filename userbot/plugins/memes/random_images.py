@@ -26,6 +26,7 @@ def _prep_cat():
         ext = re.search(animal, cat_pic).group(1).lower()
     return cat_pic
 
+
 def _prep_panda():
     ext = ''
     panda_pic = None
@@ -33,6 +34,7 @@ def _prep_panda():
         panda_pic = requests.get('https://some-random-api.ml/img/panda').json()['link']
         ext = re.search(animal, panda_pic).group(1).lower()
     return panda_pic
+
 
 def _prep_redpanda():
     ext = ''
@@ -42,6 +44,7 @@ def _prep_redpanda():
         ext = re.search(animal, redpanda_pic).group(1).lower()
     return redpanda_pic
 
+
 def _prep_bird():
     ext = ''
     bird_pic = None
@@ -50,6 +53,7 @@ def _prep_bird():
         ext = re.search(animal, bird_pic).group(1).lower()
     return bird_pic
 
+
 def _prep_fox():
     ext = ''
     fox_pic = None
@@ -57,6 +61,7 @@ def _prep_fox():
         fox_pic = requests.get('https://some-random-api.ml/img/fox').json()['link']
         ext = re.search(animal, fox_pic).group(1).lower()
     return fox_pic
+
 
 def _prep_koala():
     ext = ''
@@ -90,6 +95,7 @@ async def cat(bot: UserBot, message: Message):
         reply_to_message_id=ReplyCheck(message)
     )
 
+
 @UserBot.on_message(Filters.regex("^\.?panda$") & Filters.me)
 async def panda(bot: UserBot, message: Message):
     if message.from_user.is_self:
@@ -100,6 +106,7 @@ async def panda(bot: UserBot, message: Message):
         photo=_prep_panda(),
         reply_to_message_id=ReplyCheck(message)
     )
+
 
 @UserBot.on_message(Filters.regex("^\.?redpanda$") & Filters.me)
 async def redpanda(bot: UserBot, message: Message):
@@ -112,6 +119,7 @@ async def redpanda(bot: UserBot, message: Message):
         reply_to_message_id=ReplyCheck(message)
     )
 
+
 @UserBot.on_message(Filters.regex("^\.?bird$") & Filters.me)
 async def bird(bot: UserBot, message: Message):
     if message.from_user.is_self:
@@ -123,6 +131,7 @@ async def bird(bot: UserBot, message: Message):
         reply_to_message_id=ReplyCheck(message)
     )
 
+
 @UserBot.on_message(Filters.regex("^\.?fox$") & Filters.me)
 async def fox(bot: UserBot, message: Message):
     if message.from_user.is_self:
@@ -133,6 +142,7 @@ async def fox(bot: UserBot, message: Message):
         photo=_prep_fox(),
         reply_to_message_id=ReplyCheck(message)
     )
+
 
 @UserBot.on_message(Filters.regex("^\.?koala$") & Filters.me)
 async def koala(bot: UserBot, message: Message):
@@ -158,4 +168,3 @@ add_command_help(
         ['.koala', 'Sends a random picture of a koala. Can be used without the period at the beginning.'],
     ]
 )
-
