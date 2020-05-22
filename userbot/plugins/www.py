@@ -75,7 +75,7 @@ async def expand(bot: UserBot, message: Message):
         url = None
     
     if url:
-        expanded = expand_url(url)
+        expanded = await expand_url(url)
         if expanded:
             await message.edit(
                 f"<b>Shortened URL</b>: {url}\n<b>Expanded URL</b>: {expanded}", disable_web_page_preview = True

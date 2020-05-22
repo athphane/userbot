@@ -1,5 +1,9 @@
-import requests
+import aiohttp
 
-def expand_url(url):
-    expanded = requests.get(f"http://expandurl.com/api/v1/?url={url}").text
-    return expanded if expanded != "false" else None
+
+async def expand_url(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"http://expandurl.com/api/v1/?url={url}") as resp:
+            expanded = await resp.text()
+
+        return expanded if expanded != "false" else None
