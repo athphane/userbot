@@ -11,3 +11,4 @@ cowpy
 Pillow==7.0.0
 PTable
 requests_async
+aiohttp

@@ -9,7 +9,7 @@ from userbot.userbot import UserBot
 # Logging at the start to catch everything
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO,
+    level=logging.WARNING,
     handlers=[
         TimedRotatingFileHandler('logs/userbot.log', when="midnight", encoding=None,
                                  delay=False, backupCount=10),
