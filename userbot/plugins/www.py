@@ -6,6 +6,7 @@ from pyrogram.api import functions
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import SpeedConvert
 from userbot.helpers.constants import WWW
+from userbot.helpers.expand import expand_url
 from userbot.plugins.help import add_command_help
 
 
@@ -75,8 +76,8 @@ async def expand(bot: UserBot, message: Message):
         url = None
     
     if url:
-        expanded = requests.get(f"http://expandurl.com/api/v1/?url={url}").text
-        if expanded != "false":
+        expanded = await expand_url(url)
+        if expanded:
             await message.edit(
                 f"<b>Shortened URL</b>: {url}\n<b>Expanded URL</b>: {expanded}", disable_web_page_preview = True
             )
