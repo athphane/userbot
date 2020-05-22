@@ -1,8 +1,8 @@
 from userbot import UserBot
 from pyrogram import Filters, Message
 import os
-from time import sleep
 from userbot.plugins.help import add_command_help
+from asyncio import sleep
 
 CARBON_LANG = "py"
 
@@ -13,7 +13,6 @@ async def carbon_test(bot: UserBot, message: Message):
     Receives text and makes a carbon image using the text
     Eg: .carbon your code here (multi line supported)
     """
-
     carbon_text = message.text[8:]
 
     # Write the code to a file cause carbon-now-cli wants a file.
@@ -27,7 +26,7 @@ async def carbon_test(bot: UserBot, message: Message):
     os.system("carbon-now -h -t userbot/downloads/carbon {}".format(file))
     # await message.edit_text("Carbonizing completed...")
     # Send the thing
-    await bot.send_document(message.chat.id, 'userbot/downloads/carbon.png')
+    await bot.send_photo(message.chat.id, 'userbot/downloads/carbon.png')
     await message.delete()
 
 
@@ -47,13 +46,13 @@ async def update_carbon_lang(bot: UserBot, message: Message):
         type_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) is 1:
         await message.edit("Give me something to carbonize")
-        sleep(2)
+        await sleep(2)
         await message.delete()
         return
 
     CARBON_LANG = type_text
     await message.edit_text("Carbon type set to {}".format(type_text))
-    sleep(2)
+    await sleep(2)
     await message.delete()
 
 
@@ -63,7 +62,7 @@ async def send_carbon_lang(bot: UserBot, message: Message):
     Edits message to show current set carbon language
     """
     await message.edit_text(get_carbon_lang())
-    sleep(5)
+    await sleep(5)
     await message.delete()
 
 

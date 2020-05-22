@@ -2,7 +2,7 @@ from userbot import UserBot
 from pyrogram import Filters, Message
 from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
-import time
+import asyncio
 
 
 @UserBot.on_message(Filters.command("spam", ".") & Filters.me)
@@ -12,22 +12,20 @@ async def spam(bot: UserBot, message: Message):
     await message.delete()
 
     times = message.command[1]
-    to_spam = message.command[2]
+    to_spam = ' '.join(message.command[2:])
 
-    if message.chat.type in ['supergroup', 'group'] and message.reply_to_message:
-        for x in range(int(times)):
+    if message.chat.type in ['supergroup', 'group']:
+        for _ in range(int(times)):
             await bot.send_message(message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message))
-            time.sleep(0.15)
+            await asyncio.sleep(0.20)
 
     if message.chat.type == "private":
-        for x in range(int(times)):
+        for _ in range(int(times)):
             await bot.send_message(message.chat.id, to_spam)
-            time.sleep(0.15)
-
-    message.continue_propagation()
+            await asyncio.sleep(0.20)
 
 
 # Command help section
 add_command_help(
-    'spam', [['.spam', '<spam_amount>', '<spam_text>']]
+    'spam', [['.spam', '<spam_amount> <spam_text>']]
 )

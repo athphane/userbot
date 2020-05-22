@@ -1,3 +1,4 @@
+import asyncio
 from time import sleep
 import requests
 from random import choice
@@ -21,7 +22,7 @@ async def nice(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command(["compliment"], ".") & Filters.me)
-async def nice(bot: UserBot, message: Message):
+async def compliment_func(bot: UserBot, message: Message):
     try:
         compliment = requests.get('https://complimentr.com/api').json()['compliment']
         await message.edit(
@@ -111,6 +112,45 @@ async def fact(bot: UserBot, message: Message):
             await message.edit(fact_text, disable_web_page_preview=True)
 
 
+@UserBot.on_message(Filters.command(["insult"], ".") & Filters.me)
+async def insult(bot: UserBot, message: Message):
+    try:
+        req = requests.get("https://evilinsult.com/generate_insult.php?lang=en&type=json").json()['insult']
+        await message.edit(
+            req
+        )
+    except:
+        await message.delete()
+
+
+@UserBot.on_message(Filters.command(["f"], ".", case_sensitive=True) & Filters.me)
+async def pay_respects(bot: UserBot, message: Message):
+    paytext = "FF"
+    pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
+        paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
+        paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
+        paytext * 2, paytext * 2)
+
+    await message.edit(pay)
+
+
+@UserBot.on_message(Filters.command(["F"], ".", case_sensitive=True) & Filters.me)
+async def pay_respects_new(bot: UserBot, message: Message):
+    pay = (
+        "██████╗\n"
+        "██╔═══╝\n"
+        "█████╗\n"
+        "██╔══╝\n"
+        "██║\n"
+        "╚═╝"
+    )
+    await message.edit(pay)
+
+@UserBot.on_message(Filters.command(["g"], ".") & Filters.me)
+async def gerey(bot: UserBot, message: Message):
+    gerey = "ގެރޭ"
+    await message.edit(gerey)    
+
 # Command help section
 add_command_help(
     'text', [
@@ -119,8 +159,11 @@ add_command_help(
         ['.devexcuse', 'Replaces command with an excuse that a developer would give.'],
         ['.reverse', 'Sends ASCII version of the Uno reverse card.'],
         ['.slap', 'Sends a randomly generated slap text. Can become very random at some times.'],
+        ['.insult', 'Sends a randomly generated insult. Can become very random at some times.'],
         ['.ok', 'Sends -_____- with a fast animation.'],
         ['-_-', 'Extends to -________-'],
+        ['.f', 'Pay respects'],
+        ['.F', 'Pay respects but filled'],
     ]
 )
 
