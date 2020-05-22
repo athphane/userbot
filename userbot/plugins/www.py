@@ -1,6 +1,5 @@
 from datetime import datetime
 import speedtest
-import requests
 from pyrogram import Filters, Message
 from pyrogram.api import functions
 from userbot import UserBot
@@ -76,7 +75,7 @@ async def expand(bot: UserBot, message: Message):
         url = None
     
     if url:
-        expanded = await expand_url(url)
+        expanded = expand_url(url)
         if expanded:
             await message.edit(
                 f"<b>Shortened URL</b>: {url}\n<b>Expanded URL</b>: {expanded}", disable_web_page_preview = True
