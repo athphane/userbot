@@ -1,9 +1,3 @@
-import asyncio
-import random
-import time
-
-from pyrogram.errors import FloodWait
-
 from userbot import UserBot
 from pyrogram import Filters, Message
 from userbot.helpers.constants import First
@@ -21,7 +15,7 @@ async def repo(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("creator", ".") & Filters.me)
-async def repo(bot: UserBot, message: Message):
+async def creator(bot: UserBot, message: Message):
     await message.edit(
         "I was created by my master <a href=\"https://github.com/athphane\">Athphane</a> on a rainy day."
     )
