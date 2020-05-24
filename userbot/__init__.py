@@ -32,7 +32,7 @@ DB_USERNAME = config.get('mongo', 'db_username')
 DB_PASSWORD = config.get('mongo', 'db_password')
 
 #Yandex Translation API details
-YANDEX_API_KEY = config.get('yandex', 'key') or None
+YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
 
 # Extra details
 __version__ = '0.2.0'
