@@ -1,11 +1,12 @@
-import asyncio
-from time import sleep
-import requests
 from random import choice
-from userbot import UserBot
+from time import sleep
+
+import requests
 from pyrogram import Filters, Message
-from userbot.helpers.constants import MEMES
+
+from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck, GetUserMentionable
+from userbot.helpers.constants import MEMES
 from userbot.plugins.help import add_command_help
 
 animals = ['dog', 'cat', 'panda', 'fox', 'bird', 'koala']

@@ -1,7 +1,12 @@
-import os, sys, traceback, io, time, asyncio
+import asyncio
+import io
+import os
+import sys
+import traceback
+
+from pyrogram import Filters, Message
 
 from userbot import UserBot
-from pyrogram import Filters, Message
 
 
 @UserBot.on_message(Filters.command("eval", ".") & Filters.me)

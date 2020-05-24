@@ -1,7 +1,9 @@
 import asyncio
 from random import choice, randint
-from userbot import UserBot
+
 from pyrogram import Filters, Message
+
+from userbot import UserBot
 
 
 @UserBot.on_message(Filters.command('scam', '.') & Filters.me)

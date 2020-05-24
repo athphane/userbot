@@ -1,9 +1,11 @@
 import asyncio
-from userbot import UserBot
+from random import choice
+
 from pyrogram import Filters, Message
+
+from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
-from random import choice
 
 
 @UserBot.on_message(Filters.command("mock", ".") & Filters.me)
