@@ -79,19 +79,12 @@ async def restart(bot: UserBot, message: Message):
 
 # Command help section
 add_command_help(
-    'alive', [['.alive', 'Check if the bot is alive or not.']]
-)
-
-add_command_help(
-    'repo', [['.repo', 'Display the repo of this userbot.']]
-)
-
-add_command_help(
-    'creator', [['.creator', 'Show the creator of this userbot.']]
-)
-
-add_command_help(
-    'id', [['.id', 'Send id of what you replied to.']]
+    'start', [
+        ['.alive', 'Check if the bot is alive or not.'],
+        ['.repo', 'Display the repo of this userbot.'],
+        ['.creator', 'Show the creator of this userbot.'],
+        ['.id', 'Send id of what you replied to.']
+    ]
 )
 
 add_command_help(
