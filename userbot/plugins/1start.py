@@ -21,6 +21,7 @@ async def creator(bot: UserBot, message: Message):
         "I was created by my master <a href=\"https://github.com/athphane\">Athphane</a> on a rainy day."
     )
 
+
 @UserBot.on_message(Filters.command("id", ".") & Filters.me)
 async def get_id(bot: UserBot, message: Message):
     file_id = None
@@ -59,6 +60,7 @@ async def get_id(bot: UserBot, message: Message):
         await message.edit(file_id)
     else:
         await message.edit("This chat's ID:\n`{}`".format(message.chat.id))
+
 
 @UserBot.on_message(Filters.command("restart", '.') & Filters.me)
 async def restart(bot: UserBot, message: Message):
