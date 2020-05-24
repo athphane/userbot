@@ -1,7 +1,6 @@
 import asyncio
 from userbot import UserBot
 from pyrogram import Filters, Message
-from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
 
 
@@ -22,23 +21,23 @@ async def send_music(bot: UserBot, message: Message):
             return
 
         song_results = await bot.get_inline_bot_results("deezermusicbot", song_name)
-        
+
         try:
-            #send to Saved Messages because hide_via doesn't work sometimes
+            # send to Saved Messages because hide_via doesn't work sometimes
             saved = await bot.send_inline_bot_result(
                 chat_id="me",
                 query_id=song_results.query_id,
                 result_id=song_results.results[0].id,
                 hide_via=True)
 
-            #forward from Saved Messages
+            # forward from Saved Messages
             await bot.forward_messages(
                 chat_id=message.chat.id,
                 from_chat_id="me",
                 message_ids=saved.updates[1].message.id,
                 as_copy=True
             )
-            #delete the message from Saved Messages
+            # delete the message from Saved Messages
             await bot.delete_messages("me", saved.updates[1].message.id)
         except TimeoutError:
             await message.edit("That didn't work out")
@@ -49,7 +48,6 @@ async def send_music(bot: UserBot, message: Message):
         await message.edit("`Failed to find song`")
         await asyncio.sleep(2)
         await message.delete()
-
 
 
 # Command help section

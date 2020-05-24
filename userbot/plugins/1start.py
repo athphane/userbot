@@ -2,6 +2,7 @@ from userbot import UserBot
 from pyrogram import Filters, Message
 from userbot.helpers.constants import First
 from userbot.plugins.help import add_command_help
+import asyncio
 
 
 @UserBot.on_message(Filters.command("alive", ".") & Filters.me)
@@ -57,6 +58,21 @@ async def get_id(bot: UserBot, message: Message):
     await message.edit(out_str)
 
 
+@UserBot.on_message(Filters.command("restart", '.') & Filters.me)
+async def restart(bot: UserBot, message: Message):
+    await message.edit(f"Restarting {UserBot.__name__}.")
+    await bot.send_message('me', f'#userbot_restart, {message.chat.id}, {message.message_id}')
+
+    if 'p' in message.text and 'g' in message.text:
+        asyncio.get_event_loop().create_task(bot.restart(git_update=True, pip=True))
+    elif 'p' in message.text:
+        asyncio.get_event_loop().create_task(bot.restart(pip=True))
+    elif 'g' in message.text:
+        asyncio.get_event_loop().create_task(bot.restart(git_update=True))
+    else:
+        asyncio.get_event_loop().create_task(bot.restart())
+
+
 # Command help section
 add_command_help(
     'alive', [['.alive', 'Check if the bot is alive or not.']]
@@ -72,4 +88,13 @@ add_command_help(
 
 add_command_help(
     'id', [['.id', 'Send id of what you replied to.']]
+)
+
+add_command_help(
+    'restart', [
+        ['.restart', 'You are retarded if you do not know what this does.'],
+        ['.restart g', 'Pull latest changes from git repo and restarts.'],
+        ['.restart p', 'Installs pip requirements restarts.'],
+        ['.restart gp', 'Pull latest changes from git repo, install pip requirements and restarts.'],
+    ]
 )
