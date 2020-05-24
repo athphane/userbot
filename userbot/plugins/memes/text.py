@@ -152,6 +152,10 @@ async def gerey(bot: UserBot, message: Message):
     gerey = "ގެރޭ"
     await message.edit(gerey)
 
+@UserBot.on_message(Filters.command(["k"], ".") & Filters.me)
+async def kada(bot: UserBot, message: Message):
+    kada = "ކަޑަ؟"
+    await message.edit(kada)
 
 # Command help section
 add_command_help(
@@ -167,6 +171,7 @@ add_command_help(
         ['.f', 'Pay respects'],
         ['.F', 'Pay respects but filled'],
         ['.g', 'Gerey'],
+        ['.k', 'Kada?']
     ]
 )
 
