@@ -79,7 +79,7 @@ async def send_saved_image(bot: UserBot, message: Message, name: str, image: str
     else:
         sent_photo = await bot.send_photo(
             "self",
-            "userbot/images/{}".format(image),
+            photo="userbot/images/{}".format(image),
             reply_to_message_id=ReplyCheck(message)
         )
         save_media_id(name, sent_photo)

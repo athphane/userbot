@@ -3,7 +3,6 @@ import re
 from time import sleep
 
 import aiohttp
-import requests
 from pyrogram import Filters, Message
 
 from userbot import UserBot

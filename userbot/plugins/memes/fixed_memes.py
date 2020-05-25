@@ -4,48 +4,30 @@ from userbot import UserBot
 from userbot.helpers.file_sending_helpers import send_saved_image, send_saved_animation
 from userbot.plugins.help import add_command_help
 
+memes_data = {
+    'fast': {'name': 'fast_image', 'image': 'fast.jpg', 'type': 'image', 'caption': 'I. Am. Speed.'},
+    'tfb': {'name': 'tfb_image', 'image': 'tfb.jpg', 'type': 'image', 'caption': None},
+    'tbf': {'name': 'tfb_image', 'image': 'tfb.jpg', 'type': 'image', 'caption': None},
+    'kill': {'name': 'kill_image', 'image': 'killua.gif', 'type': 'animation', 'caption': 'I will kill you.'},
+    'lust': {'name': 'lust_gif', 'image': 'lust.gif', 'type': 'animation',
+             'caption': f"I wanna do bad things with you {Emoji.SMIRKING_FACE}"},
+    'dmf': {'name': 'dmf_image', 'image': 'dmf.gif', 'type': 'animation', 'caption': None},
+    'smart': {'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image', 'caption': None},
+    'intelligence': {'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image', 'caption': None},
+    'sobimin': {'name': 'sob_im_in_image', 'image': 'sob_im_in.jpg', 'type': 'image', 'caption': None},
+}
 
-@UserBot.on_message(Filters.command("fast", ".") & Filters.me)
-async def fast(bot: UserBot, message: Message):
+memes = [x for x in memes_data]
+
+
+@UserBot.on_message(Filters.command(memes, ".") & Filters.me)
+async def fixed_memes(bot: UserBot, message: Message):
+    meme = memes_data[message.command[0]]
     await message.delete()
-    await send_saved_image(bot, message, "fast_image", "fast.jpg", caption="I. Am. Speed.")
-
-
-@UserBot.on_message(Filters.command(['tfb', 'tbf'], ".") & Filters.me)
-async def tfb(bot: UserBot, message: Message):
-    await message.delete()
-    await send_saved_image(bot, message, "tfb_image", "tfb.jpg")
-
-
-@UserBot.on_message(Filters.command("kill", ".") & Filters.me)
-async def kill(bot: UserBot, message: Message):
-    await message.delete()
-    await send_saved_animation(bot, message, "kill_image", "killua.gif", caption="I will kill you.")
-
-
-@UserBot.on_message(Filters.command("lust", ".") & Filters.me)
-async def kill(bot: UserBot, message: Message):
-    await message.delete()
-    await send_saved_animation(bot, message, "lust_gif", "lust.gif",
-                               caption=f"I wanna do bad things with you {Emoji.SMIRKING_FACE}")
-
-
-@UserBot.on_message(Filters.command("dmf", ".") & Filters.me)
-async def dmf(bot: UserBot, message: Message):
-    await send_saved_animation(bot, message, "dmf_image", "dmf.gif")
-    await message.delete()
-
-
-@UserBot.on_message(Filters.command(['smart', 'intelligence'], ".") & Filters.me)
-async def smart(bot: UserBot, message: Message):
-    await send_saved_image(bot, message, "intelligence_image", "intelligence.jpg")
-    await message.delete()
-
-
-@UserBot.on_message(Filters.command("sobimin", ".") & Filters.me)
-async def sob_im_in(bot: UserBot, message: Message):
-    await message.delete()
-    await send_saved_image(bot, message, "sob_im_in_image", "sob_im_in.jpg")
+    if meme['type'] == 'animation':
+        await send_saved_animation(bot, message, meme['name'], meme['image'], caption=meme['caption'])
+    elif meme['type'] == 'image':
+        await send_saved_image(bot, message, meme['name'], meme['image'], caption=meme['caption'])
 
 
 # Command help section
