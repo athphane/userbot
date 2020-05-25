@@ -6,58 +6,19 @@ from pyrogram import Filters, Message
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
-
-@UserBot.on_message(Filters.command("moon", ".") & Filters.me)
-async def moon(bot: UserBot, message: Message):
-    deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
-    try:
-        for x in range(32):
-            sleep(0.2)
-            await message.edit("".join(deq), parse_mode=None)
-            deq.rotate(1)
-    except:
-        await message.delete()
+emojis = {
+    'moon': list("🌗🌘🌑🌒🌓🌔🌕🌖"),
+    'clock': list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"),
+    'thunder': list("☀️🌤️⛅🌥️☁️🌩️🌧️⛈️⚡🌩️🌧️🌦️🌥️⛅🌤️☀️"),
+    'earth': list("🌏🌍🌎🌎🌍🌏🌍🌎"),
+    'heart': list("❤️🧡💛💚💙💜🖤"),
+}
+emoji_commands = [x for x in emojis]
 
 
-@UserBot.on_message(Filters.command("clock", ".") & Filters.me)
-async def clock(bot: UserBot, message: Message):
-    deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
-    try:
-        for x in range(32):
-            sleep(0.2)
-            await message.edit("".join(deq), parse_mode=None)
-            deq.rotate(1)
-    except:
-        await message.delete()
-
-
-@UserBot.on_message(Filters.command("thunder", ".") & Filters.me)
-async def thunder(bot: UserBot, message: Message):
-    deq = deque(list("☀️🌤️⛅🌥️☁️🌩️🌧️⛈️⚡🌩️🌧️🌦️🌥️⛅🌤️☀️"))
-    try:
-        for x in range(32):
-            sleep(0.2)
-            await message.edit("".join(deq), parse_mode=None)
-            deq.rotate(1)
-    except:
-        await message.delete()
-
-
-@UserBot.on_message(Filters.command(['earth', 'globe'], ".") & Filters.me)
-async def globe(bot: UserBot, message: Message):
-    deq = deque(list("🌏🌍🌎🌎🌍🌏🌍🌎"))
-    try:
-        for x in range(32):
-            sleep(0.2)
-            await message.edit("".join(deq), parse_mode=None)
-            deq.rotate(1)
-    except:
-        await message.delete()
-
-
-@UserBot.on_message(Filters.command('heart', '.') & Filters.me)
-async def globe(bot: UserBot, message: Message):
-    deq = deque(list("❤️🧡💛💚💙💜🖤"))
+@UserBot.on_message(Filters.command(emoji_commands, ".") & Filters.me)
+async def emoji_cycle(bot: UserBot, message: Message):
+    deq = deque(emojis[message.command[0]])
     try:
         for x in range(32):
             sleep(0.2)
