@@ -69,7 +69,7 @@ async def yoda(bot: UserBot, message: Message):
 
 add_command_help(
     'translate', [
-        ['.tr', 'Translate text to English'],
-        ['.yoda', 'Translate text to Yoda']
+        ['.tr `or` .trans', 'Translate text to English.'],
+        ['.yoda', 'Like Yoda, speak.']
     ]
 )
