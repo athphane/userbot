@@ -1,4 +1,6 @@
+import asyncio
 import re
+from time import sleep
 
 import requests
 from pyrogram import Filters, Message
@@ -9,6 +11,7 @@ from userbot.plugins.help import add_command_help
 
 animal = r"([^.]*)$"
 ok_exts = ["jpg", "jpeg", "png"]
+animals = ['dog', 'cat', 'panda', 'fox', 'bird', 'koala']
 
 
 def _prep_dog():
@@ -158,9 +161,37 @@ async def koala(bot: UserBot, message: Message):
     )
 
 
+@UserBot.on_message(Filters.command('fact', '.'))
+async def fact(bot: UserBot, message: Message):
+    cmd = message.command
+
+    if not (len(cmd) >= 2):
+        await message.edit('```Not enough params provided```')
+        await asyncio.sleep(3)
+        await message.delete()
+        return
+
+    await message.edit(f"```Getting {cmd[1]} fact```")
+    link = "https://some-random-api.ml/facts/{animal}"
+
+    if cmd[1].lower() in animals:
+        fact_link = link.format(animal=cmd[1].lower())
+        try:
+            fact_text = requests.get(fact_link).json()['fact']
+        except:
+            await message.edit("```The fact API could not be reached```")
+            sleep(3)
+            await message.delete()
+        else:
+            await message.edit(fact_text, disable_web_page_preview=True)
+    else:
+        await message.edit("`Unsupported animal...`")
+        await asyncio.sleep(2)
+        await message.delete()
+
 # Command help section
 add_command_help(
-    'images', [
+    'animals', [
         ['.cat', 'Sends a random picture of a cat. Can be used without the period at the beginning.'],
         ['.dog', 'Sends a random picture of a dog. Can be used without the period at the beginning.'],
         ['.panda', 'Sends a random picture of a panda. Can be used without the period at the beginning.'],
@@ -170,4 +201,13 @@ add_command_help(
         ['.koala', 'Sends a random picture of a koala. Can be used without the period at the beginning.'],
         ['These commands', "Works without the command prefix also"]
     ]
+)
+
+
+fact_help = []
+for x in animals:
+    fact_help.append([f".fact {x}", f"Send a random fact about {x}"])
+
+add_command_help(
+    'facts', fact_help
 )

@@ -1,6 +1,5 @@
 import asyncio
 from random import choice, randint
-from time import sleep
 
 import requests
 from pyrogram import Filters, Message
@@ -9,8 +8,6 @@ from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck, GetUserMentionable
 from userbot.helpers.constants import MEMES
 from userbot.plugins.help import add_command_help
-
-animals = ['dog', 'cat', 'panda', 'fox', 'bird', 'koala']
 
 
 @UserBot.on_message(Filters.regex("^\.?nice$") & Filters.me)
@@ -146,35 +143,6 @@ async def mock_text(bot: UserBot, message: Message):
     await message.edit("".join(reply_text))
 
 
-@UserBot.on_message(Filters.command('fact', '.'))
-async def fact(bot: UserBot, message: Message):
-    cmd = message.command
-
-    if not (len(cmd) >= 2):
-        await message.edit('```Not enough params provided```')
-        sleep(3)
-        await message.delete()
-        return
-
-    await message.edit(f"```Getting {cmd[1]} fact```")
-    link = "https://some-random-api.ml/facts/{animal}"
-
-    if cmd[1].lower() in animals:
-        fact_link = link.format(animal=cmd[1].lower())
-        try:
-            fact_text = requests.get(fact_link).json()['fact']
-        except:
-            await message.edit("```The fact API could not be reached```")
-            sleep(3)
-            await message.delete()
-        else:
-            await message.edit(fact_text, disable_web_page_preview=True)
-    else:
-        await message.edit("`Unsupported animal...`")
-        await asyncio.sleep(2)
-        await message.delete()
-
-
 @UserBot.on_message(Filters.command(["insult"], ".") & Filters.me)
 async def insult(bot: UserBot, message: Message):
     try:
@@ -246,12 +214,4 @@ add_command_help(
         ['oof', 'Oof'],
         [';_; `or` .sad `or` cri', ';_;'],
     ]
-)
-
-fact_help = []
-for x in animals:
-    fact_help.append([f".fact {x}", f"Send a random fact about {x}"])
-
-add_command_help(
-    'facts', fact_help
 )
