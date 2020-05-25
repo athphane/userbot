@@ -193,6 +193,34 @@ async def kada(bot: UserBot, message: Message):
     await message.edit(kada)
 
 
+@UserBot.on_message(Filters.command(['vapor'], '.') & Filters.me)
+async def vapor(bot: UserBot, message: Message):
+    cmd = message.command
+
+    vapor_text = ""
+    if len(cmd) > 1:
+        vapor_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        vapor_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    reply_text = list()
+
+    for char in vapor_text:
+        if 0x21 <= ord(char) <= 0x7F:
+            reply_text.append(chr(ord(char) + 0xFEE0))
+        elif ord(char) == 0x20:
+            reply_text.append(chr(0x3000))
+        else:
+            reply_text.append(char)
+
+    await message.edit("".join(reply_text))
+
+
 # Command help section
 add_command_help(
     'text', [
@@ -202,6 +230,7 @@ add_command_help(
         ['.reverse', 'Sends ASCII version of the Uno reverse card.'],
         ['.slap', 'Sends a randomly generated slap text. Can become very random at some times.'],
         ['.insult', 'Sends a randomly generated insult. Can become very random at some times.'],
+        ['.vapor', 'Vaporizes the text.'],
         ['.ok', 'Sends -_____- with a fast animation.'],
         ['-_-', 'Extends to -________-'],
         ['.f', 'Pay respects'],
