@@ -35,7 +35,7 @@ DB_PASSWORD = config.get('mongo', 'db_password')
 YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
 
 # Other Users
-ALLOWED_USERS  = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
+ALLOWED_USERS = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
 
 # Extra details
 __version__ = '0.2.0'
