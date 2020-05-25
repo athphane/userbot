@@ -1,6 +1,7 @@
 from configparser import ConfigParser
 from logging.handlers import TimedRotatingFileHandler
 import logging
+import ast
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -34,21 +35,10 @@ DB_PASSWORD = config.get('mongo', 'db_password')
 YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
 
 # Other Users
-ALLOWED_USERS = config.get('users', 'allowed_users', fallback=None)
-
+ALLOWED_USERS  = ast.literal_eval(config.get('users', 'allowed_users', fallback=None))
 # Extra details
 __version__ = '0.2.0'
 __author__ = 'athphane'
 
 # Get the Values from our .env
-PM_PERMIT = config.get('pm_permit', 'pm_permit')
-PM_LIMIT = int(config.get('pm_permit', 'pm_limit'))
-
-LOG_GROUP = config.get('logs', 'log_group')
-
-# Scheduler
-scheduler = AsyncIOScheduler()
-
-# Global Variables
-CMD_HELP = {}
-client = None
+PM_PERMIT = config.get('pm_
