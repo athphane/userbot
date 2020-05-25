@@ -21,7 +21,7 @@ async def emoji_cycle(bot: UserBot, message: Message):
     deq = deque(emojis[message.command[0]])
     try:
         for x in range(32):
-            sleep(0.2)
+            sleep(0.3)
             await message.edit("".join(deq), parse_mode=None)
             deq.rotate(1)
     except:
