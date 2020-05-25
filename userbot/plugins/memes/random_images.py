@@ -168,5 +168,6 @@ add_command_help(
         ['.bird', 'Sends a random picture of a bird. Can be used without the period at the beginning.'],
         ['.fox', 'Sends a random picture of a fox. Can be used without the period at the beginning.'],
         ['.koala', 'Sends a random picture of a koala. Can be used without the period at the beginning.'],
+        ['These commands', "Works without the command prefix also"]
     ]
 )

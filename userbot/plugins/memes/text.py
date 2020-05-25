@@ -13,7 +13,7 @@ from userbot.plugins.help import add_command_help
 animals = ['dog', 'cat', 'panda', 'fox', 'bird', 'koala']
 
 
-@UserBot.on_message(Filters.command(["nice"], ".") & Filters.me)
+@UserBot.on_message(Filters.regex("^\.?nice$") & Filters.me)
 async def nice(bot: UserBot, message: Message):
     await message.delete()
     await bot.send_message(
