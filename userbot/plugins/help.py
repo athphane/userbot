@@ -1,3 +1,5 @@
+import asyncio
+
 from pyrogram import Filters, Message
 
 from userbot import UserBot, CMD_HELP
@@ -20,6 +22,8 @@ async def module_help(bot: UserBot, message: Message):
             all_commands += f"`{str(x)}`\n"
 
         await message.reply(all_commands)
+        await asyncio.sleep(10)
+        await message.delete()
         return
 
     if help_arg:
@@ -34,6 +38,9 @@ async def module_help(bot: UserBot, message: Message):
             await message.edit(this_command, parse_mode='markdown')
         else:
             await message.edit('`Please specify a valid module name.`', parse_mode='markdown')
+
+        await asyncio.sleep(10)
+        await message.delete()
 
 
 def add_command_help(module_name, commands):

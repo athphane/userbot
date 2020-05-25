@@ -1,4 +1,6 @@
 import asyncio
+import random
+import re
 from random import choice, randint
 
 import requests
@@ -78,7 +80,7 @@ async def slap(bot: UserBot, message: Message):
             await message.edit("`Can't slap this person, need to fetch some sticks and stones!!`")
 
 
-@UserBot.on_message(Filters.command("-_-", "") | Filters.command("ok", ".") & Filters.me)
+@UserBot.on_message((Filters.command("-_-", "") | Filters.command("ok", ".")) & Filters.me)
 async def ok(bot: UserBot, message: Message):
     okay = "-_-"
     for i in range(10):
@@ -86,7 +88,7 @@ async def ok(bot: UserBot, message: Message):
         await message.edit(okay, parse_mode=None)
 
 
-@UserBot.on_message(Filters.command(";_;", "") | Filters.command(['sad', 'cri'], ".") & Filters.me)
+@UserBot.on_message((Filters.command(";_;", "") | Filters.command(['sad', 'cri'], ".")) & Filters.me)
 async def sad_cri(bot: UserBot, message: Message):
     cri = ";_;"
     for i in range(10):
@@ -219,6 +221,27 @@ async def vapor(bot: UserBot, message: Message):
             reply_text.append(char)
 
     await message.edit("".join(reply_text))
+
+
+@UserBot.on_message(Filters.command(['stretch'], '.') & Filters.me)
+async def vapor(bot: UserBot, message: Message):
+    cmd = message.command
+
+    stretch_text = ""
+    if len(cmd) > 1:
+        stretch_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        stretch_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Giiiiiiiv sooooooomeeeeeee teeeeeeext!`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    count = random.randint(3, 10)
+    reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
+                        stretch_text)
+    await message.edit(reply_text)
 
 
 # Command help section
