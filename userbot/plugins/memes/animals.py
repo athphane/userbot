@@ -97,7 +97,7 @@ add_command_help(
 # Animal fact help
 fact_help = []
 for x in animals:
-    if x is not 'redpanda':
+    if x != 'redpanda':
         fact_help.append([f".fact {x}", f"Send a random fact about {x}"])
 
 add_command_help(
