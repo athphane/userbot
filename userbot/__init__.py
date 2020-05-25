@@ -33,6 +33,9 @@ DB_PASSWORD = config.get('mongo', 'db_password')
 # Yandex Translation API details
 YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
 
+# Other Users
+ALLOWED_USERS = config.get('users', 'allowed_users', fallback=None)
+
 # Extra details
 __version__ = '0.2.0'
 __author__ = 'athphane'
