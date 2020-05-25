@@ -91,9 +91,9 @@ async def ok(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command(";_;", "") | Filters.command(['sad', 'cri'], ".") & Filters.me)
 async def sad_cri(bot: UserBot, message: Message):
-    cri = ":_:"
+    cri = ";_;"
     for i in range(10):
-        cri = cri[:-1] + "_:"
+        cri = cri[:-1] + "_;"
         await message.edit(cri, parse_mode=None)
 
 
