@@ -18,10 +18,10 @@ if not os.path.exists('file_ids.txt'):
 async def get_old_message(bot: UserBot, message_id, media_type):
     old_message = await bot.get_messages('self', message_id)
 
-    if media_type is "photo":
+    if media_type == "photo":
         return old_message.photo
 
-    if media_type is "animation":
+    if media_type == "animation":
         return old_message.animation
 
 
