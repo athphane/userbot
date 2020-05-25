@@ -32,7 +32,7 @@ async def fixed_memes(bot: UserBot, message: Message):
 
 # Command help section
 add_command_help(
-    'pictures', [
+    'memes', [
         ['.fast', 'Picture of Lightning McQueen and says "I am speed.'],
         ['.tfb', 'Some guy saying "Tha Fuah Balhaa". This was an inside joke at Baivaru but now in this userbot.'],
         ['.kill', 'Gif of Killua from HunterXHunter with caption "I will kill you"'],
