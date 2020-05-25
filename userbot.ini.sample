@@ -14,3 +14,6 @@ pm_limit = 5
 
 [logs]
 log_group = None
+
+[yandex]
+key = get-key-from-https://tech.yandex.com/translate/

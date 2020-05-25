@@ -8,7 +8,7 @@ from userbot import YANDEX_API_KEY
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command("tr", ".") & Filters.me)
+@UserBot.on_message(Filters.command(['tr', 'trans'], '.') & Filters.me)
 async def translate(bot: UserBot, message: Message):
     if not YANDEX_API_KEY:
         await message.edit("NO API KEY found in configuration. Get one from https://tech.yandex.com/translate/",

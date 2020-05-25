@@ -18,7 +18,6 @@ logging.basicConfig(
 )
 LOGS = logging.getLogger(__name__)
 
-
 # Read from config file
 name = UserBot().__class__.__name__.lower()
 config_file = f"{name}.ini"
@@ -31,7 +30,7 @@ DB_NAME = config.get('mongo', 'db_name')
 DB_USERNAME = config.get('mongo', 'db_username')
 DB_PASSWORD = config.get('mongo', 'db_password')
 
-#Yandex Translation API details
+# Yandex Translation API details
 YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
 
 # Extra details
