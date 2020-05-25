@@ -11,7 +11,8 @@ from userbot.plugins.help import add_command_help
 @UserBot.on_message(Filters.command("tr", ".") & Filters.me)
 async def translate(bot: UserBot, message: Message):
     if not YANDEX_API_KEY:
-        await message.edit("NO API KEY found in configuration. Get one from https://tech.yandex.com/translate/", disable_web_page_preview=True)
+        await message.edit("NO API KEY found in configuration. Get one from https://tech.yandex.com/translate/",
+                           disable_web_page_preview=True)
         return
 
     if message.reply_to_message:
@@ -23,9 +24,10 @@ async def translate(bot: UserBot, message: Message):
         await asyncio.sleep(3)
         await message.delete()
         return
-        
-    async with aiohttp.ClientSession() as session:   
-        async with session.get(f"https://translate.yandex.net/api/v1.5/tr.json/translate?key={YANDEX_API_KEY}&text={txt}&lang=en") as resp:
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(
+                f"https://translate.yandex.net/api/v1.5/tr.json/translate?key={YANDEX_API_KEY}&text={txt}&lang=en") as resp:
             result = await resp.json()
 
             if "message" in result:
@@ -39,6 +41,7 @@ async def translate(bot: UserBot, message: Message):
                              f"{result['text'].pop()}"
                 await message.edit(translated)
 
+
 @UserBot.on_message(Filters.command("yoda", ".") & Filters.me)
 async def yoda(bot: UserBot, message: Message):
     if message.reply_to_message:
@@ -51,7 +54,7 @@ async def yoda(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    async with aiohttp.ClientSession() as session:   
+    async with aiohttp.ClientSession() as session:
         async with session.get(f"https://api.funtranslations.com/translate/yoda.json?text={txt}") as resp:
             result = await resp.json()
 
@@ -62,7 +65,8 @@ async def yoda(bot: UserBot, message: Message):
             else:
                 translated = result['contents']['translated']
                 await message.edit(translated)
-            
+
+
 add_command_help(
     'translate', [
         ['.tr', 'Translate text to English'],

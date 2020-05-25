@@ -28,7 +28,6 @@ async def paste(bot: UserBot, message: Message):
 
 add_command_help(
     'paste', [
-        ['.paste', 'Create a Nekobin paste using replied to message.'],
-        ['.bin', 'Alternate command #1'],
+        ['.paste `or` .bin', 'Create a Nekobin paste using replied to message.'],
     ]
 )

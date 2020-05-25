@@ -93,7 +93,7 @@ add_command_help(
     'www', [
         ['.ping', 'Calculates ping time between you and Telegram.'],
         ['.dc', 'Get\'s your Telegram DC.'],
-        ['.speedtest', 'Runs a speedtest on the server this userbot is hosted.. Flex on them haters. With an in '
+        ['.speedtest `or` .speed', 'Runs a speedtest on the server this userbot is hosted.. Flex on them haters. With an in '
                        'Telegram Speedtest of your server..'],
         ['.expand', 'Expands a shortened url. Works for replied to message, photo caption or .expand url']
     ]
