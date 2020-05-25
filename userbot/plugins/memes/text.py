@@ -12,7 +12,7 @@ from userbot.helpers.constants import MEMES
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.regex("^\.?nice$") & Filters.me)
+@UserBot.on_message(Filters.command('nice', '.') & Filters.me)
 async def nice(bot: UserBot, message: Message):
     await message.delete()
     await bot.send_message(
