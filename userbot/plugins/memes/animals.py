@@ -79,20 +79,18 @@ async def fact(bot: UserBot, message: Message):
         await message.delete()
 
 
-# Command help section
+# Animal image help
+animal_image_help = []
+for x in animals:
+    animal_image_help.append([f".{x}", f"Sends a random picture of a {x}"])
+
+animal_image_help.append(['These commands', "Works without the command prefix also"])
+
 add_command_help(
-    'animals', [
-        ['.cat', 'Sends a random picture of a cat. Can be used without the period at the beginning.'],
-        ['.dog', 'Sends a random picture of a dog. Can be used without the period at the beginning.'],
-        ['.panda', 'Sends a random picture of a panda. Can be used without the period at the beginning.'],
-        ['.redpanda', 'Sends a random picture of a redpanda. Can be used without the period at the beginning.'],
-        ['.bird', 'Sends a random picture of a bird. Can be used without the period at the beginning.'],
-        ['.fox', 'Sends a random picture of a fox. Can be used without the period at the beginning.'],
-        ['.koala', 'Sends a random picture of a koala. Can be used without the period at the beginning.'],
-        ['These commands', "Works without the command prefix also"]
-    ]
+    'animals', animal_image_help
 )
 
+# Animal fact help
 fact_help = []
 for x in animals:
     if x is not 'redpanda':
