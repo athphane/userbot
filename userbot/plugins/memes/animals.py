@@ -66,7 +66,11 @@ async def fact(bot: UserBot, message: Message):
     if cmd[1].lower() in animals:
         fact_link = link.format(animal=cmd[1].lower())
         try:
-            fact_text = requests.get(fact_link).json()['fact']
+            async with aiohttp.ClientSession() as session:
+                async with session.get(fact_link) as resp:
+                    data = await resp.json()
+
+            fact_text = data['fact']
         except:
             await message.edit("```The fact API could not be reached```")
             sleep(3)
