@@ -16,9 +16,9 @@ async def mock_people(bot: UserBot, message: Message):
         mock_text = ""
         if len(cmd) > 1:
             mock_text = " ".join(cmd[1:])
-        elif message.reply_to_message and len(cmd) is 1:
+        elif message.reply_to_message and len(cmd) == 1:
             mock_text = message.reply_to_message.text
-        elif not message.reply_to_message and len(cmd) is 1:
+        elif not message.reply_to_message and len(cmd) == 1:
             await message.edit("gIvE sOMEtHInG tO MoCk")
             await asyncio.sleep(2)
             await message.delete()
@@ -52,9 +52,9 @@ async def anime_girl(bot: UserBot, message: Message):
         anime_girl_text = ""
         if len(cmd) > 1:
             anime_girl_text = " ".join(cmd[1:])
-        elif message.reply_to_message and len(cmd) is 1:
+        elif message.reply_to_message and len(cmd) == 1:
             anime_girl_text = message.reply_to_message.text
-        elif not message.reply_to_message and len(cmd) is 1:
+        elif not message.reply_to_message and len(cmd) == 1:
             await message.edit("`Senpai I need something to say :(`")
             await asyncio.sleep(2)
             await message.delete()
@@ -91,9 +91,9 @@ async def anime_boy(bot: UserBot, message: Message):
         anime_boy_text = ""
         if len(cmd) > 1:
             anime_boy_text = " ".join(cmd[1:])
-        elif message.reply_to_message and len(cmd) is 1:
+        elif message.reply_to_message and len(cmd) == 1:
             anime_boy_text = message.reply_to_message.text
-        elif not message.reply_to_message and len(cmd) is 1:
+        elif not message.reply_to_message and len(cmd) == 1:
             await message.edit("`Senpai I need something to say :(`")
             await asyncio.sleep(2)
             await message.delete()
@@ -165,8 +165,8 @@ add_command_help(
                   '**Usage**:\n```.mock you smell like shit``` will give you the meme that says "You smell like shit"\n'
                   'Reply to a text message with .mock and it will grab the text of that message and generate the meme.'
          ],
-        ['.animegirl', 'Sends a random anime girl with a card of what you want. Rules apply as above.'],
-        ['.animeboy', 'Sends a random boy with a card of what you want. Rules apply as above.'],
-        ['.ggl', 'Sends google search buttons with the query you give it.. Rules apply as above.'],
+        ['.animegirl `or` .ag', 'Sends a random anime girl sticker. Rules apply as above.'],
+        ['.animeboy `or` .ab', 'Sends a random boy sticker. Rules apply as above.'],
+        ['.ggl', 'Sends google search buttons with the query you give it. Rules apply as above.'],
     ]
 )

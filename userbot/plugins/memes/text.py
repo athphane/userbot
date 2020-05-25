@@ -1,4 +1,5 @@
-from random import choice
+import asyncio
+from random import choice, randint
 from time import sleep
 
 import requests
@@ -88,6 +89,63 @@ async def ok(bot: UserBot, message: Message):
         await message.edit(okay, parse_mode=None)
 
 
+@UserBot.on_message(Filters.command(";_;", "") | Filters.command(['sad', 'cri'], ".") & Filters.me)
+async def sad_cri(bot: UserBot, message: Message):
+    cri = ":_:"
+    for i in range(10):
+        cri = cri[:-1] + "_:"
+        await message.edit(cri, parse_mode=None)
+
+
+@UserBot.on_message(Filters.command("oof", "") & Filters.me)
+async def oof(bot: UserBot, message: Message):
+    oof = "Oo "
+    for i in range(10):
+        oof = oof[:-1] + "of"
+        await message.edit(oof, parse_mode=None)
+
+
+@UserBot.on_message(Filters.command('target', '.') & Filters.me)
+async def target_emoji(bot: UserBot, message: Message):
+    await message.delete()
+    await bot.send_dice(message.chat.id, '🎯')
+
+
+@UserBot.on_message(Filters.command('dice', '.') & Filters.me)
+async def dice_emoji(bot: UserBot, message: Message):
+    await message.delete()
+    await bot.send_dice(message.chat.id, '🎲')
+
+
+@UserBot.on_message(Filters.command('mockt', '.') & Filters.me)
+async def mock_text(bot: UserBot, message: Message):
+    cmd = message.command
+
+    mock_t = ""
+    if len(cmd) > 1:
+        mock_t = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        mock_t = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("I need something to google")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    input_str = mock_t
+    if not input_str:
+        await message.edit("`gIvE sOMEtHInG tO MoCk!`")
+        return
+    reply_text = []
+    for char in input_str:
+        if char.isalpha() and randint(0, 1):
+            to_app = char.upper() if char.islower() else char.lower()
+            reply_text.append(to_app)
+        else:
+            reply_text.append(char)
+    await message.edit("".join(reply_text))
+
+
 @UserBot.on_message(Filters.command('fact', '.'))
 async def fact(bot: UserBot, message: Message):
     cmd = message.command
@@ -111,16 +169,23 @@ async def fact(bot: UserBot, message: Message):
             await message.delete()
         else:
             await message.edit(fact_text, disable_web_page_preview=True)
+    else:
+        await message.edit("`Unsupported animal...`")
+        await asyncio.sleep(2)
+        await message.delete()
 
 
 @UserBot.on_message(Filters.command(["insult"], ".") & Filters.me)
 async def insult(bot: UserBot, message: Message):
     try:
+        await message.edit("`Generating insult...`")
         req = requests.get("https://evilinsult.com/generate_insult.php?lang=en&type=json").json()['insult']
         await message.edit(
             req
         )
     except:
+        await message.edit("`Failed to generate insult...`")
+        await asyncio.sleep(2)
         await message.delete()
 
 
@@ -153,10 +218,12 @@ async def gerey(bot: UserBot, message: Message):
     gerey = "ގެރޭ"
     await message.edit(gerey)
 
+
 @UserBot.on_message(Filters.command(["k"], ".") & Filters.me)
 async def kada(bot: UserBot, message: Message):
     kada = "ކަޑަ؟"
     await message.edit(kada)
+
 
 # Command help section
 add_command_help(
@@ -172,7 +239,12 @@ add_command_help(
         ['.f', 'Pay respects'],
         ['.F', 'Pay respects but filled'],
         ['.g', 'Gerey'],
-        ['.k', 'Kada?']
+        ['.k', 'Kada?'],
+        ['.mockt', 'Mock (text only version)'],
+        ['.dice', 'Send dice animation'],
+        ['.target', 'Send target animation'],
+        ['oof', 'Oof'],
+        [';_; `or` .sad `or` cri', ';_;'],
     ]
 )
 

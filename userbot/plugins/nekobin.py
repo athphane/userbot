@@ -1,3 +1,5 @@
+import asyncio
+
 import requests
 from pyrogram import Filters, Message
 
@@ -13,20 +15,20 @@ async def paste(bot: UserBot, message: Message):
         key = requests.post('https://nekobin.com/api/documents', json={"content": text}).json().get('result').get('key')
     except requests.exceptions.RequestException as e:
         await message.edit_text("`Pasting failed`")
+        await asyncio.sleep(2)
+        await message.delete()
     else:
         url = f'https://nekobin.com/{key}'
         reply_text = f'Nekofied to **Nekobin** : {url}'
-        await bot.send_message(
-            message.chat.id,
+        await message.edit_text(
             reply_text,
             disable_web_page_preview=True,
-            reply_to_message_id=message.reply_to_message.message_id
         )
 
 
 add_command_help(
     'paste', [
-        ['.paste', 'Create a dogbin paste using replied to message.'],
+        ['.paste', 'Create a Nekobin paste using replied to message.'],
         ['.bin', 'Alternate command #1'],
     ]
 )
