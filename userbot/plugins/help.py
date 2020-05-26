@@ -12,9 +12,9 @@ async def module_help(bot: UserBot, message: Message):
     help_arg = ""
     if len(cmd) > 1:
         help_arg = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) is 1:
+    elif message.reply_to_message and len(cmd) == 1:
         help_arg = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) is 1:
+    elif not message.reply_to_message and len(cmd) == 1:
         all_commands = ""
 
         all_commands += "Please specify which module you want help for!! \nUsage: `.help [module_name]`\n\n"
