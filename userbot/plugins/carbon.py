@@ -44,9 +44,9 @@ async def update_carbon_lang(bot: UserBot, message: Message):
     type_text = ""
     if len(cmd) > 1:
         type_text = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) is 1:
+    elif message.reply_to_message and len(cmd) == 1:
         type_text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) is 1:
+    elif not message.reply_to_message and len(cmd) == 1:
         await message.edit("Give me something to carbonize")
         await sleep(2)
         await message.delete()
