@@ -33,7 +33,7 @@ async def module_help(bot: UserBot, message: Message):
             this_command += f"--**Help for {str(help_arg)} module**--\n".upper()
 
             for x in commands:
-                this_command += f"**{str(commands[x]['command'])}**: ```{str(commands[x]['description'])}```\n\n"
+                this_command += f"**{str(commands[x]['command'])}**:\n```{str(commands[x]['description'])}```\n\n"
 
             await message.edit(this_command, parse_mode='markdown')
         else:
