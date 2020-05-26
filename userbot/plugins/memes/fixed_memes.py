@@ -19,6 +19,8 @@ memes_data = {
               'help': 'Press E to use intelligence.'},
     'sobimin': {'name': 'sob_im_in_image', 'image': 'sob_im_in.jpg', 'type': 'image', 'caption': None,
                 'help': 'Morty - SOB I\'m In'},
+    'omg': {'name': 'omg_image', 'image': 'omg.gif', 'type': 'animation', 'caption': None,
+                'help': 'Anime character saying OMG.'},
 }
 
 memes = []

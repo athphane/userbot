@@ -56,6 +56,6 @@ async def send_music(bot: UserBot, message: Message):
 # Command help section
 add_command_help(
     'music', [
-        ['.m `or` .music', 'Search songs and send']
+        ['.m `or` .music', 'Search songs and send.']
     ]
 )
