@@ -104,18 +104,6 @@ async def oof(bot: UserBot, message: Message):
         await message.edit(oof, parse_mode=None)
 
 
-@UserBot.on_message(Filters.command('target', '.') & Filters.me)
-async def target_emoji(bot: UserBot, message: Message):
-    await message.delete()
-    await bot.send_dice(message.chat.id, '🎯')
-
-
-@UserBot.on_message(Filters.command('dice', '.') & Filters.me)
-async def dice_emoji(bot: UserBot, message: Message):
-    await message.delete()
-    await bot.send_dice(message.chat.id, '🎲')
-
-
 @UserBot.on_message(Filters.command('mockt', '.') & Filters.me)
 async def mock_text(bot: UserBot, message: Message):
     cmd = message.command

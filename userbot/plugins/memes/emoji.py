@@ -28,12 +28,34 @@ async def emoji_cycle(bot: UserBot, message: Message):
         await message.delete()
 
 
+special_emojis_dict = {
+    'target': {'emoji': '🎯', 'help': 'The special target emoji'},
+    'dice': {'emoji': '🎲', 'help': 'The special dice emoji'},
+    'bb': {'emoji': '🏀', 'help': 'The special basketball emoji'},
+}
+special_emoji_commands = [x for x in special_emojis_dict]
+
+
+@UserBot.on_message(Filters.command(special_emoji_commands, '.') & Filters.me)
+async def special_emojis(bot: UserBot, message: Message):
+    emoji = special_emojis_dict[message.command[0]]
+    await message.delete()
+    await bot.send_dice(message.chat.id, emoji['emoji'])
+
+
+# Command help section
+special_emoji_help = [
+    ['.moon', 'Cycles all the phases of the moon emojis.'],
+    ['.clock', 'Cycles all the phases of the clock emojis.'],
+    ['.thunder', 'Cycles thunder.'],
+    ['.heart', 'Cycles heart emojis.'],
+    ['.earth `or` .globe', 'Make the world go round.']
+]
+
+for x in special_emojis_dict:
+    command = f'.{x}'
+    special_emoji_help.append([command, special_emojis_dict[x]['help']])
+
 add_command_help(
-    'emoji', [
-        ['.moon', 'Cycles all the phases of the moon emojis.'],
-        ['.clock', 'Cycles all the phases of the clock emojis.'],
-        ['.thunder', 'Cycles thunder.'],
-        ['.heart', 'Cycles heart emojis.'],
-        ['.earth `or` .globe', 'Make the world go round.'],
-    ]
+    'emoji', special_emoji_help
 )
