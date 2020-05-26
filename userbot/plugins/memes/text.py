@@ -232,6 +232,11 @@ async def vapor(bot: UserBot, message: Message):
     await message.edit(reply_text)
 
 
+@UserBot.on_message(Filters.command(['beemoviescript'], '.') & Filters.me)
+async def bee_movie_script(bot: UserBot, message: Message):
+    await message.edit(f"Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
+
+
 # Command help section
 add_command_help(
     'text', [
