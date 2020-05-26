@@ -15,14 +15,15 @@ async def module_help(bot: UserBot, message: Message):
     elif message.reply_to_message and len(cmd) is 1:
         help_arg = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) is 1:
-        await message.edit("Please specify which module you want help for!! \nUsage: .help <module_name>", parse_mode=None)
-
         all_commands = ""
+
+        all_commands += "Please specify which module you want help for!! \nUsage: `.help [module_name]`\n\n"
+
         for x in CMD_HELP:
             all_commands += f"`{str(x)}`\n"
 
-        await message.reply(all_commands)
-        await asyncio.sleep(10)
+        await message.edit(all_commands)
+        await asyncio.sleep(30)
         await message.delete()
         return
 
@@ -39,7 +40,7 @@ async def module_help(bot: UserBot, message: Message):
         else:
             await message.edit('`Please specify a valid module name.`', parse_mode='markdown')
 
-        await asyncio.sleep(10)
+        await asyncio.sleep(30)
         await message.delete()
 
 

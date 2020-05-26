@@ -14,7 +14,7 @@ memes_data = {
     'lust': {'name': 'lust_gif', 'image': 'lust.gif', 'type': 'animation',
              'caption': f"I wanna do bad things with you {Emoji.SMIRKING_FACE}", 'help': 'Gif of lustful things.'},
     'dmf': {'name': 'dmf_image', 'image': 'dmf.gif', 'type': 'animation', 'caption': None,
-            'help': 'Syndrome from The Incredible\'s saying "You dense motherfucker".'},
+            'help': 'Syndrome from The Incredible\'s saying "You dense mf".'},
     'smart': {'alts': ['intelligence'], 'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image', 'caption': None,
               'help': 'Press E to use intelligence.'},
     'sobimin': {'name': 'sob_im_in_image', 'image': 'sob_im_in.jpg', 'type': 'image', 'caption': None,
