@@ -31,6 +31,8 @@ for x in memes_data:
 
 @UserBot.on_message(Filters.command(memes, ".") & Filters.me)
 async def fixed_memes(bot: UserBot, message: Message):
+    await message.delete()
+
     command = message.command[0]
     if command not in memes_data:
         for x in memes_data:
@@ -40,7 +42,6 @@ async def fixed_memes(bot: UserBot, message: Message):
     else:
         meme = memes_data[message.command[0]]
 
-    await message.delete()
     if meme['type'] == 'animation':
         await send_saved_animation(bot, message, meme['name'], meme['image'], caption=meme['caption'])
     elif meme['type'] == 'image':
