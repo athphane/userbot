@@ -15,19 +15,15 @@ memes_data = {
              'caption': f"I wanna do bad things with you {Emoji.SMIRKING_FACE}", 'help': 'Gif of lustful things.'},
     'dmf': {'name': 'dmf_image', 'image': 'dmf.gif', 'type': 'animation', 'caption': None,
             'help': 'Syndrome from The Incredible\'s saying "You dense motherfucker".'},
-    'smart': {'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image', 'caption': None,
+    'smart': {'alts': ['intelligence'], 'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image', 'caption': None,
               'help': 'Press E to use intelligence.'},
-    'intelligence': {'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image', 'caption': None,
-                     'help': 'Press E to use intelligence.'},
     'sobimin': {'name': 'sob_im_in_image', 'image': 'sob_im_in.jpg', 'type': 'image', 'caption': None,
                 'help': 'Morty - SOB I\'m In'},
 }
 
-# memes = [x for x in memes_data]
 memes = []
 for x in memes_data:
     memes.append(x)
-
     if 'alts' in memes_data[x]:
         for y in memes_data[x]['alts']:
             memes.append(y)
