@@ -7,7 +7,7 @@ from userbot import ALLOWED_USERS
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command("m", ".") & (Filters.me | Filters.user(ALLOWED_USERS)))
+@UserBot.on_message(Filters.command(['m', 'music'], ".") & (Filters.me | Filters.user(ALLOWED_USERS)))
 async def send_music(bot: UserBot, message: Message):
     try:
         cmd = message.command
@@ -15,9 +15,9 @@ async def send_music(bot: UserBot, message: Message):
         song_name = ""
         if len(cmd) > 1:
             song_name = " ".join(cmd[1:])
-        elif message.reply_to_message and len(cmd) is 1:
+        elif message.reply_to_message and len(cmd) == 1:
             song_name = message.reply_to_message.text
-        elif not message.reply_to_message and len(cmd) is 1:
+        elif not message.reply_to_message and len(cmd) == 1:
             await message.edit("Give a song name")
             await asyncio.sleep(2)
             await message.delete()
@@ -56,6 +56,6 @@ async def send_music(bot: UserBot, message: Message):
 # Command help section
 add_command_help(
     'music', [
-        ['.m', 'Search songs and send']
+        ['.m `or` .music', 'Search songs and send']
     ]
 )
