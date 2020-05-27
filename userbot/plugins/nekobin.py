@@ -7,7 +7,7 @@ from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['bin', 'paste'], ".") & Filters.me)
+@UserBot.on_message(Filters.command(['neko', 'nekobin', 'bin', 'paste'], ".") & Filters.me)
 async def paste(bot: UserBot, message: Message):
     await message.edit_text("`Pasting...`")
     text = message.reply_to_message.text
@@ -28,6 +28,6 @@ async def paste(bot: UserBot, message: Message):
 
 add_command_help(
     'paste', [
-        ['.paste `or` .bin', 'Create a Nekobin paste using replied to message.'],
+        ['.paste `or` .bin `or` .neko `or` .nekobin', 'Create a Nekobin paste using replied to message.'],
     ]
 )
