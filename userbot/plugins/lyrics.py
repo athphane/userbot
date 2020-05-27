@@ -33,24 +33,24 @@ async def send_lyrics(bot: UserBot, message: Message):
                 query_id=lyrics_results.query_id,
                 result_id=lyrics_results.results[0].id,
                 hide_via=True)
-            await asyncio.sleep(10)
+            await asyncio.sleep(3)
             
-            id = saved.updates[1].message.id
-            lyrics_msg = await bot.get_messages("me", id)
-            lyrics = lyrics_msg.text.split("\n\n")
-            lyrics = list(filter(None, lyrics))
+            #id = saved.updates[1].message.id
+            #lyrics_msg = await bot.get_messages("me", id)
+            #lyrics = lyrics_msg.text.split("\n\n")
+            #lyrics = list(filter(None, lyrics))
 
-            for lyric in lyrics[:-1]:
-                await asyncio.sleep(0.4)
-                await bot.send_message(chat_id=message.chat.id, text=lyric) 
+            #for lyric in lyrics[:-1]:
+            #    await asyncio.sleep(0.4)
+            #    await bot.send_message(chat_id=message.chat.id, text=lyric) 
 
             # forward from Saved Messages
-            #await bot.forward_messages(
-            #    chat_id=message.chat.id,
-            #    from_chat_id="me",
-            #    message_ids=saved.updates[1].message.id,
-            #    as_copy=True
-            #)
+            await bot.forward_messages(
+                chat_id=message.chat.id,
+                from_chat_id="me",
+                message_ids=saved.updates[1].message.id,
+                as_copy=True
+            )
 
             # delete the message from Saved Messages
             await bot.delete_messages("me", saved.updates[1].message.id)
