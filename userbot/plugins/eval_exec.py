@@ -8,6 +8,7 @@ from pyrogram import Filters, Message
 
 from userbot import UserBot
 
+sys.tracebacklimit = 0
 
 @UserBot.on_message(Filters.command("eval", ".") & Filters.me)
 async def evaluation(bot: UserBot, message: Message):
