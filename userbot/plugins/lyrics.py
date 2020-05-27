@@ -38,10 +38,10 @@ async def send_lyrics(bot: UserBot, message: Message):
             id = saved.updates[1].message.id
             lyrics_msg = await bot.get_messages("me", id)
             lyrics = lyrics_msg.text.split("\n\n")
+            lyrics = list(filter(None, lyrics))
+
             for lyric in lyrics[:-1]:
-                await asyncio.sleep(0.5)
-                if lyric == "":
-                    pass
+                await asyncio.sleep(0.4)
                 await bot.send_message(chat_id=message.chat.id, text=lyric) 
 
             # forward from Saved Messages
@@ -51,6 +51,7 @@ async def send_lyrics(bot: UserBot, message: Message):
             #    message_ids=saved.updates[1].message.id,
             #    as_copy=True
             #)
+
             # delete the message from Saved Messages
             await bot.delete_messages("me", saved.updates[1].message.id)
         except TimeoutError:
