@@ -39,7 +39,7 @@ async def send_lyrics(bot: UserBot, message: Message):
             for lyric in lyrics[:-1]:
                 if lyric == "":
                     pass
-                await bot.send_messages(chat_id=message.chat.id, lyric) 
+                await bot.send_message(chat_id=message.chat.id, text=lyric) 
 
             # forward from Saved Messages
             #await bot.forward_messages(
