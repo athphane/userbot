@@ -32,6 +32,7 @@ async def send_lyrics(bot: UserBot, message: Message):
                 query_id=lyrics_results.query_id,
                 result_id=lyrics_results.results[0].id,
                 hide_via=True)
+            await asyncio.sleep(2)
 
             # forward from Saved Messages
             await bot.forward_messages(
