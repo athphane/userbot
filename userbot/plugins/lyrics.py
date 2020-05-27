@@ -33,7 +33,7 @@ async def send_lyrics(bot: UserBot, message: Message):
                 query_id=lyrics_results.query_id,
                 result_id=lyrics_results.results[0].id,
                 hide_via=True)
-            await asyncio.sleep(4)
+            await asyncio.sleep(10)
             
             id = saved.updates[1].message.id
             lyrics_msg = await bot.get_messages("me", id)
