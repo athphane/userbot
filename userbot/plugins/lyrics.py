@@ -23,6 +23,7 @@ async def send_lyrics(bot: UserBot, message: Message):
             await message.delete()
             return
 
+        await message.edit(f"Getting lyrics for `{song_name}`")
         lyrics_results = await bot.get_inline_bot_results("ilyricsbot", song_name)
 
         try:
