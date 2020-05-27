@@ -33,10 +33,11 @@ async def send_lyrics(bot: UserBot, message: Message):
                 query_id=lyrics_results.query_id,
                 result_id=lyrics_results.results[0].id,
                 hide_via=True)
-            await asyncio.sleep(2)
+            await asyncio.sleep(7)
             
             lyrics = saved.updates[1].message.message.split("\n\n")
             for lyric in lyrics[:-1]:
+                await asyncio.sleep(0.5)
                 if lyric == "":
                     pass
                 await bot.send_message(chat_id=message.chat.id, text=lyric) 
