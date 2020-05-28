@@ -39,7 +39,7 @@ async def mock_people(bot: UserBot, message: Message):
             await message.edit("@StickerizerBot didn't respond in time.")
             await asyncio.sleep(2)
         await message.delete()
-    except Except:
+    except Exception:
         await message.edit("`Failed to reach Stickerizerbot`")
         await asyncio.sleep(2)
         await message.delete()
@@ -77,7 +77,7 @@ async def anime_girl(bot: UserBot, message: Message):
             await message.edit("@StickerizerBot didn't respond in time.")
             await asyncio.sleep(2)
         await message.delete()
-    except:
+    except Exception:
         await message.edit("`Failed to reach Stickerizerbot`")
         await asyncio.sleep(2)
         await message.delete()
@@ -116,7 +116,7 @@ async def anime_boy(bot: UserBot, message: Message):
             await message.edit("@StickerizerBot didn't respond in time.")
             await asyncio.sleep(2)
         await message.delete()
-    except:
+    except Exception:
         await message.edit("`Failed to reach Stickerizerbot`")
         await asyncio.sleep(2)
         await message.delete()
@@ -152,7 +152,7 @@ async def google_sticker(bot: UserBot, message: Message):
             await message.edit("@StickerizerBot didn't respond in time.")
             await asyncio.sleep(2)
         await message.delete()
-    except:
+    except Exception:
         await message.edit("`Failed to reach Stickerizerbot`")
         await asyncio.sleep(2)
         await message.delete()
