@@ -34,15 +34,6 @@ async def send_lyrics(bot: UserBot, message: Message):
                 result_id=lyrics_results.results[0].id,
                 hide_via=True)
             await asyncio.sleep(3)
-            
-            #id = saved.updates[1].message.id
-            #lyrics_msg = await bot.get_messages("me", id)
-            #lyrics = lyrics_msg.text.split("\n\n")
-            #lyrics = list(filter(None, lyrics))
-
-            #for lyric in lyrics[:-1]:
-            #    await asyncio.sleep(0.4)
-            #    await bot.send_message(chat_id=message.chat.id, text=lyric) 
 
             # forward from Saved Messages
             await bot.forward_messages(
@@ -63,7 +54,6 @@ async def send_lyrics(bot: UserBot, message: Message):
         await message.edit("`Failed to find lyrics`")
         await asyncio.sleep(2)
         await message.delete()
-
 
 # Command help section
 add_command_help(
