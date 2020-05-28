@@ -18,7 +18,7 @@ class SkyrimStatusMeme:
             offset_counter += 1
         backgroundImage = Image.new('RGB', self.finalSize, color='#FFF')
         count = 0
-        for x in range(0, offset_counter + 1):
+        for _ in range(0, offset_counter + 1):
             backgroundImage.paste(self.background, (count, 0))
             count += self.imgx
         draw = ImageDraw.Draw(backgroundImage)

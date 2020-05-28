@@ -42,7 +42,6 @@ async def afk_group(bot: UserBot, message: Message):
                     text=text,
                     reply_to_message_id=message.message_id
                 )
-                pass
             elif GROUPS[GetChatID(message)] > 50:
                 return
             elif GROUPS[GetChatID(message)] % 5 == 0:
@@ -90,7 +89,6 @@ async def afk_private(bot: UserBot, message: Message):
                     text=text,
                     reply_to_message_id=message.message_id
                 )
-                pass
             elif USERS[GetFromUserID(message)] > 50:
                 return
             elif USERS[GetFromUserID(message)] % 5 == 0:

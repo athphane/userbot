@@ -70,7 +70,7 @@ async def fact(bot: UserBot, message: Message):
                     data = await resp.json()
 
             fact_text = data['fact']
-        except:
+        except Exception:
             await message.edit("```The fact API could not be reached```")
             sleep(3)
             await message.delete()

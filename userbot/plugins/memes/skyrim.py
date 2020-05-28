@@ -27,7 +27,7 @@ async def skyrim(bot: UserBot, message: Message):
                 os.system(f"venv\\Scripts\\activate && python userbot\\helpers\\skyrim.py \"{text}\" {level}")
             else:
                 os.system(f". venv/bin/activate && python userbot//helpers//skyrim.py \"{text}\" {level}")
-        except:
+        except Exception:
             await message.edit("```Failed to generate skill```")
             time.sleep(2)
             await message.delete()
@@ -39,7 +39,7 @@ async def skyrim(bot: UserBot, message: Message):
                 reply_to_message_id=ReplyCheck(message)
             )
             await message.delete()
-        except:
+        except Exception:
             await message.edit("```Failed to send skill```")
             time.sleep(2)
             await message.delete()

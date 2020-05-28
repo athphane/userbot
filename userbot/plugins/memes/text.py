@@ -40,7 +40,7 @@ async def dev_excuse(bot: UserBot, message: Message):
         await message.edit(
             devexcuse.capitalize()
         )
-    except:
+    except Exception:
         await message.delete()
 
 
@@ -76,7 +76,7 @@ async def slap(bot: UserBot, message: Message):
 
         try:
             await message.edit(caption)
-        except:
+        except Exception:
             await message.edit("`Can't slap this person, need to fetch some sticks and stones!!`")
 
 
@@ -91,7 +91,7 @@ async def ok(bot: UserBot, message: Message):
 @UserBot.on_message((Filters.command(";_;", "") | Filters.command(['sad', 'cri'], ".")) & Filters.me)
 async def sad_cri(bot: UserBot, message: Message):
     cri = ";_;"
-    for i in range(10):
+    for _ in range(10):
         cri = cri[:-1] + "_;"
         await message.edit(cri, parse_mode=None)
 
@@ -99,7 +99,7 @@ async def sad_cri(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.regex("^\.?oof$") & Filters.me)
 async def oof(bot: UserBot, message: Message):
     oof = "Oo "
-    for i in range(10):
+    for _ in range(10):
         oof = oof[:-1] + "of"
         await message.edit(oof, parse_mode=None)
 
@@ -141,7 +141,7 @@ async def insult(bot: UserBot, message: Message):
         await message.edit(
             req
         )
-    except:
+    except Exception:
         await message.edit("`Failed to generate insult...`")
         await asyncio.sleep(2)
         await message.delete()

@@ -56,7 +56,7 @@ async def summoned(bot: UserBot, message: Message):
                         last_send = time.time()
                         next_send = random_interval()
                         SUMMON().update(message, last_send, next_send)
-                except:
+                except Exception:
                     await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg")
                     last_send = time.time()
                     next_send = random_interval()
@@ -78,7 +78,7 @@ async def next_summon(bot: UserBot, message: Message):
                 await message.edit(f"'''{human_time(seconds=int(delta))}'''")
                 time.sleep(6)
                 await message.delete()
-            except:
+            except Exception:
                 await message.edit("```This group does not have a summon message interval```")
                 time.sleep(2)
                 await message.delete()

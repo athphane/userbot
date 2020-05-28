@@ -75,7 +75,7 @@ async def expand(bot: UserBot, message: Message):
         url = message.command[1]
     else:
         url = None
-    
+
     if url:
         expanded = await expand_url(url)
         if expanded:

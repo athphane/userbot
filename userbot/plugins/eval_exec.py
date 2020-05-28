@@ -10,6 +10,7 @@ from userbot import UserBot
 
 sys.tracebacklimit = 0
 
+
 @UserBot.on_message(Filters.command("eval", ".") & Filters.me & ~Filters.forwarded)
 async def evaluation(bot: UserBot, message: Message):
     status_message = await message.reply_text("Processing ...")
@@ -73,7 +74,6 @@ async def aexec(code, client, message):
     return await locals()['__aexec'](client, message)
 
 
-
 @UserBot.on_message(Filters.command("exec", ".") & Filters.me & ~Filters.forwarded)
 async def execution(bot: UserBot, message: Message):
     cmd = message.text.split(" ", maxsplit=1)[1]
@@ -92,7 +92,7 @@ async def execution(bot: UserBot, message: Message):
     o = stdout.decode()
     if not o:
         o = "No output"
-    
+
     OUTPUT = ""
     OUTPUT += f"<b>Command:</b>\n<code>{cmd}</code>\n\n"
     OUTPUT += f"<b>Output</b>: \n<code>{o}</code>\n"
