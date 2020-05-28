@@ -34,12 +34,20 @@ async def send_music(bot: UserBot, message: Message):
                 hide_via=True)
 
             # forward from Saved Messages
-            await bot.forward_messages(
+            reply_to = message.reply_to_message.message_id
+            await bot.send_audio (
                 chat_id=message.chat.id,
-                from_chat_id="me",
-                message_ids=saved.updates[1].message.id,
-                as_copy=True
+                audio=saved.updates[1].media.document.id,
+                file_ref=saved.updates[1].media.document.file_reference,
+                reply_to_message_id=reply_to
             )
+#             await bot.forward_messages(
+#                 chat_id=message.chat.id,
+#                 from_chat_id="me",
+#                 message_ids=saved.updates[1].message.id,
+#                 as_copy=True
+#             )
+
             # delete the message from Saved Messages
             await bot.delete_messages("me", saved.updates[1].message.id)
         except TimeoutError:
