@@ -39,7 +39,7 @@ async def mock_people(bot: UserBot, message: Message):
             await message.edit("@StickerizerBot didn't respond in time.")
             await asyncio.sleep(2)
         await message.delete()
-    except:
+    except Except:
         await message.edit("`Failed to reach Stickerizerbot`")
         await asyncio.sleep(2)
         await message.delete()
