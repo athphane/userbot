@@ -37,7 +37,7 @@ async def send_music(bot: UserBot, message: Message):
             reply_to = message.reply_to_message.message_id if message.reply_to_message else None
             await bot.send_audio (
                 chat_id=message.chat.id,
-                audio=saved.updates[1].message.media.document.id,
+                audio=str(saved.updates[1].message.media.document.id),
                 #file_ref=saved.updates[1].message.media.document.file_reference,
                 reply_to_message_id=reply_to
             )
