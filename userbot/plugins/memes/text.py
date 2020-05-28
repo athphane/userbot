@@ -29,7 +29,7 @@ async def compliment_func(bot: UserBot, message: Message):
         await message.edit(
             compliment.capitalize()
         )
-    except:
+    except Exception:
         await message.delete()
 
 
@@ -83,7 +83,7 @@ async def slap(bot: UserBot, message: Message):
 @UserBot.on_message((Filters.command("-_-", "") | Filters.command("ok", ".")) & Filters.me)
 async def ok(bot: UserBot, message: Message):
     okay = "-_-"
-    for i in range(10):
+    for _ in range(10):
         okay = okay[:-1] + "_-"
         await message.edit(okay, parse_mode=None)
 
@@ -212,7 +212,7 @@ async def vapor(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command(['stretch'], '.') & Filters.me)
-async def vapor(bot: UserBot, message: Message):
+async def stretch(bot: UserBot, message: Message):
     cmd = message.command
 
     stretch_text = ""
