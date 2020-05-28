@@ -34,7 +34,7 @@ async def send_music(bot: UserBot, message: Message):
                 hide_via=True)
 
             # forward as a new message from Saved Messages
-            saved = await client.get_messages("me", int(saved.updates[1].message.id))
+            saved = await bot.get_messages("me", int(saved.updates[1].message.id))
             reply_to = message.reply_to_message.message_id if message.reply_to_message else None
             await bot.send_audio (
                 chat_id=message.chat.id,
