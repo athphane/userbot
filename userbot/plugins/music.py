@@ -16,7 +16,7 @@ async def send_music(bot: UserBot, message: Message):
         if len(cmd) > 1:
             song_name = " ".join(cmd[1:])
         elif message.reply_to_message and len(cmd) == 1:
-            song_name = message.reply_to_message.text
+            song_name = message.reply_to_message.text or message.reply_to_message.caption
         elif not message.reply_to_message and len(cmd) == 1:
             await message.edit("Give a song name")
             await asyncio.sleep(2)
