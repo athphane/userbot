@@ -13,7 +13,7 @@ async def paste(bot: UserBot, message: Message):
     text = message.reply_to_message.text
     try:
         key = requests.post('https://nekobin.com/api/documents', json={"content": text}).json().get('result').get('key')
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException:
         await message.edit_text("`Pasting failed`")
         await asyncio.sleep(2)
         await message.delete()
