@@ -50,7 +50,7 @@ async def send_music(bot: UserBot, message: Message):
 #             )
 
             # delete the message from Saved Messages
-            await bot.delete_messages("me", saved.updates[1].message.id)
+            await bot.delete_messages("me", saved.message_id)
         except TimeoutError:
             await message.edit("That didn't work out")
             await asyncio.sleep(2)
