@@ -38,7 +38,7 @@ async def prep_animal_image(animal_data):
     return image
 
 
-@UserBot.on_message((Filters.command(animals, '.') | Filters.command(animals, '')) & Filters.me)
+@UserBot.on_message(Filters.command(animals, ['.', '']) & Filters.me)
 async def animal_image(bot: UserBot, message: Message):
     animal_data = animals_data[message.command[0]]
     await message.delete()
