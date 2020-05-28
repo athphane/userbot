@@ -20,11 +20,11 @@ emoji_commands = [x for x in emojis]
 async def emoji_cycle(bot: UserBot, message: Message):
     deq = deque(emojis[message.command[0]])
     try:
-        for x in range(32):
+        for _ in range(32):
             await asyncio.sleep(0.3)
             await message.edit("".join(deq), parse_mode=None)
             deq.rotate(1)
-    except:
+    except Exception:
         await message.delete()
 
 
