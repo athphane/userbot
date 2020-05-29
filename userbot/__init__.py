@@ -37,6 +37,9 @@ YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
 # Other Users
 ALLOWED_USERS = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
 
+#MISC APIs (Should put yandex here too but too lazy atm)
+YOURLS_KEY = config.get('yourls', 'key', fallback=None)
+
 # Extra details
 __version__ = '0.2.0'
 __author__ = 'athphane'
