@@ -81,7 +81,7 @@ async def expand(bot: UserBot, message: Message):
         expanded = await expand_url(url)
         if expanded:
             await message.edit(
-                f"<b>Shortened URL</b>: {url}\n<b>Expanded URL</b>: {expanded}", disable_web_page_preview = True
+                f"<b>Shortened URL</b>: {url}\n<b>Expanded URL</b>: {expanded}", disable_web_page_preview=True
             )
         else:
             await message.edit(
@@ -89,18 +89,24 @@ async def expand(bot: UserBot, message: Message):
             )
     else:
         await message.edit("Nothing to expand")
-        
+
+
 @UserBot.on_message(Filters.command("shorten", ".") & Filters.me)
 async def shorten(bot: UserBot, message: Message):
+    keyword = None
+
     if message.reply_to_message:
         url = message.reply_to_message.text or message.reply_to_message.caption
-        keyword = message.command[1] or None
+        if len(message.command) > 1:
+            keyword = message.command[1]
+    elif len(message.command) > 2:
+        url = message.command[1]
+        keyword = message.command[2]
     elif len(message.command) > 1:
         url = message.command[1]
-        keyword = message.command[2] or None
     else:
         url = None
-        
+
     if url:
         shortened = await shorten_url(url, keyword)
         if shortened == "API ERROR":
@@ -113,15 +119,17 @@ async def shorten(bot: UserBot, message: Message):
             txt = f"<b>Original URL</b>: {url}\n<b>Shortened URL</b>: {shortened}"
     else:
         txt = "Please provide a URL to shorten"
-        
-    await message.edit(txt, disable_web_page_preview = True)
-        
+
+    await message.edit(txt, disable_web_page_preview=True)
+
+
 add_command_help(
     'www', [
         ['.ping', 'Calculates ping time between you and Telegram.'],
         ['.dc', 'Get\'s your Telegram DC.'],
-        ['.speedtest `or` .speed', 'Runs a speedtest on the server this userbot is hosted.. Flex on them haters. With an in '
-                       'Telegram Speedtest of your server..'],
+        ['.speedtest `or` .speed',
+         'Runs a speedtest on the server this userbot is hosted.. Flex on them haters. With an in '
+         'Telegram Speedtest of your server..'],
         ['.expand', 'Expands a shortened url. Works for replied to message, photo caption or .expand url'],
         ['.shorten', 'Shortens a url. Works for replied to message, photo caption or .shorten url keyword']
     ]

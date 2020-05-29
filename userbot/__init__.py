@@ -31,15 +31,14 @@ DB_NAME = config.get('mongo', 'db_name')
 DB_USERNAME = config.get('mongo', 'db_username')
 DB_PASSWORD = config.get('mongo', 'db_password')
 
-# Yandex Translation API details
-YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
-
 # Other Users
 ALLOWED_USERS = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
 
-#MISC APIs (Should put yandex here too but too lazy atm)
+# MISC APIs
 YOURLS_URL = config.get('misc', 'yourls_url', fallback=None)
 YOURLS_KEY = config.get('misc', 'yourls_key', fallback=None)
+YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
+
 
 # Extra details
 __version__ = '0.2.0'
