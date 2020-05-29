@@ -7,18 +7,17 @@ import aiohttp
 async def shorten_url(url, keyword):
     if not YOURLS_URL or not YOURLS_KEY:
         return "API ERROR"
-
-    if url_check(url):
+    
+    url_checked = await url_check(url)
+    if url_checked:
         yourls = YOURLSClient(YOURLS_URL, signature=YOURLS_KEY)
-
-    try:
-        shorturl = yourls.shorten(url, keyword).shorturl
-    except yourls.exceptions.YOURLSURLExistsError:
-        shorturl = yourls.expand(url)
-        result = shorturl
+        try:
+            shorturl = yourls.shorten(url, keyword).shorturl
+        except yourls.exceptions.YOURLSURLExistsError:
+            shorturl = yourls.expand(url)
+            result = shorturl
     else:
         result = "INVALID URL"
-
     return result
 
 
