@@ -93,22 +93,16 @@ async def expand(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("shorten", ".") & Filters.me)
 async def shorten(bot: UserBot, message: Message):
     if message.reply_to_message:
-        msg = (message.reply_to_message.text or message.reply_to_message.caption).split(" ")
-        if len(msg) > 0:
-            url = msg[0]
-            if len(msg) > 1:
-                keyword = msg[1]
+        url = message.reply_to_message.text or message.reply_to_message.caption
+        keyword = message.command[1] or None
     elif len(message.command) > 1:
         url = message.command[1]
-        if len(message.command) > 2:
-            keyword = message.command[2]
-        else:
-            keyword = None
+        keyword = message.command[2] or None
     else:
         url = None
         
     if url:
-        shortened = shorten_url(url, keyword)
+        shortened = await shorten_url(url, keyword)
         if shortened == "API ERROR":
             message.edit("API URL or API KEY not found! Add YOURLS details to config")
         elif shortened == "INVALID URL":
