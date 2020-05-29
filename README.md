@@ -1,5 +1,14 @@
 # Pyrogram Userbot
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b10d40c60fc549299eeb7bda1c7501aa)](https://app.codacy.com/manual/athphane/userbot?utm_source=github.com&utm_medium=referral&utm_content=athphane/userbot&utm_campaign=Badge_Grade_Settings)  [![HitCount](http://hits.dwyl.com/athphane/userbot.svg)](http://hits.dwyl.com/athphane/userbot)
+![Python Version](https://img.shields.io/badge/Python-v3.8-blue)
+![Repo Size](https://img.shields.io/github/repo-size/athphane/userbot)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/athphane/userbot)](https://github.com/athphane/userbot/pulse)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b10d40c60fc549299eeb7bda1c7501aa)](https://app.codacy.com/manual/athphane/userbot?utm_source=github.com&utm_medium=referral&utm_content=athphane/userbot&utm_campaign=Badge_Grade_Settings)
+[![HitCount](http://hits.dwyl.com/athphane/userbot.svg)](http://hits.dwyl.com/athphane/userbot)
+[![Contributors](https://img.shields.io/github/contributors/athphane/userbot)](https://github.com/athphane/userbot/graphs/contributors)
+![Last Commit](https://img.shields.io/github/last-commit/athphane/userbot/master)
+![Issues](https://img.shields.io/github/issues/athphane/userbot)
+![Pull Requests](https://img.shields.io/github/issues-pr/athphane/userbot)
+[![License](https://img.shields.io/github/license/athphane/userbot)](LICENSE)
 
 <img src="https://i.imgur.com/WXUgDHT.png" width="160" align="right">
 
