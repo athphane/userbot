@@ -8,7 +8,10 @@ async def shorten_url(url, keyword):
         return "API ERROR"
     if url_check(url):
         yourls = YOURLSClient(YOURLS_URL, signature=YOURLS_KEY)
-        shorturl = yourls.shorten(url, keyword).shorturl
+	try:
+        	shorturl = yourls.shorten(url, keyword).shorturl
+	except yourls.exceptions.YOURLSURLExistsError:
+		shorturl = yourls.expand(url)
         result = shorturl
     else:
         result = "INVALID URL"
