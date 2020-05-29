@@ -1,7 +1,8 @@
-from configparser import ConfigParser
-from logging.handlers import TimedRotatingFileHandler
-import logging
 import ast
+import logging
+from configparser import ConfigParser
+from datetime import datetime
+from logging.handlers import TimedRotatingFileHandler
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -39,7 +40,6 @@ YOURLS_URL = config.get('misc', 'yourls_url', fallback=None)
 YOURLS_KEY = config.get('misc', 'yourls_key', fallback=None)
 YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
 
-
 # Extra details
 __version__ = '0.2.0'
 __author__ = 'athphane'
@@ -56,3 +56,4 @@ scheduler = AsyncIOScheduler()
 # Global Variables
 CMD_HELP = {}
 client = None
+START_TIME = datetime.now()

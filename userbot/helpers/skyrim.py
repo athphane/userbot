@@ -1,5 +1,6 @@
-from PIL import Image, ImageDraw, ImageFont
 import sys
+
+from PIL import Image, ImageDraw, ImageFont
 
 
 class SkyrimStatusMeme:
