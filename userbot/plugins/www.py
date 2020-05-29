@@ -110,7 +110,7 @@ async def shorten(bot: UserBot, message: Message):
         elif shortened == "KEYWORD/URL Exists":
             txt = "The URL or KEYWORD already exists!"
         else:
-            txt = f"<b>Original URL</b>:{url}\n<b>Shortened URL</b>:{shortened}"
+            txt = f"<b>Original URL</b>: {url}\n<b>Shortened URL</b>: {shortened}"
     else:
         txt = "Please provide a URL to shorten"
         
