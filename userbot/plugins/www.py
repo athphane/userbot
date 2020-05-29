@@ -104,14 +104,17 @@ async def shorten(bot: UserBot, message: Message):
     if url:
         shortened = await shorten_url(url, keyword)
         if shortened == "API ERROR":
-            await message.edit("API URL or API KEY not found! Add YOURLS details to config")
+            txt = "API URL or API KEY not found! Add YOURLS details to config"
         elif shortened == "INVALID URL":
-            await message.edit("Invalid URL")
+            txt = f"The provided URL: `{url}` is invalid"
+        elif shortened == "KEYWORD/URL Exists"
+            txt = "Invalid URL"
         else:
             txt = f"<b>Original URL</b>:{url}\n<b>Shortened URL</b>:{shortened}"
-            await message.edit(txt)
     else:
-        await message.edit("Please provide a URL to shorten")
+        txt = "Please provide a URL to shorten"
+        
+    await message.edit(txt, disable_web_page_preview = True)
         
 add_command_help(
     'www', [
