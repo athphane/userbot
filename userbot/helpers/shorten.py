@@ -1,7 +1,7 @@
 from userbot import YOURLS_URL, YOURLS_KEY
 
 from yourls import YOURLSClient
-from yourls.exceptions import YOURLSURLExistsError
+from yourls.exceptions import YOURLSURLExistsError, YOURLSKeywordExistsError
 import aiohttp
 
 
@@ -14,9 +14,12 @@ async def shorten_url(url, keyword):
         yourls = YOURLSClient(YOURLS_URL, signature=YOURLS_KEY)
         try:
             shorturl = yourls.shorten(url, keyword).shorturl
+            result = shorturl
         except YOURLSURLExistsError:
             shorturl = yourls.expand(url)
             result = shorturl
+        except YOURLSKeywordExistsError:
+            result = "KEYWORD Exists"
     else:
         result = "INVALID URL"
     return result
