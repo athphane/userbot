@@ -3,7 +3,7 @@ from userbot import YOURLS_URL, YOURLS_KEY
 from yourls import YOURLSClient
 import aiohttp
 
-async def shorten(url, keyword):
+async def shorten_url(url, keyword):
     if not YOURLS_URL or not YOURLS_KEY:
         return "API ERROR"
 	if url_check(url):
