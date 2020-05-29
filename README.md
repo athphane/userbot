@@ -8,6 +8,7 @@
 ![Last Commit](https://img.shields.io/github/last-commit/athphane/userbot/master)
 ![Issues](https://img.shields.io/github/issues/athphane/userbot)
 ![Pull Requests](https://img.shields.io/github/issues-pr/athphane/userbot)
+[![StyleCI](https://github.styleci.io/repos/216083990/shield?branch=master)](https://github.styleci.io/repos/216083990)
 [![License](https://img.shields.io/github/license/athphane/userbot)](LICENSE)
 
 <img src="https://i.imgur.com/WXUgDHT.png" width="160" align="right">
