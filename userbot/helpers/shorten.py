@@ -15,11 +15,8 @@ async def shorten_url(url, keyword):
         try:
             shorturl = yourls.shorten(url, keyword).shorturl
             result = shorturl
-        except YOURLSURLExistsError:
-            shorturl = yourls.expand(url)
-            result = shorturl
-        except YOURLSKeywordExistsError:
-            result = "KEYWORD Exists"
+        except YOURLSURLExistsError, YOURLSKeywordExistsError:
+            result = "KEYWORD/URL Exists"
     else:
         result = "INVALID URL"
     return result
