@@ -27,7 +27,6 @@ async def creator(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("id", ".") & Filters.me)
 async def get_id(bot: UserBot, message: Message):
     file_id = None
-    user_id = None
 
     if message.reply_to_message:
         rep = message.reply_to_message
@@ -53,15 +52,11 @@ async def get_id(bot: UserBot, message: Message):
             file_id = rep.location.file_id
         elif rep.venue:
             file_id = rep.venue.file_id
-        elif rep.from_user:
-            user_id = rep.from_user.id
 
-    if user_id:
-        await message.edit(user_id)
-    elif file_id:
-        await message.edit(file_id)
-    else:
+    if not file_id:
         await message.edit("This chat's ID:\n`{}`".format(message.chat.id))
+    else:
+        await message.edit("File_ID:\n`{}`".format(file_id))
 
 
 @UserBot.on_message(Filters.command("restart", '.') & Filters.me)

@@ -1,8 +1,8 @@
-from userbot import YOURLS_URL, YOURLS_KEY
-
+import aiohttp
 from yourls import YOURLSClient
 from yourls.exceptions import YOURLSURLExistsError, YOURLSKeywordExistsError
-import aiohttp
+
+from userbot import YOURLS_URL, YOURLS_KEY
 
 
 async def shorten_url(url, keyword):

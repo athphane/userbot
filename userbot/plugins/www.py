@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime
 
 import speedtest
@@ -117,10 +118,14 @@ async def shorten(bot: UserBot, message: Message):
             txt = "The URL or KEYWORD already exists!"
         else:
             txt = f"<b>Original URL</b>: {url}\n<b>Shortened URL</b>: {shortened}"
+            await message.edit(txt, disable_web_page_preview=True)
+            return
     else:
         txt = "Please provide a URL to shorten"
 
-    await message.edit(txt, disable_web_page_preview=True)
+    await message.edit(txt)
+    await asyncio.sleep(3)
+    await message.delete()
 
 
 add_command_help(
