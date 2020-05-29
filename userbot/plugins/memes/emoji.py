@@ -1,5 +1,6 @@
 import asyncio
 from collections import deque
+from random import randint
 
 from pyrogram import Filters, Message
 
@@ -20,7 +21,7 @@ emoji_commands = [x for x in emojis]
 async def emoji_cycle(bot: UserBot, message: Message):
     deq = deque(emojis[message.command[0]])
     try:
-        for _ in range(len(emojis[message.command[0]]) * 2):
+        for _ in range(randint(16, 32)):
             await asyncio.sleep(0.3)
             await message.edit("".join(deq), parse_mode=None)
             deq.rotate(1)
