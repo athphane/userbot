@@ -7,6 +7,7 @@ import traceback
 from pyrogram import Filters, Message
 
 from userbot import UserBot
+from userbot.database import database
 
 sys.tracebacklimit = 0
 
@@ -28,7 +29,7 @@ async def evaluation(bot: UserBot, message: Message):
 
     try:
         reply = message.reply_to_message or None
-        await aexec(cmd, bot, message, reply)
+        await aexec(cmd, bot, message, reply, database)
     except Exception:
         exc = traceback.format_exc()
 
@@ -67,12 +68,12 @@ async def evaluation(bot: UserBot, message: Message):
         await status_message.edit(final_output)
 
 
-async def aexec(code, c, m, r):
+async def aexec(code, c, m, r, d):
     exec(
-        f'async def __aexec(c, m, r): ' +
+        f'async def __aexec(c, m, r, d): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
-    return await locals()['__aexec'](c, m, r)
+    return await locals()['__aexec'](c, m, r, d)
 
 
 @UserBot.on_message(Filters.command("exec", ".") & Filters.me & ~Filters.forwarded)
