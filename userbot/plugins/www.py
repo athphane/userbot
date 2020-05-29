@@ -8,6 +8,7 @@ from userbot import UserBot
 from userbot.helpers.PyroHelpers import SpeedConvert
 from userbot.helpers.constants import WWW
 from userbot.helpers.expand import expand_url
+from userbot.helpers.shorten import shorten_url
 from userbot.plugins.help import add_command_help
 
 
@@ -88,13 +89,43 @@ async def expand(bot: UserBot, message: Message):
             )
     else:
         await message.edit("Nothing to expand")
-
+        
+@UserBot.on_message(Filters.command("shorten", ".") & Filters.me)
+async def shorten(bot: UserBot, message: Message):
+    if message.reply_to_message:
+        msg = (message.reply_to_message.text or message.reply_to_message.caption).split(" ")
+        if len(msg) > 0:
+            url = msg[0]
+            if len(msg) > 1:
+                keyword = msg[1]
+    elif len(message.command) > 1:
+        url = message.command[1]
+        if len(message.command) > 2:
+            keyword = message.command[2]
+        else:
+            keyword = None
+    else:
+        url = None
+        
+    if url:
+        shortened = shorten_url(url, keyword)
+        if shortened == "API ERROR":
+            message.edit("API URL or API KEY not found! Add YOURLS details to config")
+        elif shortened == "INVALID URL":
+            message.edit("Invalid URL")
+        else:
+            txt = f"<b>Original URL</b>:{url}\n<b>Shortened URL</b>:{shortened}"
+            message.edit(txt)
+    else:
+        message.edit("Please provide a URL to shorten")
+        
 add_command_help(
     'www', [
         ['.ping', 'Calculates ping time between you and Telegram.'],
         ['.dc', 'Get\'s your Telegram DC.'],
         ['.speedtest `or` .speed', 'Runs a speedtest on the server this userbot is hosted.. Flex on them haters. With an in '
                        'Telegram Speedtest of your server..'],
-        ['.expand', 'Expands a shortened url. Works for replied to message, photo caption or .expand url']
+        ['.expand', 'Expands a shortened url. Works for replied to message, photo caption or .expand url'],
+        ['.shorten', 'Shortens a url. Works for replied to message, photo caption or .shorten url keyword']
     ]
 )
