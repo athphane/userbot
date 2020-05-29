@@ -1,12 +1,18 @@
 # Pyrogram Userbot
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b10d40c60fc549299eeb7bda1c7501aa)](https://app.codacy.com/manual/athphane/userbot?utm_source=github.com&utm_medium=referral&utm_content=athphane/userbot&utm_campaign=Badge_Grade_Settings)  [![HitCount](http://hits.dwyl.com/athphane/userbot.svg)](http://hits.dwyl.com/athphane/userbot)
 
-A Telegram Userbot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
+<img src="https://i.imgur.com/WXUgDHT.png" width="160" align="right">
+
+> A Telegram Userbot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
+
+This repository contains the source code of a Telegram Userbot and the instructions for running a
+copy yourself. Beside its main purpose, the bot is featuring [**Pyrogram Asyncio**](https:////github.com/pyrogram/pyrogram/issues/181) and
+[**Smart Plugins**](https://docs.pyrogram.org/topics/smart-plugins); feel free to explore the source code to
+learn more about these topics.
 
 I assume you will read this whole README.md file before continuing.
 
-Development in progress.
+> Development in progress.
 
 ## Requirements
 You're gonna need to get the following programs and services either installed on your server
@@ -43,6 +49,23 @@ pip install -r requirements.txt
 python -m userbot.
 ```
 
+## Developing
+To add extra modules to the bot, simply add the code into [userbot/plugins](userbot/plugins). Each file
+that is added to the plugins directory should have the following code at a minimum.
+```python
+from pyrogram import Message, Filters
+
+from userbot import UserBot
+
+@UserBot.on_message(Filters.command('sample', ['.']))
+async def module_name(bot: UserBot, message: Message):
+    await message.edit(
+        "This is a sample module"
+    )
+```
+
+This example is only for Pyrogram on_message events. 
+
 ## Credits, and Thanks to
 *  [Dan](https://t.me/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
 
@@ -55,4 +78,4 @@ that gave a ton of ideas on how and what modules to include in this userbot.
 *  [Baivaru](https://github.com/baivaru) for the ton of help that got me this far into making this repo. 
 
 ---
-Made with love from the Maldives <3
+<p align="center">Made with love from the Maldives ❤</p>
