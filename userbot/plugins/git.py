@@ -16,7 +16,7 @@ async def last_commit(bot: UserBot, message: Message):
     master = repo.head.reference
     commit = master.commit.message.strip()
     id = master.commit.hexsha
-    commit_link = f"<a href='https://github.com/athphane/userbot/commit/{id}'>{id[:7]}</a>
+    commit_link = f"<a href='https://github.com/athphane/userbot/commit/{id}'>{id[:7]}</a>"
     author = master.commit.author.name
     date_time = datetime.datetime.fromtimestamp(master.commit.committed_date)
     commit_msg = f"**Latest commit**:\n{commit_link}\n\n**Commit Message**:\n```{commit.strip()}```\n\n**By**: ```{author}```\n\n**On**: ```{date_time}```"
