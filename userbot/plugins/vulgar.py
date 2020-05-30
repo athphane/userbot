@@ -14,7 +14,7 @@ async def i_am_not_allowed_to_say_this(bot: UserBot, message: Message):
     for word in bad_words:
         txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
 
-    if txt != message.text:
+    if txt != message.caption if message.caption else message.text:
         try:
             await message.edit(txt)
         except:
