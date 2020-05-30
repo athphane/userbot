@@ -9,7 +9,7 @@ from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command('lastcommit', '.') & Filters.me)
+@UserBot.on_message(Filters.command(['lastcommit', 'lc'], '.') & Filters.me)
 async def last_commit(bot: UserBot, message: Message):
     repo = git.Repo(os.getcwd())
     master = repo.head.reference
@@ -22,6 +22,6 @@ async def last_commit(bot: UserBot, message: Message):
 # Command help section
 add_command_help(
     'git', [
-        ['.lastcommit', 'Gets the last commit message.'],
+        ['.lastcommit | .lc', 'Gets the last commit message.'],
     ]
 )
