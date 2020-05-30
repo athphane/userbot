@@ -30,7 +30,7 @@ async def weather(bot: UserBot, message: Message):
             await message.edit("`Sorry, we cannot process this request today!`")
         else:
             weather = f"<code>{escape(data)}</code>"
-            await message.edit(weather, parse_mode='md')
+            await message.edit(weather, parse_mode='html')
 
 
 # Command help section
