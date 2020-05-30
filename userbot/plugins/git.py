@@ -1,4 +1,5 @@
 import git
+import datetime
 import asyncio
 from html import escape
 import os
@@ -16,7 +17,8 @@ async def last_commit(bot: UserBot, message: Message):
     commit = master.commit.message.strip()
     id = master.commit.hexsha[:7]
     author = master.commit.author.name
-    commit_msg = f"**Latest commit**:\n```{id}```\n\n**Commit Message**:\n```{commit.strip()}```\n\n**By**: ```{author}```"
+    date_time = datetime.datetime.fromtimestamp(master.commit.committed_date)
+    commit_msg = f"**Latest commit**:\n```{id}```\n\n**Commit Message**:\n```{commit.strip()}```\n\n**By**: ```{author}``` on {date_time}"
     await message.edit(commit_msg)
 
 # Command help section
