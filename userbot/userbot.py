@@ -54,7 +54,7 @@ class UserBot(Client):
         if git_update:
             os.system('git pull')
         if pip:
-            os.system('pip install -r requirements.txt')
+            os.system('pip install -U -r requirements.txt')
 
         os.execl(sys.executable, sys.executable, '-m', self.__class__.__name__.lower())
         sys.exit()
