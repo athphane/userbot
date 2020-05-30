@@ -17,7 +17,7 @@ class UserBot(Client):
         super().__init__(
             name,
             config_file=config_file,
-            workers=64,
+            workers=32,
             plugins=dict(root="userbot/plugins"),
             workdir="./",
             app_version=f"Userbot v0.2",
