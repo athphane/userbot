@@ -170,17 +170,22 @@ async def pay_respects_new(bot: UserBot, message: Message):
     )
     await message.edit(pay)
 
+@UserBot.on_message(Filters.me)
+async def gerey_kada(bot: UserBot, message: Message):
+    gerey_kada = message.replace(".k", "ކަޑަ؟").replace(".g", "ގެރޭ")
+    await message.edit(gerey_kada)
 
-@UserBot.on_message(Filters.command(["g"], ".") & Filters.me)
-async def gerey(bot: UserBot, message: Message):
-    gerey = "ގެރޭ"
-    await message.edit(gerey)
+
+# @UserBot.on_message(Filters.command(["g"], ".") & Filters.me)
+# async def gerey(bot: UserBot, message: Message):
+#     gerey = "ގެރޭ"
+#     await message.edit(gerey)
 
 
-@UserBot.on_message(Filters.command(["k"], ".") & Filters.me)
-async def kada(bot: UserBot, message: Message):
-    kada = "ކަޑަ؟"
-    await message.edit(kada)
+# @UserBot.on_message(Filters.command(["k"], ".") & Filters.me)
+# async def kada(bot: UserBot, message: Message):
+#     kada = "ކަޑަ؟"
+#     await message.edit(kada)
 
 
 @UserBot.on_message(Filters.command(['vapor'], '.') & Filters.me)
