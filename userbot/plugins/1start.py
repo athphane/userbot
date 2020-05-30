@@ -80,6 +80,7 @@ async def get_id(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("restart", '.') & Filters.me)
 async def restart(bot: UserBot, message: Message):
+    message.stop_propagation()
     await message.edit(f"Restarting {UserBot.__name__}.")
     await bot.send_message('me', f'#userbot_restart, {message.chat.id}, {message.message_id}')
 
