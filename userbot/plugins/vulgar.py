@@ -9,6 +9,7 @@ bad_words = ['nigga', 'nigger', 'coon']
 
 @UserBot.on_message(~Filters.regex("^\.\w*") & Filters.me, group=10)
 async def i_am_not_allowed_to_say_this(bot: UserBot, message: Message):
+    txt = None
     if message.caption:
         txt = message.caption
     elif message.text:
