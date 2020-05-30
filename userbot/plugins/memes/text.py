@@ -172,7 +172,8 @@ async def pay_respects_new(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.me)
 async def gerey_kada(bot: UserBot, message: Message):
-    gerey_kada = message.text.replace(".k", "ކަޑަ؟").replace(".g", "ގެރޭ")
+    gerey = re.sub(r"\b.g\b", "ގެރޭ", message.text)
+    gerey_kada = re.sub(r"\b.k\b", "ކަޑަ؟", gerey)
     await message.edit(gerey_kada)
 
 
