@@ -18,7 +18,7 @@ async def last_commit(bot: UserBot, message: Message):
     id = master.commit.hexsha[:7]
     author = master.commit.author.name
     date_time = datetime.datetime.fromtimestamp(master.commit.committed_date)
-    commit_msg = f"**Latest commit**:\n```{id}```\n\n**Commit Message**:\n```{commit.strip()}```\n\n**By**: ```{author.strip()}```\n\n**On**: `{date_time}`"
+    commit_msg = f"**Latest commit**:\n```{id}```\n\n**Commit Message**:\n```{commit.strip()}```\n\n**By**: ```{author}```\n\n**On**: ```{date_time}```"
     await message.edit(commit_msg)
 
 # Command help section

@@ -9,7 +9,6 @@ from pyrogram import Filters, Message
 from userbot import UserBot
 from userbot.database import database
 
-sys.tracebacklimit = 0
 
 
 @UserBot.on_message(Filters.command("eval", ".") & Filters.me & ~Filters.forwarded)
@@ -69,6 +68,7 @@ async def evaluation(bot: UserBot, message: Message):
 
 
 async def aexec(code, c, m, r, d):
+    sys.tracebacklimit = 0
     exec(
         f'async def __aexec(c, m, r, d): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
