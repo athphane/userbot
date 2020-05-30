@@ -14,7 +14,7 @@ async def last_commit(bot: UserBot, message: Message):
     repo = git.Repo(os.getcwd())
     master = repo.head.reference
     commit = master.commit.message.strip()
-    id = master.commit.hexsha
+    id = master.commit.hexsha[:7]
     author = master.commit.author.name
     commit_msg = f"**Latest commit**:\n```{id}```\n\n**Commit Message**:\n```{commit.strip()}```\n\n**By**: ```{author}```"
     await message.edit(commit_msg)
