@@ -32,21 +32,22 @@ class PmPermit:
             return True
 
     def block_pm(self, user_id):
-        if self.check_if_approved(user_id) is False:
-            return False
-        else:
-            self.pm_table.update_one(
-                {'user_id': user_id},
-                {
-                    "$set": {
-                        'warn': True,
-                        'approval': False,
-                        'force_blocked': True,
-                        'retard_score': 10,
-                    }
+        self.pm_table.update_one(
+            {'user_id': user_id},
+            {
+                "$set": {
+                    'warn': True,
+                    'approval': False,
+                    'force_blocked': True,
+                    'retard_score': 10,
                 }
-            )
-            return True
+            }
+        )
+
+    def pm_reset(self, user_id):
+        self.pm_table.delete_one(
+            {'user_id': user_id},
+        )
 
     def check_if_force_blocked(self, user_id):
         to_check = self.pm_table.find_one({'user_id': user_id})
