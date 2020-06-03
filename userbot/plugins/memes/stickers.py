@@ -55,7 +55,7 @@ async def anime_girl(bot: UserBot, message: Message):
         elif message.reply_to_message and len(cmd) == 1:
             anime_girl_text = message.reply_to_message.text
         elif not message.reply_to_message and len(cmd) == 1:
-            await message.edit("`Senpai I need something to say :(`")
+            await message.edit("`Waifu ran away...`")
             await asyncio.sleep(2)
             await message.delete()
             return
