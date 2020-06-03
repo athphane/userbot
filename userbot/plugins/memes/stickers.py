@@ -45,7 +45,7 @@ async def mock_people(bot: UserBot, message: Message):
         await message.delete()
 
 
-@UserBot.on_message(Filters.command(["animegirl", 'ag'], ".") & Filters.me)
+@UserBot.on_message(Filters.command(["animegirl", 'ag', 'waifu'], ".") & Filters.me)
 async def anime_girl(bot: UserBot, message: Message):
     try:
         cmd = message.command
@@ -60,7 +60,7 @@ async def anime_girl(bot: UserBot, message: Message):
             await message.delete()
             return
 
-        stickers = [20, 32, 33, 40, 42, 58, 41]
+        stickers = [15, 20, 32, 33, 34, 37, 40, 41, 42, 48, 55, 58]
         sticker = f"#{int(choice(stickers))}"
         anime_girl_results = await bot.get_inline_bot_results(
             "stickerizerbot",
