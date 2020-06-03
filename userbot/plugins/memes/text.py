@@ -109,7 +109,7 @@ async def mock_text(bot: UserBot, message: Message):
     elif message.reply_to_message and len(cmd) == 1:
         mock_t = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("I need something to google")
+        await message.edit("I need something to mock")
         await asyncio.sleep(2)
         await message.delete()
         return
