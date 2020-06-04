@@ -39,12 +39,13 @@ async def define(bot: UserBot, message: Message):
             return
         else:
             await message.edit("`There is no information to display`")
-            return
+            await asyncio.sleep(3)
+            await message.delete()
     else:
         await message.edit("`No results found!`")
+        await asyncio.sleep(3)
+        await message.delete()
 
-    await asyncio.sleep(3)
-    await message.delete()
 
 # Command help section
 add_command_help(
