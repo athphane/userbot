@@ -79,10 +79,11 @@ async def sticker_super_func(bot: UserBot, message: Message):
         except TimeoutError:
             await message.edit("`@StickerizerBot didn't respond in time...`")
             await asyncio.sleep(2)
+            await message.delete()
     except Exception:
         await message.edit("`Failed to reach @Stickerizerbot...`")
         await asyncio.sleep(2)
-    await message.delete()
+        await message.delete()
 
 
 # Command help section
