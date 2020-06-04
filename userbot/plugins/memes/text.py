@@ -189,7 +189,6 @@ def weebify_text(raw_text):
         if normie_char in normiefont:
             weeby_char = weebyfont[normiefont.index(normie_char)]
             raw_text = raw_text.replace(normie_char, weeby_char)
-
     return raw_text
 
 
@@ -275,6 +274,7 @@ add_command_help(
         ['.slap', 'Sends a randomly generated slap text. Can become very random at some times.'],
         ['.insult', 'Sends a randomly generated insult. Can become very random at some times.'],
         ['.vapor', 'Vaporizes the text.'],
+        ['.weeb `or` .weebify', 'Weebifies the text.'],
         ['.ok', 'Sends -_____- with a fast animation.'],
         ['-_-', 'Extends to -________-'],
         ['.f', 'Pay respects'],
