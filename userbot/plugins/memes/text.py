@@ -178,6 +178,39 @@ async def kada(bot: UserBot, message: Message):
     await message.edit(kada)
 
 
+normiefont = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+              'v', 'w', 'x', 'y', 'z']
+weebyfont = ['卂', '乃', '匚', '刀', '乇', '下', '厶', '卄', '工', '丁', '长', '乚', '从', '𠘨', '口', '尸', '㔿', '尺', '丂', '丅', '凵',
+             'リ', '山', '乂', '丫', '乙']
+
+
+def weebify_text(raw_text):
+    for normie_char in raw_text:
+        if normie_char in normiefont:
+            weeby_char = weebyfont[normiefont.index(normie_char)]
+            raw_text = raw_text.replace(normie_char, weeby_char)
+
+    return raw_text
+
+
+@UserBot.on_message(Filters.command(['weeb', 'weebify'], ".") & Filters.me)
+async def weebify(bot: UserBot, message: Message):
+    cmd = message.command
+
+    raw_text = ""
+    if len(cmd) > 1:
+        raw_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        raw_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit(f"`{weebify_text('Could not weebify...')}`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    await message.edit(weebify_text(raw_text))
+
+
 @UserBot.on_message(Filters.command(['vapor'], '.') & Filters.me)
 async def vapor(bot: UserBot, message: Message):
     cmd = message.command
