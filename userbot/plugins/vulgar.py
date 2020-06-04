@@ -26,4 +26,4 @@ async def i_am_not_allowed_to_say_this(bot: UserBot, message: Message):
             if txt != message.text:
                 await message.edit(txt)
     except:
-        await message.delete()
+        return
