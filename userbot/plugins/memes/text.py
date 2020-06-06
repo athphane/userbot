@@ -166,6 +166,25 @@ async def pay_respects_new(bot: UserBot, message: Message):
     await message.edit(pay)
 
 
+@UserBot.on_message(Filters.command(["f"], "#") & Filters.me)
+async def calligraphic_f(bot: UserBot, message: Message):
+    pay = (
+        "⠀⠀⠀⢀⡤⢶⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⠀⢀⣠⣤⣤⣤⣿⣧⣀⣀⣀⣀⣀⣀⣀⣀⣤⡄⠀\n"
+        "⢠⣾⡟⠋⠁⠀⠀⣸⠇⠈⣿⣿⡟⠉⠉⠉⠙⠻⣿⡀\n"
+        "⢺⣿⡀⠀⠀⢀⡴⠋⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠙⠇\n"
+        "⠈⠛⠿⠶⠚⠋⣀⣤⣤⣤⣿⣿⣇⣀⣀⣴⡆⠀⠀⠀\n"
+        "⠀⠀⠀⠀⠠⡞⠋⠀⠀⠀⣿⣿⡏⠉⠛⠻⣿⡀⠀⠀\n"
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠈⠁⠀⠀\n"
+        "⠀⠀⣠⣶⣶⣶⣶⡄⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⢰⣿⠟⠉⠙⢿⡟⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⢸⡟⠀⠀⠀⠘⠀⠀⠀⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⠈⢿⡄⠀⠀⠀⠀⠀⣼⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⠀⠀⠙⠷⠶⠶⠶⠿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀\n"
+    )
+    await message.edit(pay)
+
+
 @UserBot.on_message(Filters.command(["g"], ".") & Filters.me)
 async def gerey(bot: UserBot, message: Message):
     gerey = "ގެރޭ"
@@ -279,6 +298,7 @@ add_command_help(
         ['-_-', 'Extends to -________-'],
         ['.f', 'Pay respects'],
         ['.F', 'Pay respects but filled'],
+        ['#f', 'Pay respects but calligraphy.'],
         ['.g', 'Gerey'],
         ['.k', 'Kada?'],
         ['.mockt', 'Mock (text only version)'],
