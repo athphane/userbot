@@ -1,5 +1,5 @@
 import asyncio
-frome datetime import datetime
+from datetime import datetime
 
 from pyrogram import Filters, Message
 
