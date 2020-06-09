@@ -35,7 +35,7 @@ async def nice(bot: UserBot, message: Message):
         await bot.send_photo(
             chat_id = message.chat.id,
             photo = images[0],
-            caption = txt
+            caption = txt,
             reply_to_message_id=ReplyCheck(message)
         )
     else:
