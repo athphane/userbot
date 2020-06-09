@@ -30,7 +30,7 @@ async def nice(bot: UserBot, message: Message):
         for i, image in enumerate(images, start=1):
             txt += f", <a href='{image}'>Flicker {i}</a>"
 
-    txt += f"\n\n<b>Details</b>: {data['details']}"
+    txt += f"\n\n{data['details']}"
 
     if images:
         await bot.send_photo(
