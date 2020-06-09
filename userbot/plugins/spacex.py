@@ -20,15 +20,17 @@ async def nice(bot: UserBot, message: Message):
     txt = f"<b>Mission Name:</b> {data['mission_name']}\n" \
           f"<b>Flight No:</b> {data['flight_number']}\n" \
           f"<b>Rocket Name:</b> {data['rocket']['rocket_name']}\n" \
-          f"<b>Launch Site:</b> {data['launch_site']['site_name_long']}\n" \
-          f"<b>Reddit Campaign:</b> {data['links']['reddit_campaign']}\n" \
-          f"<b>Video:</b> {data['links']['video_link']}\n"
+          f"<b>Launch Site:</b> {data['launch_site']['site_name']}\n" \
+          f"<b>Launch Date:</b> {dt}\n\n" \
+          f"<b>Links:</b>\n" \
+          f"<a href='{data['links']['reddit_campaign']}'>Reddit</a>, " \
+          f"<a href='{data['links']['video_link']}'>YouTube</a>"
 
     if images:
         for i, image in enumerate(images, start=1):
-            txt += f"<b>Image {i}:</b> {image}\n"
+            txt += f", <a href='{image}'>Flicker {i}</a>"
 
-    txt += f"<b>Details</b>: {data['details']}"
+    txt += f"\n\n<b>Details</b>: {data['details']}"
 
     if images:
         await bot.send_photo(
