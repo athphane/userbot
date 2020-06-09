@@ -48,7 +48,7 @@ async def spacex(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command(['nspacex', 'nextlaunch'], '.') & Filters.me)
-async def nextlaunch(bot: UserBot, message: Message):
+async def next_launch(bot: UserBot, message: Message):
     await message.delete()
 
     data = await get_next()
