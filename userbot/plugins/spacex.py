@@ -55,7 +55,7 @@ async def nextlaunch(bot: UserBot, message: Message):
 
     dt = datetime.utcfromtimestamp(int(data['launch_date_unix'])).strftime('%d-%m-%Y %H:%M:%S')
 
-    txt = "<u><b>NEXT SPACEX LAUNCH</b></u>" \
+    txt = "<u><b>NEXT SPACEX LAUNCH</b></u>\n" \
           f"<b>Mission Name:</b> {data['mission_name']}\n" \
           f"<b>Flight No:</b> {data['flight_number']}\n" \
           f"<b>Rocket Name:</b> {data['rocket']['rocket_name']}\n" \
