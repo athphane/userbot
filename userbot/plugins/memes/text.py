@@ -185,23 +185,6 @@ async def calligraphic_f(bot: UserBot, message: Message):
     await message.edit(pay)
 
 
-@UserBot.on_message(Filters.command(["g"], ".") & Filters.me)
-async def gerey(bot: UserBot, message: Message):
-    gerey = "ގެރޭ"
-    await message.edit(gerey)
-
-
-@UserBot.on_message(Filters.command(["k"], ".") & Filters.me)
-async def kada(bot: UserBot, message: Message):
-    kada = "ކަޑަ؟"
-    await message.edit(kada)
-
-@UserBot.on_message(Filters.command(["bidi"], ".") & Filters.me)
-async def kada(bot: UserBot, message: Message):
-    kada = "🚬"
-    await message.edit(kada)
-
-
 normiefont = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
               'v', 'w', 'x', 'y', 'z']
 weebyfont = ['卂', '乃', '匚', '刀', '乇', '下', '厶', '卄', '工', '丁', '长', '乚', '从', '𠘨', '口', '尸', '㔿', '尺', '丂', '丅', '凵',
@@ -304,8 +287,6 @@ add_command_help(
         ['.f', 'Pay respects'],
         ['.F', 'Pay respects but filled'],
         ['#f', 'Pay respects but calligraphy.'],
-        ['.g', 'Gerey'],
-        ['.k', 'Kada?'],
         ['.mockt', 'Mock (text only version)'],
         ['.dice', 'Send dice animation'],
         ['.target', 'Send target animation'],
