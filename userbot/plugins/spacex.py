@@ -47,7 +47,7 @@ async def spacex(bot: UserBot, message: Message):
         )
 
 
-@UserBot.on_message(Filters.command(['.nspacex', 'nextlaunch'   ], '.') & Filters.me)
+@UserBot.on_message(Filters.command(['nspacex', 'nextlaunch'], '.') & Filters.me)
 async def nextlaunch(bot: UserBot, message: Message):
     await message.delete()
 
@@ -59,7 +59,7 @@ async def nextlaunch(bot: UserBot, message: Message):
           f"<b>Flight No:</b> {data['flight_number']}\n" \
           f"<b>Rocket Name:</b> {data['rocket']['rocket_name']}\n" \
           f"<b>Launch Site:</b> {data['launch_site']['site_name']}\n" \
-          f"<b>Launch Date:</b> {dt}\n\n" \
+          f"<b>Launch Date:</b> {dt}" \
           f"\n\n{data['details']}"
     
     await bot.send_message(
