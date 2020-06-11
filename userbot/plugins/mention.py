@@ -11,7 +11,7 @@ mention = partial(
 )
 
 hmention = partial(
-    "<a href='tg://user?id={}'>\u200B</a>".format
+    "<a href='tg://user?id={}'>\u200B</a>hehe".format
 )
 
 @UserBot.on_message(Filters.command("mention", ".") & Filters.me)
