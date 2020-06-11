@@ -13,7 +13,12 @@ mention = partial(
 async def mention_user(bot: UserBot, message: Message):
     if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: .mention @Ahfan CTO")
-    _mention = mention(message.command[1], str(message.command[2:]))
+    try:
+        user = await bot.get_users(message.command[1])
+    except Exception:
+        await message.edit("User not found")
+        return
+    _mention = mention(user.id, ''.join(message.command[2:]))
     await message.edit(_mention)
 
 
