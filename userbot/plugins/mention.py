@@ -10,6 +10,10 @@ mention = partial(
     "<a href='tg://user?id={}'>{}</a>".format
 )
 
+hmention = partial(
+    "<a href='tg://user?id={}'>\u200B</a>".format
+)
+
 @UserBot.on_message(Filters.command("mention", ".") & Filters.me)
 async def mention_user(bot: UserBot, message: Message):
     if len(message.command) < 3:
@@ -43,8 +47,8 @@ async def hidden_mention(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    _mention = mention(user.id, '\u200B')
-    await message.edit(f"{_mention}hehe")
+    _hmention = hmention(user.id)
+    await message.edit(_hmention)
 
 # Command help section
 add_command_help(
