@@ -18,7 +18,7 @@ async def mention_user(bot: UserBot, message: Message):
     except Exception:
         await message.edit("User not found")
         return
-    _mention = mention(user.id, ''.join(message.command[2:]))
+    _mention = mention(user.id, ' '.join(message.command[2:]))
     await message.edit(_mention)
 
 
