@@ -13,7 +13,7 @@ mention = partial(
 @UserBot.on_message(Filters.command("mention", ".") & Filters.me)
 async def mention_user(bot: UserBot, message: Message):
     if len(message.command) < 3:
-        await message.edit("Incorrect format\nExample: .mention @Ahfan CTO")
+        await message.edit("Incorrect format\nExample: .mention @Athfan CTO")
         await asyncio.sleep(3)
         await message.delete()
         return
