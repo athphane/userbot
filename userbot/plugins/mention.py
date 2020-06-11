@@ -42,9 +42,9 @@ async def hidden_mention(bot: UserBot, message: Message):
         await asyncio.sleep(3)
         await message.delete()
         return
-    
+
     _mention = mention(user.id, '\u200B')
-    await message.edit(_mention)
+    await message.edit(f"{_mention}hehe")
 
 # Command help section
 add_command_help(
