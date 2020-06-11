@@ -28,7 +28,7 @@ config.read(config_file)
 
 # MongoDB details
 MONGO_URL = config.get('mongo', 'url')
-IS_ATLAS = config.get('mongo', 'is_atlas', fallback=False)
+IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
 DB_NAME = config.get('mongo', 'db_name')
 DB_USERNAME = config.get('mongo', 'db_username', fallback=None)
 DB_PASSWORD = config.get('mongo', 'db_password', fallback=None)
