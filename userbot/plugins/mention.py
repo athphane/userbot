@@ -11,7 +11,7 @@ mention = partial(
 )
 
 hmention = partial(
-    "<a href='tg://user?id={}'>\u200B</a>hehe".format
+    "<a href='tg://user?id={}'>\u200B</a>{}".format
 )
 
 @UserBot.on_message(Filters.command("mention", ".") & Filters.me)
@@ -34,7 +34,7 @@ async def mention_user(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("hmention", ".") & Filters.me)
 async def hidden_mention(bot: UserBot, message: Message):
-    if len(message.command) < 2:
+    if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: .hmention @Athfan")
         await asyncio.sleep(3)
         await message.delete()
@@ -47,7 +47,7 @@ async def hidden_mention(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    _hmention = hmention(user.id)
+    _hmention = hmention(user.id, ' '.join(message.command[2:]))
     await message.edit(_hmention)
 
 # Command help section
