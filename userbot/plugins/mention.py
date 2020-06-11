@@ -1,0 +1,25 @@
+from pyrogram import Filters, Message
+
+from userbot import UserBot
+from userbot.plugins.help import add_command_help
+
+from functools import partial
+
+mention = partial(
+    "<a href='tg://user?id={}'>{}</a>".format
+)
+
+@UserBot.on_message(Filters.command("mention", ".") & Filters.me)
+async def mention_user(bot: UserBot, message: Message):
+    if len(message.command) < 3:
+        await message.edit("Incorrect format\nExample: .mention @Ahfan CTO")
+    _mention = mention(message.command[1], str(message.command[2:]))
+    await message.edit(_mention)
+
+
+# Command help section
+add_command_help(
+    'mention', [
+        ['.mention', 'Mention a user with a different name\nExample: `.mention @Athfan CTO`'],
+    ]
+)
