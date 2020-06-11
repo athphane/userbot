@@ -1,3 +1,4 @@
+import asyncio
 from pyrogram import Filters, Message
 
 from userbot import UserBot
@@ -13,11 +14,17 @@ mention = partial(
 async def mention_user(bot: UserBot, message: Message):
     if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: .mention @Ahfan CTO")
+        await asyncio.sleep(3)
+        await message.delete()
+        return
     try:
         user = await bot.get_users(message.command[1])
     except Exception:
         await message.edit("User not found")
+        await asyncio.sleep(3)
+        await message.delete()
         return
+        
     _mention = mention(user.id, ' '.join(message.command[2:]))
     await message.edit(_mention)
 
