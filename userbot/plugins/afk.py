@@ -138,7 +138,22 @@ async def afk_unset(bot: UserBot, message: Message):
 
     await message.delete()
 
+@UserBot.on_message(Filters.me, group=3)
+async def auto_afk_unset(bot: UserBot, message: Message):
+    global AFK, AFK_REASON, USERS, GROUPS
 
+    if AFK:
+        reply = await message.reply(f"While you were away, you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
+                           f"from {len(USERS) + len(GROUPS)} chats")
+        AFK = False
+        AFK_REASON = ''
+        USERS = {}
+        GROUPS = {}
+        sleep(5)
+
+    await reply.delete()
+
+ 
 add_command_help(
     'afk', [
         ['.afk', 'Activates AFK mode with reason as anything after .afk\nUsage: ```.afk <reason>```'],
