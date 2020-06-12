@@ -141,7 +141,7 @@ async def afk_unset(bot: UserBot, message: Message):
     global AFK, AFK_TIME, AFK_REASON, USERS, GROUPS
 
     if AFK:
-        last_seen = subtract_time(datetime.now(), AFK_TIME).replace('ago', '')
+        last_seen = subtract_time(datetime.now(), AFK_TIME).replace('ago', '').strip()
         await message.edit(f"While you were away (for {last_seen}), you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
                            f"from {len(USERS) + len(GROUPS)} chats")
         AFK = False
@@ -158,7 +158,8 @@ async def auto_afk_unset(bot: UserBot, message: Message):
     global AFK, AFK_TIME, AFK_REASON, USERS, GROUPS
 
     if AFK:
-        reply = await message.reply(f"While you were away, you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
+        last_seen = subtract_time(datetime.now(), AFK_TIME).replace('ago', '').strip()
+        reply = await message.reply(f"While you were away (for {last_seen}), you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
                            f"from {len(USERS) + len(GROUPS)} chats")
         AFK = False
         AFK_TIME = ''
