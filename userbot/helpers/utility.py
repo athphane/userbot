@@ -2,6 +2,7 @@ import datetime
 import math
 import time
 import uuid
+import pretty
 from random import randint
 
 
@@ -30,6 +31,8 @@ def human_time(*args, **kwargs):
             parts.append("%s %s%s" % (n, unit, "" if n == 1 else "s"))
     return ", ".join(parts)
 
+def subtract_time(start, end):
+    return pretty.date(start-end)
 
 def random_interval():
     """
