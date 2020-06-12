@@ -151,7 +151,7 @@ async def auto_afk_unset(bot: UserBot, message: Message):
         GROUPS = {}
         sleep(5)
 
-    await reply.delete()
+        await reply.delete()
 
  
 add_command_help(
