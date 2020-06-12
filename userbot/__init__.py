@@ -28,8 +28,8 @@ config.read(config_file)
 
 # MongoDB details
 MONGO_URL = config.get('mongo', 'url')
-IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
 DB_NAME = config.get('mongo', 'db_name')
+IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
 DB_USERNAME = config.get('mongo', 'db_username', fallback=None)
 DB_PASSWORD = config.get('mongo', 'db_password', fallback=None)
 
@@ -47,7 +47,7 @@ __author__ = 'athphane'
 
 # Get the Values from our .env
 PM_PERMIT = config.get('pm_permit', 'pm_permit')
-PM_LIMIT = int(config.get('pm_permit', 'pm_limit'))
+PM_LIMIT = int(config.get('pm_permit', 'pm_limit', fallback=10))
 
 LOG_GROUP = config.get('logs', 'log_group')
 
