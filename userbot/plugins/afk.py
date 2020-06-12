@@ -23,7 +23,7 @@ async def afk_group(bot: UserBot, message: Message):
             text = (
                 f"```Beep boop. This is an automated message.```\n"
                 f"I am not available right now.\n"
-                f"Last Seen: {last_seen}\n"
+                f"Last seen: {last_seen}\n"
                 f"Here's why: ```{AFK_REASON.upper()}```\n"
                 f"See you after I'm done doing whatever I'm doing."
             )
@@ -38,6 +38,7 @@ async def afk_group(bot: UserBot, message: Message):
             if GROUPS[GetChatID(message)] == 50:
                 text = (
                     f"```This is an automated message```\n"
+                    f"Last seen: {last_seen}\n"
                     f"This is the 10th time I've told you I'm AFK right now..\n"
                     f"I'll get to you when I get to you.\n"
                     f"No more auto messages for you"
@@ -52,7 +53,7 @@ async def afk_group(bot: UserBot, message: Message):
             elif GROUPS[GetChatID(message)] % 5 == 0:
                 text = (
                     f"Hey I'm still not back yet.\n"
-                    f"Last Seen: {last_seen}\n"
+                    f"Last seen: {last_seen}\n"
                     f"Still busy with ```{AFK_REASON.upper()}```\n"
                     f"Try pinging a bit later."
                 )
@@ -73,7 +74,7 @@ async def afk_private(bot: UserBot, message: Message):
             text = (
                 f"```Beep boop. This is an automated message.```\n"
                 f"I am not available right now.\n"
-                f"Last Seen: {last_seen}\n"
+                f"Last seen: {last_seen}\n"
                 f"Here's why: ```{AFK_REASON.upper()}```\n"
                 f"See you after I'm done doing whatever I'm doing."
             )
@@ -88,6 +89,7 @@ async def afk_private(bot: UserBot, message: Message):
             if USERS[GetFromUserID(message)] == 50:
                 text = (
                     f"```This is an automated message```\n"
+                    f"Last seen: {last_seen}\n"
                     f"This is the 10th time I've told you I'm AFK right now..\n"
                     f"I'll get to you when I get to you.\n"
                     f"No more auto messages for you"
@@ -102,7 +104,7 @@ async def afk_private(bot: UserBot, message: Message):
             elif USERS[GetFromUserID(message)] % 5 == 0:
                 text = (
                     f"Hey I'm still not back yet.\n"
-                    f"Last Seen: {last_seen}\n"
+                    f"Last seen: {last_seen}\n"
                     f"Still busy with ```{AFK_REASON.upper()}```\n"
                     f"Try pinging a bit later."
                 )
@@ -139,7 +141,8 @@ async def afk_unset(bot: UserBot, message: Message):
     global AFK, AFK_TIME, AFK_REASON, USERS, GROUPS
 
     if AFK:
-        await message.edit(f"While you were away, you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
+         = subtract_time(datetime.now(), AFK_TIME).replace('ago', '')
+        await message.edit(f"While you were away (for {last_seen}), you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
                            f"from {len(USERS) + len(GROUPS)} chats")
         AFK = False
         AFK_TIME = ''

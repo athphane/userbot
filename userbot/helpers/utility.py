@@ -33,7 +33,7 @@ def human_time(*args, **kwargs):
 
 def subtract_time(start, end):
     subtracted = humanize.naturaltime(start - end)
-    return str(subtracted).title()
+    return str(subtracted)
 
 def random_interval():
     """
