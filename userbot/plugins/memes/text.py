@@ -14,12 +14,7 @@ from userbot.plugins.help import add_command_help
 
 @UserBot.on_message(Filters.command('nice', '.') & Filters.me)
 async def nice(bot: UserBot, message: Message):
-    await message.delete()
-    await bot.send_message(
-        chat_id=message.chat.id,
-        text="NICENICENICENICE",
-        reply_to_message_id=ReplyCheck(message)
-    )
+    await message.edit("NICENICENICENICE")
 
 
 @UserBot.on_message(Filters.command(["compliment"], ".") & Filters.me)
@@ -114,7 +109,7 @@ async def mock_text(bot: UserBot, message: Message):
     elif message.reply_to_message and len(cmd) == 1:
         mock_t = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("I need something to google")
+        await message.edit("I need something to mock")
         await asyncio.sleep(2)
         await message.delete()
         return
@@ -171,16 +166,55 @@ async def pay_respects_new(bot: UserBot, message: Message):
     await message.edit(pay)
 
 
-@UserBot.on_message(Filters.command(["g"], ".") & Filters.me)
-async def gerey(bot: UserBot, message: Message):
-    gerey = "ގެރޭ"
-    await message.edit(gerey)
+@UserBot.on_message(Filters.command(["f"], "#") & Filters.me)
+async def calligraphic_f(bot: UserBot, message: Message):
+    pay = (
+        "⠀⠀⠀⢀⡤⢶⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⠀⢀⣠⣤⣤⣤⣿⣧⣀⣀⣀⣀⣀⣀⣀⣀⣤⡄⠀\n"
+        "⢠⣾⡟⠋⠁⠀⠀⣸⠇⠈⣿⣿⡟⠉⠉⠉⠙⠻⣿⡀\n"
+        "⢺⣿⡀⠀⠀⢀⡴⠋⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠙⠇\n"
+        "⠈⠛⠿⠶⠚⠋⣀⣤⣤⣤⣿⣿⣇⣀⣀⣴⡆⠀⠀⠀\n"
+        "⠀⠀⠀⠀⠠⡞⠋⠀⠀⠀⣿⣿⡏⠉⠛⠻⣿⡀⠀⠀\n"
+        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠈⠁⠀⠀\n"
+        "⠀⠀⣠⣶⣶⣶⣶⡄⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⢰⣿⠟⠉⠙⢿⡟⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⢸⡟⠀⠀⠀⠘⠀⠀⠀⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⠈⢿⡄⠀⠀⠀⠀⠀⣼⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀\n"
+        "⠀⠀⠀⠙⠷⠶⠶⠶⠿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀\n"
+    )
+    await message.edit(pay)
 
 
-@UserBot.on_message(Filters.command(["k"], ".") & Filters.me)
-async def kada(bot: UserBot, message: Message):
-    kada = "ކަޑަ؟"
-    await message.edit(kada)
+normiefont = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+              'v', 'w', 'x', 'y', 'z']
+weebyfont = ['卂', '乃', '匚', '刀', '乇', '下', '厶', '卄', '工', '丁', '长', '乚', '从', '𠘨', '口', '尸', '㔿', '尺', '丂', '丅', '凵',
+             'リ', '山', '乂', '丫', '乙']
+
+
+def weebify_text(raw_text):
+    for normie_char in raw_text:
+        if normie_char in normiefont:
+            weeby_char = weebyfont[normiefont.index(normie_char)]
+            raw_text = raw_text.replace(normie_char, weeby_char)
+    return raw_text
+
+
+@UserBot.on_message(Filters.command(['weeb', 'weebify'], ".") & Filters.me)
+async def weebify(bot: UserBot, message: Message):
+    cmd = message.command
+
+    raw_text = ""
+    if len(cmd) > 1:
+        raw_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        raw_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit(f"`{weebify_text('Could not weebify...')}`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    await message.edit(weebify_text(raw_text))
 
 
 @UserBot.on_message(Filters.command(['vapor'], '.') & Filters.me)
@@ -247,12 +281,12 @@ add_command_help(
         ['.slap', 'Sends a randomly generated slap text. Can become very random at some times.'],
         ['.insult', 'Sends a randomly generated insult. Can become very random at some times.'],
         ['.vapor', 'Vaporizes the text.'],
+        ['.weeb `or` .weebify', 'Weebifies the text.'],
         ['.ok', 'Sends -_____- with a fast animation.'],
         ['-_-', 'Extends to -________-'],
         ['.f', 'Pay respects'],
         ['.F', 'Pay respects but filled'],
-        ['.g', 'Gerey'],
-        ['.k', 'Kada?'],
+        ['#f', 'Pay respects but calligraphy.'],
         ['.mockt', 'Mock (text only version)'],
         ['.dice', 'Send dice animation'],
         ['.target', 'Send target animation'],
