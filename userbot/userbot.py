@@ -52,6 +52,7 @@ class UserBot(Client):
             print(c_e)
 
         if git_update:
+            os.system('git reset --hard')
             os.system('git pull')
         if pip:
             os.system('pip install -U -r requirements.txt')
