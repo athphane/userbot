@@ -4,6 +4,7 @@ from pyrogram import Filters, Message
 
 from userbot import ALLOWED_USERS
 from userbot import UserBot
+from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
 
 
@@ -35,12 +36,11 @@ async def send_music(bot: UserBot, message: Message):
 
             # forward as a new message from Saved Messages
             saved = await bot.get_messages("me", int(saved.updates[1].message.id))
-            reply_to = message.reply_to_message.message_id if message.reply_to_message else None
             await bot.send_audio(
                 chat_id=message.chat.id,
                 audio=str(saved.audio.file_id),
                 file_ref=str(saved.audio.file_ref),
-                reply_to_message_id=reply_to
+                reply_to_message_id=ReplyCheck(message)
             )
 
             # delete the message from Saved Messages
