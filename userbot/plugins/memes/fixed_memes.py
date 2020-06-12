@@ -15,12 +15,12 @@ memes_data = {
              'caption': f"I wanna do bad things with you {Emoji.SMIRKING_FACE}", 'help': 'Gif of lustful things.'},
     'dmf': {'name': 'dmf_image', 'image': 'dmf.gif', 'type': 'animation', 'caption': None,
             'help': 'Syndrome from The Incredible\'s saying "You dense mf".'},
-    'smart': {'alts': ['intelligence'], 'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image', 'caption': None,
-              'help': 'Press E to use intelligence.'},
+    'smart': {'alts': ['intelligence'], 'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image',
+              'caption': None, 'help': 'Press E to use intelligence.'},
     'sobimin': {'name': 'sob_im_in_image', 'image': 'sob_im_in.jpg', 'type': 'image', 'caption': None,
                 'help': 'Morty - SOB I\'m In'},
     'omg': {'name': 'omg_image', 'image': 'omg.gif', 'type': 'animation', 'caption': None,
-                'help': 'Anime character saying OMG.'},
+            'help': 'Anime character saying OMG.'},
 }
 
 memes = []

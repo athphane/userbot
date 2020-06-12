@@ -8,7 +8,7 @@ from userbot import YOURLS_URL, YOURLS_KEY
 async def shorten_url(url, keyword):
     if not YOURLS_URL or not YOURLS_KEY:
         return "API ERROR"
-    
+
     url_checked = await url_check(url)
     if url_checked:
         yourls = YOURLSClient(YOURLS_URL, signature=YOURLS_KEY)

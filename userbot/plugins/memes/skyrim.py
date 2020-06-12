@@ -48,6 +48,7 @@ async def skyrim(bot: UserBot, message: Message):
     except Exception as e:
         print(e)
 
+
 # Command help section
 add_command_help(
     'skyrim', [

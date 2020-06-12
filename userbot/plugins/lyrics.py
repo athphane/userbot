@@ -55,6 +55,7 @@ async def send_lyrics(bot: UserBot, message: Message):
         await asyncio.sleep(2)
         await message.delete()
 
+
 # Command help section
 add_command_help(
     'lyrics', [
