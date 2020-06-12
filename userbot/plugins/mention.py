@@ -1,10 +1,10 @@
 import asyncio
+from functools import partial
+
 from pyrogram import Filters, Message
 
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
-
-from functools import partial
 
 mention = partial(
     "<a href='tg://user?id={}'>{}</a>".format
@@ -13,6 +13,7 @@ mention = partial(
 hmention = partial(
     "<a href='tg://user?id={}'>\u200B</a>{}".format
 )
+
 
 @UserBot.on_message(Filters.command("mention", ".") & Filters.me)
 async def mention_user(bot: UserBot, message: Message):
@@ -28,9 +29,10 @@ async def mention_user(bot: UserBot, message: Message):
         await asyncio.sleep(3)
         await message.delete()
         return
-        
+
     _mention = mention(user.id, ' '.join(message.command[2:]))
     await message.edit(_mention)
+
 
 @UserBot.on_message(Filters.command("hmention", ".") & Filters.me)
 async def hidden_mention(bot: UserBot, message: Message):
@@ -49,6 +51,7 @@ async def hidden_mention(bot: UserBot, message: Message):
 
     _hmention = hmention(user.id, ' '.join(message.command[2:]))
     await message.edit(_hmention)
+
 
 # Command help section
 add_command_help(
