@@ -141,7 +141,7 @@ async def afk_unset(bot: UserBot, message: Message):
     global AFK, AFK_TIME, AFK_REASON, USERS, GROUPS
 
     if AFK:
-         = subtract_time(datetime.now(), AFK_TIME).replace('ago', '')
+        last_seen = subtract_time(datetime.now(), AFK_TIME).replace('ago', '')
         await message.edit(f"While you were away (for {last_seen}), you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
                            f"from {len(USERS) + len(GROUPS)} chats")
         AFK = False
