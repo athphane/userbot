@@ -56,7 +56,7 @@ RUN apt update && apt upgrade -y && \
 RUN pip3 install --upgrade pip setuptools
 
 # Copy Python Requirements to /root/nana
-RUN git clone https://github.com/pokurt/userbot.git /root/userbot
+RUN git clone https://github.com/athphane/userbot.git /root/userbot
 WORKDIR /root/userbot
 
 # #Copy config file to /root/nana/nana
