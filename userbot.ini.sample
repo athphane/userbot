@@ -3,7 +3,6 @@ api_id = 123456
 api_hash = your-hash
 
 [mongo]
-is_atlas = false
 url = localhost
 db_name = userbot
 db_username =
