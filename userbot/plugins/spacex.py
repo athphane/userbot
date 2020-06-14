@@ -62,12 +62,13 @@ async def next_launch(bot: UserBot, message: Message):
           f"<b>Launch Site:</b> {data['launch_site']['site_name']}\n" \
           f"<b>Launch Date:</b> {dt}" \
           f"\n\n{data['details']}"
-    
+
     await bot.send_message(
         chat_id=message.chat.id,
         text=txt,
         disable_web_page_preview=True
     )
+
 
 # Command help section
 add_command_help(

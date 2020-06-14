@@ -1,9 +1,7 @@
-import git
 import datetime
-import asyncio
-from html import escape
 import os
-import aiohttp
+
+import git
 from pyrogram import Filters, Message
 
 from userbot import UserBot
@@ -21,6 +19,7 @@ async def last_commit(bot: UserBot, message: Message):
     date_time = datetime.datetime.fromtimestamp(master.commit.committed_date)
     commit_msg = f"**Latest commit**: {commit_link}\n\n**Commit Message**:\n```{commit.strip()}```\n\n**By**: `{author}`\n\n**On**: `{date_time}`"
     await message.edit(commit_msg, disable_web_page_preview=True)
+
 
 # Command help section
 add_command_help(

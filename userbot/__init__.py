@@ -4,12 +4,10 @@ import os
 from configparser import ConfigParser
 from datetime import datetime
 from logging.handlers import TimedRotatingFileHandler
-import sys
 
-import psutil
-from pyrogram import Client
-from userbot.userbot import UserBot
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+from userbot.userbot import UserBot
 
 ENV = bool(os.environ.get('ENV', False))
 
@@ -25,7 +23,7 @@ logging.basicConfig(
 )
 LOGS = logging.getLogger(__name__)
 
-#Must be filled
+# Must be filled
 # API_ID = os.environ.get('API_ID', None)
 # API_HASH = os.environ.get('API_HASH', None)
 # USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
@@ -35,8 +33,6 @@ name = UserBot().__class__.__name__.lower()
 config_file = f"{name}.ini"
 config = ConfigParser()
 config.read(config_file)
-
-
 
 if ENV:
     # MongoDB details
@@ -60,7 +56,7 @@ if ENV:
     PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
     PM_LIMIT = int(os.environ.get("PM_LIMIT", None))
     LOG_GROUP = os.environ.get('LOG_GROUP', )
-    IS_ATLAS = bool(os.environ.get('IS_ATLAS', fallback=True))
+    IS_ATLAS = bool(os.environ.get('IS_ATLAS', True))
 else:
     # MongoDB details
     MONGO_URL = config.get('mongo', 'url')

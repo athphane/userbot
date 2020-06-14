@@ -35,6 +35,7 @@ async def word_count(bot: UserBot, message: Message):
 
     await progress.edit_text(out)
 
+
 # Command help section
 add_command_help(
     'metrics', [

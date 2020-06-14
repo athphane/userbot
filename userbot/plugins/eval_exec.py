@@ -10,7 +10,6 @@ from userbot import UserBot
 from userbot.database import database
 
 
-
 @UserBot.on_message(Filters.command("eval", ".") & Filters.me & ~Filters.forwarded)
 async def evaluation(bot: UserBot, message: Message):
     status_message = await message.reply_text("Processing ...")
