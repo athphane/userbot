@@ -40,6 +40,9 @@ async def prep_animal_image(animal_data):
 
 @UserBot.on_message(Filters.command(animals, ['.', '']) & Filters.me)
 async def animal_image(bot: UserBot, message: Message):
+    if len(message.command) > 1:
+        return
+
     animal_data = animals_data[message.command[0]]
     await message.delete()
     await bot.send_photo(
