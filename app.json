@@ -20,18 +20,35 @@
         "description": "Fill this if you using environ variable as config.",
         "value": "Yes"
       },
+      "APP_ID": {
+        "description": "Get from https://my.telegram.org",
+        "value": "Yes"
+      },
+      "API_HASH": {
+        "description": "Get from https://my.telegram.org",
+        "value": "Yes"
+      },
+      "USERBOT_SESSION": {
+        "description": "Generate String from Heroku Shell by running 'bash genStr' after you deploy, Set this value later after genrating the string if you dont have :)",
+        "value": "Yes"
+      },
+      "IS_ATLAS": {
+        "description": "If you are using https://cloud.mongodb.com set it to True",
+        "value": "True",
+        "required": true
+      },
       "MONGO_URL": {
-        "description": "",
+        "description": "MongoDB URL",
         "value": "",
         "required": false
       },
       "DB_NAME": {
-        "description": "",
+        "description": "MongoDB Name",
         "value": "",
         "required": false
       },
       "DB_USERNAME": {
-        "description": "",
+        "description": "MongoDB Username",
         "value": "",
         "required": false
       },
@@ -41,17 +58,17 @@
         "required": false
       },
       "YOURLS_URL": {
-        "description": "",
+        "description": "(optional) Read more: https://yourls.org/#API",
         "value": "",
         "required": false
       },
       "YOURLS_KEY": {
-        "description": "(optional)",
+        "description": "(optional) Read more: https://yourls.org/#API",
         "value": "",
         "required": false
       },
       "YANDEX_API_KEY": {
-        "description": "(optional)",
+        "description": "(optional) get from: https://tech.yandex.com/translate/",
         "value": "",
         "required": false
       },

@@ -60,7 +60,7 @@ if ENV:
     PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
     PM_LIMIT = int(os.environ.get("PM_LIMIT", None))
     LOG_GROUP = os.environ.get('LOG_GROUP', )
-    IS_ATLAS = bool(os.environ.get('mongo', 'is_atlas', fallback=True))
+    IS_ATLAS = bool(os.environ.get('IS_ATLAS', fallback=True))
 else:
     # MongoDB details
     MONGO_URL = config.get('mongo', 'url')
