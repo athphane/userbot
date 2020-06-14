@@ -5,6 +5,9 @@ from configparser import ConfigParser
 import psutil
 from pyrogram import Client
 
+API_ID = os.environ.get('API_ID', None)
+API_HASH = os.environ.get('API_HASH', None)
+USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
 
 class UserBot(Client):
     def __init__(self):
@@ -15,7 +18,9 @@ class UserBot(Client):
         config.read(config_file)
 
         super().__init__(
-            name,
+            USERBOT_SESSION,
+            api_id=API_ID,
+            api_hash=API_HASH,
             config_file=config_file,
             workers=32,
             plugins=dict(root="userbot/plugins"),

@@ -6,8 +6,8 @@ from userbot import ALLOWED_USERS
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
-
-@UserBot.on_message(Filters.command(['l', 'lyrics'], ".") & (Filters.me | Filters.user(ALLOWED_USERS)))
+# @UserBot.on_message(Filters.command(['l', 'lyrics'], ".") & (Filters.me | Filters.user(ALLOWED_USERS)))
+@UserBot.on_message(Filters.command(['l', 'lyrics'], ".") & Filters.me)
 async def send_lyrics(bot: UserBot, message: Message):
     try:
         cmd = message.command

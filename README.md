@@ -22,6 +22,10 @@ learn more about these topics.
 
 I assume you will read this whole README.md file before continuing.
 
+Quick Deploy on Heroku using the button down below:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/athphane/userbot)
+
 > Development in progress.
 
 ## Requirements

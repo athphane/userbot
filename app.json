@@ -1,0 +1,100 @@
+{
+    "name": "Userbot - Telegram Userbot based on pyrogram",
+    "description": "A modular Telegram Userbot based on pyrogram running on Python 3.6+",
+    "logo": "https://camo.githubusercontent.com/68ce6fb9505cbb4b94483586927d9b0633b7f848/68747470733a2f2f692e696d6775722e636f6d2f575855674448542e706e67",
+    "keywords": [
+      "telegram",
+      "userbot",
+      "plugin",
+      "modular",
+      "pyrogram",
+      "productivity",
+      "testing"
+    ],
+    "repository": "https://github.com/pokurt/userbot",
+    "website": "athfan.com",
+    "success_url": "https://t.me/pokurt",
+    "stack": "container",
+    "env": {
+      "ENV": {
+        "description": "Fill this if you using environ variable as config.",
+        "value": "Yes"
+      },
+      "APP_ID": {
+        "description": "Get from https://my.telegram.org",
+        "value": "Yes"
+      },
+      "API_HASH": {
+        "description": "Get from https://my.telegram.org",
+        "value": "Yes"
+      },
+      "USERBOT_SESSION": {
+        "description": "Generate String from Heroku Shell by running 'bash genStr' after you deploy, Set this value later after genrating the string if you dont have :)",
+        "value": "Yes"
+      },
+      "IS_ATLAS": {
+        "description": "If you are using https://cloud.mongodb.com set it to True",
+        "value": "True",
+        "required": true
+      },
+      "MONGO_URL": {
+        "description": "MongoDB URL",
+        "value": "",
+        "required": false
+      },
+      "DB_NAME": {
+        "description": "MongoDB Name",
+        "value": "",
+        "required": false
+      },
+      "DB_USERNAME": {
+        "description": "MongoDB Username",
+        "value": "",
+        "required": false
+      },
+      "ALLOWED_USERS": {
+        "description": "",
+        "value": "",
+        "required": false
+      },
+      "YOURLS_URL": {
+        "description": "(optional) Read more: https://yourls.org/#API",
+        "value": "",
+        "required": false
+      },
+      "YOURLS_KEY": {
+        "description": "(optional) Read more: https://yourls.org/#API",
+        "value": "",
+        "required": false
+      },
+      "YANDEX_API_KEY": {
+        "description": "(optional) get from: https://tech.yandex.com/translate/",
+        "value": "",
+        "required": false
+      },
+      "PM_PERMIT": {
+        "description": "(optional)",
+        "value": "False",
+        "required": false
+      },
+      "PM_LIMIT": {
+        "description": "(optional)",
+        "value": "5",
+        "required": false
+      },
+      "LOG_GROUP": {
+        "description": "(optional)",
+        "value": "",
+        "required": false
+      }
+    },
+    "addons": [
+      {
+        "plan": "heroku-postgresql",
+        "options": {
+          "version": "9.5"
+        }
+      }
+    ]
+  }
+  
