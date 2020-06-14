@@ -5,6 +5,9 @@ from configparser import ConfigParser
 import psutil
 from pyrogram import Client
 
+API_ID = os.environ.get('API_ID', None)
+API_HASH = os.environ.get('API_HASH', None)
+USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
 
 class UserBot(Client):
     def __init__(self):
@@ -13,12 +16,9 @@ class UserBot(Client):
 
         config = ConfigParser()
         config.read(config_file)
-        API_ID = os.environ.get('API_ID', None)
-        API_HASH = os.environ.get('API_HASH', None)
-        USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
 
         super().__init__(
-            session_name=USERBOT_SESSION,
+            USERBOT_SESSION,
             api_id=API_ID,
             api_hash=API_HASH,
             config_file=config_file,
@@ -57,6 +57,7 @@ class UserBot(Client):
             print(c_e)
 
         if git_update:
+            os.system('git reset --hard')
             os.system('git pull')
         if pip:
             os.system('pip install -U -r requirements.txt')

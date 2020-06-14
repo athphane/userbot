@@ -4,10 +4,12 @@ import os
 from configparser import ConfigParser
 from datetime import datetime
 from logging.handlers import TimedRotatingFileHandler
+import sys
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
+import psutil
+from pyrogram import Client
 from userbot.userbot import UserBot
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 ENV = bool(os.environ.get('ENV', False))
 
@@ -34,8 +36,13 @@ config_file = f"{name}.ini"
 config = ConfigParser()
 config.read(config_file)
 
+
+
 if ENV:
     # MongoDB details
+    API_ID = os.environ.get('API_ID', None)
+    API_HASH = os.environ.get('API_HASH', None)
+    USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
     MONGO_URL = os.environ.get('MONGO_URL', False)
     DB_NAME = os.environ.get('DB_NAME', False)
     DB_USERNAME = os.environ.get('DB_USERNAME', False)
@@ -59,6 +66,7 @@ else:
     DB_NAME = config.get('mongo', 'db_name')
     DB_USERNAME = config.get('mongo', 'db_username')
     DB_PASSWORD = config.get('mongo', 'db_password')
+    IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
     # Other Users
     ALLOWED_USERS = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
     # MISC APIs
