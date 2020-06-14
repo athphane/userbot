@@ -44,9 +44,9 @@ if ENV:
     API_HASH = os.environ.get('API_HASH', None)
     USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
     MONGO_URL = os.environ.get('MONGO_URL', False)
-    DB_NAME = os.environ.get('DB_NAME', False)
-    DB_USERNAME = os.environ.get('DB_USERNAME', False)
-    DB_PASSWORD = os.environ.get('DB_PASSWORD', False)
+    # DB_NAME = os.environ.get('DB_NAME', False)
+    # DB_USERNAME = os.environ.get('DB_USERNAME', False)
+    # DB_PASSWORD = os.environ.get('DB_PASSWORD', False)
     # Other Users
     try:
         ALLOWED_USERS = set(int(x) for x in os.environ.get("ALLOWED_USERS", "").split())
@@ -60,13 +60,14 @@ if ENV:
     PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
     PM_LIMIT = int(os.environ.get("PM_LIMIT", None))
     LOG_GROUP = os.environ.get('LOG_GROUP', )
+    IS_ATLAS = bool(os.environ.get('mongo', 'is_atlas', fallback=True))
 else:
     # MongoDB details
     MONGO_URL = config.get('mongo', 'url')
     DB_NAME = config.get('mongo', 'db_name')
     DB_USERNAME = config.get('mongo', 'db_username')
     DB_PASSWORD = config.get('mongo', 'db_password')
-    # IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
+    IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
     # Other Users
     ALLOWED_USERS = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
     # MISC APIs
