@@ -6,10 +6,6 @@ import psutil
 from pyrogram import Client
 
 
-API_ID = os.environ.get('API_ID', None)
-API_HASH = os.environ.get('API_HASH', None)
-USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
-
 class UserBot(Client):
     def __init__(self):
         name = self.__class__.__name__.lower()
@@ -17,6 +13,9 @@ class UserBot(Client):
 
         config = ConfigParser()
         config.read(config_file)
+        API_ID = os.environ.get('API_ID', None)
+        API_HASH = os.environ.get('API_HASH', None)
+        USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
 
         super().__init__(
             USERBOT_SESSION,
