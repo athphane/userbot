@@ -19,7 +19,7 @@ class UserBot(Client):
         config.read(config_file)
 
         super().__init__(
-            USERBOT_SESSION,
+            USERBOT_SESSION if USERBOT_SESSION is not None else name,
             api_id=API_ID,
             api_hash=API_HASH,
             config_file=config_file,

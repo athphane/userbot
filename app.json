@@ -20,7 +20,7 @@
             "description": "Fill this if you using environ variable as config.",
             "value": "Yes"
         },
-        "APP_ID": {
+        "API_ID": {
             "description": "Get from https://my.telegram.org",
             "value": "Yes"
         },
