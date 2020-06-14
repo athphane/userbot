@@ -66,7 +66,7 @@ else:
     DB_NAME = config.get('mongo', 'db_name')
     DB_USERNAME = config.get('mongo', 'db_username')
     DB_PASSWORD = config.get('mongo', 'db_password')
-    IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
+    # IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
     # Other Users
     ALLOWED_USERS = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
     # MISC APIs
