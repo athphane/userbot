@@ -4,10 +4,12 @@ import os
 from configparser import ConfigParser
 from datetime import datetime
 from logging.handlers import TimedRotatingFileHandler
+import sys
+
+import psutil
+from pyrogram import Client
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
-from userbot.userbot import UserBot
 
 ENV = bool(os.environ.get('ENV', False))
 
@@ -34,8 +36,13 @@ config_file = f"{name}.ini"
 config = ConfigParser()
 config.read(config_file)
 
+
+
 if ENV:
     # MongoDB details
+    API_ID = os.environ.get('API_ID', None)
+    API_HASH = os.environ.get('API_HASH', None)
+    USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
     MONGO_URL = os.environ.get('MONGO_URL', False)
     DB_NAME = os.environ.get('DB_NAME', False)
     DB_USERNAME = os.environ.get('DB_USERNAME', False)
@@ -69,6 +76,61 @@ else:
     PM_PERMIT = config.get('pm_permit', 'pm_permit')
     PM_LIMIT = int(config.get('pm_permit', 'pm_limit'))
     LOG_GROUP = config.get('logs', 'log_group')
+
+class UserBot(Client):
+    def __init__(self):
+        name = self.__class__.__name__.lower()
+        config_file = f"{name}.ini"
+
+        config = ConfigParser()
+        config.read(config_file)
+
+        super().__init__(
+            session_name=USERBOT_SESSION,
+            api_id=API_ID,
+            api_hash=API_HASH,
+            config_file=config_file,
+            workers=32,
+            plugins=dict(root="userbot/plugins"),
+            workdir="./",
+            app_version=f"Userbot v0.2",
+            device_model="Python",
+            system_version="v0.2"
+        )
+
+    async def start(self):
+        await super().start()
+
+        restart_reply_details = super().search_messages('me', query='#userbot_restart')
+        async for x in restart_reply_details:
+            _, chat_id, message_id = x.text.split(', ')
+            await super().edit_message_text(int(chat_id), int(message_id), "`Userbot Restarted!`")
+            await super().delete_messages('me', x.message_id)
+            break
+
+        print(f"Userbot started. Hi.")
+
+    async def stop(self, *args):
+        await super().stop()
+        print("Userbot stopped. Bye.")
+
+    async def restart(self, git_update=False, pip=False, *args):
+        """ Shoutout to the Userg team for this."""
+        await self.stop()
+        try:
+            c_p = psutil.Process(os.getpid())
+            for handler in c_p.open_files() + c_p.connections():
+                os.close(handler.fd)
+        except Exception as c_e:
+            print(c_e)
+
+        if git_update:
+            os.system('git pull')
+        if pip:
+            os.system('pip install -U -r requirements.txt')
+
+        os.execl(sys.executable, sys.executable, '-m', self.__class__.__name__.lower())
+        sys.exit()
 
 # Extra details
 __version__ = '0.2.0'
