@@ -24,9 +24,9 @@ logging.basicConfig(
 LOGS = logging.getLogger(__name__)
 
 #Must be filled
-# API_ID = os.environ.get('API_ID', None)
-# API_HASH = os.environ.get('API_HASH', None)
-# USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
+API_ID = os.environ.get('API_ID', None)
+API_HASH = os.environ.get('API_HASH', None)
+USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
 
 # Read from config file
 name = UserBot().__class__.__name__.lower()
