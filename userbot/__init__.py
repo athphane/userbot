@@ -1,5 +1,6 @@
 import ast
 import logging
+import os
 from configparser import ConfigParser
 from datetime import datetime
 from logging.handlers import TimedRotatingFileHandler
@@ -7,6 +8,8 @@ from logging.handlers import TimedRotatingFileHandler
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from userbot.userbot import UserBot
+
+ENV = bool(os.environ.get('ENV', False))
 
 # Logging at the start to catch everything
 logging.basicConfig(
@@ -20,36 +23,56 @@ logging.basicConfig(
 )
 LOGS = logging.getLogger(__name__)
 
+#Must be filled
+# API_ID = os.environ.get('API_ID', None)
+# API_HASH = os.environ.get('API_HASH', None)
+# USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
+
 # Read from config file
 name = UserBot().__class__.__name__.lower()
 config_file = f"{name}.ini"
 config = ConfigParser()
 config.read(config_file)
-
+# if ENV:
 # MongoDB details
-MONGO_URL = config.get('mongo', 'url')
-DB_NAME = config.get('mongo', 'db_name')
-IS_ATLAS = config.getboolean('mongo', 'is_atlas', fallback=False)
-DB_USERNAME = config.get('mongo', 'db_username', fallback=None)
-DB_PASSWORD = config.get('mongo', 'db_password', fallback=None)
-
+MONGO_URL = os.environ.get('MONGO_URL', False)
+DB_NAME = os.environ.get('DB_NAME', False)
+DB_USERNAME = os.environ.get('DB_USERNAME', False)
+DB_PASSWORD = os.environ.get('DB_PASSWORD', False)
 # Other Users
-ALLOWED_USERS = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
-
+try:
+    ALLOWED_USERS = set(int(x) for x in os.environ.get("ALLOWED_USERS", "").split())
+except ValueError:
+    raise Exception("Your allowed users list does not contain valid integers.")
 # MISC APIs
-YOURLS_URL = config.get('misc', 'yourls_url', fallback=None)
-YOURLS_KEY = config.get('misc', 'yourls_key', fallback=None)
-YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
+YOURLS_URL = os.environ.get('YOURLS_URL', None)
+YOURLS_KEY = os.environ.get('YOURLS_KEY', None)
+YANDEX_API_KEY = os.environ.get('YANDEX_API_KEY', None)
+# Get the Values from our .env
+PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
+PM_LIMIT = int(os.environ.get("PM_LIMIT", None))
+LOG_GROUP = os.environ.get('LOG_GROUP', )
+
+# else:
+    # # MongoDB details
+    # MONGO_URL = config.get('mongo', 'url')
+    # DB_NAME = config.get('mongo', 'db_name')
+    # DB_USERNAME = config.get('mongo', 'db_username')
+    # DB_PASSWORD = config.get('mongo', 'db_password')
+    # # Other Users
+    # ALLOWED_USERS = ast.literal_eval(config.get('users', 'allowed_users', fallback='[]'))
+    # # MISC APIs
+    # YOURLS_URL = config.get('misc', 'yourls_url', fallback=None)
+    # YOURLS_KEY = config.get('misc', 'yourls_key', fallback=None)
+    # YANDEX_API_KEY = config.get('yandex', 'key', fallback=None)
+    # # Get the Values from our .env
+    # PM_PERMIT = config.get('pm_permit', 'pm_permit')
+    # PM_LIMIT = int(config.get('pm_permit', 'pm_limit'))
+    # LOG_GROUP = config.get('logs', 'log_group')
 
 # Extra details
 __version__ = '0.2.0'
 __author__ = 'athphane'
-
-# Get the Values from our .env
-PM_PERMIT = config.get('pm_permit', 'pm_permit')
-PM_LIMIT = int(config.get('pm_permit', 'pm_limit', fallback=10))
-
-LOG_GROUP = config.get('logs', 'log_group')
 
 # Scheduler
 scheduler = AsyncIOScheduler()

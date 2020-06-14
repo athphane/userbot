@@ -1,0 +1,83 @@
+{
+    "name": "Userbot - Telegram Userbot based on pyrogram",
+    "description": "A modular Telegram Userbot based on pyrogram running on Python 3.6+",
+    "logo": "https://camo.githubusercontent.com/68ce6fb9505cbb4b94483586927d9b0633b7f848/68747470733a2f2f692e696d6775722e636f6d2f575855674448542e706e67",
+    "keywords": [
+      "telegram",
+      "userbot",
+      "plugin",
+      "modular",
+      "pyrogram",
+      "productivity",
+      "testing"
+    ],
+    "repository": "https://github.com/pokurt/userbot",
+    "website": "athfan.com",
+    "success_url": "https://t.me/pokurt",
+    "stack": "container",
+    "env": {
+      "ENV": {
+        "description": "Fill this if you using environ variable as config.",
+        "value": "Yes"
+      },
+      "MONGO_URL": {
+        "description": "",
+        "value": "",
+        "required": false
+      },
+      "DB_NAME": {
+        "description": "",
+        "value": "",
+        "required": false
+      },
+      "DB_USERNAME": {
+        "description": "",
+        "value": "",
+        "required": false
+      },
+      "ALLOWED_USERS": {
+        "description": "",
+        "value": "",
+        "required": false
+      },
+      "YOURLS_URL": {
+        "description": "",
+        "value": "",
+        "required": false
+      },
+      "YOURLS_KEY": {
+        "description": "(optional)",
+        "value": "2",
+        "required": false
+      },
+      "YANDEX_API_KEY": {
+        "description": "(optional)",
+        "value": "8",
+        "required": false
+      },
+      "PM_PERMIT": {
+        "description": "(optional)",
+        "value": "False",
+        "required": false
+      },
+      "PM_LIMIT": {
+        "description": "(optional)",
+        "value": "en",
+        "required": false
+      },
+      "LOG_GROUP": {
+        "description": "(optional)",
+        "value": "PC",
+        "required": false
+      }
+    },
+    "addons": [
+      {
+        "plan": "heroku-postgresql",
+        "options": {
+          "version": "9.5"
+        }
+      }
+    ]
+  }
+  
