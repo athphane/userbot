@@ -47,12 +47,12 @@
       },
       "YOURLS_KEY": {
         "description": "(optional)",
-        "value": "2",
+        "value": "",
         "required": false
       },
       "YANDEX_API_KEY": {
         "description": "(optional)",
-        "value": "8",
+        "value": "",
         "required": false
       },
       "PM_PERMIT": {
@@ -62,12 +62,12 @@
       },
       "PM_LIMIT": {
         "description": "(optional)",
-        "value": "en",
+        "value": "5",
         "required": false
       },
       "LOG_GROUP": {
         "description": "(optional)",
-        "value": "PC",
+        "value": "",
         "required": false
       }
     },

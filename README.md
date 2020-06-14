@@ -22,8 +22,11 @@ learn more about these topics.
 
 I assume you will read this whole README.md file before continuing.
 
-> Development in progress.
+Quick Deploy on Heroku using the button down below:
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/pokurt/userbot)
 
+> Development in progress.
+    
 ## Requirements
 You're gonna need to get the following programs and services either installed on your server
 or signed up for. You must do all. It is a cardinal sin if you don't.
