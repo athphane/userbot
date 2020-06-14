@@ -29,7 +29,7 @@
         "value": "Yes"
       },
       "USERBOT_SESSION": {
-        "description": "Generate String from Heroku Shell by running 'bash genStr' after you deploy, Set this value later after genrating the string if you dont have :)",
+        "description": "Generate String from Heroku Shell by running 'bash genStr' after you deploy, Set this value later after genrating the string if you dont have. Make sure you choose option 1 since you are here to use it for userbot :)",
         "value": "Yes"
       },
       "IS_ATLAS": {
