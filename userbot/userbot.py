@@ -18,7 +18,7 @@ class UserBot(Client):
         USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
 
         super().__init__(
-            USERBOT_SESSION,
+            session_name=USERBOT_SESSION,
             api_id=API_ID,
             api_hash=API_HASH,
             config_file=config_file,
