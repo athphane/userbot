@@ -5,13 +5,11 @@ from platform import python_version
 from pyrogram import Filters, Message, __version__
 
 from userbot import UserBot, START_TIME
-from userbot.helpers.constants import First
 from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command("alive", ".") & Filters.me)
 async def alive(bot: UserBot, message: Message):
-    await message.edit(First.ALIVE)
     txt = (
         f"**{UserBot.__name__}** ```RUNNING```\n"
         f"-> Current Uptime: `{str(datetime.now() - START_TIME).split('.')[0]}`\n"
