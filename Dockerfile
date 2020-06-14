@@ -18,7 +18,6 @@ RUN apt update && apt upgrade -y && \
     git \
     sudo \
     util-linux \
-    chromium \
     libffi-dev \
     libjpeg-dev \
     libjpeg62-turbo-dev \
@@ -27,10 +26,7 @@ RUN apt update && apt upgrade -y && \
     musl-dev \
     musl \
     neofetch \
-    php-pgsql \
     python3-lxml \
-    postgresql \
-    postgresql-client \
     python3-psycopg2 \
     libpq-dev \
     libcurl4-openssl-dev \
@@ -38,7 +34,6 @@ RUN apt update && apt upgrade -y && \
     libxslt1-dev \
     python3-pip \
     python3-requests \
-    python3-sqlalchemy \
     python3-tz \
     python3-aiohttp \
     openssl \
@@ -49,24 +44,14 @@ RUN apt update && apt upgrade -y && \
     python3-dev \
     libreadline-dev \
     libyaml-dev \
-    sqlite3 \
-    libsqlite3-dev \
     sudo \
     zlib1g \
     ffmpeg \
     libssl-dev \
-    cmake \
-    make \
-    g++ \
     libopus0 \
     libopus-dev \
-    pkg-config \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
-
-# Setting up ENV Path for Chrom-bin and Chrome-Path
-ENV CHROME_BIN=/usr/bin/chromium-browser \
-    CHROME_PATH=/usr/lib/chromium/
-
+    
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
 
