@@ -13,7 +13,8 @@ async def get_person():
     url = "https://thispersondoesnotexist.com/image?randomtag=" + rand_int
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
-            content = (await resp.content.read()).decode('utf-8')
+            content = await resp.content.read()
+            print(content)
             file_name = f"{rand_int}person.jpeg"
             with open(file_name, 'wb') as file:
                 shutil.copyfileobj(content, file)
