@@ -119,7 +119,7 @@ async def mock_text(bot: UserBot, message: Message):
     if not input_str:
         await message.edit("`gIvE sOMEtHInG tO MoCk!`")
         return
-    reply_text = get_mock_text(input_str)
+    reply_text = get_mock_text(input_str.lower())
     await message.edit(reply_text)
 
 
