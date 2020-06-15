@@ -24,6 +24,7 @@ async def send_person(bot: UserBot, message: Message):
     try:
         photo = await get_person()
     except Exception as err:
+        print(err)
         await message.edit("Error occured while fetching random person")
         return
     
