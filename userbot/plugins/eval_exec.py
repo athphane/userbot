@@ -66,13 +66,13 @@ async def evaluation(bot: UserBot, message: Message):
         await status_message.edit(final_output)
 
 
-async def aexec(code, c, m, r, d):
+async def aexec(code, b, m, r, d):
     sys.tracebacklimit = 0
     exec(
-        f'async def __aexec(c, m, r, d): ' +
+        f'async def __aexec(b, m, r, d): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
-    return await locals()['__aexec'](c, m, r, d)
+    return await locals()['__aexec'](b, m, r, d)
 
 
 @UserBot.on_message(Filters.command("exec", ".") & Filters.me & ~Filters.forwarded)
