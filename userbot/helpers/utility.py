@@ -54,3 +54,9 @@ def get_random_hex(chars=4):
     """
     my_hex = uuid.uuid4().hex[:chars]
     return my_hex
+
+
+def get_mock_text(text):
+    text = list(text)
+    text[1::2] = [letter.upper() for letter in text[1::2]]
+    return ''.join(text)
