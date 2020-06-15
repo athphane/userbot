@@ -55,7 +55,7 @@ async def evaluation(bot: UserBot, message: Message):
         with open("eval.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(final_output))
         await message.reply_document(
-            document="eval.text",
+            document="eval.txt",
             caption=cmd,
             disable_notification=True,
             reply_to_message_id=reply_to_id
