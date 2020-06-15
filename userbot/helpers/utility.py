@@ -53,7 +53,7 @@ def get_random_hex(chars=4):
     return my_hex
 
 
-def mock_text(text):
+def get_mock_text(text):
     text = list(text)
     text[1::2] = [letter.upper() for letter in text[1::2]]
     return ''.join(text)
