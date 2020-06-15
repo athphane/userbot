@@ -11,9 +11,9 @@ from userbot.plugins.help import add_command_help
 async def get_person():
     rand_int = str(randint(0,9999))
     url = "https://thispersondoesnotexist.com/image?randomtag=" + rand_int
-    async with aiohttp.ClientSession(auto_decompress=False) as session:
+    async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
-            content = await resp
+            content = await resp.content.read().decode("utf-8")
             file_name = f"{rand_int}person.jpeg"
             with open(file_name, 'wb') as file:
                 shutil.copyfileobj(content, file)
