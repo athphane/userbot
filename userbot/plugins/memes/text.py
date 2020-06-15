@@ -9,6 +9,7 @@ from pyrogram import Filters, Message
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck, GetUserMentionable
 from userbot.helpers.constants import MEMES
+from userbot.helpers.utility import mock_text
 from userbot.plugins.help import add_command_help
 
 
@@ -118,14 +119,8 @@ async def mock_text(bot: UserBot, message: Message):
     if not input_str:
         await message.edit("`gIvE sOMEtHInG tO MoCk!`")
         return
-    reply_text = []
-    for char in input_str:
-        if char.isalpha() and randint(0, 1):
-            to_app = char.upper() if char.islower() else char.lower()
-            reply_text.append(to_app)
-        else:
-            reply_text.append(char)
-    await message.edit("".join(reply_text))
+    reply_text = mock_text(input_str)
+    await message.edit(reply_text)
 
 
 @UserBot.on_message(Filters.command(["insult"], ".") & Filters.me)
