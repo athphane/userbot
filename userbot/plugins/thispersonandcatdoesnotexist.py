@@ -19,7 +19,7 @@ async def this_person_does_no_exist(bot: UserBot, message: Message):
 
 
 @UserBot.on_message((Filters.command('rcat', '.') & Filters.me))
-async def this_person_does_no_exist(bot: UserBot, message: Message):
+async def this_cat_does_no_exist(bot: UserBot, message: Message):
     cat = get_cat()
     file_name = f"{randint(1, 999)}cat.jpeg"
     cat.save_image(file_name)
