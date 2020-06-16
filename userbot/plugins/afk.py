@@ -1,5 +1,5 @@
+import asyncio
 from datetime import datetime
-from time import sleep
 
 from pyrogram import Filters, Message
 
@@ -151,7 +151,7 @@ async def afk_unset(bot: UserBot, message: Message):
         AFK_REASON = ''
         USERS = {}
         GROUPS = {}
-        sleep(5)
+        await asyncio.sleep(5)
 
     await message.delete()
 
@@ -171,7 +171,7 @@ async def auto_afk_unset(bot: UserBot, message: Message):
         AFK_REASON = ''
         USERS = {}
         GROUPS = {}
-        sleep(5)
+        await asyncio.sleep(5)
 
         await reply.delete()
 
