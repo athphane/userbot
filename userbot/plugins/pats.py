@@ -1,3 +1,5 @@
+import asyncio
+
 import aiohttp
 from pyrogram import Filters, Message
 
@@ -15,7 +17,11 @@ async def give_pats(bot: UserBot, message: Message):
                 return await message.edit("`no Pats for u :c")
             result = await request.json()
             url = result.get("link", None)
-            await bot.send_video(GetChatID(message), url, reply_to_message_id=ReplyCheck(message))
+            await asyncio.gather(
+                message.delete(),
+                await bot.send_video(GetChatID(message), url, reply_to_message_id=ReplyCheck(message))
+            )
+
 
 # Command help section
 add_command_help(
