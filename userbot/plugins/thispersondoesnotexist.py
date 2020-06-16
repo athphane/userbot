@@ -15,3 +15,4 @@ async def this_person_does_no_exist(bot: UserBot, message: Message):
     person.save_image(file_name)
     await bot.send_photo(message.chat.id, file_name, reply_to_message_id=ReplyCheck(message))
     os.remove(file_name)
+    await message.delete()
