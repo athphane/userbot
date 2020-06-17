@@ -71,9 +71,9 @@ async def get_id(bot: UserBot, message: Message):
             file_id = rep.venue.file_id
 
     if not file_id:
-        await message.edit("This chat's ID:\n`{}`".format(message.chat.id))
+        await message.edit(str(message.chat.id))
     else:
-        await message.edit("File_ID:\n`{}`".format(file_id))
+        await message.edit(file_id)
 
 
 @UserBot.on_message(Filters.command("restart", '.') & Filters.me)
