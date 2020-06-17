@@ -38,7 +38,7 @@ async def commit_graph(bot: UserBot, message: Message):
         git_user = message.command[1]
     
     url = f"https://ghchart.rshah.org/{git_user}"
-    resp = AioHttp.get_raw(url)
+    resp = await AioHttp.get_raw(url)
     f = await aiofiles.open('git.svg', mode='wb')
     await f.write(resp)
     await f.close()
