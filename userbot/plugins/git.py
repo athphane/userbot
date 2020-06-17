@@ -37,13 +37,15 @@ async def commit_graph(bot: UserBot, message: Message):
     else:
         git_user = message.command[1]
     
+    
     url = f"https://ghchart.rshah.org/{git_user}"
+    file_name = f"{randint(1,999)}{git_user}"
+    
     resp = await AioHttp.get_raw(url)
-    f = await aiofiles.open('git.svg', mode='wb')
+    f = await aiofiles.open(f'{file_name}'.svg', mode='wb')
     await f.write(resp)
     await f.close()
     
-    file_name = f"{randint(1,999)}{git_user}"
     try:
         cairosvg.svg2png(url=f"{file_name}.svg", write_to=f"{file_name}.png")
     except UnboundLocalError:
