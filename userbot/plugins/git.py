@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 import os
 from asyncio import sleep
@@ -54,13 +55,15 @@ async def commit_graph(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    await bot.send_photo(
-        chat_id=message.chat.id,
-        photo=f"{file_name}.png",
-        caption=git_user,
-        reply_to_message_id=ReplyCheck(message)
+    await asyncio.gather(
+        bot.send_photo(
+            chat_id=message.chat.id,
+            photo=f"{file_name}.png",
+            caption=git_user,
+            reply_to_message_id=ReplyCheck(message)
+        ),
+        message.delete()
     )
-    await message.delete()
 
     for file in iglob(f"{file_name}.*"):
         os.remove(file)
