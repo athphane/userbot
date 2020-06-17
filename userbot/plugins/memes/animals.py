@@ -29,7 +29,9 @@ async def prep_animal_image(animal_data):
     ext = ''
     image = None
     while ext not in ok_exts:
-        data = await AioHttp().get_json(animal_data['url'])
+        raw = await AioHttp().get_raw(animal_data['url'])
+        data = await raw.json()
+        # data = await AioHttp().get_json(animal_data['url'])
         image = data[animal_data['key']]
         ext = re.search(animal, image).group(1).lower()
     return image
