@@ -42,7 +42,7 @@ async def commit_graph(bot: UserBot, message: Message):
     file_name = f"{randint(1,999)}{git_user}"
     
     resp = await AioHttp.get_raw(url)
-    f = await aiofiles.open(f'{file_name}'.svg', mode='wb')
+    f = await aiofiles.open(f"{file_name}.svg", mode='wb')
     await f.write(resp)
     await f.close()
     
