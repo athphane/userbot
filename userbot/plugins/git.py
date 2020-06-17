@@ -32,7 +32,7 @@ async def commit_graph(bot: UserBot, message: Message):
     if len(message.command) < 2:
         message.edit("Please provide a github profile username to generate the graph!")
         await sleep(2)
-        message.delete()
+        await message.delete()
         return
     else:
         git_user = message.command[1]
@@ -49,15 +49,16 @@ async def commit_graph(bot: UserBot, message: Message):
     except UnboundLocalError:
         message.edit("Username does not exist!")
         await sleep(2)
-        message.delete()
+        await message.delete()
         return
     
     await bot.send_photo(
         chat_id=message.chat.id,
-        photo="git.png",
+        photo=f"{file_name}.png",
         caption=git_user,
         reply_to_message_id=ReplyCheck(message)
     )
+    await message.delete()
     
     for file in iglob(f"{file_name}.*"):
         os.remove(file)
