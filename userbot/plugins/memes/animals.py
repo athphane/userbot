@@ -1,7 +1,7 @@
 import asyncio
 import re
 from time import sleep
-
+from userbot.helpers.aiohttp import AioHttp
 import aiohttp
 from pyrogram import Filters, Message
 
@@ -29,10 +29,7 @@ async def prep_animal_image(animal_data):
     ext = ''
     image = None
     while ext not in ok_exts:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(animal_data['url']) as resp:
-                data = await resp.json()
-
+        data = await AioHttp().get_json(animal_data['url'])
         image = data[animal_data['key']]
         ext = re.search(animal, image).group(1).lower()
     return image
