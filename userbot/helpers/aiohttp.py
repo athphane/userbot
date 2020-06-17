@@ -18,4 +18,4 @@ class AioHttp:
     async def get_raw(link):
         async with aiohttp.ClientSession() as session:
             async with session.get(link) as resp:
-                return resp
+                return await resp.read()
