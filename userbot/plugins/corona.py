@@ -1,18 +1,18 @@
 import asyncio
 import datetime
 
-import requests
 from prettytable import PrettyTable
 from pyrogram import Filters, Message
 
 from userbot import UserBot
+from userbot.helpers.aiohttp import AioHttp
 from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command("c", ".") & Filters.me)
 async def corona_all(bot: UserBot, message: Message):
     try:
-        r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
+        r = await AioHttp().get_json('https://corona.lmao.ninja/v2/all?yesterday=true')
         last_updated = datetime.datetime.fromtimestamp(r['updated'] / 1000).strftime("%Y-%m-%d %I:%M:%S")
 
         ac = PrettyTable()
@@ -33,7 +33,7 @@ async def corona_all(bot: UserBot, message: Message):
 
         await message.edit(f"```{str(ac)}```\nLast updated on: {last_updated}")
     except Exception as e:
-        await message.edit("```The corona API could not be reached```")
+        await message.edit("`The corona API could not be reached`")
         print(e)
         await asyncio.sleep(3)
         await message.delete()
@@ -52,7 +52,7 @@ async def corona_search(bot: UserBot, message: Message):
     country = cmd[1]
     await message.edit(f"```Getting Corona statistics for {country}```")
 
-    r = requests.get(f"https://corona.lmao.ninja/v2/countries/{country}").json()
+    r = await AioHttp().get_json(f"https://corona.lmao.ninja/v2/countries/{country}")
     if "cases" not in r:
         await message.edit("```The country could not be found!```")
         await asyncio.sleep(3)

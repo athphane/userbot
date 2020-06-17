@@ -8,6 +8,7 @@ from pyrogram import Filters, Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck, GetUserMentionable
+from userbot.helpers.aiohttp import AioHttp
 from userbot.helpers.constants import MEMES
 from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
@@ -21,12 +22,11 @@ async def nice(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("compliment", ".") & Filters.me)
 async def compliment_func(bot: UserBot, message: Message):
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get('https://complimentr.com/api') as resp:
-                compliment = (await resp.json())['compliment']
-                await message.edit(
-                    compliment.capitalize()
-                )
+        data = await AioHttp().get_json('https://complimentr.com/api')
+        compliment = data['compliment']
+        await message.edit(
+            compliment.capitalize()
+        )
     except Exception:
         await message.delete()
 
@@ -34,12 +34,11 @@ async def compliment_func(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("devexcuse", ".") & Filters.me)
 async def dev_excuse(bot: UserBot, message: Message):
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get('https://dev-excuses-api.herokuapp.com/') as resp:
-                devexcuse = (await resp.json())['text']
-                await message.edit(
-                    devexcuse.capitalize()
-                )
+        data = await AioHttp().get_json('https://dev-excuses-api.herokuapp.com/')
+        devexcuse = data['text']
+        await message.edit(
+            devexcuse.capitalize()
+        )
     except Exception:
         await message.delete()
 
@@ -131,12 +130,11 @@ async def mock_text(bot: UserBot, message: Message):
 async def insult(bot: UserBot, message: Message):
     try:
         await message.edit("`Generating insult...`")
-        async with aiohttp.ClientSession() as session:
-            async with session.get('https://evilinsult.com/generate_insult.php?lang=en&type=json') as resp:
-                req = (await resp.json())['insult']
-                await message.edit(
-                    req
-                )
+        data = await AioHttp().get_json('https://evilinsult.com/generate_insult.php?lang=en&type=json')
+        req = data['insult']
+        await message.edit(
+            req
+        )
     except Exception:
         await message.edit("`Failed to generate insult...`")
         await asyncio.sleep(2)
