@@ -11,9 +11,9 @@
         "productivity",
         "testing"
     ],
-    "repository": "https://github.com/pokurt/userbot",
+    "repository": "https://github.com/athphane/userbot",
     "website": "athfan.com",
-    "success_url": "https://t.me/pokurt",
+    "success_url": "https://athfan.com",
     "stack": "container",
     "env": {
         "ENV": {
@@ -87,14 +87,6 @@
             "value": "",
             "required": false
         }
-    },
-    "addons": [
-        {
-            "plan": "heroku-postgresql",
-            "options": {
-                "version": "9.5"
-            }
-        }
-    ]
+    }
 }
   
