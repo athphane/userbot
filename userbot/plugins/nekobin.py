@@ -33,7 +33,8 @@ async def paste(bot: UserBot, message: Message):
         if delete:
             await asyncio.gather(
                 bot.send_message(message.chat.id, reply_text, disable_web_page_preview=True),
-                message.reply_to_message.delete()
+                message.reply_to_message.delete(),
+                message.delete()
             )
         else:
             await message.edit_text(
