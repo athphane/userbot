@@ -27,7 +27,7 @@ async def compliment_func(bot: UserBot, message: Message):
         )
     except Exception:
         await message.delete()
-
+        
 
 @UserBot.on_message(Filters.command(["devexcuse"], ".") & Filters.me)
 async def dev_excuse(bot: UserBot, message: Message):
@@ -264,6 +264,13 @@ async def stretch(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command(['beemoviescript'], '.') & Filters.me)
 async def bee_movie_script(bot: UserBot, message: Message):
     await message.edit(f"Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
+                           
+                           
+@UserBot.on_message(Filters.command(["ht"], ".") & Filters.me)
+async def heads_tails(bot: UserBot, message: Message):
+    coin_sides = ['heads', 'tails']
+    ht = f"Heads or Tails? `{choice(coin_sides)}`"
+    message.edit(ht)
 
 
 # Command help section
@@ -287,5 +294,6 @@ add_command_help(
         ['.target', 'Send target animation'],
         ['oof', 'Oof'],
         [';_; `or` .sad `or` cri', ';_;'],
+        ['.ht', 'Heads or Tails'],
     ]
 )
