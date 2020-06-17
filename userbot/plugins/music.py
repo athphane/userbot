@@ -41,12 +41,6 @@ async def send_music(bot: UserBot, message: Message):
                 file_ref=str(saved.audio.file_ref),
                 reply_to_message_id=reply_to
             )
-            #             await bot.forward_messages(
-            #                 chat_id=message.chat.id,
-            #                 from_chat_id="me",
-            #                 message_ids=saved.updates[1].message.id,
-            #                 as_copy=True
-            #             )
 
             # delete the message from Saved Messages
             await bot.delete_messages("me", saved.message_id)
