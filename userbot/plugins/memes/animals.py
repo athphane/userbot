@@ -40,6 +40,9 @@ async def prep_animal_image(animal_data):
 
 @UserBot.on_message(Filters.command(animals, ['.', '']) & Filters.me)
 async def animal_image(bot: UserBot, message: Message):
+    if len(message.command) > 1:
+        return
+
     animal_data = animals_data[message.command[0]]
     await message.delete()
     await bot.send_photo(
@@ -93,12 +96,6 @@ add_command_help(
     'animals', animal_image_help
 )
 
-# Animal fact help
-fact_help = []
-for x in animals:
-    if x != 'redpanda':
-        fact_help.append([f".fact {x}", f"Send a random fact about {x}"])
-
 add_command_help(
-    'facts', fact_help
+    'facts', [[f".fact {x}", f"Send a random fact about {x}"] for x in animals if x != 'redpanda']
 )

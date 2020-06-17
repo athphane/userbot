@@ -10,7 +10,6 @@ from userbot import UserBot
 from userbot.database import database
 
 
-
 @UserBot.on_message(Filters.command("eval", ".") & Filters.me & ~Filters.forwarded)
 async def evaluation(bot: UserBot, message: Message):
     status_message = await message.reply_text("Processing ...")
@@ -56,7 +55,7 @@ async def evaluation(bot: UserBot, message: Message):
         with open("eval.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(final_output))
         await message.reply_document(
-            document="eval.text",
+            document="eval.txt",
             caption=cmd,
             disable_notification=True,
             reply_to_message_id=reply_to_id
@@ -67,13 +66,13 @@ async def evaluation(bot: UserBot, message: Message):
         await status_message.edit(final_output)
 
 
-async def aexec(code, c, m, r, d):
+async def aexec(code, b, m, r, d):
     sys.tracebacklimit = 0
     exec(
-        f'async def __aexec(c, m, r, d): ' +
+        f'async def __aexec(b, m, r, d): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
-    return await locals()['__aexec'](c, m, r, d)
+    return await locals()['__aexec'](b, m, r, d)
 
 
 @UserBot.on_message(Filters.command("exec", ".") & Filters.me & ~Filters.forwarded)

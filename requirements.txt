@@ -16,3 +16,4 @@ speedtest-cli
 tgcrypto
 yourls
 humanize
+thisapidoesnotexist
