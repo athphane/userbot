@@ -1,6 +1,6 @@
 import asyncio
+
 import aiohttp
-import requests
 from pyrogram import Filters, Message
 
 from userbot import UserBot
@@ -14,9 +14,9 @@ async def paste(bot: UserBot, message: Message):
     try:
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                'https://nekobin.com/api/documents',
-                json={"content": text},
-                timeout=3
+                    'https://nekobin.com/api/documents',
+                    json={"content": text},
+                    timeout=3
             ) as response:
                 key = (await response.json())["result"]["key"]
     except Exception:
@@ -27,14 +27,19 @@ async def paste(bot: UserBot, message: Message):
     else:
         url = f'https://nekobin.com/{key}'
         reply_text = f'Nekofied to **Nekobin** : {url}'
-        await message.edit_text(
-            reply_text,
-            disable_web_page_preview=True,
-        )
-
-        if len(message.command) > 1 and message.command[1] in ['d', 'del']:
-            if message.reply_to_message.from_user.is_self:
-                await message.reply_to_message.delete()
+        delete = True if len(message.command) > 1 and \
+                         message.command[1] in ['d', 'del'] and \
+                         message.reply_to_message.from_user.is_self else False
+        if delete:
+            await asyncio.gather(
+                bot.send_message(message.chat.id, reply_text, disable_web_page_preview=True),
+                message.reply_to_message.delete()
+            )
+        else:
+            await message.edit_text(
+                reply_text,
+                disable_web_page_preview=True,
+            )
 
 
 add_command_help(
