@@ -30,7 +30,7 @@ async def last_commit(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command(['ggraph', 'commitgraph'], '.') & Filters.me)
 async def commit_graph(bot: UserBot, message: Message):
     if len(message.command) < 2:
-        message.edit("Please provide a github profile username to generate the graph!")
+        await message.edit("Please provide a github profile username to generate the graph!")
         await sleep(2)
         await message.delete()
         return
@@ -49,7 +49,7 @@ async def commit_graph(bot: UserBot, message: Message):
     try:
         cairosvg.svg2png(url=f"{file_name}.svg", write_to=f"{file_name}.png")
     except UnboundLocalError:
-        message.edit("Username does not exist!")
+        await message.edit("Username does not exist!")
         await sleep(2)
         await message.delete()
         return
