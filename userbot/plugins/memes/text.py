@@ -270,7 +270,7 @@ async def bee_movie_script(bot: UserBot, message: Message):
 async def heads_tails(bot: UserBot, message: Message):
     coin_sides = ['heads', 'tails']
     ht = f"Heads or Tails? `{choice(coin_sides)}`"
-    message.edit(ht)
+    await message.edit(ht)
 
 
 # Command help section
