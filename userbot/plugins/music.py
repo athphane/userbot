@@ -2,12 +2,11 @@ import asyncio
 
 from pyrogram import Filters, Message
 
-from userbot import UserBot
+from userbot import UserBot, ALLOWED_USERS
 from userbot.plugins.help import add_command_help
 
 
-# @UserBot.on_message(Filters.command(['m', 'music'], ".") & (Filters.me | Filters.user(ALLOWED_USERS)))
-@UserBot.on_message(Filters.command(['m', 'music'], ".") & Filters.me)
+@UserBot.on_message(Filters.command(['m', 'music'], ".") & (Filters.me | Filters.user(ALLOWED_USERS)))
 async def send_music(bot: UserBot, message: Message):
     try:
         cmd = message.command
