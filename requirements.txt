@@ -17,5 +17,6 @@ tgcrypto
 yourls
 humanize
 thisapidoesnotexist
-cairosvg
 aiofiles
+svglib
+reportlab

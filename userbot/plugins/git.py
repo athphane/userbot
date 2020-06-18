@@ -4,9 +4,10 @@ import os
 from asyncio import sleep
 from glob import iglob
 from random import randint
-
+from svglib.svglib import svg2rlg
+from reportlab.graphics import renderPM
 import aiofiles
-import cairosvg
+# import cairosvg
 import git
 from pyrogram import Filters, Message
 
@@ -48,7 +49,9 @@ async def commit_graph(bot: UserBot, message: Message):
     await f.close()
 
     try:
-        cairosvg.svg2png(url=f"{file_name}.svg", write_to=f"{file_name}.png")
+        drawing = svg2rlg(f"{file_name}.svg")
+        renderPM.drawToFile(drawing, f"{file_name}.png")
+        # cairosvg.svg2png(url=f"{file_name}.svg", write_to=f"{file_name}.png")
     except UnboundLocalError:
         await message.edit("Username does not exist!")
         await sleep(2)
