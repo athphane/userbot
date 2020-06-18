@@ -1,11 +1,11 @@
 import asyncio
 from datetime import datetime
 
+import humanize
 from pyrogram import Filters, Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetChatID
-from userbot.helpers.utility import subtract_time
 from userbot.plugins.help import add_command_help
 
 AFK = False
@@ -13,6 +13,12 @@ AFK_REASON = ''
 AFK_TIME = ''
 USERS = {}
 GROUPS = {}
+
+
+def subtract_time(start, end):
+    """Get humanized time"""
+    subtracted = humanize.naturaltime(start - end)
+    return str(subtracted)
 
 
 @UserBot.on_message(((Filters.group & Filters.mentioned) | Filters.private) & ~Filters.me, group=3)
