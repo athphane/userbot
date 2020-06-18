@@ -4,7 +4,7 @@ from datetime import datetime
 from pyrogram import Filters, Message
 
 from userbot import UserBot
-from userbot.helpers.PyroHelpers import GetFromUserID, GetChatID
+from userbot.helpers.PyroHelpers import GetChatID
 from userbot.helpers.utility import subtract_time
 from userbot.plugins.help import add_command_help
 
@@ -15,11 +15,14 @@ USERS = {}
 GROUPS = {}
 
 
-@UserBot.on_message(Filters.group & Filters.mentioned & ~Filters.me, group=3)
-async def afk_group(bot: UserBot, message: Message):
+@UserBot.on_message(((Filters.group & Filters.mentioned) | Filters.private) & ~Filters.me, group=3)
+async def collect_afk_messages(bot: UserBot, message: Message):
     if AFK:
         last_seen = subtract_time(datetime.now(), AFK_TIME)
-        if GetChatID(message) not in GROUPS:
+        is_group = True if message.chat.type in ['supergroup', 'group'] else False
+        PLACE = GROUPS if is_group else USERS
+
+        if GetChatID(message) not in PLACE:
             text = (
                 f"`Beep boop. This is an automated message.\n"
                 f"I am not available right now.\n"
@@ -32,10 +35,10 @@ async def afk_group(bot: UserBot, message: Message):
                 text=text,
                 reply_to_message_id=message.message_id
             )
-            GROUPS[GetChatID(message)] = 1
+            PLACE[GetChatID(message)] = 1
             return
-        elif GetChatID(message) in GROUPS:
-            if GROUPS[GetChatID(message)] == 50:
+        elif GetChatID(message) in PLACE:
+            if PLACE[GetChatID(message)] == 50:
                 text = (
                     f"`This is an automated message\n"
                     f"Last seen: {last_seen}\n"
@@ -48,9 +51,9 @@ async def afk_group(bot: UserBot, message: Message):
                     text=text,
                     reply_to_message_id=message.message_id
                 )
-            elif GROUPS[GetChatID(message)] > 50:
+            elif PLACE[GetChatID(message)] > 50:
                 return
-            elif GROUPS[GetChatID(message)] % 5 == 0:
+            elif PLACE[GetChatID(message)] % 5 == 0:
                 text = (
                     f"`Hey I'm still not back yet.\n"
                     f"Last seen: {last_seen}\n"
@@ -63,58 +66,7 @@ async def afk_group(bot: UserBot, message: Message):
                     reply_to_message_id=message.message_id
                 )
 
-        GROUPS[GetChatID(message)] += 1
-
-
-@UserBot.on_message(Filters.private & ~Filters.me, group=3)
-async def afk_private(bot: UserBot, message: Message):
-    if AFK:
-        last_seen = subtract_time(datetime.now(), AFK_TIME)
-        if GetFromUserID(message) not in USERS:
-            text = (
-                f"`Beep boop. This is an automated message.\n"
-                f"I am not available right now.\n"
-                f"Last seen: {last_seen}\n"
-                f"Here's why: ```{AFK_REASON.upper()}```\n"
-                f"See you after I'm done doing whatever I'm doing.`"
-            )
-            await bot.send_message(
-                chat_id=GetFromUserID(message),
-                text=text,
-                reply_to_message_id=message.message_id
-            )
-            USERS[GetFromUserID(message)] = 1
-            return
-        elif GetFromUserID(message) in USERS:
-            if USERS[GetFromUserID(message)] == 50:
-                text = (
-                    f"`This is an automated message\n"
-                    f"Last seen: {last_seen}\n"
-                    f"This is the 10th time I've told you I'm AFK right now..\n"
-                    f"I'll get to you when I get to you.\n"
-                    f"No more auto messages for you`"
-                )
-                await bot.send_message(
-                    chat_id=GetFromUserID(message),
-                    text=text,
-                    reply_to_message_id=message.message_id
-                )
-            elif USERS[GetFromUserID(message)] > 50:
-                return
-            elif USERS[GetFromUserID(message)] % 5 == 0:
-                text = (
-                    f"`Hey I'm still not back yet.\n"
-                    f"Last seen: {last_seen}\n"
-                    f"Still busy with ```{AFK_REASON.upper()}```\n"
-                    f"Try pinging a bit later.`"
-                )
-                await bot.send_message(
-                    chat_id=GetFromUserID(message),
-                    text=text,
-                    reply_to_message_id=message.message_id
-                )
-
-        USERS[GetFromUserID(message)] += 1
+        PLACE[GetChatID(message)] += 1
 
 
 @UserBot.on_message(Filters.command("afk", ".") & Filters.me, group=3)
