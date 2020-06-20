@@ -12,6 +12,7 @@ from userbot.helpers.adminHelpers import (
 
 @UserBot.on_message(Filters.command("ban", prefixes='.') & Filters.me)
 async def ban_hammer(bot: UserBot, message: Message):
+    await message.
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
@@ -49,7 +50,6 @@ async def unban(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command(["mute", "mute 24"], prefixes='.') & Filters.me)
 async def mute_hammer(bot: UserBot, message: Message):
-    print(message.command)
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
@@ -132,10 +132,18 @@ async def kick_user(bot: UserBot, message: Message):
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
             )
-            await bot.unban_chat_member(
-                chat_id=message.chat.id,
-                user_id=message.reply_to_message.from_user.id
-            )
             await message.edit(f"{mention}, Sayonara motherfucker.")
         except UserAdminInvalid:
             await RestrictFailed(message)
+
+add_command_help(
+    'ban', [
+        ['.ban', 'Bans user indefinitely.'],
+        ['.ban 24', 'Bans user for 24hrs.'],
+        ['.unban', 'Unbans the user.'],
+        ['.mute', 'Mutes user indefinitely.'],
+        ['.mute 24', 'Bans user for 24hrs.'],
+        ['.unmute', 'Unmutes the user.'],
+        ['.kick', 'Kicks the user out of the group.'],
+    ]
+)
