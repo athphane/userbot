@@ -3,12 +3,12 @@ from time import sleep
 from pyrogram import Message, User
 from pyrogram.api import functions, types
 
-from userbot.userbot import UserBot
+from userbot import UserBot
 
 from userbot.plugins.interval import IntervalHelper
 
 
-def CheckAdmin(message: Message):
+async def CheckAdmin(message: Message):
     """Check if we are an admin."""
 
     admin = 'administrator'
@@ -20,9 +20,9 @@ def CheckAdmin(message: Message):
         user_id=message.from_user.id)
 
     if SELF.status not in ranks:
-        message.edit("__I'm not Admin!__")
+        await message.edit("__I'm not Admin!__")
         sleep(2)
-        message.delete()
+        await message.delete()
 
     else:
         if SELF.status is not admin:
@@ -30,26 +30,26 @@ def CheckAdmin(message: Message):
         elif SELF.permissions.can_restrict_members:
             return True
         else:
-            message.edit("__No Permissions to restrict Members__")
+            await message.edit("__No Permissions to restrict Members__")
             sleep(2)
-            message.delete()
+            await message.delete()
 
 
-def CheckReplyAdmin(message: Message):
+async def CheckReplyAdmin(message: Message):
     """Check if the message is a reply to another user."""
     if not message.reply_to_message:
-        message.edit(f"`?{message.command[0]}` needs to be a reply")
+        await message.edit(f"`?{message.command[0]}` needs to be a reply")
         sleep(2)
-        message.delete()
+        await message.delete()
     elif message.reply_to_message.from_user.is_self:
-        message.edit(f"I can't {message.command[0]} myself.")
+        await message.edit(f"I can't {message.command[0]} myself.")
         sleep(2)
-        message.delete()
+        await message.delete()
     else:
         return True
 
 
-def Timer(message: Message):
+async def Timer(message: Message):
     if len(message.command) > 1:
         secs = IntervalHelper(message.command[1])
         return int(str(time()).split(".")[0] + secs.to_secs()[0])
@@ -57,12 +57,12 @@ def Timer(message: Message):
         return 0
 
 
-def TimerString(message: Message):
+async def TimerString(message: Message):
     secs = IntervalHelper(message.command[1])
     return f"{secs.to_secs()[1]} {secs.to_secs()[2]}"
 
 
-def RestrictFailed(message: Message):
-    message.edit(f"I can't {message.command[1]} this user.")
+async def RestrictFailed(message: Message):
+    await message.edit(f"I can't {message.command[1]} this user.")
     sleep(2)
-    message.delete()
+    await message.delete()
