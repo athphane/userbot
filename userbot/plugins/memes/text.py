@@ -2,6 +2,7 @@ import asyncio
 import random
 import re
 from random import choice
+from aiohttp.client_exceptions import ClientError
 
 from pyrogram import Filters, Message
 
@@ -26,7 +27,7 @@ async def compliment_func(_, message: Message):
         await message.edit(
             compliment.capitalize()
         )
-    except Exception:
+    except ClientError:
         await message.delete()
         
 
@@ -38,7 +39,7 @@ async def dev_excuse(_, message: Message):
         await message.edit(
             devexcuse.capitalize()
         )
-    except Exception:
+    except ClientError:
         await message.delete()
 
 
@@ -132,7 +133,7 @@ async def insult(_, message: Message):
         await message.edit(
             req
         )
-    except Exception:
+    except ClientError:
         await message.edit("`Failed to generate insult...`")
         await asyncio.sleep(2)
         await message.delete()
