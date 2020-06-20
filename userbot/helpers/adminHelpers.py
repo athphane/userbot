@@ -15,7 +15,7 @@ async def CheckAdmin(bot: UserBot, message: Message):
     creator = 'creator'
     ranks = [admin, creator]
 
-    SELF = await bot().get_chat_member(
+    SELF = await bot.get_chat_member(
         chat_id=message.chat.id,
         user_id=message.from_user.id)
 
