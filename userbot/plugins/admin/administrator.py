@@ -84,15 +84,15 @@ async def unmute(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("kick", prefixes='.') & Filters.me)
 async def kick_user(bot: UserBot, message: Message):
-    if CheckReplyAdmin(message) is True:
-        if CheckAdmin(message) is True:
+    if await CheckReplyAdmin(message) is True:
+        if await CheckAdmin(message) is True:
             try:
-                bot.kick_chat_member(
+                await bot.kick_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     until_date=0
                 )
-                bot.unban_chat_member(
+                await bot.unban_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id
                 )
