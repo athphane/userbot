@@ -92,7 +92,7 @@ async def sad_cri(_, message: Message):
         await message.edit(cri, parse_mode=None)
 
 
-@UserBot.on_message(Filters.regex("^\.?oof$") & Filters.me)
+@UserBot.on_message(Filters.regex(r"^\.?oof$") & Filters.me)
 async def send_oof(_, message: Message):
     oof = "Oo "
     for _ in range(10):
