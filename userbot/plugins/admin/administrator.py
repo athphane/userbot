@@ -15,14 +15,18 @@ async def ban_hammer(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            await bot.kick_chat_member(
-                chat_id=message.chat.id,
-                user_id=message.reply_to_message.from_user.id,
-                until_date=int(time.time() + 86400)
-            )
-            if len(message.command) > 1:
+            if message.command == 'ban 24':
+                await bot.kick_chat_member(
+                    chat_id=message.chat.id,
+                    user_id=message.reply_to_message.from_user.id,
+                    until_date=int(time.time() + 86400)
+                )
                 await message.edit(f"{mention} has been banned for {until_date}.")
             else:
+                await bot.kick_chat_member(
+                    chat_id=message.chat.id,
+                    user_id=message.reply_to_message.from_user.id,
+                )
                 await message.edit(f"{mention} has been banned indefinitely.")
         except UserAdminInvalid:
             await RestrictFailed(message)
@@ -43,32 +47,49 @@ async def unban(bot: UserBot, message: Message):
             await message.edit("I can't unban this user.")
 
 
-@UserBot.on_message(Filters.command("mute", prefixes='.') & Filters.me)
+@UserBot.on_message(Filters.command(["mute", "mute 24"], prefixes='.') & Filters.me)
 async def mute_hammer(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            await bot.restrict_chat_member(
-                chat_id=message.chat.id,
-                user_id=message.reply_to_message.from_user.id,
-                permissions=ChatPermissions(
-                    can_send_messages=False,
-                    can_send_media_messages=False,
-                    can_send_stickers=False,
-                    can_send_animations=False,
-                    can_send_games=False,
-                    can_use_inline_bots=False,
-                    can_add_web_page_previews=False,
-                    can_send_polls=False,
-                    can_change_info=False,
-                    can_invite_users=True,
-                    can_pin_messages=False
-                ),
-                until_date=int(time.time() + 86400)
-            )
-            if len(message.command) > 1:
+            if message.command == 'mute 24':
+                await bot.restrict_chat_member(
+                    chat_id=message.chat.id,
+                    user_id=message.reply_to_message.from_user.id,
+                    permissions=ChatPermissions(
+                        can_send_messages=False,
+                        can_send_media_messages=False,
+                        can_send_stickers=False,
+                        can_send_animations=False,
+                        can_send_games=False,
+                        can_use_inline_bots=False,
+                        can_add_web_page_previews=False,
+                        can_send_polls=False,
+                        can_change_info=False,
+                        can_invite_users=True,
+                        can_pin_messages=False
+                    ),
+                    until_date=int(time.time() + 86400)
+                )
                 await message.edit(f"{mention} has been muted for {until_date}.")
             else:
+                await bot.restrict_chat_member(
+                    chat_id=message.chat.id,
+                    user_id=message.reply_to_message.from_user.id,
+                    permissions=ChatPermissions(
+                        can_send_messages=False,
+                        can_send_media_messages=False,
+                        can_send_stickers=False,
+                        can_send_animations=False,
+                        can_send_games=False,
+                        can_use_inline_bots=False,
+                        can_add_web_page_previews=False,
+                        can_send_polls=False,
+                        can_change_info=False,
+                        can_invite_users=True,
+                        can_pin_messages=False
+                    )
+                )
                 await message.edit(f"{mention} has been muted indefinitely.")
         except UserAdminInvalid:
             await RestrictFailed(message)
@@ -82,15 +103,19 @@ async def unmute(bot: UserBot, message: Message):
             await bot.restrict_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
-                until_date=0,
-                can_send_messages=True,
-                can_send_media_messages=True,
-                can_send_other_messages=True,
-                can_add_web_page_previews=True,
-                can_send_polls=True,
-                can_change_info=True,
-                can_invite_users=True,
-                can_pin_messages=True
+                permissions=ChatPermissions(
+                    can_send_messages=True,
+                    can_send_media_messages=True,
+                    can_send_stickers=True,
+                    can_send_animations=True,
+                    can_send_games=True,
+                    can_use_inline_bots=True,
+                    can_add_web_page_previews=True,
+                    can_send_polls=True,
+                    can_change_info=False,
+                    can_invite_users=True,
+                    can_pin_messages=False
+                )
             )
             await message.edit(f"{mention}, you may send messages here now.")
         except UserAdminInvalid:
