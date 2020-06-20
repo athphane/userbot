@@ -9,10 +9,10 @@ from userbot.helpers.adminHelpers import (
 
 @UserBot.on_message(Filters.command("ban", prefixes='.') & Filters.me)
 async def ban_hammer(bot: UserBot, message: Message):
-    if CheckReplyAdmin(message) is True:
-        if CheckAdmin(message) is True:
+    if await CheckReplyAdmin(message) is True:
+        if await CheckAdmin(message) is True:
             try:
-                bot.kick_chat_member(
+                await bot.kick_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     until_date=Timer(message)
@@ -22,29 +22,30 @@ async def ban_hammer(bot: UserBot, message: Message):
                 else:
                     await message.edit(f"{user_id} has been banned indefinitely.")
             except UserAdminInvalid:
-                RestrictFailed(message)
+                await RestrictFailed(message)
 
 
 @UserBot.on_message(Filters.command("unban", prefixes='.') & Filters.me)
 async def unban(bot: UserBot, message: Message):
-    if CheckReplyAdmin(message) is True:
-        if CheckAdmin(message) is True:
+    if await CheckReplyAdmin(message) is True:
+        if await CheckAdmin(message) is True:
             try:
-                bot.unban_chat_member(
+                await bot.unban_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id
                 )
-                await message.edit(f"Congratulations {user_id} you have been unbanned. Follow rules and be careful from now.")
+                await message.edit(f"Congratulations {user_id} you have been unbanned." 
+                                   "Follow the rules and be careful from now on.")
             except UserAdminInvalid:
                 await message.edit("I can't unban this user.")
 
 
 @UserBot.on_message(Filters.command("mute", prefixes='.') & Filters.me)
 async def mute_hammer(bot: UserBot, message: Message):
-    if CheckReplyAdmin(message) is True:
-        if CheckAdmin(message) is True:
+    if await CheckReplyAdmin(message) is True:
+        if await CheckAdmin(message) is True:
             try:
-                bot.restrict_chat_member(
+                await bot.restrict_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     until_date=Timer(message),
@@ -55,15 +56,15 @@ async def mute_hammer(bot: UserBot, message: Message):
                 else:
                     await message.edit(f"{user_id} has been banned indefinitely.")
             except UserAdminInvalid:
-                RestrictFailed(message)
+                await RestrictFailed(message)
 
 
 @UserBot.on_message(Filters.command("unmute", prefixes='.') & Filters.me)
 async def unmute(bot: UserBot, message: Message):
-    if CheckReplyAdmin(message) is True:
-        if CheckAdmin(message) is True:
+    if await CheckReplyAdmin(message) is True:
+        if await CheckAdmin(message) is True:
             try:
-                bot.restrict_chat_member(
+                await bot.restrict_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     until_date=0,
@@ -78,7 +79,7 @@ async def unmute(bot: UserBot, message: Message):
                 )
                 await message.edit(f"{user_id}, you may send messages here now.")
             except UserAdminInvalid:
-                RestrictFailed(message)
+                await RestrictFailed(message)
 
 
 @UserBot.on_message(Filters.command("kick", prefixes='.') & Filters.me)
@@ -97,4 +98,4 @@ async def kick_user(bot: UserBot, message: Message):
                 )
                 await message.edit(f"{user_id}, Sayonara motherfucker.")
             except UserAdminInvalid:
-                RestrictFailed(message)
+                await RestrictFailed(message)
