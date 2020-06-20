@@ -38,7 +38,7 @@ async def pin_message(bot: UserBot, message: Message):
             else:
                 # You didn't reply to a message and we can't pin anything. ffs
                 await message.edit(
-                    f"`Reply to a message so that I can pin the god damned thing...`")
+                    "`Reply to a message so that I can pin the god damned thing...`")
         else:
             # You have no business running this command.
             await message.edit("`I am not an admin here lmao. What am I doing?`")

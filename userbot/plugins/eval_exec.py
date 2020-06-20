@@ -69,7 +69,7 @@ async def evaluation(bot: UserBot, message: Message):
 async def aexec(code, b, m, r, d):
     sys.tracebacklimit = 0
     exec(
-        f'async def __aexec(b, m, r, d): ' +
+        'async def __aexec(b, m, r, d): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
     return await locals()['__aexec'](b, m, r, d)
