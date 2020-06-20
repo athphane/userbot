@@ -1,4 +1,4 @@
-from time import sleep
+from time import sleep, time
 
 from pyrogram import Message, User
 from pyrogram.api import functions, types
