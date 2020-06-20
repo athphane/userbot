@@ -5,6 +5,7 @@ from pyrogram.errors import UserAdminInvalid
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetUserMentionable
+from userbot.plugins.help import add_command_help
 from userbot.helpers.adminHelpers import (
     CheckAdmin, CheckReplyAdmin, Timer, TimerString, RestrictFailed
 )
