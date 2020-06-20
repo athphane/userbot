@@ -14,7 +14,7 @@ from userbot.helpers.adminHelpers import (
 async def ban_hammer(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
-            mention = await GetUserMentionable(message.reply_to_message.from_user)
+            mention = GetUserMentionable(message.reply_to_message.from_user)
             await bot.kick_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
@@ -32,7 +32,7 @@ async def ban_hammer(bot: UserBot, message: Message):
 async def unban(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
-            mention = await GetUserMentionable(message.reply_to_message.from_user)
+            mention = GetUserMentionable(message.reply_to_message.from_user)
             await bot.unban_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id
@@ -47,7 +47,7 @@ async def unban(bot: UserBot, message: Message):
 async def mute_hammer(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
-            mention = await GetUserMentionable(message.reply_to_message.from_user)
+            mention = GetUserMentionable(message.reply_to_message.from_user)
             await bot.restrict_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
@@ -66,7 +66,7 @@ async def mute_hammer(bot: UserBot, message: Message):
 async def unmute(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
-            mention = await GetUserMentionable(message.reply_to_message.from_user)
+            mention = GetUserMentionable(message.reply_to_message.from_user)
             await bot.restrict_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
@@ -89,7 +89,7 @@ async def unmute(bot: UserBot, message: Message):
 async def kick_user(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
-            mention = await GetUserMentionable(message.reply_to_message.from_user)
+            mention = GetUserMentionable(message.reply_to_message.from_user)
             await bot.kick_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
