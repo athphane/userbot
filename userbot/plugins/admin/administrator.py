@@ -12,7 +12,6 @@ from userbot.helpers.adminHelpers import (
 
 @UserBot.on_message(Filters.command("ban", prefixes='.') & Filters.me)
 async def ban_hammer(bot: UserBot, message: Message):
-    await message.
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
