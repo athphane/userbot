@@ -275,13 +275,6 @@ async def heads_tails(_, message: Message):
     await message.edit(ht)
 
 
-@UserBot.on_message(Filters.command("ht", ".") & Filters.me)
-async def heads_tails(_, message: Message):
-    coin_sides = ['Heads', 'Tails']
-    ht = f"Heads or Tails?\n`{choice(coin_sides)}`"
-    await message.edit(ht)
-
-
 # Command help section
 add_command_help(
     'text', [
