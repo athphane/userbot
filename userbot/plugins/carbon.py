@@ -19,9 +19,8 @@ async def carbon_test(bot: UserBot, message: Message):
 
     # Write the code to a file cause carbon-now-cli wants a file.
     file = "userbot/downloads/carbon.{}".format(get_carbon_lang())
-    f = open(file, "w+")
-    f.write(carbon_text)
-    f.close()
+    with open(file, "w+") as f:
+        f.write(carbon_text)
 
     await message.edit_text("Carbonizing code...")
     # Do the thing
