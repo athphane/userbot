@@ -13,7 +13,7 @@ from svglib.svglib import svg2rlg
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
-from userbot.helpers.aiohttp import AioHttp
+from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 

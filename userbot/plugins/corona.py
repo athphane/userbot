@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 from pyrogram import Filters, Message
 
 from userbot import UserBot
-from userbot.helpers.aiohttp import AioHttp
+from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 

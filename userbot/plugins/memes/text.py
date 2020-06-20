@@ -8,7 +8,7 @@ from pyrogram import Filters, Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetUserMentionable
-from userbot.helpers.aiohttp import AioHttp
+from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.helpers.constants import MEMES
 from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
