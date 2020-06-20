@@ -54,7 +54,10 @@ async def mute_hammer(bot: UserBot, message: Message):
                 permissions=ChatPermissions(
                     can_send_messages=False,
                     can_send_media_messages=False,
-                    can_send_other_messages=False,
+                    can_send_stickers=False,
+                    can_send_animations=False,
+                    can_send_games=False,
+                    can_use_inline_bots=False,
                     can_add_web_page_previews=False,
                     can_send_polls=False,
                     can_change_info=False,
