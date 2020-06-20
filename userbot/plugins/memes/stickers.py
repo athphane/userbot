@@ -8,12 +8,12 @@ from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
 
 sticker_data = {
-    'mock': {'value': 7, 'empty_message': 'GiVE ME sOMEThINg TO MOCK'},
-    'ggl': {'value': 12, 'empty_message': 'Senpai, I need something to Google...'},
+    'mock': {'value': 7, 'empty_message': 'GiVE ME sOMEThINg TO MOCK', 'action': 'Mocking...'},
+    'ggl': {'value': 12, 'empty_message': 'Senpai, I need something to Google...', 'action': 'Googling...'},
     'waifu': {'alts': ['ag', 'animegirl'], 'value': [15, 20, 32, 33, 34, 40, 41, 42, 58],
-              'empty_message': 'The waifu ran away...'},
+              'empty_message': 'The waifu ran away...', 'action': 'Asking my wiafus to say it...'},
     'animeboy': {'alts': ['ab'], 'value': [37, 38, 48, 55],
-                 'empty_message': 'Senpai, I need something to say...'},
+                 'empty_message': 'Senpai, I need something to say...', 'action': 'The boys are on it...'},
 }
 
 sticker_commands = []
@@ -30,9 +30,9 @@ async def sticker_super_func(bot: UserBot, message: Message):
         sticker = {}
         command = message.command[0]
         if command not in sticker_data:
-            for x in sticker_data:
-                if 'alts' in sticker_data[x] and command in sticker_data[x]['alts']:
-                    sticker = sticker_data[x]
+            for sticker in sticker_data:
+                if 'alts' in sticker_data[sticker] and command in sticker_data[sticker]['alts']:
+                    sticker = sticker_data[sticker]
                     break
         else:
             sticker = sticker_data[message.command[0]]
@@ -50,7 +50,7 @@ async def sticker_super_func(bot: UserBot, message: Message):
             await message.delete()
             return
 
-        await message.edit(f"`Generating {command}`")
+        await message.edit(f"`Generating {sticker['action']}`")
 
         values = sticker['value']
         choice = None

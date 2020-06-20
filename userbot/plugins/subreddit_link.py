@@ -3,12 +3,12 @@ from pyrogram import Filters, Message
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
-the_regex = "^r\/([^\s\/])+"
+the_regex = r"^r\/([^\s\/])+"
 
 
 # Generate full Reddit link with subreddit
 @UserBot.on_message(Filters.regex(the_regex) & Filters.me)
-async def subreddit_link(bot: UserBot, message: Message):
+async def subreddit_link(_, message: Message):
     html = "<a href='{link}'>{string}</a>"
     await message.edit(
         html.format(link="https://reddit.com/" + message.text, string=message.text),

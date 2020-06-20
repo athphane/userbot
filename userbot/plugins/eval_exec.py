@@ -11,7 +11,7 @@ from userbot.database import database
 
 
 @UserBot.on_message(Filters.command("eval", ".") & Filters.me & ~Filters.forwarded)
-async def evaluation(bot: UserBot, message: Message):
+async def evaluation_func(bot: UserBot, message: Message):
     status_message = await message.reply_text("Processing ...")
     cmd = message.text.split(" ", maxsplit=1)[1]
 
@@ -36,7 +36,6 @@ async def evaluation(bot: UserBot, message: Message):
     sys.stdout = old_stdout
     sys.stderr = old_stderr
 
-    evaluation = ""
     if exc:
         evaluation = exc
     elif stderr:
@@ -69,14 +68,14 @@ async def evaluation(bot: UserBot, message: Message):
 async def aexec(code, b, m, r, d):
     sys.tracebacklimit = 0
     exec(
-        f'async def __aexec(b, m, r, d): ' +
-        ''.join(f'\n {l}' for l in code.split('\n'))
+        'async def __aexec(b, m, r, d): ' +
+        ''.join(f'\n {line}' for line in code.split('\n'))
     )
     return await locals()['__aexec'](b, m, r, d)
 
 
 @UserBot.on_message(Filters.command("exec", ".") & Filters.me & ~Filters.forwarded)
-async def execution(bot: UserBot, message: Message):
+async def execution(_, message: Message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id

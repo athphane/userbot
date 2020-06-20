@@ -9,7 +9,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command("alive", ".") & Filters.me)
-async def alive(bot: UserBot, message: Message):
+async def alive(_, message: Message):
     txt = (
         f"**{UserBot.__name__}** ```RUNNING```\n"
         f"-> Current Uptime: `{str(datetime.now() - START_TIME).split('.')[0]}`\n"
@@ -20,19 +20,19 @@ async def alive(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("repo", ".") & Filters.me)
-async def repo(bot: UserBot, message: Message):
+async def repo(_, message: Message):
     await message.edit("Click <a href=\"https://github.com/athphane/userbot\">here</a> to open Usebot's GitHub page.")
 
 
 @UserBot.on_message(Filters.command("creator", ".") & Filters.me)
-async def creator(bot: UserBot, message: Message):
+async def creator(_, message: Message):
     await message.edit(
         "I was created by my master <a href=\"https://github.com/athphane\">Athphane</a> on a rainy day."
     )
 
 
 @UserBot.on_message(Filters.command(['uptime', 'up'], ".") & Filters.me)
-async def uptime(bot: UserBot, message: Message):
+async def uptime(_, message: Message):
     now = datetime.now()
     current_uptime = now - START_TIME
     await message.edit(
@@ -42,7 +42,7 @@ async def uptime(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("id", ".") & Filters.me)
-async def get_id(bot: UserBot, message: Message):
+async def get_id(_, message: Message):
     file_id = None
 
     if message.reply_to_message:

@@ -27,18 +27,16 @@ async def pin_message(bot: UserBot, message: Message):
                     disable_notification = False
 
                 # Pin the fucking message.
-                pinned_event = await bot.pin_chat_message(
+                await bot.pin_chat_message(
                     message.chat.id,
                     message.reply_to_message.message_id,
                     disable_notification=disable_notification
                 )
                 await message.edit("`Pinned message!`")
-
-                return
             else:
                 # You didn't reply to a message and we can't pin anything. ffs
                 await message.edit(
-                    f"`Reply to a message so that I can pin the god damned thing...`")
+                    "`Reply to a message so that I can pin the god damned thing...`")
         else:
             # You have no business running this command.
             await message.edit("`I am not an admin here lmao. What am I doing?`")

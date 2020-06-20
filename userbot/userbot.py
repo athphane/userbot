@@ -26,7 +26,7 @@ class UserBot(Client):
             workers=32,
             plugins=dict(root="userbot/plugins"),
             workdir="./",
-            app_version=f"Userbot v0.2",
+            app_version="Userbot v0.2",
             device_model="Python",
             system_version="v0.2"
         )
@@ -41,13 +41,13 @@ class UserBot(Client):
             await super().delete_messages('me', x.message_id)
             break
 
-        print(f"Userbot started. Hi.")
+        print("Userbot started. Hi.")
 
     async def stop(self, *args):
         await super().stop()
         print("Userbot stopped. Bye.")
 
-    async def restart(self, git_update=False, pip=False, *args):
+    async def restart(self, *args, git_update=False, pip=False):
         """ Shoutout to the Userg team for this."""
         await self.stop()
         try:

@@ -1,14 +1,15 @@
 import re
 
 from pyrogram import Filters, Message
+from pyrogram.errors import MessageNotModified
 
 from userbot import UserBot
 
 bad_words = ['nigga', 'nigger', 'coon']
 
 
-@UserBot.on_message(~Filters.regex("^\.\w*") & Filters.me, group=10)
-async def i_am_not_allowed_to_say_this(bot: UserBot, message: Message):
+@UserBot.on_message(~Filters.regex(r"^\.\w*") & Filters.me, group=10)
+async def i_am_not_allowed_to_say_this(_, message: Message):
     try:
         txt = None
         if message.caption:
@@ -25,5 +26,5 @@ async def i_am_not_allowed_to_say_this(bot: UserBot, message: Message):
         elif message.text:
             if txt != message.text:
                 await message.edit(txt)
-    except:
+    except MessageNotModified:
         return

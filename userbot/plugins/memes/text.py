@@ -2,59 +2,56 @@ import asyncio
 import random
 import re
 from random import choice
+from aiohttp.client_exceptions import ClientError
 
-import aiohttp
 from pyrogram import Filters, Message
 
 from userbot import UserBot
-from userbot.helpers.PyroHelpers import ReplyCheck, GetUserMentionable
-from userbot.helpers.aiohttp import AioHttp
+from userbot.helpers.PyroHelpers import GetUserMentionable
+from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.helpers.constants import MEMES
 from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command('nice', '.') & Filters.me)
-async def nice(bot: UserBot, message: Message):
+async def nice(_, message: Message):
     await message.edit("NICENICENICENICE")
 
 
 @UserBot.on_message(Filters.command("compliment", ".") & Filters.me)
-async def compliment_func(bot: UserBot, message: Message):
+async def compliment_func(_, message: Message):
     try:
         data = await AioHttp().get_json('https://complimentr.com/api')
         compliment = data['compliment']
         await message.edit(
             compliment.capitalize()
         )
-    except Exception:
+    except ClientError:
         await message.delete()
         
 
 @UserBot.on_message(Filters.command("devexcuse", ".") & Filters.me)
-async def dev_excuse(bot: UserBot, message: Message):
+async def dev_excuse(_, message: Message):
     try:
         data = await AioHttp().get_json('https://dev-excuses-api.herokuapp.com/')
         devexcuse = data['text']
         await message.edit(
             devexcuse.capitalize()
         )
-    except Exception:
+    except ClientError:
         await message.delete()
 
 
 @UserBot.on_message(Filters.command("reverse", ".") & Filters.me)
-async def reverse(bot: UserBot, message: Message):
-    await message.delete()
-    await bot.send_message(
-        chat_id=message.chat.id,
+async def reverse(_, message: Message):
+    await message.edit(
         text=MEMES.REVERSE,
-        reply_to_message_id=ReplyCheck(message)
     )
 
 
 @UserBot.on_message(Filters.command("slap", ".") & Filters.me)
-async def slap(bot: UserBot, message: Message):
+async def slap(_, message: Message):
     if message.reply_to_message is None:
         await message.delete()
     else:
@@ -80,7 +77,7 @@ async def slap(bot: UserBot, message: Message):
 
 
 @UserBot.on_message((Filters.command("-_-", "") | Filters.command("ok", ".")) & Filters.me)
-async def ok(bot: UserBot, message: Message):
+async def ok(_, message: Message):
     okay = "-_-"
     for _ in range(10):
         okay = okay[:-1] + "_-"
@@ -88,15 +85,15 @@ async def ok(bot: UserBot, message: Message):
 
 
 @UserBot.on_message((Filters.command(";_;", "") | Filters.command(['sad', 'cri'], ".")) & Filters.me)
-async def sad_cri(bot: UserBot, message: Message):
+async def sad_cri(_, message: Message):
     cri = ";_;"
     for _ in range(10):
         cri = cri[:-1] + "_;"
         await message.edit(cri, parse_mode=None)
 
 
-@UserBot.on_message(Filters.regex("^\.?oof$") & Filters.me)
-async def oof(bot: UserBot, message: Message):
+@UserBot.on_message(Filters.regex(r"^\.?oof$") & Filters.me)
+async def send_oof(_, message: Message):
     oof = "Oo "
     for _ in range(10):
         oof = oof[:-1] + "of"
@@ -104,7 +101,7 @@ async def oof(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('mockt', '.') & Filters.me)
-async def mock_text(bot: UserBot, message: Message):
+async def mock_text(_, message: Message):
     cmd = message.command
 
     mock_t = ""
@@ -123,11 +120,12 @@ async def mock_text(bot: UserBot, message: Message):
         await message.edit("`gIvE sOMEtHInG tO MoCk!`")
         return
     reply_text = get_mock_text(input_str.lower())
+
     await message.edit(reply_text)
 
 
 @UserBot.on_message(Filters.command("insult", ".") & Filters.me)
-async def insult(bot: UserBot, message: Message):
+async def insult(_, message: Message):
     try:
         await message.edit("`Generating insult...`")
         data = await AioHttp().get_json('https://evilinsult.com/generate_insult.php?lang=en&type=json')
@@ -135,14 +133,14 @@ async def insult(bot: UserBot, message: Message):
         await message.edit(
             req
         )
-    except Exception:
+    except ClientError:
         await message.edit("`Failed to generate insult...`")
         await asyncio.sleep(2)
         await message.delete()
 
 
 @UserBot.on_message(Filters.command("f", ".", case_sensitive=True) & Filters.me)
-async def pay_respects(bot: UserBot, message: Message):
+async def pay_respects(_, message: Message):
     paytext = "FF"
     pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
         paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
@@ -153,7 +151,7 @@ async def pay_respects(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("F", ".", case_sensitive=True) & Filters.me)
-async def pay_respects_new(bot: UserBot, message: Message):
+async def pay_respects_new(_, message: Message):
     pay = (
         "██████╗\n"
         "██╔═══╝\n"
@@ -166,7 +164,7 @@ async def pay_respects_new(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("f", "#") & Filters.me)
-async def calligraphic_f(bot: UserBot, message: Message):
+async def calligraphic_f(_, message: Message):
     pay = (
         "⠀⠀⠀⢀⡤⢶⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
         "⠀⠀⢀⣠⣤⣤⣤⣿⣧⣀⣀⣀⣀⣀⣀⣀⣀⣤⡄⠀\n"
@@ -199,7 +197,7 @@ def weebify_text(raw_text):
 
 
 @UserBot.on_message(Filters.command(['weeb', 'weebify'], ".") & Filters.me)
-async def weebify(bot: UserBot, message: Message):
+async def weebify(_, message: Message):
     cmd = message.command
 
     raw_text = ""
@@ -217,7 +215,7 @@ async def weebify(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('vapor', '.') & Filters.me)
-async def vapor(bot: UserBot, message: Message):
+async def vapor(_, message: Message):
     cmd = message.command
 
     vapor_text = ""
@@ -231,7 +229,7 @@ async def vapor(bot: UserBot, message: Message):
         await message.delete()
         return
 
-    reply_text = list()
+    reply_text = []
 
     for char in vapor_text:
         if 0x21 <= ord(char) <= 0x7F:
@@ -245,7 +243,7 @@ async def vapor(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('stretch', '.') & Filters.me)
-async def stretch(bot: UserBot, message: Message):
+async def stretch(_, message: Message):
     cmd = message.command
 
     stretch_text = ""
@@ -266,21 +264,14 @@ async def stretch(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('beemoviescript', '.') & Filters.me)
-async def bee_movie_script(bot: UserBot, message: Message):
-    await message.edit(f"Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
+async def bee_movie_script(_, message: Message):
+    await message.edit("Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
                            
                            
 @UserBot.on_message(Filters.command(["ht"], ".") & Filters.me)
-async def heads_tails(bot: UserBot, message: Message):
+async def heads_tails(_, message: Message):
     coin_sides = ['Heads', 'Tails']
     ht = f"Heads or Tails? `{choice(coin_sides)}`"
-    await message.edit(ht)
-
-
-@UserBot.on_message(Filters.command("ht", ".") & Filters.me)
-async def heads_tails(bot: UserBot, message: Message):
-    coin_sides = ['Heads', 'Tails']
-    ht = f"Heads or Tails?\n`{choice(coin_sides)}`"
     await message.edit(ht)
 
 

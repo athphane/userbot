@@ -11,7 +11,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command('summonhere', '.') & Filters.me)
-async def summon_here(bot: UserBot, message: Message):
+async def summon_here(_, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 
     if chat_details is not None:
@@ -30,7 +30,7 @@ async def summon_here(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('summonhere', '!') & Filters.me)
-async def not_summoned_here(bot: UserBot, message: Message):
+async def not_summoned_here(_, message: Message):
     if SUMMON().delete_chat_id(message) is True:
         await message.edit("```Summon message disabled for this chat```")
     else:
@@ -64,7 +64,7 @@ async def summoned(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('nextsummon', '.') & Filters.me)
-async def next_summon(bot: UserBot, message: Message):
+async def next_summon(_, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 
     if chat_details is not None:

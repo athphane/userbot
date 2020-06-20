@@ -6,7 +6,7 @@ from userbot import UserBot, CMD_HELP
 
 
 @UserBot.on_message(Filters.command("help", ".") & Filters.me)
-async def module_help(bot: UserBot, message: Message):
+async def module_help(_, message: Message):
     cmd = message.command
 
     help_arg = ""

@@ -6,7 +6,7 @@ from pyrogram import Filters, Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
-from userbot.helpers.aiohttp import AioHttp
+from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 animal = r"([^.]*)$"
@@ -50,7 +50,7 @@ async def animal_image(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('fact', '.') & Filters.me)
-async def fact(bot: UserBot, message: Message):
+async def fact(_, message: Message):
     cmd = message.command
 
     if not (len(cmd) >= 2):

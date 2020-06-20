@@ -16,60 +16,61 @@ memes_data = {
     'dmf': {'name': 'dmf_image', 'image': 'dmf.gif', 'type': 'animation', 'caption': None,
             'help': 'Syndrome from The Incredible\'s saying "You dense mf".'},
     'smart': {'alts': ['intelligence'], 'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image',
-              'caption': None,
-              'help': 'Press E to use intelligence.'},
+              'caption': None, 'help': 'Press E to use intelligence.'},
     'sobimin': {'name': 'sob_im_in_image', 'image': 'sob_im_in.jpg', 'type': 'image', 'caption': None,
                 'help': 'Morty - SOB I\'m In'},
     'omg': {'name': 'omg_image', 'image': 'omg.gif', 'type': 'animation', 'caption': None,
             'help': 'Anime character saying OMG.'},
     'ma': {'name': 'ma_image', 'image': 'ma.JPG', 'type': 'image', 'caption': None,
-            'help': 'Anime character saying mashaallah.'},
+           'help': 'Anime character saying mashaallah.'},
     'sa': {'name': 'sa_image', 'image': 'sa.JPG', 'type': 'image', 'caption': None,
-            'help': 'Anime character saying subuhanallah.'},
+           'help': 'Anime character saying subuhanallah.'},
     'al': {'name': 'al_image', 'image': 'al.JPG', 'type': 'image', 'caption': None,
-            'help': 'Anime character saying alhamdhulilah.'},
+           'help': 'Anime character saying alhamdhulilah.'},
     'astf': {'name': 'astf_image', 'image': 'astf.JPG', 'type': 'image', 'caption': None,
-            'help': 'Anime character saying asthagfirullah.'},
+             'help': 'Anime character saying asthagfirullah.'},
     'ia': {'name': 'ia_image', 'image': 'ia.JPG', 'type': 'image', 'caption': None,
-            'help': 'Anime character inshaallah.'},
+           'help': 'Anime character inshaallah.'},
+    'dumb': {'name': 'dumb', 'image': 'dumb.jpg', 'type': 'image', 'caption': None,
+           'help': 'Are you dumb?.'},
 }
 
 memes = []
-for x in memes_data:
-    memes.append(x)
-    if 'alts' in memes_data[x]:
-        for y in memes_data[x]['alts']:
+fixed_memes_help = []
+for meme in memes_data:
+    memes.append(meme)
+    if 'alts' in memes_data[meme]:
+        for y in memes_data[meme]['alts']:
             memes.append(y)
+
+    # Construct the help from the same loop eh.
+    command = f'.{meme}'
+    if 'alts' in memes_data[meme]:
+        for y in memes_data[meme]['alts']:
+            command += f' __or__ .{y}'
+    fixed_memes_help.append([command, memes_data[meme]['help']])
 
 
 @UserBot.on_message(Filters.command(memes, ".") & Filters.me)
 async def fixed_memes(bot: UserBot, message: Message):
     await message.delete()
 
-    command = message.command[0]
-    if command not in memes_data:
+    cmd = message.command[0]
+    if cmd not in memes_data:
         for x in memes_data:
-            if 'alts' in memes_data[x] and command in memes_data[x]['alts']:
-                meme = memes_data[x]
+            if 'alts' in memes_data[x] and cmd in memes_data[x]['alts']:
+                the_meme = memes_data[x]
                 break
     else:
-        meme = memes_data[message.command[0]]
+        the_meme = memes_data[message.command[0]]
 
-    if meme['type'] == 'animation':
-        await send_saved_animation(bot, message, meme['name'], meme['image'], caption=meme['caption'])
-    elif meme['type'] == 'image':
-        await send_saved_image(bot, message, meme['name'], meme['image'], caption=meme['caption'])
+    if the_meme['type'] == 'animation':
+        await send_saved_animation(bot, message, the_meme['name'], the_meme['image'], caption=the_meme['caption'])
+    elif the_meme['type'] == 'image':
+        await send_saved_image(bot, message, the_meme['name'], the_meme['image'], caption=the_meme['caption'])
 
 
 # Command help section
-fixed_memes_help = []
-for x in memes_data:
-    command = f'.{x}'
-    if 'alts' in memes_data[x]:
-        for y in memes_data[x]['alts']:
-            command += f' __or__ .{y}'
-    fixed_memes_help.append([command, memes_data[x]['help']])
-
 add_command_help(
     'memes', fixed_memes_help
 )

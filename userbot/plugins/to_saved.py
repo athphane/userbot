@@ -5,7 +5,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command('s', '.') & Filters.me)
-async def to_saved(bot: UserBot, message: Message):
+async def to_saved(_, message: Message):
     await message.delete()
     await message.reply_to_message.forward('self')
 

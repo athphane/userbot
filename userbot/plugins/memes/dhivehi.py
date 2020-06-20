@@ -10,19 +10,27 @@ dhivehi_text_memes = {
 }
 
 dhivehi_text_memes_commands = []
-for x in dhivehi_text_memes:
-    dhivehi_text_memes_commands.append(x)
-    if 'alts' in dhivehi_text_memes[x]:
-        for y in dhivehi_text_memes[x]['alts']:
+fixed_memes_help = []
+for dv in dhivehi_text_memes:
+    dhivehi_text_memes_commands.append(dv)
+    if 'alts' in dhivehi_text_memes[dv]:
+        for y in dhivehi_text_memes[dv]['alts']:
             dhivehi_text_memes_commands.append(y)
+
+    # Construct the help from the same loop eh.
+    command = f'.{dv}'
+    if 'alts' in dhivehi_text_memes[dv]:
+        for y in dhivehi_text_memes[dv]['alts']:
+            command += f' __or__ .{y}'
+    fixed_memes_help.append([command, dhivehi_text_memes[dv]['help']])
 
 
 @UserBot.on_message(Filters.command(dhivehi_text_memes_commands, ".") & Filters.me)
-async def dhivehi_memes(bot: UserBot, message: Message):
-    command = message.command[0]
-    if command not in dhivehi_text_memes:
+async def dhivehi_memes(_, message: Message):
+    cmd = message.command[0]
+    if cmd not in dhivehi_text_memes:
         for x in dhivehi_text_memes:
-            if 'alts' in dhivehi_text_memes[x] and command in dhivehi_text_memes[x]['alts']:
+            if 'alts' in dhivehi_text_memes[x] and cmd in dhivehi_text_memes[x]['alts']:
                 meme = dhivehi_text_memes[x]
                 break
     else:
@@ -32,14 +40,6 @@ async def dhivehi_memes(bot: UserBot, message: Message):
 
 
 # Command help section
-fixed_memes_help = []
-for x in dhivehi_text_memes:
-    command = f'.{x}'
-    if 'alts' in dhivehi_text_memes[x]:
-        for y in dhivehi_text_memes[x]['alts']:
-            command += f' __or__ .{y}'
-    fixed_memes_help.append([command, dhivehi_text_memes[x]['help']])
-
 add_command_help(
     'dhivehi', fixed_memes_help
 )

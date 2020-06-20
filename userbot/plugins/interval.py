@@ -4,7 +4,7 @@
 import re
 
 
-class IntervalHelper(object):
+class IntervalHelper:
     class IntervalError(Exception):
         pass
 

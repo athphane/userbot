@@ -8,9 +8,8 @@ from userbot.helpers.PyroHelpers import ReplyCheck, GetChatID
 
 
 def reset_file_ids():
-    f = open("file_ids.txt", "w")
-    f.write(json.dumps({}))
-    f.close()
+    with open("file_ids.txt", "w") as f:
+        f.write(json.dumps({}))
 
 
 if not os.path.exists('file_ids.txt'):
@@ -32,9 +31,8 @@ def save_media_id(name, media: Message):
     file_json = json.load(open("file_ids.txt", "r"))
     message_id = media.message_id
     file_json[name] = message_id
-    f = open("file_ids.txt", "w")
-    f.write(json.dumps(file_json))
-    f.close()
+    with open("file_ids.txt", "w") as f:
+        f.write(json.dumps(file_json))
 
 
 # Function to reuse to send animation and remember the file_id

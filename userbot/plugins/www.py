@@ -14,7 +14,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(["speed", 'speedtest'], ".") & Filters.me)
-async def speed_test(bot: UserBot, message: Message):
+async def speed_test(_, message: Message):
     new_msg = await message.edit(
         "`Running speed test . . .`")
     spd = speedtest.Speedtest()
@@ -61,7 +61,7 @@ async def nearest_dc(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("ping", ".") & Filters.me)
-async def ping_me(bot: UserBot, message: Message):
+async def ping_me(_, message: Message):
     start = datetime.now()
     await message.edit('`Pong!`')
     end = datetime.now()
@@ -70,7 +70,7 @@ async def ping_me(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("expand", ".") & Filters.me)
-async def expand(bot: UserBot, message: Message):
+async def expand(_, message: Message):
     if message.reply_to_message:
         url = message.reply_to_message.text or message.reply_to_message.caption
     elif len(message.command) > 1:
@@ -93,7 +93,7 @@ async def expand(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("shorten", ".") & Filters.me)
-async def shorten(bot: UserBot, message: Message):
+async def shorten(_, message: Message):
     keyword = None
 
     if message.reply_to_message:
