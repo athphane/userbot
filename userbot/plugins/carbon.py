@@ -33,7 +33,7 @@ async def carbon_test(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('carbonlang', '.') & Filters.me)
-async def update_carbon_lang(bot: UserBot, message: Message):
+async def update_carbon_lang(_, message: Message):
     """
     Set language to use Carbon with.
     Eg: .carbonlang js -> will set the file type to js
@@ -59,7 +59,7 @@ async def update_carbon_lang(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('carbonlang', '!') & Filters.me)
-async def send_carbon_lang(bot: UserBot, message: Message):
+async def send_carbon_lang(_, message: Message):
     """
     Edits message to show current set carbon language
     """

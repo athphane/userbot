@@ -76,7 +76,7 @@ async def aexec(code, b, m, r, d):
 
 
 @UserBot.on_message(Filters.command("exec", ".") & Filters.me & ~Filters.forwarded)
-async def execution(bot: UserBot, message: Message):
+async def execution(_, message: Message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id

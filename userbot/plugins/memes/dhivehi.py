@@ -18,7 +18,7 @@ for x in dhivehi_text_memes:
 
 
 @UserBot.on_message(Filters.command(dhivehi_text_memes_commands, ".") & Filters.me)
-async def dhivehi_memes(bot: UserBot, message: Message):
+async def dhivehi_memes(_, message: Message):
     command = message.command[0]
     if command not in dhivehi_text_memes:
         for x in dhivehi_text_memes:

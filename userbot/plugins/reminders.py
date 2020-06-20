@@ -9,7 +9,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command('reminders', '.') & Filters.me)
-async def show_all_reminders(bot: UserBot, message: Message):
+async def show_all_reminders(_, message: Message):
     reminders = Reminders().get_all_reminders()
     if len(reminders) != 0:
         send_text = "**==== My Reminders ====** \n"
@@ -27,7 +27,7 @@ async def show_all_reminders(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("remind", ".") & Filters.me)
-async def remind(bot: UserBot, message: Message):
+async def remind(_, message: Message):
     cmd = message.command
     remind_text = ""
     if len(cmd) > 1:
@@ -47,7 +47,7 @@ async def remind(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("reminder", "!") & Filters.me)
-async def delete_reminder(bot: UserBot, message: Message):
+async def delete_reminder(_, message: Message):
     cmd = message.command
     reminder_id = ""
     if len(cmd) > 1:

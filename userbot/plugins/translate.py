@@ -9,7 +9,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(['tr', 'trans'], '.') & Filters.me)
-async def translate(bot: UserBot, message: Message):
+async def translate(_, message: Message):
     if not YANDEX_API_KEY:
         await message.edit("NO API KEY found in configuration. Get one from https://tech.yandex.com/translate/",
                            disable_web_page_preview=True)
@@ -43,7 +43,7 @@ async def translate(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("yoda", ".") & Filters.me)
-async def yoda(bot: UserBot, message: Message):
+async def yoda(_, message: Message):
     if message.reply_to_message:
         txt = message.reply_to_message.text or message.reply_to_message.caption
     elif len(message.command) > 1:

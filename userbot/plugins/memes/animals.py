@@ -50,7 +50,7 @@ async def animal_image(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command('fact', '.') & Filters.me)
-async def fact(bot: UserBot, message: Message):
+async def fact(_, message: Message):
     cmd = message.command
 
     if not (len(cmd) >= 2):

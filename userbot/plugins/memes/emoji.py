@@ -18,7 +18,7 @@ emoji_commands = [x for x in emojis]
 
 
 @UserBot.on_message(Filters.command(emoji_commands, ".") & Filters.me)
-async def emoji_cycle(bot: UserBot, message: Message):
+async def emoji_cycle(_, message: Message):
     deq = deque(emojis[message.command[0]])
     try:
         for _ in range(randint(16, 32)):

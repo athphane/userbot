@@ -18,7 +18,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(['lastcommit', 'lc'], '.') & Filters.me)
-async def last_commit(bot: UserBot, message: Message):
+async def last_commit(_, message: Message):
     repo = git.Repo(os.getcwd())
     master = repo.head.reference
     commit = master.commit.message.strip()

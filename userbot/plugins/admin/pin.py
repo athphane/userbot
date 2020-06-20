@@ -27,7 +27,7 @@ async def pin_message(bot: UserBot, message: Message):
                     disable_notification = False
 
                 # Pin the fucking message.
-                pinned_event = await bot.pin_chat_message(
+                await bot.pin_chat_message(
                     message.chat.id,
                     message.reply_to_message.message_id,
                     disable_notification=disable_notification

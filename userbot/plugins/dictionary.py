@@ -8,7 +8,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(['define', 'dict'], '.') & Filters.me)
-async def define(bot: UserBot, message: Message):
+async def define(_, message: Message):
     cmd = message.command
     word = ""
     if len(cmd) > 1:
