@@ -30,9 +30,9 @@ async def sticker_super_func(bot: UserBot, message: Message):
         sticker = {}
         command = message.command[0]
         if command not in sticker_data:
-            for x in sticker_data:
-                if 'alts' in sticker_data[x] and command in sticker_data[x]['alts']:
-                    sticker = sticker_data[x]
+            for sticker in sticker_data:
+                if 'alts' in sticker_data[sticker] and command in sticker_data[sticker]['alts']:
+                    sticker = sticker_data[sticker]
                     break
         else:
             sticker = sticker_data[message.command[0]]
