@@ -264,7 +264,7 @@ async def stretch(_, message: Message):
 
 @UserBot.on_message(Filters.command('beemoviescript', '.') & Filters.me)
 async def bee_movie_script(_, message: Message):
-    await message.edit(f"Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
+    await message.edit("Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
                            
                            
 @UserBot.on_message(Filters.command(["ht"], ".") & Filters.me)
