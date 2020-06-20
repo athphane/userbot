@@ -21,7 +21,7 @@ async def ban_hammer(bot: UserBot, message: Message):
                     user_id=message.reply_to_message.from_user.id,
                     until_date=int(time.time() + 86400)
                 )
-                await message.edit(f"{mention} has been banned for {until_date}.")
+                await message.edit(f"{mention} has been banned for 24hrs.")
             else:
                 await bot.kick_chat_member(
                     chat_id=message.chat.id,
@@ -72,7 +72,7 @@ async def mute_hammer(bot: UserBot, message: Message):
                     ),
                     until_date=int(time.time() + 86400)
                 )
-                await message.edit(f"{mention} has been muted for {bot.restrict_chat_member(until_date)}.")
+                await message.edit(f"{mention} has been muted for 24hrs.")
             else:
                 await bot.restrict_chat_member(
                     chat_id=message.chat.id,
