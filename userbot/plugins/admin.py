@@ -2,7 +2,7 @@ from pyrogram import Filters, Message
 from pyrogram.errors import UserAdminInvalid
 
 from userbot import UserBot
-from helpers import adminHelpers
+from userbot.helpers import adminHelpers
 
 
 @UserBot.on_message(Filters.command("ban", prefixes='.') & Filters.me)
