@@ -15,19 +15,19 @@ async def CheckAdmin(message: Message):
     creator = 'creator'
     ranks = [admin, creator]
 
-    SELF = UserBot().get_chat_member(
+    SELF = await UserBot().get_chat_member(
         chat_id=message.chat.id,
         user_id=message.from_user.id)
 
-    if SELF.status not in ranks:
+    if await SELF.status not in ranks:
         await message.edit("__I'm not Admin!__")
         sleep(2)
         await message.delete()
 
     else:
-        if SELF.status is not admin:
+        if await SELF.status is not admin:
             return True
-        elif SELF.permissions.can_restrict_members:
+        elif await SELF.permissions.can_restrict_members:
             return True
         else:
             await message.edit("__No Permissions to restrict Members__")
