@@ -228,7 +228,7 @@ async def vapor(_, message: Message):
         await message.delete()
         return
 
-    reply_text = list()
+    reply_text = []
 
     for char in vapor_text:
         if 0x21 <= ord(char) <= 0x7F:
