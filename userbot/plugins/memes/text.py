@@ -3,7 +3,6 @@ import random
 import re
 from random import choice
 
-import aiohttp
 from pyrogram import Filters, Message
 
 from userbot import UserBot
