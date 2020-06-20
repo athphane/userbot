@@ -63,6 +63,6 @@ async def TimerString(message: Message):
 
 
 async def RestrictFailed(message: Message):
-    await message.edit(f"I can't {message.command[1]} this user.")
+    await message.edit(f"I can't {message.command} this user.")
     sleep(2)
     await message.delete()
