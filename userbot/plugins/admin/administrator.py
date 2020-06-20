@@ -89,8 +89,8 @@ async def unmute(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command("kick", prefixes='.') & Filters.me)
 async def kick_user(bot: UserBot, message: Message):
-    if CheckReplyAdmin(message) is True:
-        if CheckAdmin(message) is True:
+    if await CheckReplyAdmin(message) is True:
+        if await CheckAdmin(message) is True:
             try:
                 mention = await GetUserMentionable(message.from_user)
                 bot.kick_chat_member(
