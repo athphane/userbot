@@ -33,8 +33,6 @@ async def pin_message(bot: UserBot, message: Message):
                     disable_notification=disable_notification
                 )
                 await message.edit("`Pinned message!`")
-
-                return
             else:
                 # You didn't reply to a message and we can't pin anything. ffs
                 await message.edit(
