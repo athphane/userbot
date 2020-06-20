@@ -31,6 +31,8 @@ memes_data = {
              'help': 'Anime character saying asthagfirullah.'},
     'ia': {'name': 'ia_image', 'image': 'ia.JPG', 'type': 'image', 'caption': None,
            'help': 'Anime character inshaallah.'},
+    'dumb': {'name': 'dumb', 'image': 'dumb.jpg', 'type': 'image', 'caption': None,
+           'help': 'Are you dumb?.'},
 }
 
 memes = []
