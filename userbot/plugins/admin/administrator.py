@@ -1,4 +1,4 @@
-from time import time
+import time
 
 from pyrogram import Filters, Message, ChatPermissions
 from pyrogram.errors import UserAdminInvalid
