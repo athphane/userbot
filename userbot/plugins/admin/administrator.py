@@ -8,7 +8,7 @@ from userbot.helpers.adminHelpers import (
 
 
 @UserBot.on_message(Filters.command("ban", prefixes='.') & Filters.me)
-def ban_hammer(bot: UserBot, message: Message):
+async def ban_hammer(bot: UserBot, message: Message):
     if CheckReplyAdmin(message) is True:
         if CheckAdmin(message) is True:
             try:
@@ -18,15 +18,15 @@ def ban_hammer(bot: UserBot, message: Message):
                     until_date=Timer(message)
                 )
                 if len(message.command) > 1:
-                    message.edit(f"{user_id} has been banned for {until_date}.")
+                    await message.edit(f"{user_id} has been banned for {until_date}.")
                 else:
-                    message.edit(f"{user_id} has been banned indefinitely.")
+                    await message.edit(f"{user_id} has been banned indefinitely.")
             except UserAdminInvalid:
                 RestrictFailed(message)
 
 
 @UserBot.on_message(Filters.command("unban", prefixes='.') & Filters.me)
-def unban(bot: UserBot, message: Message):
+async def unban(bot: UserBot, message: Message):
     if CheckReplyAdmin(message) is True:
         if CheckAdmin(message) is True:
             try:
@@ -34,13 +34,13 @@ def unban(bot: UserBot, message: Message):
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id
                 )
-                message.edit(f"Congratulations {user_id} you have been unbanned. Follow rules and be careful from now.")
+                await message.edit(f"Congratulations {user_id} you have been unbanned. Follow rules and be careful from now.")
             except UserAdminInvalid:
-                message.edit("I can't unban this user.")
+                await message.edit("I can't unban this user.")
 
 
 @UserBot.on_message(Filters.command("mute", prefixes='.') & Filters.me)
-def mute_hammer(bot: UserBot, message: Message):
+async def mute_hammer(bot: UserBot, message: Message):
     if CheckReplyAdmin(message) is True:
         if CheckAdmin(message) is True:
             try:
@@ -51,15 +51,15 @@ def mute_hammer(bot: UserBot, message: Message):
                     can_send_messages=False,
                 )
                 if len(message.command) > 1:
-                    message.edit(f"{user_id} has been banned for {until_date}.")
+                    await message.edit(f"{user_id} has been banned for {until_date}.")
                 else:
-                    message.edit(f"{user_id} has been banned indefinitely.")
+                    await message.edit(f"{user_id} has been banned indefinitely.")
             except UserAdminInvalid:
                 RestrictFailed(message)
 
 
 @UserBot.on_message(Filters.command("unmute", prefixes='.') & Filters.me)
-def unmute(bot: UserBot, message: Message):
+async def unmute(bot: UserBot, message: Message):
     if CheckReplyAdmin(message) is True:
         if CheckAdmin(message) is True:
             try:
@@ -76,13 +76,13 @@ def unmute(bot: UserBot, message: Message):
                     can_invite_users=True,
                     can_pin_messages=True
                 )
-                message.edit(f"{user_id}, you may send messages here now.")
+                await message.edit(f"{user_id}, you may send messages here now.")
             except UserAdminInvalid:
                 RestrictFailed(message)
 
 
 @UserBot.on_message(Filters.command("kick", prefixes='.') & Filters.me)
-def kick_user(bot: UserBot, message: Message):
+async def kick_user(bot: UserBot, message: Message):
     if CheckReplyAdmin(message) is True:
         if CheckAdmin(message) is True:
             try:
@@ -95,6 +95,6 @@ def kick_user(bot: UserBot, message: Message):
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id
                 )
-                message.edit(f"{user_id}, Sayonara motherfucker.")
+                await message.edit(f"{user_id}, Sayonara motherfucker.")
             except UserAdminInvalid:
                 RestrictFailed(message)
