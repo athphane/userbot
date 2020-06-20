@@ -43,7 +43,7 @@ async def unban(bot: UserBot, message: Message):
                 user_id=message.reply_to_message.from_user.id
             )
             await message.edit(f"Congratulations {mention} you have been unbanned." 
-                               "Follow the rules and be careful from now on.")
+                               " Follow the rules and be careful from now on.")
         except UserAdminInvalid:
             await message.edit("I can't unban this user.")
 
