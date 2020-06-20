@@ -93,12 +93,12 @@ async def kick_user(bot: UserBot, message: Message):
         if await CheckAdmin(bot, message) is True:
             try:
                 mention = GetUserMentionable(message.reply_to_message.from_user)
-                bot.kick_chat_member(
+                await bot.kick_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     until_date=0
                 )
-                bot.unban_chat_member(
+                await bot.unban_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id
                 )
