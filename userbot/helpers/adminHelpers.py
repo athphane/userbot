@@ -3,7 +3,7 @@ from time import sleep
 from pyrogram import Message, User
 from pyrogram.api import functions, types
 
-from userbot import UserBot
+from userbot.userbot import UserBot
 
 from userbot.plugins.interval import IntervalHelper
 
@@ -15,7 +15,7 @@ def CheckAdmin(message: Message):
     creator = 'creator'
     ranks = [admin, creator]
 
-    SELF = UserBot.get_chat_member(
+    SELF = UserBot().get_chat_member(
         chat_id=message.chat.id,
         user_id=message.from_user.id)
 
