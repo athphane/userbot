@@ -1,6 +1,7 @@
 import re
 
 from pyrogram import Filters, Message
+from pyrogram.errors import MessageNotModified
 
 from userbot import UserBot
 
@@ -25,5 +26,5 @@ async def i_am_not_allowed_to_say_this(_, message: Message):
         elif message.text:
             if txt != message.text:
                 await message.edit(txt)
-    except:
+    except MessageNotModified:
         return
