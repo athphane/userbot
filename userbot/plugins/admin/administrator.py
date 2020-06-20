@@ -10,7 +10,7 @@ from userbot.helpers.adminHelpers import (
 @UserBot.on_message(Filters.command("ban", prefixes='.') & Filters.me)
 async def ban_hammer(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True:
-        if await CheckAdmin(message) is True:
+        if await CheckAdmin(bot, message) is True:
             try:
                 await bot.kick_chat_member(
                     chat_id=message.chat.id,
@@ -28,7 +28,7 @@ async def ban_hammer(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("unban", prefixes='.') & Filters.me)
 async def unban(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True:
-        if await CheckAdmin(message) is True:
+        if await CheckAdmin(bot, message) is True:
             try:
                 await bot.unban_chat_member(
                     chat_id=message.chat.id,
@@ -43,7 +43,7 @@ async def unban(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("mute", prefixes='.') & Filters.me)
 async def mute_hammer(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True:
-        if await CheckAdmin(message) is True:
+        if await CheckAdmin(bot, message) is True:
             try:
                 await bot.restrict_chat_member(
                     chat_id=message.chat.id,
@@ -62,7 +62,7 @@ async def mute_hammer(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("unmute", prefixes='.') & Filters.me)
 async def unmute(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True:
-        if await CheckAdmin(message) is True:
+        if await CheckAdmin(bot, message) is True:
             try:
                 await bot.restrict_chat_member(
                     chat_id=message.chat.id,
@@ -85,7 +85,7 @@ async def unmute(bot: UserBot, message: Message):
 @UserBot.on_message(Filters.command("kick", prefixes='.') & Filters.me)
 async def kick_user(bot: UserBot, message: Message):
     if await CheckReplyAdmin(message) is True:
-        if await CheckAdmin(message) is True:
+        if await CheckAdmin(bot, message) is True:
             try:
                 await bot.kick_chat_member(
                     chat_id=message.chat.id,
