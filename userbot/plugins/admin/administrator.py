@@ -1,6 +1,6 @@
 from time import time
 
-from pyrogram import Filters, Message
+from pyrogram import Filters, Message, ChatPermissions
 from pyrogram.errors import UserAdminInvalid
 
 from userbot import UserBot
