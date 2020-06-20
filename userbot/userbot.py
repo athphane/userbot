@@ -47,7 +47,7 @@ class UserBot(Client):
         await super().stop()
         print("Userbot stopped. Bye.")
 
-    async def restart(self, git_update=False, pip=False, *args):
+    async def restart(self, *args, git_update=False, pip=False):
         """ Shoutout to the Userg team for this."""
         await self.stop()
         try:
