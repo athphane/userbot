@@ -8,14 +8,14 @@ from userbot import UserBot
 from userbot.plugins.interval import IntervalHelper
 
 
-async def CheckAdmin(message: Message):
+async def CheckAdmin(bot: UserBot, message: Message):
     """Check if we are an admin."""
 
     admin = 'administrator'
     creator = 'creator'
     ranks = [admin, creator]
 
-    SELF = await UserBot().get_chat_member(
+    SELF = await bot().get_chat_member(
         chat_id=message.chat.id,
         user_id=message.from_user.id)
 
