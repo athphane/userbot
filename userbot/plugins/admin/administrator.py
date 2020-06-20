@@ -17,7 +17,7 @@ async def ban_hammer(bot: UserBot, message: Message):
                 await bot.kick_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
-                    until_date=Timer(message)
+                    until_date=await Timer(message)
                 )
                 if len(message.command) > 1:
                     await message.edit(f"{mention} has been banned for {until_date}.")
