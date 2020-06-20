@@ -49,6 +49,7 @@ async def unban(bot: UserBot, message: Message):
 
 @UserBot.on_message(Filters.command(["mute", "mute 24"], prefixes='.') & Filters.me)
 async def mute_hammer(bot: UserBot, message: Message):
+    print(message.command)
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
