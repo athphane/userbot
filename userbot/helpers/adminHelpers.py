@@ -27,7 +27,7 @@ async def CheckAdmin(bot: UserBot, message: Message):
     else:
         if SELF.status is not admin:
             return True
-        elif SELF.permissions.can_restrict_members:
+        elif SELF.can_restrict_members:
             return True
         else:
             await message.edit("__No Permissions to restrict Members__")
