@@ -2,14 +2,23 @@
 # not happy how it works, especially the message deletion part. Maybe that is not supposed to be there
 
 
-# from userbot import UserBot, PM_PERMIT, PM_LIMIT
-# from pyrogram import Filters, Message
+# PM_PERMIT, PM_LIMIT
+from pyrogram import Filters, Message
+
+from userbot import UserBot
+
+
 # from pyrogram.errors import FloodWait
 # from userbot.plugins.help import add_command_help
 # from userbot.database.pmpermit import PmPermit
 # from time import sleep
 #
 #
+
+@UserBot.on_message(Filters.command('pmpermit', '.') & Filters.me)
+async def pm_permit_enable(bot: UserBot, message: Message):
+    return
+
 # UNAPPROVED_MSG = (
 #     "`Bleep blop! I'm a bot and this is an AUTOMATED MESSAGE..\n\n`"
 #     "`My master hasn't approved you to PM.`"
