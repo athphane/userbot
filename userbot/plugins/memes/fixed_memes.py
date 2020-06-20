@@ -22,6 +22,16 @@ memes_data = {
                 'help': 'Morty - SOB I\'m In'},
     'omg': {'name': 'omg_image', 'image': 'omg.gif', 'type': 'animation', 'caption': None,
             'help': 'Anime character saying OMG.'},
+    'ma': {'name': 'ma_image', 'image': 'ma.JPG', 'type': 'image', 'caption': None,
+            'help': 'Anime character saying mashaallah.'},
+    'sa': {'name': 'sa_image', 'image': 'sa.JPG', 'type': 'image', 'caption': None,
+            'help': 'Anime character saying subuhanallah.'},
+    'al': {'name': 'al_image', 'image': 'al.JPG', 'type': 'image', 'caption': None,
+            'help': 'Anime character saying alhamdhulilah.'},
+    'astf': {'name': 'astf_image', 'image': 'astf.JPG', 'type': 'image', 'caption': None,
+            'help': 'Anime character saying asthagfirullah.'},
+    'ia': {'name': 'ia_image', 'image': 'ia.JPG', 'type': 'image', 'caption': None,
+            'help': 'Anime character inshaallah.'},
 }
 
 memes = []
