@@ -277,9 +277,20 @@ async def heads_tails(_, message: Message):
 
 @UserBot.on_message(Filters.command('reverset', ".") & Filters.me)
 async def text_reverse(_, message: Message):
-    await message.edit(
-        message.reply_to_message.text[::-1] if (message.reply_to_message and message.reply_to_message.text) else message.command[1:][::-1])
+    cmd = message.command
 
+    reverse_text = ""
+    if len(cmd) > 1:
+        reverse_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        reverse_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Give me something to reverse`"[::-1])
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    await message.edit(reverse_text[::-1])
 
 # Command help section
 add_command_help(
