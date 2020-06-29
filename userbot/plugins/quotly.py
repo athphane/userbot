@@ -1,5 +1,5 @@
+import random
 from asyncio import sleep
-from random import random
 
 from pyrogram import Filters, Message
 
