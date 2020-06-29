@@ -49,7 +49,7 @@ async def define(_, message: Message):
 
 # Command help section
 add_command_help(
-    'git', [
+    'dictionary', [
         ['.define | .dict', 'Define the word you send or reply to.'],
     ]
 )
