@@ -2,8 +2,8 @@ import asyncio
 import random
 import re
 from random import choice
-from aiohttp.client_exceptions import ClientError
 
+from aiohttp.client_exceptions import ClientError
 from pyrogram import Filters, Message
 
 from userbot import UserBot
@@ -29,7 +29,7 @@ async def compliment_func(_, message: Message):
         )
     except ClientError:
         await message.delete()
-        
+
 
 @UserBot.on_message(Filters.command("devexcuse", ".") & Filters.me)
 async def dev_excuse(_, message: Message):
@@ -266,14 +266,31 @@ async def stretch(_, message: Message):
 @UserBot.on_message(Filters.command('beemoviescript', '.') & Filters.me)
 async def bee_movie_script(_, message: Message):
     await message.edit("Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
-                           
-                           
+
+
 @UserBot.on_message(Filters.command(["ht"], ".") & Filters.me)
 async def heads_tails(_, message: Message):
     coin_sides = ['Heads', 'Tails']
     ht = f"Heads or Tails? `{choice(coin_sides)}`"
     await message.edit(ht)
 
+
+@UserBot.on_message(Filters.command('reverset', ".") & Filters.me)
+async def text_reverse(_, message: Message):
+    cmd = message.command
+
+    reverse_text = ""
+    if len(cmd) > 1:
+        reverse_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        reverse_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Give me something to reverse`"[::-1])
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    await message.edit(reverse_text[::-1])
 
 # Command help section
 add_command_help(
@@ -297,5 +314,6 @@ add_command_help(
         ['oof', 'Oof'],
         [';_; `or` .sad `or` cri', ';_;'],
         ['.ht', 'Heads or Tails'],
+        ['.reverset', 'Reverses the text'],
     ]
 )

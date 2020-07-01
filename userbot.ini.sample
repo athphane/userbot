@@ -17,4 +17,8 @@ pm_limit = 5
 log_group = None
 
 [yandex]
-key = get-key-from-https://tech.yandex.com/translate/
+key = your-key-but-Yandex-no-longer-gives
+
+[misc]
+yourls_url = http://your-domain.test/yourls-api.php
+yourls_key = your key here
