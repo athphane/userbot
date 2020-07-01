@@ -1,12 +1,10 @@
 import userbot
+from userbot import UserBot
 from userbot import scheduler
-from userbot.userbot import UserBot
 
 if __name__ == '__main__':
-    app = UserBot()
-
-    userbot.client = app
+    userbot.client = UserBot
 
     scheduler.start()
 
-    app.run()
+    UserBot.run()

@@ -10,9 +10,9 @@ API_HASH = os.environ.get('API_HASH', None)
 USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
 
 
-class UserBot(Client):
-    def __init__(self):
-        name = self.__class__.__name__.lower()
+class UserBotBaseClass(Client):
+    def __init__(self, name):
+        name = name.lower()
         config_file = f"{name}.ini"
 
         config = ConfigParser()

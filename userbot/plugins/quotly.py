@@ -8,7 +8,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.me & Filters.command(["q"], '.'))
-async def quotly(bot: UserBot, message: Message):
+async def quotly(_, message: Message):
     if not message.reply_to_message:
         await message.edit("Reply to any users text message")
         return
@@ -18,7 +18,7 @@ async def quotly(bot: UserBot, message: Message):
     progress = 0
     while not is_sticker:
         try:
-            msg = await bot.get_history("@QuotLyBot", 1)
+            msg = await UserBot.get_history("@QuotLyBot", 1)
             check = msg[0]["sticker"]["file_id"]
             is_sticker = True
         except:
@@ -30,7 +30,7 @@ async def quotly(bot: UserBot, message: Message):
                 await message.edit("ERROR SUUUU")
     await message.edit("```Complete !```")
     msg_id = msg[0]["message_id"]
-    await bot.forward_messages(message.chat.id, "@QuotLyBot", msg_id)
+    await UserBot.forward_messages(message.chat.id, "@QuotLyBot", msg_id)
 
 
 # Command help section
