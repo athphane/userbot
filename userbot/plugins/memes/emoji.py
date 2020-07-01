@@ -38,10 +38,10 @@ special_emoji_commands = [x for x in special_emojis_dict]
 
 
 @UserBot.on_message(Filters.command(special_emoji_commands, '.') & Filters.me)
-async def special_emojis(bot: UserBot, message: Message):
+async def special_emojis(_, message: Message):
     emoji = special_emojis_dict[message.command[0]]
     await message.delete()
-    await bot.send_dice(message.chat.id, emoji['emoji'])
+    await UserBot.send_dice(message.chat.id, emoji['emoji'])
 
 
 # Command help section

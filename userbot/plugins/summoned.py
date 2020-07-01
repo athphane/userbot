@@ -41,7 +41,7 @@ async def not_summoned_here(_, message: Message):
 
 
 @UserBot.on_message(Filters.incoming & Filters.mentioned & ~Filters.reply)
-async def summoned(bot: UserBot, message: Message):
+async def summoned(_, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 
     if chat_details is not None:

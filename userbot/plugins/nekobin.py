@@ -8,7 +8,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(['neko', 'nekobin', 'bin', 'paste'], ".") & Filters.me)
-async def paste(bot: UserBot, message: Message):
+async def paste(_, message: Message):
     text = message.reply_to_message.text
     try:
         async with aiohttp.ClientSession() as session:

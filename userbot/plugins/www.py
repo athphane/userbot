@@ -50,8 +50,8 @@ async def speed_test(_, message: Message):
 
 
 @UserBot.on_message(Filters.command("dc", ".") & Filters.me)
-async def nearest_dc(bot: UserBot, message: Message):
-    dc = await bot.send(
+async def nearest_dc(_, message: Message):
+    dc = await UserBot.send(
         functions.help.GetNearestDc())
     await message.edit(
         WWW.NearestDC.format(

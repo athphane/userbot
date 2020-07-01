@@ -22,7 +22,7 @@ def subtract_time(start, end):
 
 
 @UserBot.on_message(((Filters.group & Filters.mentioned) | Filters.private) & ~Filters.me, group=3)
-async def collect_afk_messages(bot: UserBot, message: Message):
+async def collect_afk_messages(_, message: Message):
     if AFK:
         last_seen = subtract_time(datetime.now(), AFK_TIME)
         is_group = True if message.chat.type in ['supergroup', 'group'] else False
@@ -36,7 +36,7 @@ async def collect_afk_messages(bot: UserBot, message: Message):
                 f"Here's why: ```{AFK_REASON.upper()}```\n"
                 f"See you after I'm done doing whatever I'm doing.`"
             )
-            await bot.send_message(
+            await UserBot.send_message(
                 chat_id=GetChatID(message),
                 text=text,
                 reply_to_message_id=message.message_id
@@ -52,7 +52,7 @@ async def collect_afk_messages(bot: UserBot, message: Message):
                     f"I'll get to you when I get to you.\n"
                     f"No more auto messages for you`"
                 )
-                await bot.send_message(
+                await UserBot.send_message(
                     chat_id=GetChatID(message),
                     text=text,
                     reply_to_message_id=message.message_id
@@ -66,7 +66,7 @@ async def collect_afk_messages(bot: UserBot, message: Message):
                     f"Still busy with ```{AFK_REASON.upper()}```\n"
                     f"Try pinging a bit later.`"
                 )
-                await bot.send_message(
+                await UserBot.send_message(
                     chat_id=GetChatID(message),
                     text=text,
                     reply_to_message_id=message.message_id

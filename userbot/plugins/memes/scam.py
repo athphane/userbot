@@ -7,7 +7,7 @@ from userbot import UserBot
 
 
 @UserBot.on_message(Filters.command('scam', '.') & Filters.me)
-async def scam(bot: UserBot, message: Message):
+async def scam(_, message: Message):
     options = ('typing', 'upload_photo', 'record_video', 'upload_video', 'record_audio',
                'upload_audio', 'upload_document', 'find_location', 'record_video_note',
                'upload_video_note', 'choose_contact', 'playing')
@@ -42,7 +42,7 @@ async def scam(bot: UserBot, message: Message):
 
             count = 0
             while count <= scam_time:
-                await bot.send_chat_action(chat_id, scam_action)
+                await UserBot.send_chat_action(chat_id, scam_action)
                 await asyncio.sleep(5)
                 count += 5
 

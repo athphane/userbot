@@ -32,7 +32,7 @@ async def last_commit(_, message: Message):
 
 
 @UserBot.on_message(Filters.command(['ggraph', 'commitgraph'], '.') & Filters.me)
-async def commit_graph(bot: UserBot, message: Message):
+async def commit_graph(_, message: Message):
     if len(message.command) < 2:
         await message.edit("Please provide a github profile username to generate the graph!")
         await sleep(2)

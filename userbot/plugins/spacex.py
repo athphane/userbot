@@ -9,7 +9,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(['spacex', 'elon', 'ae12'], '.') & Filters.me)
-async def spacex(bot: UserBot, message: Message):
+async def spacex(_, message: Message):
     await message.delete()
 
     data = await get_latest()
@@ -33,14 +33,14 @@ async def spacex(bot: UserBot, message: Message):
     txt += f"\n\n{data['details']}"
 
     if images:
-        await bot.send_photo(
+        await UserBot.send_photo(
             chat_id=message.chat.id,
             photo=images[0],
             caption=txt,
             reply_to_message_id=ReplyCheck(message)
         )
     else:
-        await bot.send_message(
+        await UserBot.send_message(
             chat_id=message.chat.id,
             text=txt,
             disable_web_page_preview=True
@@ -48,7 +48,7 @@ async def spacex(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command(['nspacex', 'nextlaunch'], '.') & Filters.me)
-async def next_launch(bot: UserBot, message: Message):
+async def next_launch(_, message: Message):
     await message.delete()
 
     data = await get_next()
@@ -63,7 +63,7 @@ async def next_launch(bot: UserBot, message: Message):
           f"<b>Launch Date:</b> {dt}" \
           f"\n\n{data['details']}"
 
-    await bot.send_message(
+    await UserBot.send_message(
         chat_id=message.chat.id,
         text=txt,
         disable_web_page_preview=True

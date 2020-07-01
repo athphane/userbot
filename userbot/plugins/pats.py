@@ -9,7 +9,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(['pat', 'pats'], '.') & Filters.me)
-async def give_pats(bot: UserBot, message: Message):
+async def give_pats(_, message: Message):
     URL = "https://some-random-api.ml/animu/pat"
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:

@@ -8,7 +8,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command("spam", ".") & Filters.me)
-async def spam(bot: UserBot, message: Message):
+async def spam(_, message: Message):
     # Get current chat and spam to there.
     # if in group and replied to user, then spam replying to user.
     await message.delete()
@@ -18,12 +18,12 @@ async def spam(bot: UserBot, message: Message):
 
     if message.chat.type in ['supergroup', 'group']:
         for _ in range(int(times)):
-            await bot.send_message(message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message))
+            await UserBot.send_message(message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message))
             await asyncio.sleep(0.20)
 
     if message.chat.type == "private":
         for _ in range(int(times)):
-            await bot.send_message(message.chat.id, to_spam)
+            await UserBot.send_message(message.chat.id, to_spam)
             await asyncio.sleep(0.20)
 
 

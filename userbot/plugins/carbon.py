@@ -10,7 +10,7 @@ CARBON_LANG = "py"
 
 
 @UserBot.on_message(Filters.command("carbon", ".") & Filters.me)
-async def carbon_test(bot: UserBot, message: Message):
+async def carbon_test(_, message: Message):
     """
     Receives text and makes a carbon image using the text
     Eg: .carbon your code here (multi line supported)
@@ -27,7 +27,7 @@ async def carbon_test(bot: UserBot, message: Message):
     os.system("carbon-now -h -t userbot/downloads/carbon {}".format(file))
     # await message.edit_text("Carbonizing completed...")
     # Send the thing
-    await bot.send_photo(message.chat.id, 'userbot/downloads/carbon.png')
+    await UserBot.send_photo(message.chat.id, 'userbot/downloads/carbon.png')
     await message.delete()
 
 

@@ -11,7 +11,7 @@ from userbot.database import database
 
 
 @UserBot.on_message(Filters.command("eval", ".") & Filters.me & ~Filters.forwarded)
-async def evaluation_func(bot: UserBot, message: Message):
+async def evaluation_func(_, message: Message):
     status_message = await message.reply_text("Processing ...")
     cmd = message.text.split(" ", maxsplit=1)[1]
 

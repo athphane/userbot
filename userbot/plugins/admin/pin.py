@@ -8,13 +8,13 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command('pin', '.') & Filters.me)
-async def pin_message(bot: UserBot, message: Message):
+async def pin_message(_, message: Message):
     # First of all check if its a group or not
     if message.chat.type in ['group', 'supergroup']:
         # Here lies the sanity checks
-        admins = await bot.get_chat_members(message.chat.id, filter=ChatMemberFilters.ADMINISTRATORS)
+        admins = await UserBot.get_chat_members(message.chat.id, filter=ChatMemberFilters.ADMINISTRATORS)
         admin_ids = [user.user.id for user in admins]
-        me = await bot.get_me()
+        me = await UserBot.get_me()
 
         # If you are an admin
         if me.id in admin_ids:
@@ -27,7 +27,7 @@ async def pin_message(bot: UserBot, message: Message):
                     disable_notification = False
 
                 # Pin the fucking message.
-                await bot.pin_chat_message(
+                await UserBot.pin_chat_message(
                     message.chat.id,
                     message.reply_to_message.message_id,
                     disable_notification=disable_notification
