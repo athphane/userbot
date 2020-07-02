@@ -3,7 +3,7 @@ from time import sleep, time
 from pyrogram import Message
 
 from userbot import UserBot
-from userbot.plugins.interval import IntervalHelper
+from userbot.helpers.interval import IntervalHelper
 
 
 async def CheckAdmin(message: Message):
