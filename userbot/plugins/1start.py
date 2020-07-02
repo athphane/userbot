@@ -5,7 +5,7 @@ from platform import python_version
 from pyrogram import Filters, Message, __version__
 
 from userbot import UserBot, START_TIME
-from userbot.helpers.static_strinngs import REPO, CREATOR
+from userbot.helpers.constants import First
 from userbot.plugins.help import add_command_help
 
 
@@ -22,12 +22,12 @@ async def alive(_, message: Message):
 
 @UserBot.on_message(Filters.command("repo", ".") & Filters.me)
 async def repo(_, message: Message):
-    await message.edit(REPO)
+    await message.edit(First.REPO)
 
 
 @UserBot.on_message(Filters.command("creator", ".") & Filters.me)
 async def creator(_, message: Message):
-    await message.edit(CREATOR)
+    await message.edit(First.CREATOR)
 
 
 @UserBot.on_message(Filters.command(['uptime', 'up'], ".") & Filters.me)

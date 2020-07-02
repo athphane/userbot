@@ -22,7 +22,6 @@ logging.basicConfig(
 LOGS = logging.getLogger(__name__)
 
 name = 'userbot'
-UserBot = UserBot(name)
 
 # Read from config file
 config_file = f"{name}.ini"
@@ -88,3 +87,5 @@ scheduler = AsyncIOScheduler()
 CMD_HELP = {}
 client = None
 START_TIME = datetime.now()
+
+UserBot = UserBot(name)
