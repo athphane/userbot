@@ -17,8 +17,9 @@ async def i_am_not_allowed_to_say_this(_, message: Message):
         elif message.text:
             txt = message.text
 
-        for word in bad_words:
-            txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
+        if txt in bad_words:
+            for word in bad_words:
+                txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
 
         if message.caption:
             if txt != message.caption:
