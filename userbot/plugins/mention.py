@@ -16,14 +16,14 @@ hmention = partial(
 
 
 @UserBot.on_message(Filters.command("mention", ".") & Filters.me)
-async def mention_user(bot: UserBot, message: Message):
+async def mention_user(_, message: Message):
     if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: .mention @Athfan CTO")
         await asyncio.sleep(3)
         await message.delete()
         return
     try:
-        user = await bot.get_users(message.command[1])
+        user = await UserBot.get_users(message.command[1])
     except Exception:
         await message.edit("User not found")
         await asyncio.sleep(3)
@@ -35,14 +35,14 @@ async def mention_user(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("hmention", ".") & Filters.me)
-async def hidden_mention(bot: UserBot, message: Message):
+async def hidden_mention(_, message: Message):
     if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: .hmention @Athfan")
         await asyncio.sleep(3)
         await message.delete()
         return
     try:
-        user = await bot.get_users(message.command[1])
+        user = await UserBot.get_users(message.command[1])
     except Exception:
         await message.edit("User not found")
         await asyncio.sleep(3)

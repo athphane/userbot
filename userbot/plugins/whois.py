@@ -57,9 +57,9 @@ def LastOnline(user: User):
 
 
 async def GetCommon(bot, get_user):
-    common = await bot.send(
+    common = await UserBot.send(
         functions.messages.GetCommonChats(
-            user_id=await bot.resolve_peer(get_user),
+            user_id=await UserBot.resolve_peer(get_user),
             max_id=0,
             limit=0))
     return common
@@ -74,7 +74,7 @@ def ProfilePicUpdate(user_pic):
 
 
 @UserBot.on_message(Filters.command('whois', ['.', '']) & Filters.me)
-async def summon_here(bot: UserBot, message: Message):
+async def summon_here(_, message: Message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:
         get_user = message.from_user.id
@@ -87,16 +87,16 @@ async def summon_here(bot: UserBot, message: Message):
         except ValueError:
             pass
     try:
-        user = await bot.get_users(get_user)
+        user = await UserBot.get_users(get_user)
     except PeerIdInvalid:
         await message.edit("I don't know that User.")
         sleep(2)
         await message.delete()
         return
-    desc = await bot.get_chat(get_user)
+    desc = await UserBot.get_chat(get_user)
     desc = desc.description
-    user_pic = await bot.get_profile_photos(user.id)
-    pic_count = await bot.get_profile_photos_count(user.id)
+    user_pic = await UserBot.get_profile_photos(user.id)
+    pic_count = await UserBot.get_profile_photos_count(user.id)
     common = await GetCommon(bot, user.id)
 
     if not user.photo:
@@ -112,7 +112,7 @@ async def summon_here(bot: UserBot, message: Message):
                 bio=desc if desc else "`No bio set up.`"),
             disable_web_page_preview=True)
     elif user.photo:
-        await bot.send_photo(
+        await UserBot.send_photo(
             message.chat.id,
             user_pic[0].file_id,
             caption=WHOIS_PIC.format(

@@ -12,10 +12,10 @@ class Custom(dict):
 
 
 @UserBot.on_message(Filters.command("wordcount", ".") & Filters.me)
-async def word_count(bot: UserBot, message: Message):
+async def word_count(_, message: Message):
     await message.delete()
     words = Custom()
-    progress = await bot.send_message(message.chat.id, "`Processed 0 messages...`")
+    progress = await UserBot.send_message(message.chat.id, "`Processed 0 messages...`")
     total = 0
     async for msg in bot.iter_history(message.chat.id, 1000):
         total += 1

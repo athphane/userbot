@@ -3,7 +3,7 @@ import os.path
 
 from pyrogram import Message
 
-from userbot import UserBot
+from userbot import UserBotBaseClass
 from userbot.helpers.PyroHelpers import ReplyCheck, GetChatID
 
 
@@ -16,7 +16,7 @@ if not os.path.exists('file_ids.txt'):
     reset_file_ids()
 
 
-async def get_old_message(bot: UserBot, message_id, media_type):
+async def get_old_message(bot: UserBotBaseClass, message_id, media_type):
     old_message = await bot.get_messages('self', message_id)
 
     if media_type == "photo":
@@ -36,7 +36,7 @@ def save_media_id(name, media: Message):
 
 
 # Function to reuse to send animation and remember the file_id
-async def send_saved_animation(bot: UserBot, message: Message, name: str, image: str, caption=None):
+async def send_saved_animation(bot: UserBotBaseClass, message: Message, name: str, image: str, caption=None):
     files = json.load(open("file_ids.txt", "r"))
 
     if name in files:
@@ -64,7 +64,7 @@ async def send_saved_animation(bot: UserBot, message: Message, name: str, image:
 
 
 # Function to reuse to send image and save file_id
-async def send_saved_image(bot: UserBot, message: Message, name: str, image: str, caption=None):
+async def send_saved_image(bot: UserBotBaseClass, message: Message, name: str, image: str, caption=None):
     files = json.load(open("file_ids.txt", "r"))
 
     if name in files:

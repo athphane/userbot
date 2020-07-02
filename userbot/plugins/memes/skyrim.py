@@ -10,7 +10,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command(['skyrim', 'skill'], ".") & Filters.me)
-async def skyrim(bot: UserBot, message: Message):
+async def skyrim(_, message: Message):
     if len(message.command) >= 2:
         text = message.command[1]
     else:
@@ -33,7 +33,7 @@ async def skyrim(bot: UserBot, message: Message):
             await message.delete()
 
         try:
-            await bot.send_photo(
+            await UserBot.send_photo(
                 message.chat.id,
                 'userbot/downloads/skyrim.png',
                 reply_to_message_id=ReplyCheck(message)

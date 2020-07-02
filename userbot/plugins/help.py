@@ -1,8 +1,10 @@
 import asyncio
 
+from prettytable import PrettyTable
 from pyrogram import Filters, Message
 
 from userbot import UserBot, CMD_HELP
+from userbot.helpers.utility import split_list
 
 
 @UserBot.on_message(Filters.command("help", ".") & Filters.me)
@@ -16,13 +18,17 @@ async def module_help(_, message: Message):
         help_arg = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
         all_commands = ""
-
         all_commands += "Please specify which module you want help for!! \nUsage: `.help [module_name]`\n\n"
 
-        for x in CMD_HELP:
-            all_commands += f"`{x}`\n"
+        ac = PrettyTable()
+        ac.header = False
+        ac.title = "UserBot Modules"
+        ac.align = 'l'
 
-        await message.edit(all_commands)
+        for x in split_list(sorted(CMD_HELP.keys()), 2):
+            ac.add_row([x[0], x[1] if len(x) >= 2 else None])
+
+        await message.edit(f"```{str(ac)}```")
 
     if help_arg:
         if help_arg in CMD_HELP:

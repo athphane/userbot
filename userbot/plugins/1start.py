@@ -77,9 +77,9 @@ async def get_id(_, message: Message):
 
 
 @UserBot.on_message(Filters.command("restart", '.') & Filters.me)
-async def restart(bot: UserBot, message: Message):
+async def restart(_, message: Message):
     await message.edit(f"Restarting {UserBot.__name__}.")
-    await bot.send_message('me', f'#userbot_restart, {message.chat.id}, {message.message_id}')
+    await UserBot.send_message('me', f'#userbot_restart, {message.chat.id}, {message.message_id}')
 
     if 'p' in message.text and 'g' in message.text:
         asyncio.get_event_loop().create_task(bot.restart(git_update=True, pip=True))

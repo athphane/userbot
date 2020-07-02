@@ -2,11 +2,11 @@ from time import sleep, time
 
 from pyrogram import Message
 
-from userbot import UserBot
+from userbot import UserBotBaseClass
 from userbot.plugins.interval import IntervalHelper
 
 
-async def CheckAdmin(bot: UserBot, message: Message):
+async def CheckAdmin(bot: UserBotBaseClass, message: Message):
     """Check if we are an admin."""
     admin = 'administrator'
     creator = 'creator'

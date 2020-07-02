@@ -12,19 +12,19 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(Filters.command("ban", '.') & Filters.me)
-async def ban_hammer(bot: UserBot, message: Message):
+async def ban_hammer(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
             if message.command == ['ban', '24']:
-                await bot.kick_chat_member(
+                await UserBot.kick_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     until_date=int(time.time() + 86400)
                 )
                 await message.edit(f"{mention} has been banned for 24hrs.")
             else:
-                await bot.kick_chat_member(
+                await UserBot.kick_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                 )
@@ -34,11 +34,11 @@ async def ban_hammer(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("unban", '.') & Filters.me)
-async def unban(bot: UserBot, message: Message):
+async def unban(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            await bot.unban_chat_member(
+            await UserBot.unban_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id
             )
@@ -65,12 +65,12 @@ mute_permission = ChatPermissions(
 
 
 @UserBot.on_message(Filters.command(["mute", "mute 24"], '.') & Filters.me)
-async def mute_hammer(bot: UserBot, message: Message):
+async def mute_hammer(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
             if message.command == ['mute', '24']:
-                await bot.restrict_chat_member(
+                await UserBot.restrict_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     permissions=mute_permission,
@@ -78,7 +78,7 @@ async def mute_hammer(bot: UserBot, message: Message):
                 )
                 await message.edit(f"{mention} has been muted for 24hrs.")
             else:
-                await bot.restrict_chat_member(
+                await UserBot.restrict_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     permissions=mute_permission
@@ -105,11 +105,11 @@ unmute_permissions = ChatPermissions(
 
 
 @UserBot.on_message(Filters.command("unmute", '.') & Filters.me)
-async def unmute(bot: UserBot, message: Message):
+async def unmute(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            await bot.restrict_chat_member(
+            await UserBot.restrict_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
                 permissions=unmute_permissions
@@ -120,11 +120,11 @@ async def unmute(bot: UserBot, message: Message):
 
 
 @UserBot.on_message(Filters.command("kick", '.') & Filters.me)
-async def kick_user(bot: UserBot, message: Message):
+async def kick_user(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            await bot.kick_chat_member(
+            await UserBot.kick_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
             )
