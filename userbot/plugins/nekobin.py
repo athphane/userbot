@@ -31,7 +31,7 @@ async def paste(_, message: Message):
                          message.reply_to_message.from_user.is_self else False
         if delete:
             await asyncio.gather(
-                bot.send_message(message.chat.id, reply_text, disable_web_page_preview=True),
+                UserBot.send_message(message.chat.id, reply_text, disable_web_page_preview=True),
                 message.reply_to_message.delete(),
                 message.delete()
             )

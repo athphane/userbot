@@ -59,7 +59,7 @@ async def commit_graph(_, message: Message):
         return
 
     await asyncio.gather(
-        bot.send_photo(
+        UserBot.send_photo(
             chat_id=message.chat.id,
             photo=f"{file_name}.png",
             caption=git_user,

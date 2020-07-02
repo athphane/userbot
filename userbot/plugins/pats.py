@@ -19,7 +19,7 @@ async def give_pats(_, message: Message):
             url = result.get("link", None)
             await asyncio.gather(
                 message.delete(),
-                bot.send_video(GetChatID(message), url, reply_to_message_id=ReplyCheck(message))
+                UserBot.send_video(GetChatID(message), url, reply_to_message_id=ReplyCheck(message))
             )
 
 
