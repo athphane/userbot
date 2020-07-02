@@ -10,6 +10,7 @@ from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetUserMentionable
 from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.helpers.constants import MEMES
+from userbot.helpers.static_strinngs import normiefont, weebyfont, Fs
 from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
 
@@ -141,51 +142,17 @@ async def insult(_, message: Message):
 
 @UserBot.on_message(Filters.command("f", ".", case_sensitive=True) & Filters.me)
 async def pay_respects(_, message: Message):
-    paytext = "FF"
-    pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
-        paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
-        paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
-        paytext * 2, paytext * 2)
-
-    await message.edit(pay)
+    await message.edit(Fs().f)
 
 
 @UserBot.on_message(Filters.command("F", ".", case_sensitive=True) & Filters.me)
 async def pay_respects_new(_, message: Message):
-    pay = (
-        "██████╗\n"
-        "██╔═══╝\n"
-        "█████╗\n"
-        "██╔══╝\n"
-        "██║\n"
-        "╚═╝"
-    )
-    await message.edit(pay)
+    await message.edit(Fs().big_f)
 
 
 @UserBot.on_message(Filters.command("f", "#") & Filters.me)
 async def calligraphic_f(_, message: Message):
-    pay = (
-        "⠀⠀⠀⢀⡤⢶⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⠀⢀⣠⣤⣤⣤⣿⣧⣀⣀⣀⣀⣀⣀⣀⣀⣤⡄⠀\n"
-        "⢠⣾⡟⠋⠁⠀⠀⣸⠇⠈⣿⣿⡟⠉⠉⠉⠙⠻⣿⡀\n"
-        "⢺⣿⡀⠀⠀⢀⡴⠋⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠙⠇\n"
-        "⠈⠛⠿⠶⠚⠋⣀⣤⣤⣤⣿⣿⣇⣀⣀⣴⡆⠀⠀⠀\n"
-        "⠀⠀⠀⠀⠠⡞⠋⠀⠀⠀⣿⣿⡏⠉⠛⠻⣿⡀⠀⠀\n"
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠈⠁⠀⠀\n"
-        "⠀⠀⣠⣶⣶⣶⣶⡄⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⢰⣿⠟⠉⠙⢿⡟⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⢸⡟⠀⠀⠀⠘⠀⠀⠀⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⠈⢿⡄⠀⠀⠀⠀⠀⣼⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⠀⠀⠙⠷⠶⠶⠶⠿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀\n"
-    )
-    await message.edit(pay)
-
-
-normiefont = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-              'v', 'w', 'x', 'y', 'z']
-weebyfont = ['卂', '乃', '匚', '刀', '乇', '下', '厶', '卄', '工', '丁', '长', '乚', '从', '𠘨', '口', '尸', '㔿', '尺', '丂', '丅', '凵',
-             'リ', '山', '乂', '丫', '乙']
+    await message.edit(Fs().fancy_f)
 
 
 def weebify_text(raw_text):
@@ -291,6 +258,7 @@ async def text_reverse(_, message: Message):
         return
 
     await message.edit(reverse_text[::-1])
+
 
 # Command help section
 add_command_help(

@@ -5,10 +5,8 @@ from platform import python_version
 from pyrogram import Filters, Message, __version__
 
 from userbot import UserBot, START_TIME
+from userbot.helpers.static_strinngs import REPO, CREATOR
 from userbot.plugins.help import add_command_help
-
-REPO = "Click <a href=\"https://github.com/athphane/userbot\">here</a> to open Usebot's GitHub page."
-CREATOR = "I was created by my master <a href=\"https://github.com/athphane\">Athphane</a> on a rainy day."
 
 
 @UserBot.on_message(Filters.command("alive", ".") & Filters.me)
