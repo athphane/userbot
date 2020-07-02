@@ -7,7 +7,7 @@ from logging.handlers import TimedRotatingFileHandler
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from userbot.userbotbaseclass import UserBotBaseClass
+from userbot.userbot import UserBot
 
 # Logging at the start to catch everything
 logging.basicConfig(
@@ -22,7 +22,7 @@ logging.basicConfig(
 LOGS = logging.getLogger(__name__)
 
 name = 'userbot'
-UserBot = UserBotBaseClass(name)
+UserBot = UserBot(name)
 
 # Read from config file
 config_file = f"{name}.ini"
