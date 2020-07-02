@@ -17,13 +17,16 @@ async def i_am_not_allowed_to_say_this(_, message: Message):
         elif message.text:
             txt = message.text
 
-        if txt in bad_words:
-            for word in bad_words:
+        for word in bad_words:
+            try:
                 txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
+            except Exception:
+                pass
 
         if message.caption:
             if txt != message.caption:
                 await message.edit_caption(txt)
+
         elif message.text:
             if txt != message.text:
                 await message.edit(txt)
