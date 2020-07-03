@@ -17,8 +17,13 @@ async def unsplash_pictures(_, message: Message):
         if len(cmd) > 2 and int(cmd[2]) < 10:
             await message.edit('```Getting Pictures```')
             count = int(cmd[2])
-            for _ in range(0, count):
+            images = []
+            while len(images) is not count:
                 img = await AioHttp().get_url(f"https://source.unsplash.com/1600x900/?{keyword}")
+                if img not in images:
+                    images.append(img)
+
+            for img in images:
                 await UserBot.send_photo(message.chat.id, str(img))
 
             await message.delete()
