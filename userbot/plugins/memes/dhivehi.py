@@ -5,8 +5,9 @@ from userbot.plugins.help import add_command_help
 
 dhivehi_text_memes = {
     'bidi': {'meme': "🚬", 'help': 'Bidi'},
+    '100': {'meme': "💯", 'help': '💯'},
     'kada': {'alts': ['k'], 'meme': "ކަޑަ؟", 'help': "ކަޑަ؟"},
-    'gerey': {'alts': ['g'], 'meme': "ގެރޭ", 'help': "ގެރޭ"}
+    'gerey': {'alts': ['g'], 'meme': "ގެރޭ", 'help': "ގެރޭ"},
 }
 
 dhivehi_text_memes_commands = []
