@@ -16,8 +16,8 @@ if not os.path.exists('file_ids.txt'):
     reset_file_ids()
 
 
-async def get_old_message(bot: UserBot, message_id, media_type):
-    old_message = await bot.get_messages('self', message_id)
+async def get_old_message(message_id, media_type):
+    old_message = await UserBot.get_messages('self', message_id)
 
     if media_type == "photo":
         return old_message.photo
@@ -36,13 +36,13 @@ def save_media_id(name, media: Message):
 
 
 # Function to reuse to send animation and remember the file_id
-async def send_saved_animation(bot: UserBot, message: Message, name: str, image: str, caption=None):
+async def send_saved_animation(message: Message, name: str, image: str, caption=None):
     files = json.load(open("file_ids.txt", "r"))
 
     if name in files:
-        old_message = await get_old_message(bot, int(files[name]), "animation")
+        old_message = await get_old_message(int(files[name]), "animation")
         if old_message is not None:
-            await bot.send_animation(
+            await UserBot.send_animation(
                 message.chat.id,
                 old_message.file_id,
                 file_ref=old_message.file_ref,
@@ -52,25 +52,25 @@ async def send_saved_animation(bot: UserBot, message: Message, name: str, image:
         else:
             # Reset file id list because of the one error
             reset_file_ids()
-            await send_saved_animation(bot, message, name, image, caption)
+            await send_saved_animation(message, name, image, caption)
     else:
-        sent_animation = await bot.send_animation(
+        sent_animation = await UserBot.send_animation(
             "self",
             "userbot/images/{}".format(image),
             reply_to_message_id=ReplyCheck(message)
         )
         save_media_id(name, sent_animation)
-        await send_saved_animation(bot, message, name, image, caption)
+        await send_saved_animation(message, name, image, caption)
 
 
 # Function to reuse to send image and save file_id
-async def send_saved_image(bot: UserBot, message: Message, name: str, image: str, caption=None):
+async def send_saved_image(message: Message, name: str, image: str, caption=None):
     files = json.load(open("file_ids.txt", "r"))
 
     if name in files:
-        old_message = await get_old_message(bot, int(files[name]), "photo")
+        old_message = await get_old_message(int(files[name]), "photo")
         if old_message is not None:
-            await bot.send_photo(
+            await UserBot.send_photo(
                 GetChatID(message),
                 old_message.file_id,
                 file_ref=old_message.file_ref,
@@ -80,12 +80,12 @@ async def send_saved_image(bot: UserBot, message: Message, name: str, image: str
         else:
             # Reset file id list because of the one error
             reset_file_ids()
-            await send_saved_image(bot, message, name, image, caption)
+            await send_saved_image(message, name, image, caption)
     else:
-        sent_photo = await bot.send_photo(
+        sent_photo = await UserBot.send_photo(
             "self",
             photo="userbot/images/{}".format(image),
             reply_to_message_id=ReplyCheck(message)
         )
         save_media_id(name, sent_photo)
-        await send_saved_image(bot, message, name, image, caption)
+        await send_saved_image(message, name, image, caption)
