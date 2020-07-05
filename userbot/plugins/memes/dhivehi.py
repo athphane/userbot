@@ -7,6 +7,7 @@ dhivehi_text_memes = {
     'bidi': {'meme': "🚬", 'help': 'Bidi'},
     '100': {'meme': "💯", 'help': '💯'},
     'kada': {'alts': ['k'], 'meme': "ކަޑަ؟", 'help': "ކަޑަ؟"},
+    'blk': {'alts': ['b'], 'meme': "ލކ", 'help': 'blk'},
     'gerey': {'alts': ['g'], 'meme': "ގެރޭ", 'help': "ގެރޭ"},
 }
 
@@ -44,3 +45,5 @@ async def dhivehi_memes(_, message: Message):
 add_command_help(
     'dhivehi', fixed_memes_help
 )
+
+ބލކ
