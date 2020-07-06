@@ -7,7 +7,7 @@ from pyrogram.errors import MessageNotModified
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
-bad_words = ['nigga', 'nigger', 'coon', 'nigg', 'nig']
+bad_words = ['nigga', 'nigger', 'coon']
 
 vulgar_filter = False
 
