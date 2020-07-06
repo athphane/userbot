@@ -1,3 +1,4 @@
+import asyncio
 import re
 
 from pyrogram import Filters, Message
@@ -20,6 +21,8 @@ def commute():
 async def toggle(_, message: Message):
     c = commute()
     await message.reply_text("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
+    await asyncio.sleep(3)
+    await message.delete()
 
 
 @UserBot.on_message(~Filters.regex(r"^\.\w*") & Filters.me, group=10)
