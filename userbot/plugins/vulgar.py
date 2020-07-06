@@ -5,6 +5,7 @@ from pyrogram import Filters, Message
 from pyrogram.errors import MessageNotModified
 
 from userbot import UserBot
+from userbot.plugins.help import add_command_help
 
 bad_words = ['nigga', 'nigger', 'coon', 'nigg', 'nig']
 
@@ -50,3 +51,10 @@ async def i_am_not_allowed_to_say_this(_, message: Message):
                     await message.edit(txt)
         except MessageNotModified:
             return
+
+# Command help section
+add_command_help(
+    'vulgar', [
+        ['.vulgar', 'Toggles bad word filtering on and off.'],
+    ]
+)
