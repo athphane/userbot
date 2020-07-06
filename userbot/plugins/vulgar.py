@@ -19,7 +19,7 @@ f = Filters.create(lambda self, _: self.flag, flag=True, commute=vulgar_switch)
 
 @UserBot.on_message(Filters.command("vulgar", ".") & Filters.me)
 async def toggle(_, message: Message):
-    c = f.vulgar_switch()
+    c = f.commute()
     await message.reply_text("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
 
 
