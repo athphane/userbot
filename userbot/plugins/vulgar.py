@@ -20,7 +20,7 @@ def commute():
 @UserBot.on_message(Filters.command("vulgar", ".") & Filters.me)
 async def toggle(_, message: Message):
     c = commute()
-    await message.reply_text("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
+    await message.edit("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
     await asyncio.sleep(3)
     await message.delete()
 
