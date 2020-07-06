@@ -5,10 +5,25 @@ from pyrogram.errors import MessageNotModified
 
 from userbot import UserBot
 
-bad_words = ['nigga', 'nigger', 'coon']
+bad_words = ['nigga', 'nigger', 'coon', 'nigg', 'nig']
 
 
-@UserBot.on_message(~Filters.regex(r"^\.\w*") & Filters.me, group=10)
+def vulgar_switch(self):
+    """Switch states between `True` and `False`"""
+    self.flag = not self.flag
+    return self.flag
+
+
+f = Filters.create(lambda self, _: self.flag, flag=True, commute=vulgar_switch)
+
+
+@UserBot.on_message(Filters.command("vulgar", ".") & Filters.me)
+async def toggle(_, message: Message):
+    c = f.vulgar_switch()
+    await message.reply_text("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
+
+
+@UserBot.on_message(f & ~Filters.regex(r"^\.\w*") & Filters.me, group=10)
 async def i_am_not_allowed_to_say_this(_, message: Message):
     try:
         txt = None
