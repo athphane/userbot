@@ -7,43 +7,43 @@ from userbot import UserBot
 
 bad_words = ['nigga', 'nigger', 'coon', 'nigg', 'nig']
 
-
-def vulgar_switch(self):
-    """Switch states between `True` and `False`"""
-    self.flag = not self.flag
-    return self.flag
+vulgar_filter = False
 
 
-f = Filters.create(lambda self, _: self.flag, flag=True, commute=vulgar_switch)
+def commute():
+    global vulgar_filter
+    vulgar_filter = not vulgar_filter
+    return vulgar_filter
 
 
 @UserBot.on_message(Filters.command("vulgar", ".") & Filters.me)
 async def toggle(_, message: Message):
-    c = f.commute()
+    c = commute()
     await message.reply_text("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
 
 
-@UserBot.on_message(f & ~Filters.regex(r"^\.\w*") & Filters.me, group=10)
+@UserBot.on_message(~Filters.regex(r"^\.\w*") & Filters.me, group=10)
 async def i_am_not_allowed_to_say_this(_, message: Message):
-    try:
-        txt = None
-        if message.caption:
-            txt = message.caption
-        elif message.text:
-            txt = message.text
+    if vulgar_filter:
+        try:
+            txt = None
+            if message.caption:
+                txt = message.caption
+            elif message.text:
+                txt = message.text
 
-        for word in bad_words:
-            try:
-                txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
-            except Exception:
-                pass
+            for word in bad_words:
+                try:
+                    txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
+                except Exception:
+                    pass
 
-        if message.caption:
-            if txt != message.caption:
-                await message.edit_caption(txt)
+            if message.caption:
+                if txt != message.caption:
+                    await message.edit_caption(txt)
 
-        elif message.text:
-            if txt != message.text:
-                await message.edit(txt)
-    except MessageNotModified:
-        return
+            elif message.text:
+                if txt != message.text:
+                    await message.edit(txt)
+        except MessageNotModified:
+            return
