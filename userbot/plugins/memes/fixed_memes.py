@@ -65,9 +65,9 @@ async def fixed_memes(_, message: Message):
         the_meme = memes_data[message.command[0]]
 
     if the_meme['type'] == 'animation':
-        await send_saved_animation(bot, message, the_meme['name'], the_meme['image'], caption=the_meme['caption'])
+        await send_saved_animation(message, the_meme['name'], the_meme['image'], caption=the_meme['caption'])
     elif the_meme['type'] == 'image':
-        await send_saved_image(bot, message, the_meme['name'], the_meme['image'], caption=the_meme['caption'])
+        await send_saved_image(message, the_meme['name'], the_meme['image'], caption=the_meme['caption'])
 
 
 # Command help section

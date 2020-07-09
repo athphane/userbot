@@ -3,13 +3,11 @@ import random
 import re
 from random import choice
 
-from aiohttp.client_exceptions import ClientError
 from pyrogram import Filters, Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetUserMentionable
-from userbot.helpers.aiohttp_helper import AioHttp
-from userbot.helpers.constants import MEMES
+from userbot.helpers.constants import MEMES, Fs, Weebify
 from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
 
@@ -17,30 +15,6 @@ from userbot.plugins.help import add_command_help
 @UserBot.on_message(Filters.command('nice', '.') & Filters.me)
 async def nice(_, message: Message):
     await message.edit("NICENICENICENICE")
-
-
-@UserBot.on_message(Filters.command("compliment", ".") & Filters.me)
-async def compliment_func(_, message: Message):
-    try:
-        data = await AioHttp().get_json('https://complimentr.com/api')
-        compliment = data['compliment']
-        await message.edit(
-            compliment.capitalize()
-        )
-    except ClientError:
-        await message.delete()
-
-
-@UserBot.on_message(Filters.command("devexcuse", ".") & Filters.me)
-async def dev_excuse(_, message: Message):
-    try:
-        data = await AioHttp().get_json('https://dev-excuses-api.herokuapp.com/')
-        devexcuse = data['text']
-        await message.edit(
-            devexcuse.capitalize()
-        )
-    except ClientError:
-        await message.delete()
 
 
 @UserBot.on_message(Filters.command("reverse", ".") & Filters.me)
@@ -119,79 +93,38 @@ async def mock_text(_, message: Message):
     if not input_str:
         await message.edit("`gIvE sOMEtHInG tO MoCk!`")
         return
+
     reply_text = get_mock_text(input_str.lower())
 
     await message.edit(reply_text)
 
 
-@UserBot.on_message(Filters.command("insult", ".") & Filters.me)
-async def insult(_, message: Message):
-    try:
-        await message.edit("`Generating insult...`")
-        data = await AioHttp().get_json('https://evilinsult.com/generate_insult.php?lang=en&type=json')
-        req = data['insult']
-        await message.edit(
-            req
-        )
-    except ClientError:
-        await message.edit("`Failed to generate insult...`")
-        await asyncio.sleep(2)
-        await message.delete()
+@UserBot.on_message(Filters.command("brain", ".") & Filters.me)
+async def brain(_, message: Message):
+    for x in MEMES.BRAIN:
+        await asyncio.sleep(0.35)
+        await message.edit(x)
 
 
 @UserBot.on_message(Filters.command("f", ".", case_sensitive=True) & Filters.me)
 async def pay_respects(_, message: Message):
-    paytext = "FF"
-    pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
-        paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
-        paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
-        paytext * 2, paytext * 2)
-
-    await message.edit(pay)
+    await message.edit(Fs().F)
 
 
 @UserBot.on_message(Filters.command("F", ".", case_sensitive=True) & Filters.me)
 async def pay_respects_new(_, message: Message):
-    pay = (
-        "██████╗\n"
-        "██╔═══╝\n"
-        "█████╗\n"
-        "██╔══╝\n"
-        "██║\n"
-        "╚═╝"
-    )
-    await message.edit(pay)
+    await message.edit(Fs.BIG_F)
 
 
 @UserBot.on_message(Filters.command("f", "#") & Filters.me)
 async def calligraphic_f(_, message: Message):
-    pay = (
-        "⠀⠀⠀⢀⡤⢶⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⠀⢀⣠⣤⣤⣤⣿⣧⣀⣀⣀⣀⣀⣀⣀⣀⣤⡄⠀\n"
-        "⢠⣾⡟⠋⠁⠀⠀⣸⠇⠈⣿⣿⡟⠉⠉⠉⠙⠻⣿⡀\n"
-        "⢺⣿⡀⠀⠀⢀⡴⠋⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠙⠇\n"
-        "⠈⠛⠿⠶⠚⠋⣀⣤⣤⣤⣿⣿⣇⣀⣀⣴⡆⠀⠀⠀\n"
-        "⠀⠀⠀⠀⠠⡞⠋⠀⠀⠀⣿⣿⡏⠉⠛⠻⣿⡀⠀⠀\n"
-        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠈⠁⠀⠀\n"
-        "⠀⠀⣠⣶⣶⣶⣶⡄⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⢰⣿⠟⠉⠙⢿⡟⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⢸⡟⠀⠀⠀⠘⠀⠀⠀⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⠈⢿⡄⠀⠀⠀⠀⠀⣼⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀\n"
-        "⠀⠀⠀⠙⠷⠶⠶⠶⠿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀\n"
-    )
-    await message.edit(pay)
-
-
-normiefont = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-              'v', 'w', 'x', 'y', 'z']
-weebyfont = ['卂', '乃', '匚', '刀', '乇', '下', '厶', '卄', '工', '丁', '长', '乚', '从', '𠘨', '口', '尸', '㔿', '尺', '丂', '丅', '凵',
-             'リ', '山', '乂', '丫', '乙']
+    await message.edit(Fs.FANCY_F)
 
 
 def weebify_text(raw_text):
     for normie_char in raw_text:
-        if normie_char in normiefont:
-            weeby_char = weebyfont[normiefont.index(normie_char)]
+        if normie_char in Weebify.NORMIE_FONT:
+            weeby_char = Weebify.WEEBY_FONT[Weebify.NORMIE_FONT.index(normie_char)]
             raw_text = raw_text.replace(normie_char, weeby_char)
     return raw_text
 
@@ -292,6 +225,40 @@ async def text_reverse(_, message: Message):
 
     await message.edit(reverse_text[::-1])
 
+
+@UserBot.on_message(Filters.me & Filters.command(['shg', 'shrug'], '.'))
+async def shrug(_, message):
+    await message.edit(random.choice(MEMES.SHRUGS))
+
+
+@UserBot.on_message(Filters.me & Filters.command('flip', '.'))
+async def flip_text(_, message):
+    cmd = message.command
+
+    text = ""
+    if len(cmd) > 1:
+        text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Give me something to reverse`"[::-1])
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    final_str = ""
+    for char in text:
+        if char in MEMES.REPLACEMENT_MAP.keys():
+            new_char = MEMES.REPLACEMENT_MAP[char]
+        else:
+            new_char = char
+        final_str += new_char
+    if text != final_str:
+        await message.edit(final_str)
+    else:
+        await message.edit(text)
+
+
 # Command help section
 add_command_help(
     'text', [
@@ -315,5 +282,6 @@ add_command_help(
         [';_; `or` .sad `or` cri', ';_;'],
         ['.ht', 'Heads or Tails'],
         ['.reverset', 'Reverses the text'],
+        ['.shrug', 'Random shrug'],
     ]
 )

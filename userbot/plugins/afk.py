@@ -26,9 +26,9 @@ async def collect_afk_messages(_, message: Message):
     if AFK:
         last_seen = subtract_time(datetime.now(), AFK_TIME)
         is_group = True if message.chat.type in ['supergroup', 'group'] else False
-        PLACE = GROUPS if is_group else USERS
+        CHAT_TYPE = GROUPS if is_group else USERS
 
-        if GetChatID(message) not in PLACE:
+        if GetChatID(message) not in CHAT_TYPE:
             text = (
                 f"`Beep boop. This is an automated message.\n"
                 f"I am not available right now.\n"
@@ -41,10 +41,10 @@ async def collect_afk_messages(_, message: Message):
                 text=text,
                 reply_to_message_id=message.message_id
             )
-            PLACE[GetChatID(message)] = 1
+            CHAT_TYPE[GetChatID(message)] = 1
             return
-        elif GetChatID(message) in PLACE:
-            if PLACE[GetChatID(message)] == 50:
+        elif GetChatID(message) in CHAT_TYPE:
+            if CHAT_TYPE[GetChatID(message)] == 50:
                 text = (
                     f"`This is an automated message\n"
                     f"Last seen: {last_seen}\n"
@@ -57,9 +57,9 @@ async def collect_afk_messages(_, message: Message):
                     text=text,
                     reply_to_message_id=message.message_id
                 )
-            elif PLACE[GetChatID(message)] > 50:
+            elif CHAT_TYPE[GetChatID(message)] > 50:
                 return
-            elif PLACE[GetChatID(message)] % 5 == 0:
+            elif CHAT_TYPE[GetChatID(message)] % 5 == 0:
                 text = (
                     f"`Hey I'm still not back yet.\n"
                     f"Last seen: {last_seen}\n"
@@ -72,7 +72,7 @@ async def collect_afk_messages(_, message: Message):
                     reply_to_message_id=message.message_id
                 )
 
-        PLACE[GetChatID(message)] += 1
+        CHAT_TYPE[GetChatID(message)] += 1
 
 
 @UserBot.on_message(Filters.command("afk", ".") & Filters.me, group=3)
@@ -101,8 +101,8 @@ async def afk_unset(_, message: Message):
     if AFK:
         last_seen = subtract_time(datetime.now(), AFK_TIME).replace('ago', '').strip()
         await message.edit(
-            f"`While you were away (for {last_seen}), you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
-            f"from {len(USERS) + len(GROUPS)} chats`"
+            f"`While you were away (for {last_seen}), you received {sum(USERS.values()) + sum(GROUPS.values())} "
+            f"messages from {len(USERS) + len(GROUPS)} chats`"
         )
         AFK = False
         AFK_TIME = ''
@@ -121,8 +121,8 @@ async def auto_afk_unset(_, message: Message):
     if AFK:
         last_seen = subtract_time(datetime.now(), AFK_TIME).replace('ago', '').strip()
         reply = await message.reply(
-            f"`While you were away (for {last_seen}), you received {sum(USERS.values()) + sum(GROUPS.values())} messages "
-            f"from {len(USERS) + len(GROUPS)} chats`"
+            f"`While you were away (for {last_seen}), you received {sum(USERS.values()) + sum(GROUPS.values())} "
+            f"messages from {len(USERS) + len(GROUPS)} chats`"
         )
         AFK = False
         AFK_TIME = ''
@@ -130,7 +130,6 @@ async def auto_afk_unset(_, message: Message):
         USERS = {}
         GROUPS = {}
         await asyncio.sleep(5)
-
         await reply.delete()
 
 

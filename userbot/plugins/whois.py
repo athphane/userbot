@@ -56,7 +56,7 @@ def LastOnline(user: User):
         return datetime.fromtimestamp(user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
 
 
-async def GetCommon(bot, get_user):
+async def GetCommon(get_user):
     common = await UserBot.send(
         functions.messages.GetCommonChats(
             user_id=await UserBot.resolve_peer(get_user),
@@ -97,7 +97,7 @@ async def summon_here(_, message: Message):
     desc = desc.description
     user_pic = await UserBot.get_profile_photos(user.id)
     pic_count = await UserBot.get_profile_photos_count(user.id)
-    common = await GetCommon(bot, user.id)
+    common = await GetCommon(user.id)
 
     if not user.photo:
         await message.edit(

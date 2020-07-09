@@ -13,7 +13,7 @@ from userbot.plugins.help import add_command_help
 
 @UserBot.on_message(Filters.command("ban", '.') & Filters.me)
 async def ban_hammer(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
+    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
             if message.command == ['ban', '24']:
@@ -35,7 +35,7 @@ async def ban_hammer(_, message: Message):
 
 @UserBot.on_message(Filters.command("unban", '.') & Filters.me)
 async def unban(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
+    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
             await UserBot.unban_chat_member(
@@ -66,7 +66,7 @@ mute_permission = ChatPermissions(
 
 @UserBot.on_message(Filters.command(["mute", "mute 24"], '.') & Filters.me)
 async def mute_hammer(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
+    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
             if message.command == ['mute', '24']:
@@ -106,7 +106,7 @@ unmute_permissions = ChatPermissions(
 
 @UserBot.on_message(Filters.command("unmute", '.') & Filters.me)
 async def unmute(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
+    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
             await UserBot.restrict_chat_member(
@@ -121,7 +121,7 @@ async def unmute(_, message: Message):
 
 @UserBot.on_message(Filters.command("kick", '.') & Filters.me)
 async def kick_user(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(bot, message) is True:
+    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
             await UserBot.kick_chat_member(

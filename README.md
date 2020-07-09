@@ -69,10 +69,10 @@ that is added to the plugins directory should have the following code at a minim
 ```python
 from pyrogram import Message, Filters
 
-from userbot import UserBotBaseClass
+from userbot import UserBot
 
-@UserBotBaseClass.on_message(Filters.command('sample', ['.']))
-async def module_name(bot: UserBotBaseClass, message: Message):
+@UserBot.on_message(Filters.command('sample', ['.']))
+async def module_name(bot: UserBot, message: Message):
     await message.edit(
         "This is a sample module"
     )

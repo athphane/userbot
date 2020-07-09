@@ -26,9 +26,9 @@ async def paste(_, message: Message):
     else:
         url = f'https://nekobin.com/{key}'
         reply_text = f'Nekofied to **Nekobin** : {url}'
-        delete = True if len(message.command) > 1 and \
-                         message.command[1] in ['d', 'del'] and \
-                         message.reply_to_message.from_user.is_self else False
+        delete = True if len(message.command) > 1 \
+                         and message.command[1] in ['d', 'del'] \
+                         and message.reply_to_message.from_user.is_self else False
         if delete:
             await asyncio.gather(
                 UserBot.send_message(message.chat.id, reply_text, disable_web_page_preview=True),

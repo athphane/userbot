@@ -10,7 +10,7 @@ API_HASH = os.environ.get('API_HASH', None)
 USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
 
 
-class UserBotBaseClass(Client):
+class UserBot(Client):
     def __init__(self, name):
         name = name.lower()
         config_file = f"{name}.ini"
@@ -26,9 +26,9 @@ class UserBotBaseClass(Client):
             workers=32,
             plugins=dict(root="userbot/plugins"),
             workdir="./",
-            app_version="Userbot v0.2",
+            app_version="Userbot v1.0",
             device_model="Python",
-            system_version="v0.2"
+            system_version="v1.0"
         )
 
     async def start(self):
