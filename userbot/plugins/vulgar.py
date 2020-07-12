@@ -12,7 +12,7 @@ bad_words = ['nigga', 'nigger', 'coon']
 vulgar_filter = False
 
 
-def commute():
+def switch():
     global vulgar_filter
     vulgar_filter = not vulgar_filter
     return vulgar_filter
@@ -20,7 +20,7 @@ def commute():
 
 @UserBot.on_message(Filters.command("vulgar", ".") & Filters.me)
 async def toggle(_, message: Message):
-    c = commute()
+    c = switch()
     await message.edit("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
     await asyncio.sleep(3)
     await message.delete()

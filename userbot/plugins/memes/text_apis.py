@@ -9,6 +9,7 @@ text_apis_data = {
     'compliment': {'url': 'https://complimentr.com/api', 'target_key': 'compliment'},
     'devexcuse': {'url': 'https://dev-excuses-api.herokuapp.com/', 'target_key': 'text'},
     'insult': {'url': 'https://evilinsult.com/generate_insult.php?lang=en', 'target_key': 'insult'},
+    'kanye': {'url': 'https://api.kanye.rest/', 'target_key': 'quote'},
 }
 
 text_apis = [x for x in text_apis_data]
@@ -40,5 +41,7 @@ add_command_help(
     'text', [
         ['.compliment', 'Replaces command with a nice compliment.'],
         ['.devexcuse', 'Replaces command with an excuse that a developer would give.'],
+        ['.insult', 'It does what it says it does.'],
+        ['.kanye', 'Kanye once said...'],
     ]
 )
