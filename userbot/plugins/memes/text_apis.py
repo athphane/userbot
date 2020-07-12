@@ -10,6 +10,7 @@ text_apis_data = {
     'devexcuse': {'url': 'https://dev-excuses-api.herokuapp.com/', 'target_key': 'text'},
     'insult': {'url': 'https://evilinsult.com/generate_insult.php?lang=en', 'target_key': 'insult'},
     'kanye': {'url': 'https://api.kanye.rest/', 'target_key': 'quote', 'format': 'Kanye once said:\n`{}`'},
+    'programmer': {'url': 'https://programming-quotes-api.herokuapp.com/quotes/random', 'target_key': 'en'},
 }
 
 text_apis = [x for x in text_apis_data]
