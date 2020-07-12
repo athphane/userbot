@@ -9,7 +9,7 @@ text_apis_data = {
     'compliment': {'url': 'https://complimentr.com/api', 'target_key': 'compliment'},
     'devexcuse': {'url': 'https://dev-excuses-api.herokuapp.com/', 'target_key': 'text'},
     'insult': {'url': 'https://evilinsult.com/generate_insult.php?lang=en', 'target_key': 'insult'},
-    'kanye': {'url': 'https://api.kanye.rest/', 'target_key': 'quote', 'format': 'Kanye once said:\n `{}'},
+    'kanye': {'url': 'https://api.kanye.rest/', 'target_key': 'quote', 'format': 'Kanye once said:\n`{}`'},
 }
 
 text_apis = [x for x in text_apis_data]
