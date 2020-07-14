@@ -33,6 +33,7 @@ special_emojis_dict = {
     'target': {'emoji': '🎯', 'help': 'The special target emoji'},
     'dice': {'emoji': '🎲', 'help': 'The special dice emoji'},
     'bb': {'emoji': '🏀', 'help': 'The special basketball emoji'},
+    'soccer': {'emoji': '⚽️', 'help': 'The special football emoji'},
 }
 special_emoji_commands = [x for x in special_emojis_dict]
 
