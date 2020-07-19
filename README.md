@@ -22,10 +22,6 @@ learn more about these topics.
 
 I assume you will read this whole README.md file before continuing.
 
-Quick Deploy on Heroku using the button down below:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/athphane/userbot)
-
 > Development in progress.
 
 ## Requirements
@@ -50,8 +46,9 @@ I assume you already have NPM installed.
 
 ## Installing
 *One Click Deploy*
+Quick Deploy on Heroku using the button down below:
 
-There is no one click deploy.. It was all a ruse. You have to deploy like how I deploy it...
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/athphane/userbot)
 
 *The way I deploy*
 ```bash
