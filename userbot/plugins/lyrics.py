@@ -14,8 +14,11 @@ async def send_lyrics(_, message: Message):
         song_name = ""
         if len(cmd) > 1:
             song_name = " ".join(cmd[1:])
-        elif message.reply_to_message and len(cmd) == 1:
-            song_name = message.reply_to_message.text
+        elif message.reply_to_message:
+            if message.reply_to_message.audio:
+                song_name = f"{message.reply_to_message.audio.title} {message.reply_to_message.audio.performer}"
+            elif len(cmd) == 1:
+                song_name = message.reply_to_message.text
         elif not message.reply_to_message and len(cmd) == 1:
             await message.edit("Give a song name")
             await asyncio.sleep(2)
