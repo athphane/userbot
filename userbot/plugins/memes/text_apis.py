@@ -9,6 +9,8 @@ text_apis_data = {
     'compliment': {'url': 'https://complimentr.com/api', 'target_key': 'compliment'},
     'devexcuse': {'url': 'https://dev-excuses-api.herokuapp.com/', 'target_key': 'text'},
     'insult': {'url': 'https://evilinsult.com/generate_insult.php?lang=en', 'target_key': 'insult'},
+    'kanye': {'url': 'https://api.kanye.rest/', 'target_key': 'quote', 'format': 'Kanye once said:\n`{}`'},
+    'programmer': {'url': 'https://programming-quotes-api.herokuapp.com/quotes/random', 'target_key': 'en'},
 }
 
 text_apis = [x for x in text_apis_data]
@@ -24,8 +26,12 @@ async def text_api(_, message: Message):
         try:
             data = await AioHttp().get_json(api['url'])
             resp_json = data[api['target_key']]
+            if 'format' in api:
+                txt = api['format'].format(resp_json)
+            else:
+                txt = resp_json.capitalize()
             await message.edit(
-                resp_json.capitalize()
+                txt
             )
         except Exception:
             data = await AioHttp().get_text(api['url'])
@@ -40,5 +46,7 @@ add_command_help(
     'text', [
         ['.compliment', 'Replaces command with a nice compliment.'],
         ['.devexcuse', 'Replaces command with an excuse that a developer would give.'],
+        ['.insult', 'It does what it says it does.'],
+        ['.kanye', 'Kanye once said...'],
     ]
 )
