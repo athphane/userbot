@@ -50,7 +50,7 @@ async def sticker_super_func(_, message: Message):
             await message.delete()
             return
 
-        await message.edit(f"`Generating {sticker['action']}`")
+        await message.edit(f"`{sticker['action']}`")
 
         values = sticker['value']
         choice = None
