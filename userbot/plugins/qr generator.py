@@ -1,4 +1,6 @@
 import os
+import cv2
+from pyzbar import pyzbar
 
 import aiofiles
 import aiohttp
@@ -28,6 +30,28 @@ async def generate_qr(_, m: Message):
             await m.delete()
     except exception as e:
         print(e)
+
+@UserBot.on_message(Filters.command("decode", prefixes=".") & Filters.me)
+async def qr_decode(_, m:Message):
+    try:
+        if os.path.exists('userbot/downloads/qr_decode.png'):
+            os.remove('userbot/downloads/qr_decode.png')
+        image = await m.reply_to_message.download("userbot/downloads/qr_decode.png")
+        await m.edit_text("Decoding QR...")
+        output = await read_qr(image)
+        await m.edit_text(output)
+
+    except exception as e:
+        await UserBot.send_message(m.chat.id, f"Oopsie I encountered an error: {e}.")
+        print(e)
+
+
+async def read_qr(image):
+    im_gray = cv2.imread(image, cv2.IMREAD_GRAYSCALE)
+    im_bw = cv2.threshold(im_gray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+    im_bw = cv2.threshold(im_gray, 127, 255, cv2.THRESH_BINARY)[1]
+    barcodes = pyzbar.decode(im_bw)
+    return barcodes[0].data.decode('utf-8')
 
 
 add_command_help(
