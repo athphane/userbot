@@ -25,7 +25,7 @@ async def generate_qr(_, m: Message):
                     await f.write(await resp.read())
                     await f.close()
         await m.edit_text("Generating QR...")
-        await Bot.send_photo(m.chat.id, 'userbot/downloads/qr.png')
+        await UserBot.send_photo(m.chat.id, 'userbot/downloads/qr.png')
         await m.delete()
     except exception as e:
         print(e)
