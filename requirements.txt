@@ -20,3 +20,5 @@ thisapidoesnotexist
 aiofiles
 svglib
 reportlab
+opencv-python
+pyzbar
