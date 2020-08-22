@@ -9,6 +9,8 @@ dhivehi_text_memes = {
     'kada': {'alts': ['k'], 'meme': "ކަޑަ؟", 'help': "ކަޑަ؟"},
     'blk': {'alts': ['b'], 'meme': "ބލކ", 'help': 'ބލކ'},
     'gerey': {'alts': ['g'], 'meme': "ގެރޭ", 'help': "ގެރޭ"},
+    'ngb': {'alts': ['n'], 'meme': "ނަގޫބަޅާ", 'help': "ނަގޫބަޅާ"},
+    'amf': {'alts': ['a'], 'meme': "އަމާފޫޅު", 'help': "އަމާފޫޅު"},
 }
 
 dhivehi_text_memes_commands = []
