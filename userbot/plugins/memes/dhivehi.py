@@ -11,8 +11,8 @@ dhivehi_text_memes = {
     'gerey': {'alts': ['g'], 'meme': "ގެރޭ", 'help': "ގެރޭ"},
     'ngb': {'alts': ['n'], 'meme': "ނަގޫބަޅާ", 'help': "ނަގޫބަޅާ"},
     'amf': {'alts': ['a'], 'meme': "އަމާފޫޅު", 'help': "އަމާފޫޅު"},
-    'fdb': {'alts': [''], 'meme': "ނަގޫބަޅާ", 'help': "ނަގޫބަޅާ"},
-    'kg': {'alts': [''], 'meme': "ކަލޯގަޔާ", 'help': "ކަލޯގަޔާ"},
+    'fdb': {'alts': [], 'meme': "ނަގޫބަޅާ", 'help': "ނަގޫބަޅާ"},
+    'kg': {'alts': [], 'meme': "ކަލޯގަޔާ", 'help': "ކަލޯގަޔާ"},
 }
 
 dhivehi_text_memes_commands = []
