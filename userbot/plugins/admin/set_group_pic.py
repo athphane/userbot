@@ -18,13 +18,15 @@ async def set_picture(_, message: Message):
 
         # If you are an admin
         if me.id in admin_ids:
+
+            my_permissions = None
             # Fetch your permissions
             for user in admins:
                 if user.user.id == me.id:
                     my_permissions = user
 
             # If you can change group photo
-            if my_permissions.can_change_info:
+            if my_permissions and my_permissions.can_change_info:
                 # If you replied to a message and it has a photo
                 if message.reply_to_message and message.reply_to_message.media:
                     file_id = message.reply_to_message.photo.file_id
