@@ -2,14 +2,14 @@ import asyncio
 import os
 import time
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['skyrim', 'skill'], ".") & Filters.me)
+@UserBot.on_message(filters.command(['skyrim', 'skill'], ".") & filters.me)
 async def skyrim(_, message: Message):
     if len(message.command) >= 2:
         text = message.command[1]

@@ -1,13 +1,13 @@
 import asyncio
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['unsplash', 'pic'], ".") & Filters.me)
+@UserBot.on_message(filters.command(['unsplash', 'pic'], ".") & filters.me)
 async def unsplash_pictures(_, message: Message):
     cmd = message.command
 

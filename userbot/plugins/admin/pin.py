@@ -1,13 +1,14 @@
 import asyncio
 
-from pyrogram import Filters, Message
-from pyrogram.client.methods.chats.get_chat_members import Filters as ChatMemberFilters
+from pyrogram import filters
+from pyrogram.methods.chats.get_chat_members import Filters as ChatMemberFilters
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command('pin', '.') & Filters.me)
+@UserBot.on_message(filters.command('pin', '.') & filters.me)
 async def pin_message(_, message: Message):
     # First of all check if its a group or not
     if message.chat.type in ['group', 'supergroup']:

@@ -2,8 +2,8 @@ import asyncio
 import re
 from time import sleep
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.helpers.aiohttp_helper import AioHttp
@@ -35,7 +35,7 @@ async def prep_animal_image(animal_data):
     return image
 
 
-@UserBot.on_message(Filters.command(animals, ['.', '']) & Filters.me)
+@UserBot.on_message(filters.command(animals, ['.', '']) & filters.me)
 async def animal_image(_, message: Message):
     if len(message.command) > 1:
         return
@@ -49,7 +49,7 @@ async def animal_image(_, message: Message):
     )
 
 
-@UserBot.on_message(Filters.command('fact', '.') & Filters.me)
+@UserBot.on_message(filters.command('fact', '.') & filters.me)
 async def fact(_, message: Message):
     cmd = message.command
 

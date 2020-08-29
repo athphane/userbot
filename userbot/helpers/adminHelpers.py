@@ -1,6 +1,6 @@
 from time import sleep, time
 
-from pyrogram import Message
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.helpers.interval import IntervalHelper

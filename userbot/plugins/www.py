@@ -2,8 +2,9 @@ import asyncio
 from datetime import datetime
 
 import speedtest
-from pyrogram import Filters, Message
-from pyrogram.api import functions
+from pyrogram import filters
+from pyrogram.raw import functions
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import SpeedConvert
@@ -13,7 +14,7 @@ from userbot.helpers.shorten import shorten_url
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(["speed", 'speedtest'], ".") & Filters.me)
+@UserBot.on_message(filters.command(["speed", 'speedtest'], ".") & filters.me)
 async def speed_test(_, message: Message):
     new_msg = await message.edit(
         "`Running speed test . . .`")
@@ -49,7 +50,7 @@ async def speed_test(_, message: Message):
         ))
 
 
-@UserBot.on_message(Filters.command("dc", ".") & Filters.me)
+@UserBot.on_message(filters.command("dc", ".") & filters.me)
 async def nearest_dc(_, message: Message):
     dc = await UserBot.send(
         functions.help.GetNearestDc())
@@ -60,7 +61,7 @@ async def nearest_dc(_, message: Message):
             dc.this_dc))
 
 
-@UserBot.on_message(Filters.command("ping", ".") & Filters.me)
+@UserBot.on_message(filters.command("ping", ".") & filters.me)
 async def ping_me(_, message: Message):
     start = datetime.now()
     await message.edit('`Pong!`')
@@ -69,7 +70,7 @@ async def ping_me(_, message: Message):
     await message.edit(f"**Pong!**\n`{ms} ms`")
 
 
-@UserBot.on_message(Filters.command("expand", ".") & Filters.me)
+@UserBot.on_message(filters.command("expand", ".") & filters.me)
 async def expand(_, message: Message):
     if message.reply_to_message:
         url = message.reply_to_message.text or message.reply_to_message.caption
@@ -92,7 +93,7 @@ async def expand(_, message: Message):
         await message.edit("Nothing to expand")
 
 
-@UserBot.on_message(Filters.command("shorten", ".") & Filters.me)
+@UserBot.on_message(filters.command("shorten", ".") & filters.me)
 async def shorten(_, message: Message):
     keyword = None
 

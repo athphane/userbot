@@ -7,7 +7,8 @@ from random import randint
 
 import aiofiles
 import git
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 from reportlab.graphics import renderPM
 from svglib.svglib import svg2rlg
 
@@ -17,7 +18,7 @@ from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['lastcommit', 'lc'], '.') & Filters.me)
+@UserBot.on_message(filters.command(['lastcommit', 'lc'], '.') & filters.me)
 async def last_commit(_, message: Message):
     repo = git.Repo(os.getcwd())
     master = repo.head.reference
@@ -31,7 +32,7 @@ async def last_commit(_, message: Message):
     await message.edit(commit_msg, disable_web_page_preview=True)
 
 
-@UserBot.on_message(Filters.command(['ggraph', 'commitgraph'], '.') & Filters.me)
+@UserBot.on_message(filters.command(['ggraph', 'commitgraph'], '.') & filters.me)
 async def commit_graph(_, message: Message):
     if len(message.command) < 2:
         await message.edit("Please provide a github profile username to generate the graph!")

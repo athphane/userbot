@@ -1,7 +1,7 @@
 import time
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.database.summon import SUMMON
 from userbot.helpers.file_sending_helpers import send_saved_image
@@ -10,7 +10,7 @@ from userbot.plugins.afk import AFK
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command('summonhere', '.') & Filters.me)
+@UserBot.on_message(filters.command('summonhere', '.') & filters.me)
 async def summon_here(_, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 
@@ -29,7 +29,7 @@ async def summon_here(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.command('summonhere', '!') & Filters.me)
+@UserBot.on_message(filters.command('summonhere', '!') & filters.me)
 async def not_summoned_here(_, message: Message):
     if SUMMON().delete_chat_id(message) is True:
         await message.edit("```Summon message disabled for this chat```")
@@ -40,7 +40,7 @@ async def not_summoned_here(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.incoming & Filters.mentioned & ~Filters.reply)
+@UserBot.on_message(filters.incoming & filters.mentioned & ~filters.reply)
 async def summoned(_, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 
@@ -52,18 +52,18 @@ async def summoned(_, message: Message):
                     next_send = chat_details['next_send']
 
                     if (time.time() - last_send) >= next_send:
-                        await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg", )
+                        await send_saved_image(message, "summoned_cat", "summoned_cat.jpg", )
                         last_send = time.time()
                         next_send = random_interval()
                         SUMMON().update(message, last_send, next_send)
                 except Exception:
-                    await send_saved_image(bot, message, "summoned_cat", "summoned_cat.jpg")
+                    await send_saved_image(message, "summoned_cat", "summoned_cat.jpg")
                     last_send = time.time()
                     next_send = random_interval()
                     SUMMON().update(message, last_send, next_send)
 
 
-@UserBot.on_message(Filters.command('nextsummon', '.') & Filters.me)
+@UserBot.on_message(filters.command('nextsummon', '.') & filters.me)
 async def next_summon(_, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 

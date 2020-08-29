@@ -23,12 +23,9 @@ class UserBot(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             config_file=config_file,
-            workers=32,
-            plugins=dict(root="userbot/plugins"),
+            plugins=dict(root=f"{name}/plugins"),
             workdir="./",
-            app_version="Userbot v1.0",
-            device_model="Python",
-            system_version="v1.0"
+            app_version="Userbot v1.1",
         )
 
     async def start(self):

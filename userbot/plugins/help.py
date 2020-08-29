@@ -1,13 +1,14 @@
 import asyncio
 
 from prettytable import PrettyTable
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 
 from userbot import UserBot, CMD_HELP
 from userbot.helpers.utility import split_list
 
 
-@UserBot.on_message(Filters.command("help", ".") & Filters.me)
+@UserBot.on_message(filters.command("help", ".") & filters.me)
 async def module_help(_, message: Message):
     cmd = message.command
 

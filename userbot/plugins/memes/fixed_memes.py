@@ -1,5 +1,5 @@
-from pyrogram import Filters, Message, Emoji
-
+from pyrogram import filters, emoji
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.file_sending_helpers import send_saved_image, send_saved_animation
 from userbot.plugins.help import add_command_help
@@ -12,7 +12,7 @@ memes_data = {
     'kill': {'name': 'kill_image', 'image': 'killua.gif', 'type': 'animation', 'caption': 'I will kill you.',
              'help': 'Gif of Killua from Hunter X Hunter.'},
     'lust': {'name': 'lust_gif', 'image': 'lust.gif', 'type': 'animation',
-             'caption': f"I wanna do bad things with you {Emoji.SMIRKING_FACE}", 'help': 'Gif of lustful things.'},
+             'caption': f"I wanna do bad things with you {emoji.SMIRKING_FACE}", 'help': 'Gif of lustful things.'},
     'dmf': {'name': 'dmf_image', 'image': 'dmf.gif', 'type': 'animation', 'caption': None,
             'help': 'Syndrome from The Incredible\'s saying "You dense mf".'},
     'smart': {'alts': ['intelligence'], 'name': 'intelligence_image', 'image': 'intelligence.jpg', 'type': 'image',
@@ -51,7 +51,7 @@ for meme in memes_data:
     fixed_memes_help.append([command, memes_data[meme]['help']])
 
 
-@UserBot.on_message(Filters.command(memes, ".") & Filters.me)
+@UserBot.on_message(filters.command(memes, ".") & filters.me)
 async def fixed_memes(_, message: Message):
     await message.delete()
 

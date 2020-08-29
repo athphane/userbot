@@ -1,14 +1,13 @@
 from time import sleep
 
-from pyrogram import Emoji
-from pyrogram import Filters, Message
-
+from pyrogram import filters, emoji
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.database.reminders import Reminders
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command('reminders', '.') & Filters.me)
+@UserBot.on_message(filters.command('reminders', '.') & filters.me)
 async def show_all_reminders(_, message: Message):
     reminders = Reminders().get_all_reminders()
     if len(reminders) != 0:
@@ -26,7 +25,7 @@ async def show_all_reminders(_, message: Message):
         await message.delete()
 
 
-@UserBot.on_message(Filters.command("remind", ".") & Filters.me)
+@UserBot.on_message(filters.command("remind", ".") & filters.me)
 async def remind(_, message: Message):
     cmd = message.command
     remind_text = ""
@@ -35,7 +34,7 @@ async def remind(_, message: Message):
     elif message.reply_to_message and len(cmd) == 1:
         remind_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit(f"__I need something to remind you about {Emoji.CRYING_FACE}__")
+        await message.edit(f"__I need something to remind you about {emoji.CRYING_FACE}__")
         sleep(2)
         await message.delete()
         return
@@ -46,7 +45,7 @@ async def remind(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.command("reminder", "!") & Filters.me)
+@UserBot.on_message(filters.command("reminder", "!") & filters.me)
 async def delete_reminder(_, message: Message):
     cmd = message.command
     reminder_id = ""
@@ -55,7 +54,7 @@ async def delete_reminder(_, message: Message):
     elif message.reply_to_message and len(cmd) == 1:
         reminder_id = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit(f"I need the reminder ID to delete it {Emoji.CRYING_FACE}")
+        await message.edit(f"I need the reminder ID to delete it {emoji.CRYING_FACE}")
         sleep(2)
         await message.delete()
         return

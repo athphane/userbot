@@ -1,7 +1,8 @@
 import asyncio
 from functools import partial
 
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
@@ -15,7 +16,7 @@ hmention = partial(
 )
 
 
-@UserBot.on_message(Filters.command("mention", ".") & Filters.me)
+@UserBot.on_message(filters.command("mention", ".") & filters.me)
 async def mention_user(_, message: Message):
     if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: .mention @Athfan CTO")
@@ -34,7 +35,7 @@ async def mention_user(_, message: Message):
     await message.edit(_mention)
 
 
-@UserBot.on_message(Filters.command("hmention", ".") & Filters.me)
+@UserBot.on_message(filters.command("hmention", ".") & filters.me)
 async def hidden_mention(_, message: Message):
     if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: .hmention @Athfan")

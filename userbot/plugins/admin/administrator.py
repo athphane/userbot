@@ -1,6 +1,8 @@
 import time
 
-from pyrogram import Filters, Message, ChatPermissions
+from pyrogram import filters
+from pyrogram.types import Message, ChatPermissions
+
 from pyrogram.errors import UserAdminInvalid
 
 from userbot import UserBot
@@ -11,7 +13,7 @@ from userbot.helpers.adminHelpers import (
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command("ban", '.') & Filters.me)
+@UserBot.on_message(filters.command("ban", '.') & filters.me)
 async def ban_hammer(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
@@ -33,7 +35,7 @@ async def ban_hammer(_, message: Message):
             await RestrictFailed(message)
 
 
-@UserBot.on_message(Filters.command("unban", '.') & Filters.me)
+@UserBot.on_message(filters.command("unban", '.') & filters.me)
 async def unban(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
@@ -64,7 +66,7 @@ mute_permission = ChatPermissions(
 )
 
 
-@UserBot.on_message(Filters.command(["mute", "mute 24"], '.') & Filters.me)
+@UserBot.on_message(filters.command(["mute", "mute 24"], '.') & filters.me)
 async def mute_hammer(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
@@ -104,7 +106,7 @@ unmute_permissions = ChatPermissions(
 )
 
 
-@UserBot.on_message(Filters.command("unmute", '.') & Filters.me)
+@UserBot.on_message(filters.command("unmute", '.') & filters.me)
 async def unmute(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:
@@ -119,7 +121,7 @@ async def unmute(_, message: Message):
             await RestrictFailed(message)
 
 
-@UserBot.on_message(Filters.command("kick", '.') & Filters.me)
+@UserBot.on_message(filters.command("kick", '.') & filters.me)
 async def kick_user(_, message: Message):
     if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
         try:

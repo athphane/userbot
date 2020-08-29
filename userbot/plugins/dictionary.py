@@ -1,13 +1,14 @@
 import asyncio
 
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['define', 'dict'], '.') & Filters.me)
+@UserBot.on_message(filters.command(['define', 'dict'], '.') & filters.me)
 async def define(_, message: Message):
     """ Thank you Poki!!"""
     cmd = message.command

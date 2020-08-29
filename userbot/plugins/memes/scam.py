@@ -1,12 +1,12 @@
 import asyncio
 from random import choice, randint
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 
 
-@UserBot.on_message(Filters.command('scam', '.') & Filters.me)
+@UserBot.on_message(filters.command('scam', '.') & filters.me)
 async def scam(_, message: Message):
     options = ('typing', 'upload_photo', 'record_video', 'upload_video', 'record_audio',
                'upload_audio', 'upload_document', 'find_location', 'record_video_note',

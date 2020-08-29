@@ -3,8 +3,8 @@
 
 
 # PM_PERMIT, PM_LIMIT
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 
 
@@ -15,7 +15,7 @@ from userbot import UserBot
 #
 #
 
-@UserBot.on_message(Filters.command('pmpermit', '.') & Filters.me)
+@UserBot.on_message(filters.command('pmpermit', '.') & filters.me)
 async def pm_permit_enable(_, message: Message):
     await message.delete()
 
@@ -27,7 +27,7 @@ async def pm_permit_enable(_, message: Message):
 # )
 #
 #
-# @UserBot.on_message(Filters.private & ~Filters.me)
+# @UserBot.on_message(filters.private & ~Filters.me)
 # async def incoming_pm(_, message: Message):
 #     if PM_PERMIT:
 #         approved = PmPermit().check_if_approved(message.chat.id)
@@ -59,12 +59,12 @@ async def pm_permit_enable(_, message: Message):
 #                 PmPermit().increment_retard_level(message.chat.id)
 #
 #
-# @UserBot.on_message(Filters.private & Filters.me)
+# @UserBot.on_message(filters.private & filters.me)
 # async def auto_approve_user_on_message(_, message: Message):
 #     PmPermit().approve(message.chat.id)
 #
 #
-# @UserBot.on_message(Filters.command('approve', '.') & Filters.me)
+# @UserBot.on_message(filters.command('approve', '.') & filters.me)
 # async def approve(_, message: Message):
 #     PmPermit().approve(message.chat.id)
 #     await message.edit("You have been approved to PM me. Please continue on with your story.")
@@ -72,7 +72,7 @@ async def pm_permit_enable(_, message: Message):
 #     await message.delete()
 #
 #
-# @UserBot.on_message(Filters.command('block', '.') & Filters.me)
+# @UserBot.on_message(filters.command('block', '.') & filters.me)
 # async def block(_, message: Message):
 #     PmPermit().block_pm(message.chat.id)
 #     await message.edit("`You have been blocked. Sad day for you init.`")

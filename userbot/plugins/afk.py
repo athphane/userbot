@@ -2,7 +2,8 @@ import asyncio
 from datetime import datetime
 
 import humanize
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetChatID
@@ -21,7 +22,7 @@ def subtract_time(start, end):
     return str(subtracted)
 
 
-@UserBot.on_message(((Filters.group & Filters.mentioned) | Filters.private) & ~Filters.me, group=3)
+@UserBot.on_message(((filters.group & filters.mentioned) | filters.private) & ~filters.me, group=3)
 async def collect_afk_messages(_, message: Message):
     if AFK:
         last_seen = subtract_time(datetime.now(), AFK_TIME)
@@ -75,7 +76,7 @@ async def collect_afk_messages(_, message: Message):
         CHAT_TYPE[GetChatID(message)] += 1
 
 
-@UserBot.on_message(Filters.command("afk", ".") & Filters.me, group=3)
+@UserBot.on_message(filters.command("afk", ".") & filters.me, group=3)
 async def afk_set(_, message: Message):
     global AFK_REASON, AFK, AFK_TIME
 
@@ -94,7 +95,7 @@ async def afk_set(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.command("afk", "!") & Filters.me, group=3)
+@UserBot.on_message(filters.command("afk", "!") & filters.me, group=3)
 async def afk_unset(_, message: Message):
     global AFK, AFK_TIME, AFK_REASON, USERS, GROUPS
 
@@ -114,7 +115,7 @@ async def afk_unset(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.me, group=3)
+@UserBot.on_message(filters.me, group=3)
 async def auto_afk_unset(_, message: Message):
     global AFK, AFK_TIME, AFK_REASON, USERS, GROUPS
 
