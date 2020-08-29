@@ -1,5 +1,5 @@
 from pymongo import ReturnDocument
-from pyrogram import Message
+from pyrogram.types import Message
 
 from userbot.database import database
 

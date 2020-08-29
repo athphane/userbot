@@ -3,8 +3,8 @@ import random
 import re
 from random import choice
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetUserMentionable
 from userbot.helpers.constants import MEMES, Fs, Weebify
@@ -12,19 +12,19 @@ from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command('nice', '.') & Filters.me)
+@UserBot.on_message(filters.command('nice', '.') & filters.me)
 async def nice(_, message: Message):
     await message.edit("NICENICENICENICE")
 
 
-@UserBot.on_message(Filters.command("reverse", ".") & Filters.me)
+@UserBot.on_message(filters.command("reverse", ".") & filters.me)
 async def reverse(_, message: Message):
     await message.edit(
         text=MEMES.REVERSE,
     )
 
 
-@UserBot.on_message(Filters.command("slap", ".") & Filters.me)
+@UserBot.on_message(filters.command("slap", ".") & filters.me)
 async def slap(_, message: Message):
     if message.reply_to_message is None:
         await message.delete()
@@ -50,7 +50,7 @@ async def slap(_, message: Message):
             await message.edit("`Can't slap this person, need to fetch some sticks and stones!!`")
 
 
-@UserBot.on_message((Filters.command("-_-", "") | Filters.command("ok", ".")) & Filters.me)
+@UserBot.on_message((filters.command("-_-", "") | filters.command("ok", ".")) & filters.me)
 async def ok(_, message: Message):
     okay = "-_-"
     for _ in range(10):
@@ -58,7 +58,7 @@ async def ok(_, message: Message):
         await message.edit(okay, parse_mode=None)
 
 
-@UserBot.on_message((Filters.command(";_;", "") | Filters.command(['sad', 'cri'], ".")) & Filters.me)
+@UserBot.on_message((filters.command(";_;", "") | filters.command(['sad', 'cri'], ".")) & filters.me)
 async def sad_cri(_, message: Message):
     cri = ";_;"
     for _ in range(10):
@@ -66,7 +66,7 @@ async def sad_cri(_, message: Message):
         await message.edit(cri, parse_mode=None)
 
 
-@UserBot.on_message(Filters.regex(r"^\.?oof$") & Filters.me)
+@UserBot.on_message(filters.regex(r"^\.?oof$") & filters.me)
 async def send_oof(_, message: Message):
     oof = "Oo "
     for _ in range(10):
@@ -74,7 +74,7 @@ async def send_oof(_, message: Message):
         await message.edit(oof, parse_mode=None)
 
 
-@UserBot.on_message(Filters.command('mockt', '.') & Filters.me)
+@UserBot.on_message(filters.command('mockt', '.') & filters.me)
 async def mock_text(_, message: Message):
     cmd = message.command
 
@@ -99,24 +99,24 @@ async def mock_text(_, message: Message):
     await message.edit(reply_text)
 
 
-@UserBot.on_message(Filters.command("brain", ".") & Filters.me)
+@UserBot.on_message(filters.command("brain", ".") & filters.me)
 async def brain(_, message: Message):
     for x in MEMES.BRAIN:
         await asyncio.sleep(0.35)
         await message.edit(x)
 
 
-@UserBot.on_message(Filters.command("f", ".", case_sensitive=True) & Filters.me)
+@UserBot.on_message(filters.command("f", ".", case_sensitive=True) & filters.me)
 async def pay_respects(_, message: Message):
     await message.edit(Fs().F)
 
 
-@UserBot.on_message(Filters.command("F", ".", case_sensitive=True) & Filters.me)
+@UserBot.on_message(filters.command("F", ".", case_sensitive=True) & filters.me)
 async def pay_respects_new(_, message: Message):
     await message.edit(Fs.BIG_F)
 
 
-@UserBot.on_message(Filters.command("f", "#") & Filters.me)
+@UserBot.on_message(filters.command("f", "#") & filters.me)
 async def calligraphic_f(_, message: Message):
     await message.edit(Fs.FANCY_F)
 
@@ -129,7 +129,7 @@ def weebify_text(raw_text):
     return raw_text
 
 
-@UserBot.on_message(Filters.command(['weeb', 'weebify'], ".") & Filters.me)
+@UserBot.on_message(filters.command(['weeb', 'weebify'], ".") & filters.me)
 async def weebify(_, message: Message):
     cmd = message.command
 
@@ -147,7 +147,7 @@ async def weebify(_, message: Message):
     await message.edit(weebify_text(raw_text))
 
 
-@UserBot.on_message(Filters.command('vapor', '.') & Filters.me)
+@UserBot.on_message(filters.command('vapor', '.') & filters.me)
 async def vapor(_, message: Message):
     cmd = message.command
 
@@ -175,7 +175,7 @@ async def vapor(_, message: Message):
     await message.edit("".join(reply_text))
 
 
-@UserBot.on_message(Filters.command('stretch', '.') & Filters.me)
+@UserBot.on_message(filters.command('stretch', '.') & filters.me)
 async def stretch(_, message: Message):
     cmd = message.command
 
@@ -196,19 +196,19 @@ async def stretch(_, message: Message):
     await message.edit(reply_text)
 
 
-@UserBot.on_message(Filters.command('beemoviescript', '.') & Filters.me)
+@UserBot.on_message(filters.command('beemoviescript', '.') & filters.me)
 async def bee_movie_script(_, message: Message):
     await message.edit("Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
 
 
-@UserBot.on_message(Filters.command(["ht"], ".") & Filters.me)
+@UserBot.on_message(filters.command(["ht"], ".") & filters.me)
 async def heads_tails(_, message: Message):
     coin_sides = ['Heads', 'Tails']
     ht = f"Heads or Tails? `{choice(coin_sides)}`"
     await message.edit(ht)
 
 
-@UserBot.on_message(Filters.command('reverset', ".") & Filters.me)
+@UserBot.on_message(filters.command('reverset', ".") & filters.me)
 async def text_reverse(_, message: Message):
     cmd = message.command
 
@@ -226,12 +226,12 @@ async def text_reverse(_, message: Message):
     await message.edit(reverse_text[::-1])
 
 
-@UserBot.on_message(Filters.me & Filters.command(['shg', 'shrug'], '.'))
+@UserBot.on_message(filters.me & filters.command(['shg', 'shrug'], '.'))
 async def shrug(_, message):
     await message.edit(random.choice(MEMES.SHRUGS))
 
 
-@UserBot.on_message(Filters.me & Filters.command('flip', '.'))
+@UserBot.on_message(filters.me & filters.command('flip', '.'))
 async def flip_text(_, message):
     cmd = message.command
 

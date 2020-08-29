@@ -1,5 +1,5 @@
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
@@ -31,7 +31,7 @@ for dv in dhivehi_text_memes:
     fixed_memes_help.append([command, dhivehi_text_memes[dv]['help']])
 
 
-@UserBot.on_message(Filters.command(dhivehi_text_memes_commands, ".") & Filters.me)
+@UserBot.on_message(filters.command(dhivehi_text_memes_commands, ".") & filters.me)
 async def dhivehi_memes(_, message: Message):
     cmd = message.command[0]
     if cmd not in dhivehi_text_memes:

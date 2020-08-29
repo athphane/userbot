@@ -1,7 +1,8 @@
 import asyncio
 import re
 
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 from pyrogram.errors import MessageNotModified
 
 from userbot import UserBot
@@ -18,7 +19,7 @@ def switch():
     return vulgar_filter
 
 
-@UserBot.on_message(Filters.command("vulgar", ".") & Filters.me)
+@UserBot.on_message(filters.command("vulgar", ".") & filters.me)
 async def toggle(_, message: Message):
     c = switch()
     await message.edit("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
@@ -26,7 +27,7 @@ async def toggle(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(~Filters.regex(r"^\.\w*") & Filters.me, group=10)
+@UserBot.on_message(~filters.regex(r"^\.\w*") & filters.me, group=10)
 async def i_am_not_allowed_to_say_this(_, message: Message):
     if vulgar_filter:
         try:

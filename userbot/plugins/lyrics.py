@@ -1,12 +1,13 @@
 import asyncio
 
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 
 from userbot import UserBot, ALLOWED_USERS
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['l', 'lyrics'], ".") & (Filters.me | Filters.user(ALLOWED_USERS)))
+@UserBot.on_message(filters.command(['l', 'lyrics'], ".") & (filters.me | filters.user(ALLOWED_USERS)))
 async def send_lyrics(_, message: Message):
     try:
         cmd = message.command

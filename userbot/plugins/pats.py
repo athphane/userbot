@@ -1,14 +1,14 @@
 import asyncio
 
 import aiohttp
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck, GetChatID
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['pat', 'pats'], '.') & Filters.me)
+@UserBot.on_message(filters.command(['pat', 'pats'], '.') & filters.me)
 async def give_pats(_, message: Message):
     URL = "https://some-random-api.ml/animu/pat"
     async with aiohttp.ClientSession() as session:

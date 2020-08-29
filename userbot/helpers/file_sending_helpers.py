@@ -1,7 +1,7 @@
 import json
 import os.path
 
-from pyrogram import Message
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck, GetChatID

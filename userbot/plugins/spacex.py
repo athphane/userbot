@@ -1,14 +1,14 @@
 from datetime import datetime
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.helpers.spacex import get_latest, get_next
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['spacex', 'elon', 'ae12'], '.') & Filters.me)
+@UserBot.on_message(filters.command(['spacex', 'elon', 'ae12'], '.') & filters.me)
 async def spacex(_, message: Message):
     await message.delete()
 
@@ -47,7 +47,7 @@ async def spacex(_, message: Message):
         )
 
 
-@UserBot.on_message(Filters.command(['nspacex', 'nextlaunch'], '.') & Filters.me)
+@UserBot.on_message(filters.command(['nspacex', 'nextlaunch'], '.') & filters.me)
 async def next_launch(_, message: Message):
     await message.delete()
 

@@ -1,13 +1,14 @@
 import asyncio
 
-from pyrogram import Filters, Message
-from pyrogram.api import functions
+from pyrogram import filters
+from pyrogram.raw import functions
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command(['screenshot', 'ss'], ".") & Filters.private & Filters.me)
+@UserBot.on_message(filters.command(['screenshot', 'ss'], ".") & filters.private & filters.me)
 async def screenshot(_, message: Message):
     await asyncio.gather(
         message.delete(),

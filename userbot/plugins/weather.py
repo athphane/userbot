@@ -2,13 +2,13 @@ import asyncio
 from html import escape
 
 import aiohttp
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command('weather', '.') & Filters.me)
+@UserBot.on_message(filters.command('weather', '.') & filters.me)
 async def get_weather(_, message: Message):
     if len(message.command) == 1:
         await message.edit("Usage: `.weather Maldives`")

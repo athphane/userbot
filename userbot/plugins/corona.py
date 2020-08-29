@@ -2,14 +2,15 @@ import asyncio
 import datetime
 
 from prettytable import PrettyTable
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(Filters.command("c", ".") & Filters.me)
+@UserBot.on_message(filters.command("c", ".") & filters.me)
 async def corona_all(_, message: Message):
     try:
         r = await AioHttp().get_json('https://corona.lmao.ninja/v2/all?yesterday=true')
@@ -39,7 +40,7 @@ async def corona_all(_, message: Message):
         await message.delete()
 
 
-@UserBot.on_message(Filters.command("cs", ".") & Filters.me)
+@UserBot.on_message(filters.command("cs", ".") & filters.me)
 async def corona_search(_, message: Message):
     cmd = message.command
 

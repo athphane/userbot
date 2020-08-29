@@ -1,7 +1,7 @@
 import time
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
@@ -11,7 +11,7 @@ class Custom(dict):
         return 0
 
 
-@UserBot.on_message(Filters.command("wordcount", ".") & Filters.me)
+@UserBot.on_message(filters.command("wordcount", ".") & filters.me)
 async def word_count(_, message: Message):
     await message.delete()
     words = Custom()

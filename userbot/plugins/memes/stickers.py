@@ -1,8 +1,8 @@
 import asyncio
 import random
 
-from pyrogram import Filters, Message
-
+from pyrogram import filters
+from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
@@ -24,7 +24,7 @@ for x in sticker_data:
             sticker_commands.append(y)
 
 
-@UserBot.on_message(Filters.command(sticker_commands, ".") & Filters.me)
+@UserBot.on_message(filters.command(sticker_commands, ".") & filters.me)
 async def sticker_super_func(_, message: Message):
     try:
         sticker = {}

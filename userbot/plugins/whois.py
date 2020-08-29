@@ -1,8 +1,9 @@
 from datetime import datetime
 from time import sleep
 
-from pyrogram import Filters, Message, User
-from pyrogram.api import functions
+from pyrogram import filters
+from pyrogram.raw import functions
+from pyrogram.types import Message, User
 from pyrogram.errors import PeerIdInvalid
 
 from userbot import UserBot
@@ -73,7 +74,7 @@ def ProfilePicUpdate(user_pic):
     return datetime.fromtimestamp(user_pic[0].date).strftime("%d.%m.%Y, %H:%M:%S")
 
 
-@UserBot.on_message(Filters.command('whois', ['.', '']) & Filters.me)
+@UserBot.on_message(filters.command('whois', ['.', '']) & filters.me)
 async def summon_here(_, message: Message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:

@@ -1,4 +1,4 @@
-from pyrogram import Filters
+from pyrogram import filters
 from asyncio import sleep
 from userbot import UserBot
 from userbot.helpers.aiohttp_helper import AioHttp
@@ -10,7 +10,7 @@ def replace_text(text):
         "\\", "")
 
 
-@UserBot.on_message(Filters.me & Filters.command(["ud"], '.'))
+@UserBot.on_message(filters.me & filters.command(["ud"], '.'))
 async def urban_dictionary(bot, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `ud example`")

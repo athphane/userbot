@@ -1,7 +1,8 @@
 import os
 from asyncio import sleep
 
-from pyrogram import Filters, Message
+from pyrogram import filters
+from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
@@ -9,7 +10,7 @@ from userbot.plugins.help import add_command_help
 CARBON_LANG = "py"
 
 
-@UserBot.on_message(Filters.command("carbon", ".") & Filters.me)
+@UserBot.on_message(filters.command("carbon", ".") & filters.me)
 async def carbon_test(_, message: Message):
     """
     Receives text and makes a carbon image using the text
@@ -31,7 +32,7 @@ async def carbon_test(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.command('carbonlang', '.') & Filters.me)
+@UserBot.on_message(filters.command('carbonlang', '.') & filters.me)
 async def update_carbon_lang(_, message: Message):
     """
     Set language to use Carbon with.
@@ -57,7 +58,7 @@ async def update_carbon_lang(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(Filters.command('carbonlang', '!') & Filters.me)
+@UserBot.on_message(filters.command('carbonlang', '!') & filters.me)
 async def send_carbon_lang(_, message: Message):
     """
     Edits message to show current set carbon language
