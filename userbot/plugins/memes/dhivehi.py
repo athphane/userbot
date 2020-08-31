@@ -34,6 +34,9 @@ for dv in dhivehi_text_memes:
 @UserBot.on_message(filters.command(dhivehi_text_memes_commands, ".") & filters.me)
 async def dhivehi_memes(_, message: Message):
     cmd = message.command[0]
+
+    meme = None
+
     if cmd not in dhivehi_text_memes:
         for x in dhivehi_text_memes:
             if 'alts' in dhivehi_text_memes[x] and cmd in dhivehi_text_memes[x]['alts']:
@@ -42,7 +45,8 @@ async def dhivehi_memes(_, message: Message):
     else:
         meme = dhivehi_text_memes[message.command[0]]
 
-    await message.edit(meme['meme'])
+    if meme:
+        await message.edit(meme['meme'])
 
 
 # Command help section
