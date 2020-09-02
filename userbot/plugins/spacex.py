@@ -12,7 +12,7 @@ from userbot.plugins.help import add_command_help
 async def spacex(_, message: Message):
     await message.delete()
 
-    data = await Spacex.get("latest")
+    data = await Spacex().latest()
 
     dt = datetime.utcfromtimestamp(int(data['launch_date_unix'])).strftime('%d-%m-%Y %H:%M:%S')
     images = data['links']['flickr_images']
@@ -51,7 +51,7 @@ async def spacex(_, message: Message):
 async def next_launch(_, message: Message):
     await message.delete()
 
-    data = await Spacex.get("next")
+    data = await Spacex().next()
 
     dt = datetime.utcfromtimestamp(int(data['launch_date_unix'])).strftime('%d-%m-%Y %H:%M:%S')
 
