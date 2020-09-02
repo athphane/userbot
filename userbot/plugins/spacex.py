@@ -4,7 +4,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
-from userbot.helpers.spacex import get_latest, get_next
+from userbot.helpers.spacex import Spacex
 from userbot.plugins.help import add_command_help
 
 
@@ -12,7 +12,7 @@ from userbot.plugins.help import add_command_help
 async def spacex(_, message: Message):
     await message.delete()
 
-    data = await get_latest()
+    data = await Spacex.get_latest()
 
     dt = datetime.utcfromtimestamp(int(data['launch_date_unix'])).strftime('%d-%m-%Y %H:%M:%S')
     images = data['links']['flickr_images']
@@ -51,7 +51,7 @@ async def spacex(_, message: Message):
 async def next_launch(_, message: Message):
     await message.delete()
 
-    data = await get_next()
+    data = await Spacex.get_next()
 
     dt = datetime.utcfromtimestamp(int(data['launch_date_unix'])).strftime('%d-%m-%Y %H:%M:%S')
 
