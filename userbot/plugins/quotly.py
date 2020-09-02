@@ -1,3 +1,4 @@
+import asyncio
 import random
 from asyncio import sleep
 
@@ -28,9 +29,11 @@ async def quotly(_, message: Message):
                 await message.edit("```Making a Quote```\nProcessing {}%".format(progress))
             except:
                 await message.edit("ERROR SUUUU")
-    await message.edit("```Complete !```")
-    msg_id = msg[0]["message_id"]
-    await UserBot.forward_messages(message.chat.id, "@QuotLyBot", msg_id)
+    if msg_id := msg[0]['message_id']:
+        await asyncio.gather(
+            message.delete(),
+            UserBot.forward_messages(message.chat.id,"@QuotLyBot", msg_id)
+        )
 
 
 # Command help section
