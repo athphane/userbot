@@ -1,22 +1,35 @@
 from aiohttp.client_exceptions import ClientError
 from pyrogram import filters
 from pyrogram.types import Message
+
 from userbot import UserBot
 from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 text_apis_data = {
-    'compliment': {'url': 'https://complimentr.com/api', 'target_key': 'compliment'},
-    'devexcuse': {'url': 'https://dev-excuses-api.herokuapp.com/', 'target_key': 'text'},
-    'insult': {'url': 'https://evilinsult.com/generate_insult.php?lang=en', 'target_key': 'insult'},
-    'kanye': {'url': 'https://api.kanye.rest/', 'target_key': 'quote', 'format': 'Kanye once said:\n`{}`'},
-    'programmer': {'url': 'https://programming-quotes-api.herokuapp.com/quotes/random', 'target_key': 'en'},
+    'compliment': {'url': 'https://complimentr.com/api', 'target_key': 'compliment',
+                   'help': 'Sends a nice compliment.'},
+    'devexcuse': {'url': 'https://dev-excuses-api.herokuapp.com/', 'target_key': 'text',
+                  'help': 'It works on my machine!'},
+    'insult': {'url': 'https://evilinsult.com/generate_insult.php?lang=en', 'target_key': 'insult',
+               'help': 'Give it a guess dumbass!'},
+    'kanye': {'url': 'https://api.kanye.rest/', 'target_key': 'quote', 'format': 'Kanye once said:\n`{}`',
+              'help': 'Kanye used to say'},
+    'programmer': {'url': 'https://programming-quotes-api.herokuapp.com/quotes/random', 'target_key': 'en',
+                   'help': 'Programmers be like.'},
+    'affirmation': {'url': 'https://www.affirmations.dev/', 'target_key': 'affirmation',
+                    'help': 'Affirmative messages'}
 }
 
-text_apis = [x for x in text_apis_data]
+text_api_commands = []
+for x in text_apis_data:
+    text_api_commands.append(x)
+    if 'alts' in text_apis_data[x]:
+        for y in text_apis_data[x]['alts']:
+            text_api_commands.append(y)
 
 
-@UserBot.on_message(filters.command(text_apis, '.') & filters.me)
+@UserBot.on_message(filters.command(text_api_commands, '.') & filters.me)
 async def text_api(_, message: Message):
     cmd = message.command
     api_key = cmd[0]
@@ -42,11 +55,9 @@ async def text_api(_, message: Message):
 
 
 # Command help section
-add_command_help(
-    'text', [
-        ['.compliment', 'Replaces command with a nice compliment.'],
-        ['.devexcuse', 'Replaces command with an excuse that a developer would give.'],
-        ['.insult', 'It does what it says it does.'],
-        ['.kanye', 'Kanye once said...'],
-    ]
-)
+for x in text_apis_data:
+    add_command_help(
+        'text', [
+            [f'.{x}', text_apis_data[x]['help']],
+        ]
+    )
