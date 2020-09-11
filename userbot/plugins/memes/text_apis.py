@@ -43,12 +43,16 @@ async def text_api(_, message: Message):
                 txt = api['format'].format(resp_json)
             else:
                 txt = resp_json.capitalize()
-            await message.edit(
-                txt
-            )
+            if message.from_user.is_self:
+                await message.edit(txt)
+            else:
+                await message.reply(txt)
         except Exception:
             data = await AioHttp().get_text(api['url'])
-            await message.edit(data)
+            if message.from_user.is_self:
+                await message.edit(data)
+            else:
+                await message.reply(data)
     except ClientError as e:
         print(e)
         await message.delete()
