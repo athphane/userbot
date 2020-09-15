@@ -1,5 +1,5 @@
 import asyncio
-from datetime import datetime
+import time
 
 import speedtest
 from pyrogram import filters
@@ -63,11 +63,11 @@ async def nearest_dc(_, message: Message):
 
 @UserBot.on_message(filters.command("ping", ".") & filters.me)
 async def ping_me(_, message: Message):
-    start = datetime.now()
-    await message.edit('`Pong!`')
-    end = datetime.now()
-    ms = (end - start).microseconds / 1000
-    await message.edit(f"**Pong!**\n`{ms} ms`")
+    """Ping the assistant"""
+    start = time.time()
+    reply = await message.reply_text("...")
+    delta_ping = time.time() - start
+    await reply.edit_text(f"**Pong!** `{delta_ping * 1000:.3f} ms`")
 
 
 @UserBot.on_message(filters.command("expand", ".") & filters.me)
