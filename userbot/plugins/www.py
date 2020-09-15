@@ -67,7 +67,7 @@ async def ping_me(_, message: Message):
     start = time.time()
     reply = await message.reply_text("...")
     delta_ping = time.time() - start
-    await reply.edit_text(f"**Pong!** `{delta_ping * 1000:.3f} ms`")
+    await reply.edit_text(f"**Pong!**\n`{delta_ping * 1000:.3f} ms`")
 
 
 @UserBot.on_message(filters.command("expand", ".") & filters.me)
