@@ -7,6 +7,8 @@ from pyrogram.types import Message
 from userbot import UserBot, CMD_HELP
 from userbot.helpers.utility import split_list
 
+heading = "──「 **{0}** 」──\n"
+
 
 @UserBot.on_message(filters.command("help", ".") & filters.me)
 async def module_help(_, message: Message):
@@ -34,11 +36,11 @@ async def module_help(_, message: Message):
     if help_arg:
         if help_arg in CMD_HELP:
             commands: dict = CMD_HELP[help_arg]
-            this_command = ""
-            this_command += f"--**Help for {str(help_arg)} module**--\n".upper()
+            this_command = "**Help for**\n"
+            this_command += heading.format(str(help_arg)).upper()
 
             for x in commands:
-                this_command += f"**{str(x)}**:\n```{str(commands[x])}```\n\n"
+                this_command += f"-> `{str(x)}`\n```{str(commands[x])}```\n"
 
             await message.edit(this_command, parse_mode='markdown')
         else:
