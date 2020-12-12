@@ -29,7 +29,7 @@ async def quotly(_, message: Message):
                 await message.edit("```Making a Quote```\nProcessing {}%".format(progress))
             except:
                 await message.edit("ERROR SUUUU")
-    if msg_id := msg[0]['message_id']:
+    if msg_id == msg[0]['message_id']:
         await asyncio.gather(
             message.delete(),
             UserBot.forward_messages(message.chat.id,"@QuotLyBot", msg_id)
