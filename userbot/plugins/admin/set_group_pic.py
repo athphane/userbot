@@ -8,12 +8,14 @@ from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command('setpic', '.') & filters.me)
+@UserBot.on_message(filters.command("setpic", ".") & filters.me)
 async def set_picture(_, message: Message):
     # First of all check if its a group or not
-    if message.chat.type in ['group', 'supergroup']:
+    if message.chat.type in ["group", "supergroup"]:
         # Here lies the sanity checks
-        admins = await UserBot.get_chat_members(message.chat.id, filter=ChatMemberFilters.ADMINISTRATORS)
+        admins = await UserBot.get_chat_members(
+            message.chat.id, filter=ChatMemberFilters.ADMINISTRATORS
+        )
         admin_ids = [user.user.id for user in admins]
         me = await UserBot.get_me()
 
@@ -32,13 +34,18 @@ async def set_picture(_, message: Message):
                 if message.reply_to_message and message.reply_to_message.media:
                     file_id = message.reply_to_message.photo.file_id
                     file_ref = message.reply_to_message.photo.file_ref
-                    await UserBot.set_chat_photo(message.chat.id, file_id, file_ref=file_ref)
-                    await message.edit(f"`{message.chat.type.title()} picture has been set.`")
+                    await UserBot.set_chat_photo(
+                        message.chat.id, file_id, file_ref=file_ref
+                    )
+                    await message.edit(
+                        f"`{message.chat.type.title()} picture has been set.`"
+                    )
                     return
                 else:
                     # You didn't reply and it didn't have a photo either. Baka.
                     await message.edit(
-                        f"`Please reply to a message with a photo to set it as {message.chat.type} picture.`")
+                        f"`Please reply to a message with a photo to set it as {message.chat.type} picture.`"
+                    )
             else:
                 # You literally CANNOT do this.
                 await message.edit("`I lack the permissions to do this...`")
@@ -58,8 +65,4 @@ async def set_picture(_, message: Message):
 
 
 # Command help section
-add_command_help(
-    'admin', [
-        ['.setpic', 'Set group picture as the replied to photo.']
-    ]
-)
+add_command_help("admin", [[".setpic", "Set group picture as the replied to photo."]])

@@ -26,7 +26,7 @@ async def module_help(_, message: Message):
         ac = PrettyTable()
         ac.header = False
         ac.title = "UserBot Modules"
-        ac.align = 'l'
+        ac.align = "l"
 
         for x in split_list(sorted(CMD_HELP.keys()), 2):
             ac.add_row([x[0], x[1] if len(x) >= 2 else None])
@@ -42,9 +42,11 @@ async def module_help(_, message: Message):
             for x in commands:
                 this_command += f"-> `{str(x)}`\n```{str(commands[x])}```\n"
 
-            await message.edit(this_command, parse_mode='markdown')
+            await message.edit(this_command, parse_mode="markdown")
         else:
-            await message.edit('`Please specify a valid module name.`', parse_mode='markdown')
+            await message.edit(
+                "`Please specify a valid module name.`", parse_mode="markdown"
+            )
 
     await asyncio.sleep(10)
     await message.delete()

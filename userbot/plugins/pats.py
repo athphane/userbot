@@ -8,7 +8,7 @@ from userbot.helpers.PyroHelpers import ReplyCheck, GetChatID
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command(['pat', 'pats'], '.') & filters.me)
+@UserBot.on_message(filters.command(["pat", "pats"], ".") & filters.me)
 async def give_pats(_, message: Message):
     URL = "https://some-random-api.ml/animu/pat"
     async with aiohttp.ClientSession() as session:
@@ -19,13 +19,16 @@ async def give_pats(_, message: Message):
             url = result.get("link", None)
             await asyncio.gather(
                 message.delete(),
-                UserBot.send_video(GetChatID(message), url, reply_to_message_id=ReplyCheck(message))
+                UserBot.send_video(
+                    GetChatID(message), url, reply_to_message_id=ReplyCheck(message)
+                ),
             )
 
 
 # Command help section
 add_command_help(
-    'pats', [
-        ['.pat | .pats', 'Give pats.'],
-    ]
+    "pats",
+    [
+        [".pat | .pats", "Give pats."],
+    ],
 )

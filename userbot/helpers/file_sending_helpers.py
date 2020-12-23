@@ -12,12 +12,12 @@ def reset_file_ids():
         f.write(json.dumps({}))
 
 
-if not os.path.exists('file_ids.txt'):
+if not os.path.exists("file_ids.txt"):
     reset_file_ids()
 
 
 async def get_old_message(message_id, media_type):
-    old_message = await UserBot.get_messages('self', message_id)
+    old_message = await UserBot.get_messages("self", message_id)
 
     if media_type == "photo":
         return old_message.photo
@@ -47,7 +47,7 @@ async def send_saved_animation(message: Message, name: str, image: str, caption=
                 old_message.file_id,
                 file_ref=old_message.file_ref,
                 reply_to_message_id=ReplyCheck(message),
-                caption=caption if caption is not None else ''
+                caption=caption if caption is not None else "",
             )
         else:
             # Reset file id list because of the one error
@@ -57,7 +57,7 @@ async def send_saved_animation(message: Message, name: str, image: str, caption=
         sent_animation = await UserBot.send_animation(
             "self",
             "userbot/images/{}".format(image),
-            reply_to_message_id=ReplyCheck(message)
+            reply_to_message_id=ReplyCheck(message),
         )
         save_media_id(name, sent_animation)
         await send_saved_animation(message, name, image, caption)
@@ -75,7 +75,7 @@ async def send_saved_image(message: Message, name: str, image: str, caption=None
                 old_message.file_id,
                 file_ref=old_message.file_ref,
                 reply_to_message_id=ReplyCheck(message),
-                caption=caption if caption is not None else ''
+                caption=caption if caption is not None else "",
             )
         else:
             # Reset file id list because of the one error
@@ -85,7 +85,7 @@ async def send_saved_image(message: Message, name: str, image: str, caption=None
         sent_photo = await UserBot.send_photo(
             "self",
             photo="userbot/images/{}".format(image),
-            reply_to_message_id=ReplyCheck(message)
+            reply_to_message_id=ReplyCheck(message),
         )
         save_media_id(name, sent_photo)
         await send_saved_image(message, name, image, caption)

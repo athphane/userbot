@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 class SkyrimStatusMeme:
     font = ImageFont.truetype("userbot/fonts/impact.ttf", 60)
-    background = Image.open('userbot/images/skyrim_background.png', 'r')
+    background = Image.open("userbot/images/skyrim_background.png", "r")
     finalText = ""
     finalSize = [300, 200]
     imgx = 300
@@ -17,7 +17,7 @@ class SkyrimStatusMeme:
         while self.GetSize()[0] > (self.finalSize[0] - 100):
             self.finalSize[0] += 300
             offset_counter += 1
-        backgroundImage = Image.new('RGB', self.finalSize, color='#FFF')
+        backgroundImage = Image.new("RGB", self.finalSize, color="#FFF")
         count = 0
         for _ in range(0, offset_counter + 1):
             backgroundImage.paste(self.background, (count, 0))
@@ -36,6 +36,6 @@ class SkyrimStatusMeme:
         return self.font.getsize(self.finalText)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     inst = SkyrimStatusMeme(sys.argv[1], sys.argv[2])
-    inst.SaveFile('userbot/downloads/skyrim.png')
+    inst.SaveFile("userbot/downloads/skyrim.png")

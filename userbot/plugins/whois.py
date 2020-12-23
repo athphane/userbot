@@ -11,7 +11,7 @@ from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
 
 WHOIS = (
-    "**WHO IS \"{full_name}\"?**\n"
+    '**WHO IS "{full_name}"?**\n'
     "[Link to profile](tg://user?id={user_id})\n"
     "════════════════\n"
     "UserID: `{user_id}`\n"
@@ -21,10 +21,11 @@ WHOIS = (
     "Last Online: `{last_online}`\n"
     "Common Groups: `{common_groups}`\n"
     "════════════════\n"
-    "Bio:\n{bio}")
+    "Bio:\n{bio}"
+)
 
 WHOIS_PIC = (
-    "**WHO IS \"{full_name}\"?**\n"
+    '**WHO IS "{full_name}"?**\n'
     "[Link to profile](tg://user?id={user_id})\n"
     "════════════════\n"
     "UserID: `{user_id}`\n"
@@ -37,32 +38,35 @@ WHOIS_PIC = (
     "Profile Pics: `{profile_pics}`\n"
     "Last Updated: `{profile_pic_update}`\n"
     "════════════════\n"
-    "Bio:\n{bio}")
+    "Bio:\n{bio}"
+)
 
 
 def LastOnline(user: User):
     if user.is_bot:
         return ""
-    elif user.status == 'recently':
+    elif user.status == "recently":
         return "Recently"
-    elif user.status == 'within_week':
+    elif user.status == "within_week":
         return "Within the last week"
-    elif user.status == 'within_month':
+    elif user.status == "within_month":
         return "Within the last month"
-    elif user.status == 'long_time_ago':
+    elif user.status == "long_time_ago":
         return "A long time ago :("
-    elif user.status == 'online':
+    elif user.status == "online":
         return "Currently Online"
-    elif user.status == 'offline':
-        return datetime.fromtimestamp(user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
+    elif user.status == "offline":
+        return datetime.fromtimestamp(user.status.date).strftime(
+            "%a, %d %b %Y, %H:%M:%S"
+        )
 
 
 async def GetCommon(get_user):
     common = await UserBot.send(
         functions.messages.GetCommonChats(
-            user_id=await UserBot.resolve_peer(get_user),
-            max_id=0,
-            limit=0))
+            user_id=await UserBot.resolve_peer(get_user), max_id=0, limit=0
+        )
+    )
     return common
 
 
@@ -74,7 +78,7 @@ def ProfilePicUpdate(user_pic):
     return datetime.fromtimestamp(user_pic[0].date).strftime("%d.%m.%Y, %H:%M:%S")
 
 
-@UserBot.on_message(filters.command('whois', ['.', '']) & filters.me)
+@UserBot.on_message(filters.command("whois", [".", ""]) & filters.me)
 async def summon_here(_, message: Message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:
@@ -110,8 +114,10 @@ async def summon_here(_, message: Message):
                 username=user.username if user.username else "",
                 last_online=LastOnline(user),
                 common_groups=len(common.chats),
-                bio=desc if desc else "`No bio set up.`"),
-            disable_web_page_preview=True)
+                bio=desc if desc else "`No bio set up.`",
+            ),
+            disable_web_page_preview=True,
+        )
     elif user.photo:
         await UserBot.send_photo(
             message.chat.id,
@@ -126,7 +132,8 @@ async def summon_here(_, message: Message):
                 profile_pics=pic_count,
                 common_groups=len(common.chats),
                 bio=desc if desc else "`No bio set up.`",
-                profile_pic_update=ProfilePicUpdate(user_pic)),
+                profile_pic_update=ProfilePicUpdate(user_pic),
+            ),
             reply_to_message_id=ReplyCheck(message),
             file_ref=user_pic[0].file_ref,
         )
@@ -134,8 +141,12 @@ async def summon_here(_, message: Message):
 
 
 add_command_help(
-    'whois', [
-        ['.whois', 'Finds out who the person is. Reply to message sent by the person'
-                   'you want information from and send the command. Without the dot also works.']
-    ]
+    "whois",
+    [
+        [
+            ".whois",
+            "Finds out who the person is. Reply to message sent by the person"
+            "you want information from and send the command. Without the dot also works.",
+        ]
+    ],
 )

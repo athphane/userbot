@@ -38,8 +38,12 @@ async def word_count(_, message: Message):
 
 # Command help section
 add_command_help(
-    'metrics', [
-        ['.wordcount', 'Finds the 25 most used words in the last 1000 messages in a group or private chat. Use in '
-                       'chat you want to find the metric in.'],
-    ]
+    "metrics",
+    [
+        [
+            ".wordcount",
+            "Finds the 25 most used words in the last 1000 messages in a group or private chat. Use in "
+            "chat you want to find the metric in.",
+        ],
+    ],
 )

@@ -8,7 +8,7 @@ from pyrogram.errors import MessageNotModified
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
-bad_words = ['nigga', 'nigger', 'coon']
+bad_words = ["nigga", "nigger", "coon"]
 
 vulgar_filter = False
 
@@ -39,7 +39,7 @@ async def i_am_not_allowed_to_say_this(_, message: Message):
 
             for word in bad_words:
                 try:
-                    txt = re.sub(word, 'bruh', txt, flags=re.IGNORECASE)
+                    txt = re.sub(word, "bruh", txt, flags=re.IGNORECASE)
                 except Exception:
                     pass
 
@@ -53,9 +53,11 @@ async def i_am_not_allowed_to_say_this(_, message: Message):
         except MessageNotModified:
             return
 
+
 # Command help section
 add_command_help(
-    'vulgar', [
-        ['.vulgar', 'Toggles bad word filtering on and off.'],
-    ]
+    "vulgar",
+    [
+        [".vulgar", "Toggles bad word filtering on and off."],
+    ],
 )

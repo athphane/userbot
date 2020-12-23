@@ -11,10 +11,9 @@ def database():
         )
     else:
         from userbot import DB_USERNAME, DB_PASSWORD
+
         client = pymongo.MongoClient(
-            MONGO_URL,
-            username=DB_USERNAME,
-            password=DB_PASSWORD
+            MONGO_URL, username=DB_USERNAME, password=DB_PASSWORD
         )
 
     db = client[DB_NAME]

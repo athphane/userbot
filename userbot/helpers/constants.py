@@ -1,14 +1,66 @@
 class First:
     ALIVE = "`Baka! Anata wa watashi ga shinu to omotta?`"
-    REPO = "Click <a href=\"https://github.com/athphane/userbot\">here</a> to open Usebot's GitHub page."
-    CREATOR = "I was created by my master <a href=\"https://github.com/athphane\">Athphane</a> on a rainy day."
+    REPO = 'Click <a href="https://github.com/athphane/userbot">here</a> to open Usebot\'s GitHub page.'
+    CREATOR = 'I was created by my master <a href="https://github.com/athphane">Athphane</a> on a rainy day.'
 
 
 class Weebify:
-    NORMIE_FONT = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-                   'u', 'v', 'w', 'x', 'y', 'z']
-    WEEBY_FONT = ['卂', '乃', '匚', '刀', '乇', '下', '厶', '卄', '工', '丁', '长', '乚', '从', '𠘨', '口', '尸', '㔿', '尺', '丂', '丅',
-                  '凵', 'リ', '山', '乂', '丫', '乙']
+    NORMIE_FONT = [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+    ]
+    WEEBY_FONT = [
+        "卂",
+        "乃",
+        "匚",
+        "刀",
+        "乇",
+        "下",
+        "厶",
+        "卄",
+        "工",
+        "丁",
+        "长",
+        "乚",
+        "从",
+        "𠘨",
+        "口",
+        "尸",
+        "㔿",
+        "尺",
+        "丂",
+        "丅",
+        "凵",
+        "リ",
+        "山",
+        "乂",
+        "丫",
+        "乙",
+    ]
 
 
 class Fs:
@@ -16,20 +68,23 @@ class Fs:
     def F(self):
         paytext = "FF"
         pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
-            paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
-            paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
-            paytext * 2, paytext * 2)
+            paytext * 8,
+            paytext * 8,
+            paytext * 2,
+            paytext * 2,
+            paytext * 2,
+            paytext * 6,
+            paytext * 6,
+            paytext * 2,
+            paytext * 2,
+            paytext * 2,
+            paytext * 2,
+            paytext * 2,
+        )
 
         return pay
 
-    BIG_F = (
-        "██████╗\n"
-        "██╔═══╝\n"
-        "█████╗\n"
-        "██╔══╝\n"
-        "██║\n"
-        "╚═╝"
-    )
+    BIG_F = "██████╗\n" "██╔═══╝\n" "█████╗\n" "██╔══╝\n" "██║\n" "╚═╝"
 
     FANCY_F = (
         "⠀⠀⠀⢀⡤⢶⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
@@ -57,20 +112,14 @@ class Eval:
     ERROR_LOG = (
         "**Evaluation Query**\n"
         "```{}```\n"
-        "erred in chat \"[{}](t.me/c/{}/{})\" with error\n"
+        'erred in chat "[{}](t.me/c/{}/{})" with error\n'
         "```{}```"
     )
 
-    SUCCESS_LOG = (
-        "Evaluation Query\n"
-        "```{}```\n"
-        "succeeded in \"[{}](t.me/c/{}/{})\""
-    )
+    SUCCESS_LOG = "Evaluation Query\n" "```{}```\n" 'succeeded in "[{}](t.me/c/{}/{})"'
 
     RESULT_LOG = (
-        "Evaluation Query\n"
-        "```{}```\n"
-        "executed in chat \"[{}](t.me/c/{}/{})\"."
+        "Evaluation Query\n" "```{}```\n" 'executed in chat "[{}](t.me/c/{}/{})".'
     )
 
 
@@ -83,11 +132,7 @@ class WWW:
         "ISP:\n__{isp}__"
     )
 
-    NearestDC = (
-        "Country: `{}`\n"
-        "Nearest Datacenter: `{}`\n"
-        "This Datacenter: `{}`"
-    )
+    NearestDC = "Country: `{}`\n" "Nearest Datacenter: `{}`\n" "This Datacenter: `{}`"
 
 
 class MEMES:
@@ -122,7 +167,8 @@ class MEMES:
         "{hits} {victim} around a bit with a {item}.",
         "{throws} a {item} at {victim}.",
         "grabs a {item} and {throws} it at {victim}'s face.",
-        "{hits} a {item} at {victim}.", "{throws} a few {item} at {victim}.",
+        "{hits} a {item} at {victim}.",
+        "{throws} a few {item} at {victim}.",
         "grabs a {item} and {throws} it in {victim}'s face.",
         "launches a {item} in {victim}'s general direction.",
         "sits on {victim}'s face while slamming a {item} {where}.",
@@ -137,16 +183,20 @@ class MEMES:
         "{hits} {victim} {where} with a {item}.",
         "ties {victim} to a pole and whips them {where} with a {item}."
         "gave a friendly push to help {victim} learn to swim in lava.",
-        "sent {victim} to /dev/null.", "sent {victim} down the memory hole.",
-        "beheaded {victim}.", "threw {victim} off a building.",
+        "sent {victim} to /dev/null.",
+        "sent {victim} down the memory hole.",
+        "beheaded {victim}.",
+        "threw {victim} off a building.",
         "replaced all of {victim}'s music with Nickelback.",
-        "spammed {victim}'s email.", "made {victim} a knuckle sandwich.",
+        "spammed {victim}'s email.",
+        "made {victim} a knuckle sandwich.",
         "slapped {victim} with pure nothing.",
         "hit {victim} with a small, interstellar spaceship.",
-        "quickscoped {victim}.", "put {victim} in check-mate.",
+        "quickscoped {victim}.",
+        "put {victim} in check-mate.",
         "RSA-encrypted {victim} and deleted the private key.",
         "put {victim} in the friendzone.",
-        "slaps {victim} with a DMCA takedown request!"
+        "slaps {victim} with a DMCA takedown request!",
     ]
 
     ITEMS = [
