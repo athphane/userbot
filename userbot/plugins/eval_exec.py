@@ -11,7 +11,7 @@ from userbot import UserBot
 from userbot.database import database
 
 
-@UserBot.on_message(filters.command("eval", ".") & filters.me & ~filters.forwarded)
+@UserBot.on_message(filters.command("eval", ".") & filters.me & ~filters.forwarded & ~filters.edited & ~filters.via_bot)
 async def evaluation_func(bot: UserBot, message: Message):
     status_message = await message.reply_text("Processing ...")
     cmd = message.text.split(" ", maxsplit=1)[1]
@@ -75,7 +75,7 @@ async def aexec(code, b, m, r, d):
     return await locals()['__aexec'](b, m, r, d)
 
 
-@UserBot.on_message(filters.command("exec", ".") & filters.me & ~filters.forwarded)
+@UserBot.on_message(filters.command("exec", ".") & filters.me & ~filters.forwarded & ~filters.edited & ~filters.via_bot)
 async def execution(_, message: Message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
