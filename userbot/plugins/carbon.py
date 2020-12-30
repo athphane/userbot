@@ -28,11 +28,11 @@ async def carbon_test(_, message: Message):
     os.system("carbon-now -h -t userbot/downloads/carbon {}".format(file))
     # await message.edit_text("Carbonizing completed...")
     # Send the thing
-    await UserBot.send_photo(message.chat.id, 'userbot/downloads/carbon.png')
+    await UserBot.send_photo(message.chat.id, "userbot/downloads/carbon.png")
     await message.delete()
 
 
-@UserBot.on_message(filters.command('carbonlang', '.') & filters.me)
+@UserBot.on_message(filters.command("carbonlang", ".") & filters.me)
 async def update_carbon_lang(_, message: Message):
     """
     Set language to use Carbon with.
@@ -58,7 +58,7 @@ async def update_carbon_lang(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(filters.command('carbonlang', '!') & filters.me)
+@UserBot.on_message(filters.command("carbonlang", "!") & filters.me)
 async def send_carbon_lang(_, message: Message):
     """
     Edits message to show current set carbon language
@@ -76,11 +76,21 @@ def get_carbon_lang():
 
 
 add_command_help(
-    'carbon', [
-        ['.carbon', 'Generates a carbon image of your code.\nUsage: `.carbon` reply to message or command args'],
-        ['.carbonlang', 'Change carbon language for syntax highlighting.\nUsage: `.carbonlang` reply to message or '
-                        'command args\n'
-                        'Please use file extensions for best results.'],
-        ['!carbonlang', 'Show current carbon language. Default is python.\nUsage: `!carbonlang`'],
-    ]
+    "carbon",
+    [
+        [
+            ".carbon",
+            "Generates a carbon image of your code.\nUsage: `.carbon` reply to message or command args",
+        ],
+        [
+            ".carbonlang",
+            "Change carbon language for syntax highlighting.\nUsage: `.carbonlang` reply to message or "
+            "command args\n"
+            "Please use file extensions for best results.",
+        ],
+        [
+            "!carbonlang",
+            "Show current carbon language. Default is python.\nUsage: `!carbonlang`",
+        ],
+    ],
 )

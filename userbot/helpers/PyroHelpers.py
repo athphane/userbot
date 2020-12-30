@@ -16,12 +16,7 @@ def ReplyCheck(message: Message):
 def SpeedConvert(size):
     power = 2 ** 10
     zero = 0
-    units = {
-        0: '',
-        1: 'Kbit/s',
-        2: 'Mbit/s',
-        3: 'Gbit/s',
-        4: 'Tbit/s'}
+    units = {0: "", 1: "Kbit/s", 2: "Mbit/s", 3: "Gbit/s", 4: "Tbit/s"}
     while size > power:
         size /= power
         zero += 1

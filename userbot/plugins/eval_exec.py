@@ -11,7 +11,13 @@ from userbot import UserBot
 from userbot.database import database
 
 
-@UserBot.on_message(filters.command("eval", ".") & filters.me & ~filters.forwarded)
+@UserBot.on_message(
+    filters.command("eval", ".")
+    & filters.me
+    & ~filters.forwarded
+    & ~filters.edited
+    & ~filters.via_bot
+)
 async def evaluation_func(bot: UserBot, message: Message):
     status_message = await message.reply_text("Processing ...")
     cmd = message.text.split(" ", maxsplit=1)[1]
@@ -47,8 +53,7 @@ async def evaluation_func(bot: UserBot, message: Message):
         evaluation = "Success"
 
     final_output = "<b>Expression</b>:\n<code>{}</code>\n\n<b>Result</b>:\n<code>{}</code> \n".format(
-        cmd,
-        evaluation.strip()
+        cmd, evaluation.strip()
     )
 
     if len(final_output) > 4096:
@@ -58,7 +63,7 @@ async def evaluation_func(bot: UserBot, message: Message):
             document="eval.txt",
             caption=cmd,
             disable_notification=True,
-            reply_to_message_id=reply_to_id
+            reply_to_message_id=reply_to_id,
         )
         os.remove("eval.text")
         await status_message.delete()
@@ -69,13 +74,19 @@ async def evaluation_func(bot: UserBot, message: Message):
 async def aexec(code, b, m, r, d):
     sys.tracebacklimit = 0
     exec(
-        'async def __aexec(b, m, r, d): ' +
-        ''.join(f'\n {line}' for line in code.split('\n'))
+        "async def __aexec(b, m, r, d): "
+        + "".join(f"\n {line}" for line in code.split("\n"))
     )
-    return await locals()['__aexec'](b, m, r, d)
+    return await locals()["__aexec"](b, m, r, d)
 
 
-@UserBot.on_message(filters.command("exec", ".") & filters.me & ~filters.forwarded)
+@UserBot.on_message(
+    filters.command("exec", ".")
+    & filters.me
+    & ~filters.forwarded
+    & ~filters.edited
+    & ~filters.via_bot
+)
 async def execution(_, message: Message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
@@ -106,7 +117,7 @@ async def execution(_, message: Message):
             document="exec.text",
             caption=cmd,
             disable_notification=True,
-            reply_to_message_id=reply_to_id
+            reply_to_message_id=reply_to_id,
         )
         os.remove("exec.text")
     else:

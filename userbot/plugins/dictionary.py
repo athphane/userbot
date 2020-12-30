@@ -8,7 +8,7 @@ from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command(['define', 'dict'], '.') & filters.me)
+@UserBot.on_message(filters.command(["define", "dict"], ".") & filters.me)
 async def define(_, message: Message):
     """ Thank you Poki!!"""
     cmd = message.command
@@ -29,10 +29,17 @@ async def define(_, message: Message):
         for i in s_word:
             if "definition" in i:
                 if "example" in i:
-                    w_word += ("\n**Definition**\n<pre>" + i["definition"] +
-                               "</pre>\n<b>Example</b>\n<pre>" + i["example"] + "</pre>")
+                    w_word += (
+                        "\n**Definition**\n<pre>"
+                        + i["definition"]
+                        + "</pre>\n<b>Example</b>\n<pre>"
+                        + i["example"]
+                        + "</pre>"
+                    )
                 else:
-                    w_word += "\n**Definition**\n" + "<pre>" + i["definition"] + "</pre>"
+                    w_word += (
+                        "\n**Definition**\n" + "<pre>" + i["definition"] + "</pre>"
+                    )
         w_word += "\n\n"
         return w_word
 
@@ -81,31 +88,42 @@ async def define(_, message: Message):
                 out += combine(crosref, "crossReference")
                 # print(crosref)
         if "title" in list(word1):
-            out += ("**__Error Note__**\n\n▪️`" + word1["title"] +
-                    "\n\n▪️" + word1["message"] + "\n\n▪️<i>" + word1["resolution"] +
-                    "</i>`")
+            out += (
+                "**__Error Note__**\n\n▪️`"
+                + word1["title"]
+                + "\n\n▪️"
+                + word1["message"]
+                + "\n\n▪️<i>"
+                + word1["resolution"]
+                + "</i>`"
+            )
         return out
 
     if not input_string:
         await message.edit("`Plz enter word to search‼️`")
     else:
         word = input_string
-        r_dec = await AioHttp().get_json(f"https://api.dictionaryapi.dev/api/v1/entries/en/{word}")
+        r_dec = await AioHttp().get_json(
+            f"https://api.dictionaryapi.dev/api/v1/entries/en/{word}"
+        )
 
         v_word = input_string
         if isinstance(r_dec, list):
             r_dec = r_dec[0]
-            v_word = r_dec['word']
+            v_word = r_dec["word"]
         last_output = out_print(r_dec)
         if last_output:
-            await message.edit("`Search reasult for   `" + f" {v_word}\n\n" + last_output)
+            await message.edit(
+                "`Search reasult for   `" + f" {v_word}\n\n" + last_output
+            )
         else:
-            await message.edit('`No result found from the database.`')
+            await message.edit("`No result found from the database.`")
 
 
 # Command help section
 add_command_help(
-    'dictionary', [
-        ['.define | .dict', 'Define the word you send or reply to.'],
-    ]
+    "dictionary",
+    [
+        [".define | .dict", "Define the word you send or reply to."],
+    ],
 )

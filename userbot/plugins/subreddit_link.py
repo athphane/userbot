@@ -13,14 +13,18 @@ async def subreddit_link(_, message: Message):
     await message.edit(
         html.format(link="https://reddit.com/" + message.text, string=message.text),
         disable_web_page_preview=True,
-        parse_mode="html"
+        parse_mode="html",
     )
 
 
 # Command help section
 add_command_help(
-    'reddit', [
-        ['r/telegram', 'As long as your message starts with r/, it will automatically generate a subreddit link and '
-                       'hyperlink your message.'],
-    ]
+    "reddit",
+    [
+        [
+            "r/telegram",
+            "As long as your message starts with r/, it will automatically generate a subreddit link and "
+            "hyperlink your message.",
+        ],
+    ],
 )

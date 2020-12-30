@@ -7,7 +7,7 @@ from userbot.database.reminders import Reminders
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command('reminders', '.') & filters.me)
+@UserBot.on_message(filters.command("reminders", ".") & filters.me)
 async def show_all_reminders(_, message: Message):
     reminders = Reminders().get_all_reminders()
     if len(reminders) != 0:
@@ -34,7 +34,9 @@ async def remind(_, message: Message):
     elif message.reply_to_message and len(cmd) == 1:
         remind_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit(f"__I need something to remind you about {emoji.CRYING_FACE}__")
+        await message.edit(
+            f"__I need something to remind you about {emoji.CRYING_FACE}__"
+        )
         sleep(2)
         await message.delete()
         return
@@ -71,9 +73,13 @@ async def delete_reminder(_, message: Message):
 
 
 add_command_help(
-    'reminders', [
-        ['.reminders', 'Show all of your reminders.'],
-        ['.remind', 'Add to reminders.\nUsage: reply to message or command args'],
-        ['!reminder', 'Delete reminder from list.\nUsage: `!reminder code_from_.reminders`'],
-    ]
+    "reminders",
+    [
+        [".reminders", "Show all of your reminders."],
+        [".remind", "Add to reminders.\nUsage: reply to message or command args"],
+        [
+            "!reminder",
+            "Delete reminder from list.\nUsage: `!reminder code_from_.reminders`",
+        ],
+    ],
 )

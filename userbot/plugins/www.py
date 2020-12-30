@@ -14,51 +14,42 @@ from userbot.helpers.shorten import shorten_url
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command(["speed", 'speedtest'], ".") & filters.me)
+@UserBot.on_message(filters.command(["speed", "speedtest"], ".") & filters.me)
 async def speed_test(_, message: Message):
-    new_msg = await message.edit(
-        "`Running speed test . . .`")
+    new_msg = await message.edit("`Running speed test . . .`")
     spd = speedtest.Speedtest()
 
     new_msg = await message.edit(
-        f"`{new_msg.text}`\n"
-        "`Getting best server based on ping . . .`")
+        f"`{new_msg.text}`\n" "`Getting best server based on ping . . .`"
+    )
     spd.get_best_server()
 
-    new_msg = await message.edit(
-        f"`{new_msg.text}`\n"
-        "`Testing download speed . . .`")
+    new_msg = await message.edit(f"`{new_msg.text}`\n" "`Testing download speed . . .`")
     spd.download()
 
-    new_msg = await message.edit(
-        f"`{new_msg.text}`\n"
-        "`Testing upload speed . . .`")
+    new_msg = await message.edit(f"`{new_msg.text}`\n" "`Testing upload speed . . .`")
     spd.upload()
 
     new_msg = await new_msg.edit(
-        f"`{new_msg.text}`\n"
-        "`Getting results and preparing formatting . . .`")
+        f"`{new_msg.text}`\n" "`Getting results and preparing formatting . . .`"
+    )
     results = spd.results.dict()
 
     await message.edit(
         WWW.SpeedTest.format(
-            start=results['timestamp'],
-            ping=results['ping'],
-            download=SpeedConvert(results['download']),
-            upload=SpeedConvert(results['upload']),
-            isp=results['client']['isp']
-        ))
+            start=results["timestamp"],
+            ping=results["ping"],
+            download=SpeedConvert(results["download"]),
+            upload=SpeedConvert(results["upload"]),
+            isp=results["client"]["isp"],
+        )
+    )
 
 
 @UserBot.on_message(filters.command("dc", ".") & filters.me)
 async def nearest_dc(_, message: Message):
-    dc = await UserBot.send(
-        functions.help.GetNearestDc())
-    await message.edit(
-        WWW.NearestDC.format(
-            dc.country,
-            dc.nearest_dc,
-            dc.this_dc))
+    dc = await UserBot.send(functions.help.GetNearestDc())
+    await message.edit(WWW.NearestDC.format(dc.country, dc.nearest_dc, dc.this_dc))
 
 
 @UserBot.on_message(filters.command("ping", ".") & filters.me)
@@ -83,12 +74,11 @@ async def expand(_, message: Message):
         expanded = await expand_url(url)
         if expanded:
             await message.edit(
-                f"<b>Shortened URL</b>: {url}\n<b>Expanded URL</b>: {expanded}", disable_web_page_preview=True
+                f"<b>Shortened URL</b>: {url}\n<b>Expanded URL</b>: {expanded}",
+                disable_web_page_preview=True,
             )
         else:
-            await message.edit(
-                "No bro that's not what I do"
-            )
+            await message.edit("No bro that's not what I do")
     else:
         await message.edit("Nothing to expand")
 
@@ -130,13 +120,22 @@ async def shorten(_, message: Message):
 
 
 add_command_help(
-    'www', [
-        ['.ping', 'Calculates ping time between you and Telegram.'],
-        ['.dc', 'Get\'s your Telegram DC.'],
-        ['.speedtest `or` .speed',
-         'Runs a speedtest on the server this userbot is hosted.. Flex on them haters. With an in '
-         'Telegram Speedtest of your server..'],
-        ['.expand', 'Expands a shortened url. Works for replied to message, photo caption or .expand url'],
-        ['.shorten', 'Shortens a url. Works for replied to message, photo caption or .shorten url keyword']
-    ]
+    "www",
+    [
+        [".ping", "Calculates ping time between you and Telegram."],
+        [".dc", "Get's your Telegram DC."],
+        [
+            ".speedtest `or` .speed",
+            "Runs a speedtest on the server this userbot is hosted.. Flex on them haters. With an in "
+            "Telegram Speedtest of your server..",
+        ],
+        [
+            ".expand",
+            "Expands a shortened url. Works for replied to message, photo caption or .expand url",
+        ],
+        [
+            ".shorten",
+            "Shortens a url. Works for replied to message, photo caption or .shorten url keyword",
+        ],
+    ],
 )

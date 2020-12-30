@@ -14,7 +14,7 @@ def split_list(input_list, n):
     :return:
     """
     n = max(1, n)
-    return [input_list[i:i + n] for i in range(0, len(input_list), n)]
+    return [input_list[i : i + n] for i in range(0, len(input_list), n)]
 
 
 def human_time(*args, **kwargs):
@@ -43,8 +43,8 @@ def random_interval():
 
 
 def get_random_hex(chars=4):
-    """ Generate random hex. limited to chars provided.
-        If chars not provided then limit to 4
+    """Generate random hex. limited to chars provided.
+    If chars not provided then limit to 4
     """
     my_hex = uuid.uuid4().hex[:chars]
     return my_hex
@@ -56,16 +56,24 @@ def get_mock_text(sentence):
 
     for letter in sentence.lower():
         if len(new_sentence) < 2:  # Creates the first two letter
-            random_number = random.randint(0, 1)  # This randomly decides if the letter should be upper or lowercase
+            random_number = random.randint(
+                0, 1
+            )  # This randomly decides if the letter should be upper or lowercase
             if random_number == 0:
                 new_sentence += letter.upper()
             else:
                 new_sentence += letter
         else:
-            if new_sentence[number - 2].isupper() and new_sentence[number - 1].isupper() or \
-                    new_sentence[number - 2].islower() and new_sentence[number - 1].islower():
+            if (
+                new_sentence[number - 2].isupper()
+                and new_sentence[number - 1].isupper()
+                or new_sentence[number - 2].islower()
+                and new_sentence[number - 1].islower()
+            ):
                 # Checks if the two letters before are both upper or lowercase
-                if new_sentence[number - 1].isupper():  # Makes the next letter the opposite of the letter before
+                if new_sentence[
+                    number - 1
+                ].isupper():  # Makes the next letter the opposite of the letter before
                     new_sentence += letter.lower()
                 else:
                     new_sentence += letter.upper()

@@ -32,14 +32,11 @@ async def creator(_, message: Message):
     await message.edit(First.CREATOR)
 
 
-@UserBot.on_message(filters.command(['uptime', 'up'], ".") & filters.me)
+@UserBot.on_message(filters.command(["uptime", "up"], ".") & filters.me)
 async def uptime(_, message: Message):
     now = datetime.now()
     current_uptime = now - START_TIME
-    await message.edit(
-        f"Current Uptime\n"
-        f"```{str(current_uptime).split('.')[0]}```"
-    )
+    await message.edit(f"Current Uptime\n" f"```{str(current_uptime).split('.')[0]}```")
 
 
 @UserBot.on_message(filters.command("id", ".") & filters.me)
@@ -49,7 +46,7 @@ async def get_id(_, message: Message):
 
     if message.reply_to_message:
         rep = message.reply_to_message
-        
+
         if rep.audio:
             file_id = f"**File ID**: `{rep.audio.file_id}`"
             file_id += f"**File Ref**: `{rep.audio.file_ref}`"
@@ -76,7 +73,7 @@ async def get_id(_, message: Message):
                     file_id += "**Animated Sticker**: `False`\n"
             else:
                 file_id += "**Sticker Set**: __None__\n"
-                file_id += "**Sticker Emoji**: __None__"  
+                file_id += "**Sticker Emoji**: __None__"
 
         elif rep.video:
             file_id = f"**File ID**: `{rep.video.file_id}`\n"
@@ -116,14 +113,18 @@ async def get_id(_, message: Message):
 
     if user_id:
         if rep.forward_from:
-            user_detail = f"**Forwarded User ID**: `{message.reply_to_message.forward_from.id}`\n"
+            user_detail = (
+                f"**Forwarded User ID**: `{message.reply_to_message.forward_from.id}`\n"
+            )
         else:
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"
         user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`"
         await message.edit(user_detail)
     elif file_id:
         if rep.forward_from:
-            user_detail = f"**Forwarded User ID**: `{message.reply_to_message.forward_from.id}`\n"
+            user_detail = (
+                f"**Forwarded User ID**: `{message.reply_to_message.forward_from.id}`\n"
+            )
         else:
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"
         user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`\n\n"
@@ -134,16 +135,18 @@ async def get_id(_, message: Message):
         await message.edit(f"**Chat ID**: `{message.chat.id}`")
 
 
-@UserBot.on_message(filters.command("restart", '.') & filters.me)
+@UserBot.on_message(filters.command("restart", ".") & filters.me)
 async def restart(_, message: Message):
     await message.edit(f"Restarting {UserBot.__class__.__name__}.")
-    await UserBot.send_message('me', f'#userbot_restart, {message.chat.id}, {message.message_id}')
+    await UserBot.send_message(
+        "me", f"#userbot_restart, {message.chat.id}, {message.message_id}"
+    )
 
-    if 'p' in message.text and 'g' in message.text:
+    if "p" in message.text and "g" in message.text:
         asyncio.get_event_loop().create_task(UserBot.restart(git_update=True, pip=True))
-    elif 'p' in message.text:
+    elif "p" in message.text:
         asyncio.get_event_loop().create_task(UserBot.restart(pip=True))
-    elif 'g' in message.text:
+    elif "g" in message.text:
         asyncio.get_event_loop().create_task(UserBot.restart(git_update=True))
     else:
         asyncio.get_event_loop().create_task(UserBot.restart())
@@ -151,20 +154,25 @@ async def restart(_, message: Message):
 
 # Command help section
 add_command_help(
-    'start', [
-        ['.alive', 'Check if the bot is alive or not.'],
-        ['.repo', 'Display the repo of this userbot.'],
-        ['.creator', 'Show the creator of this userbot.'],
-        ['.id', 'Send id of what you replied to.'],
-        ['.up `or` .uptime', 'Check bot\'s current uptime.']
-    ]
+    "start",
+    [
+        [".alive", "Check if the bot is alive or not."],
+        [".repo", "Display the repo of this userbot."],
+        [".creator", "Show the creator of this userbot."],
+        [".id", "Send id of what you replied to."],
+        [".up `or` .uptime", "Check bot's current uptime."],
+    ],
 )
 
 add_command_help(
-    'restart', [
-        ['.restart', 'You are retarded if you do not know what this does.'],
-        ['.restart g', 'Pull latest changes from git repo and restarts.'],
-        ['.restart p', 'Installs pip requirements restarts.'],
-        ['.restart gp', 'Pull latest changes from git repo, install pip requirements and restarts.'],
-    ]
+    "restart",
+    [
+        [".restart", "You are retarded if you do not know what this does."],
+        [".restart g", "Pull latest changes from git repo and restarts."],
+        [".restart p", "Installs pip requirements restarts."],
+        [
+            ".restart gp",
+            "Pull latest changes from git repo, install pip requirements and restarts.",
+        ],
+    ],
 )
