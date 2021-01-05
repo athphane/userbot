@@ -1,4 +1,4 @@
-# Pyrogram Userbot
+# B LAC TEÀM USERBOT
 ![Python Version](https://img.shields.io/badge/Python-v3.8-blue)
 ![Repo Size](https://img.shields.io/github/repo-size/athphane/userbot)
 [![Commit Activity](https://img.shields.io/github/commit-activity/w/athphane/userbot)](https://github.com/athphane/userbot/pulse)
@@ -13,7 +13,7 @@
 
 <img src="https://i.imgur.com/WXUgDHT.png" width="160" align="right">
 
-> A Telegram Userbot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
+> A Telegram Userbot based on [B LAC ](https://github.com/pyrogram/pyrogram)
 
 This repository contains the source code of a Telegram Userbot and the instructions for running a
 copy yourself. Beside its main purpose, the bot is featuring [**Pyrogram Asyncio**](https:////github.com/pyrogram/pyrogram/issues/181) and
