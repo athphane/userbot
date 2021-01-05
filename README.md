@@ -89,4 +89,39 @@ that gave a ton of ideas on how and what modules to include in this userbot.
 *  [Baivaru](https://github.com/baivaru) for the ton of help that got me this far into making this repo. 
 
 ---
-<p align="center">Made with love from the Maldives ❤</p>
+<pBuild Status Python Version Release Stars Forks Issues Open Issues Closed PRs Open PRs Closed Contributors Repo Size License Commit Activity Plugins Repo! Join Channel! DeepSource Gitpod ready-to-code
+
+Userge is a Powerful , Pluggable Telegram UserBot written in Python using Pyrogram.
+
+Documentation 📘
+you can find full documentation here
+
+Inspiration 😇
+This project is inspired by the following projects :)
+
+tg_userbot ( heavily ) 🤗
+PyroGramBot
+Telegram-Paperplane
+UniBorg
+Special Thanks to all of you !!!.
+
+How To Deploy 👷
+With Heroku 🇭
+Deploy
+
+With Docker 🐳
+
+With Git, Python and pip 🔧
+
+Video Tutorial 🎥
+Tutorial
+
+Support & Discussions 👥
+Head over to the Discussion Group and Update Channel
+
+Project Credits 💆‍♂️
+Specially to these projects 🥰
+Contributors 👥
+Copyright & License 👮
+Copyright (C) 2020 by UsergeTeam ❤️️
+Licensed under the terms of the GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
