@@ -14,7 +14,7 @@ async def give_pats(_, message: Message):
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
-                return await message.edit("`no Pats for u :c")
+                return await message.edit("`no Pats for you :c")
             result = await request.json()
             url = result.get("link", None)
             await asyncio.gather(
