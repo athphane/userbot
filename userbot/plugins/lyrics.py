@@ -7,7 +7,9 @@ from userbot import UserBot, ALLOWED_USERS
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command(['l', 'lyrics'], ".") & (filters.me | filters.user(ALLOWED_USERS)))
+@UserBot.on_message(
+    filters.command(["l", "lyrics"], ".") & (filters.me | filters.user(ALLOWED_USERS))
+)
 async def send_lyrics(_, message: Message):
     try:
         cmd = message.command
@@ -35,7 +37,8 @@ async def send_lyrics(_, message: Message):
                 chat_id="me",
                 query_id=lyrics_results.query_id,
                 result_id=lyrics_results.results[0].id,
-                hide_via=True)
+                hide_via=True,
+            )
             await asyncio.sleep(3)
 
             # forward from Saved Messages
@@ -43,7 +46,7 @@ async def send_lyrics(_, message: Message):
                 chat_id=message.chat.id,
                 from_chat_id="me",
                 message_ids=saved.updates[1].message.id,
-                as_copy=True
+                as_copy=True,
             )
 
             # delete the message from Saved Messages
@@ -60,8 +63,4 @@ async def send_lyrics(_, message: Message):
 
 
 # Command help section
-add_command_help(
-    'lyrics', [
-        ['.l `or` .lyrics', 'Search lyrics and send.']
-    ]
-)
+add_command_help("lyrics", [[".l `or` .lyrics", "Search lyrics and send."]])

@@ -12,7 +12,7 @@ from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command('nice', '.') & filters.me)
+@UserBot.on_message(filters.command("nice", ".") & filters.me)
 async def nice(_, message: Message):
     await message.edit("NICENICENICENICE")
 
@@ -42,15 +42,21 @@ async def slap(_, message: Message):
         throw = choice(MEMES.THROW)
         where = choice(MEMES.WHERE)
 
-        caption = temp.format(victim=slapped, item=item, hits=hit, throws=throw, where=where)
+        caption = temp.format(
+            victim=slapped, item=item, hits=hit, throws=throw, where=where
+        )
 
         try:
             await message.edit(caption)
         except Exception:
-            await message.edit("`Can't slap this person, need to fetch some sticks and stones!!`")
+            await message.edit(
+                "`Can't slap this person, need to fetch some sticks and stones!!`"
+            )
 
 
-@UserBot.on_message((filters.command("-_-", "") | filters.command("ok", ".")) & filters.me)
+@UserBot.on_message(
+    (filters.command("-_-", "") | filters.command("ok", ".")) & filters.me
+)
 async def ok(_, message: Message):
     okay = "-_-"
     for _ in range(10):
@@ -58,7 +64,9 @@ async def ok(_, message: Message):
         await message.edit(okay, parse_mode=None)
 
 
-@UserBot.on_message((filters.command(";_;", "") | filters.command(['sad', 'cri'], ".")) & filters.me)
+@UserBot.on_message(
+    (filters.command(";_;", "") | filters.command(["sad", "cri"], ".")) & filters.me
+)
 async def sad_cri(_, message: Message):
     cri = ";_;"
     for _ in range(10):
@@ -74,7 +82,7 @@ async def send_oof(_, message: Message):
         await message.edit(oof, parse_mode=None)
 
 
-@UserBot.on_message(filters.command('mockt', '.') & filters.me)
+@UserBot.on_message(filters.command("mockt", ".") & filters.me)
 async def mock_text(_, message: Message):
     cmd = message.command
 
@@ -129,7 +137,7 @@ def weebify_text(raw_text):
     return raw_text
 
 
-@UserBot.on_message(filters.command(['weeb', 'weebify'], ".") & filters.me)
+@UserBot.on_message(filters.command(["weeb", "weebify"], ".") & filters.me)
 async def weebify(_, message: Message):
     cmd = message.command
 
@@ -147,7 +155,7 @@ async def weebify(_, message: Message):
     await message.edit(weebify_text(raw_text))
 
 
-@UserBot.on_message(filters.command('vapor', '.') & filters.me)
+@UserBot.on_message(filters.command("vapor", ".") & filters.me)
 async def vapor(_, message: Message):
     cmd = message.command
 
@@ -175,7 +183,7 @@ async def vapor(_, message: Message):
     await message.edit("".join(reply_text))
 
 
-@UserBot.on_message(filters.command('stretch', '.') & filters.me)
+@UserBot.on_message(filters.command("stretch", ".") & filters.me)
 async def stretch(_, message: Message):
     cmd = message.command
 
@@ -191,24 +199,27 @@ async def stretch(_, message: Message):
         return
 
     count = random.randint(3, 10)
-    reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
-                        stretch_text)
+    reply_text = re.sub(
+        r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), stretch_text
+    )
     await message.edit(reply_text)
 
 
-@UserBot.on_message(filters.command('beemoviescript', '.') & filters.me)
+@UserBot.on_message(filters.command("beemoviescript", ".") & filters.me)
 async def bee_movie_script(_, message: Message):
-    await message.edit("Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate")
+    await message.edit(
+        "Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate"
+    )
 
 
 @UserBot.on_message(filters.command(["ht"], ".") & filters.me)
 async def heads_tails(_, message: Message):
-    coin_sides = ['Heads', 'Tails']
+    coin_sides = ["Heads", "Tails"]
     ht = f"Heads or Tails? `{choice(coin_sides)}`"
     await message.edit(ht)
 
 
-@UserBot.on_message(filters.command('reverset', ".") & filters.me)
+@UserBot.on_message(filters.command("reverset", ".") & filters.me)
 async def text_reverse(_, message: Message):
     cmd = message.command
 
@@ -226,12 +237,12 @@ async def text_reverse(_, message: Message):
     await message.edit(reverse_text[::-1])
 
 
-@UserBot.on_message(filters.me & filters.command(['shg', 'shrug'], '.'))
+@UserBot.on_message(filters.me & filters.command(["shg", "shrug"], "."))
 async def shrug(_, message):
     await message.edit(random.choice(MEMES.SHRUGS))
 
 
-@UserBot.on_message(filters.me & filters.command('flip', '.'))
+@UserBot.on_message(filters.me & filters.command("flip", "."))
 async def flip_text(_, message):
     cmd = message.command
 
@@ -261,27 +272,34 @@ async def flip_text(_, message):
 
 # Command help section
 add_command_help(
-    'text', [
-        ['.nice', 'Replaces command with NICENICENICENICE.'],
-        ['.compliment', 'Replaces command with a nice compliment.'],
-        ['.devexcuse', 'Replaces command with an excuse that a developer would give.'],
-        ['.reverse', 'Sends ASCII version of the Uno reverse card.'],
-        ['.slap', 'Sends a randomly generated slap text. Can become very random at some times.'],
-        ['.insult', 'Sends a randomly generated insult. Can become very random at some times.'],
-        ['.vapor', 'Vaporizes the text.'],
-        ['.weeb `or` .weebify', 'Weebifies the text.'],
-        ['.ok', 'Sends -_____- with a fast animation.'],
-        ['-_-', 'Extends to -________-'],
-        ['.f', 'Pay respects'],
-        ['.F', 'Pay respects but filled'],
-        ['#f', 'Pay respects but calligraphy.'],
-        ['.mockt', 'Mock (text only version)'],
-        ['.dice', 'Send dice animation'],
-        ['.target', 'Send target animation'],
-        ['oof', 'Oof'],
-        [';_; `or` .sad `or` cri', ';_;'],
-        ['.ht', 'Heads or Tails'],
-        ['.reverset', 'Reverses the text'],
-        ['.shrug', 'Random shrug'],
-    ]
+    "text",
+    [
+        [".nice", "Replaces command with NICENICENICENICE."],
+        [".compliment", "Replaces command with a nice compliment."],
+        [".devexcuse", "Replaces command with an excuse that a developer would give."],
+        [".reverse", "Sends ASCII version of the Uno reverse card."],
+        [
+            ".slap",
+            "Sends a randomly generated slap text. Can become very random at some times.",
+        ],
+        [
+            ".insult",
+            "Sends a randomly generated insult. Can become very random at some times.",
+        ],
+        [".vapor", "Vaporizes the text."],
+        [".weeb `or` .weebify", "Weebifies the text."],
+        [".ok", "Sends -_____- with a fast animation."],
+        ["-_-", "Extends to -________-"],
+        [".f", "Pay respects"],
+        [".F", "Pay respects but filled"],
+        ["#f", "Pay respects but calligraphy."],
+        [".mockt", "Mock (text only version)"],
+        [".dice", "Send dice animation"],
+        [".target", "Send target animation"],
+        ["oof", "Oof"],
+        [";_; `or` .sad `or` cri", ";_;"],
+        [".ht", "Heads or Tails"],
+        [".reverset", "Reverses the text"],
+        [".shrug", "Random shrug"],
+    ],
 )

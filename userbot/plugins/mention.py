@@ -7,13 +7,9 @@ from pyrogram.types import Message
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
-mention = partial(
-    "<a href='tg://user?id={}'>{}</a>".format
-)
+mention = partial("<a href='tg://user?id={}'>{}</a>".format)
 
-hmention = partial(
-    "<a href='tg://user?id={}'>\u200B</a>{}".format
-)
+hmention = partial("<a href='tg://user?id={}'>\u200B</a>{}".format)
 
 
 @UserBot.on_message(filters.command("mention", ".") & filters.me)
@@ -31,7 +27,7 @@ async def mention_user(_, message: Message):
         await message.delete()
         return
 
-    _mention = mention(user.id, ' '.join(message.command[2:]))
+    _mention = mention(user.id, " ".join(message.command[2:]))
     await message.edit(_mention)
 
 
@@ -50,14 +46,21 @@ async def hidden_mention(_, message: Message):
         await message.delete()
         return
 
-    _hmention = hmention(user.id, ' '.join(message.command[2:]))
+    _hmention = hmention(user.id, " ".join(message.command[2:]))
     await message.edit(_hmention)
 
 
 # Command help section
 add_command_help(
-    'mention', [
-        ['.mention', 'Mention a user with a different name\nExample: `.mention @Athfan CTO`'],
-        ['.hmention', 'Mention a user with a hidden text\nExample: `.hmention @Athfan`']
-    ]
+    "mention",
+    [
+        [
+            ".mention",
+            "Mention a user with a different name\nExample: `.mention @Athfan CTO`",
+        ],
+        [
+            ".hmention",
+            "Mention a user with a hidden text\nExample: `.hmention @Athfan`",
+        ],
+    ],
 )

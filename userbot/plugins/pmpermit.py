@@ -15,9 +15,11 @@ from userbot import UserBot
 #
 #
 
-@UserBot.on_message(filters.command('pmpermit', '.') & filters.me)
+
+@UserBot.on_message(filters.command("pmpermit", ".") & filters.me)
 async def pm_permit_enable(_, message: Message):
     await message.delete()
+
 
 # UNAPPROVED_MSG = (
 #     "`Bleep blop! I'm a bot and this is an AUTOMATED MESSAGE..\n\n`"

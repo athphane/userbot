@@ -13,8 +13,10 @@ from userbot.plugins.help import add_command_help
 @UserBot.on_message(filters.command("c", ".") & filters.me)
 async def corona_all(_, message: Message):
     try:
-        r = await AioHttp().get_json('https://corona.lmao.ninja/v2/all?yesterday=true')
-        last_updated = datetime.datetime.fromtimestamp(r['updated'] / 1000).strftime("%Y-%m-%d %I:%M:%S")
+        r = await AioHttp().get_json("https://corona.lmao.ninja/v2/all?yesterday=true")
+        last_updated = datetime.datetime.fromtimestamp(r["updated"] / 1000).strftime(
+            "%Y-%m-%d %I:%M:%S"
+        )
 
         ac = PrettyTable()
         ac.header = False
@@ -45,7 +47,7 @@ async def corona_search(_, message: Message):
     cmd = message.command
 
     if not (len(cmd) >= 2):
-        await message.edit('```Not enough params provided```')
+        await message.edit("```Not enough params provided```")
         await asyncio.sleep(3)
         await message.delete()
         return
@@ -59,11 +61,13 @@ async def corona_search(_, message: Message):
         await asyncio.sleep(3)
         await message.delete()
     else:
-        last_updated = datetime.datetime.fromtimestamp(r['updated'] / 1000).strftime("%Y-%m-%d %I:%M:%S")
+        last_updated = datetime.datetime.fromtimestamp(r["updated"] / 1000).strftime(
+            "%Y-%m-%d %I:%M:%S"
+        )
 
         cc = PrettyTable()
         cc.header = False
-        country = r['countryInfo']['iso3'] if len(r['country']) > 12 else r['country']
+        country = r["countryInfo"]["iso3"] if len(r["country"]) > 12 else r["country"]
         cc.title = f"Corona Cases in {country}"
         cc.add_row(["Cases", f"{r['cases']:,}"])
         cc.add_row(["Cases Today", f"{r['todayCases']:,}"])
@@ -81,9 +85,13 @@ async def corona_search(_, message: Message):
 
 
 add_command_help(
-    'corona', [
-        ['.c', 'Sends global corona stats: cases, deaths, recovered, and active cases'],
-        ['.cs Country', 'Sends cases, new cases, deaths, new deaths, recovered, active cases, critical cases, '
-                        'and cases/deaths per one million people for a specific country']
-    ]
+    "corona",
+    [
+        [".c", "Sends global corona stats: cases, deaths, recovered, and active cases"],
+        [
+            ".cs Country",
+            "Sends cases, new cases, deaths, new deaths, recovered, active cases, critical cases, "
+            "and cases/deaths per one million people for a specific country",
+        ],
+    ],
 )

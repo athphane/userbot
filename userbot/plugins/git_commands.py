@@ -18,7 +18,7 @@ from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command(['lastcommit', 'lc'], '.') & filters.me)
+@UserBot.on_message(filters.command(["lastcommit", "lc"], ".") & filters.me)
 async def last_commit(_, message: Message):
     repo = git.Repo(os.getcwd())
     master = repo.head.reference
@@ -27,15 +27,19 @@ async def last_commit(_, message: Message):
     commit_link = f"<a href='https://github.com/athphane/userbot/commit/{commit_id}'>{commit_id[:7]}</a>"
     author = master.commit.author.name
     date_time = datetime.datetime.fromtimestamp(master.commit.committed_date)
-    commit_msg = f"**Latest commit**: {commit_link}\n\n**Commit Message**:\n```{commit.strip()}```\n\n" \
-                 f"**By**: `{author}`\n\n**On**: `{date_time}`"
+    commit_msg = (
+        f"**Latest commit**: {commit_link}\n\n**Commit Message**:\n```{commit.strip()}```\n\n"
+        f"**By**: `{author}`\n\n**On**: `{date_time}`"
+    )
     await message.edit(commit_msg, disable_web_page_preview=True)
 
 
-@UserBot.on_message(filters.command(['ggraph', 'commitgraph'], '.') & filters.me)
+@UserBot.on_message(filters.command(["ggraph", "commitgraph"], ".") & filters.me)
 async def commit_graph(_, message: Message):
     if len(message.command) < 2:
-        await message.edit("Please provide a github profile username to generate the graph!")
+        await message.edit(
+            "Please provide a github profile username to generate the graph!"
+        )
         await sleep(2)
         await message.delete()
         return
@@ -46,7 +50,7 @@ async def commit_graph(_, message: Message):
     file_name = f"{randint(1, 999)}{git_user}"
 
     resp = await AioHttp.get_raw(url)
-    f = await aiofiles.open(f"{file_name}.svg", mode='wb')
+    f = await aiofiles.open(f"{file_name}.svg", mode="wb")
     await f.write(resp)
     await f.close()
 
@@ -64,9 +68,9 @@ async def commit_graph(_, message: Message):
             chat_id=message.chat.id,
             photo=f"{file_name}.png",
             caption=git_user,
-            reply_to_message_id=ReplyCheck(message)
+            reply_to_message_id=ReplyCheck(message),
         ),
-        message.delete()
+        message.delete(),
     )
 
     for file in iglob(f"{file_name}.*"):
@@ -75,8 +79,9 @@ async def commit_graph(_, message: Message):
 
 # Command help section
 add_command_help(
-    'git', [
-        ['.lastcommit | .lc', 'Gets the last commit message.'],
-        ['.ggraph | .commitgraph', 'Gets the commit graph for a Github user.'],
-    ]
+    "git",
+    [
+        [".lastcommit | .lc", "Gets the last commit message."],
+        [".ggraph | .commitgraph", "Gets the commit graph for a Github user."],
+    ],
 )
