@@ -36,7 +36,7 @@ async def collect_afk_messages(_, message: Message):
                 f"`Beep boop. This is an automated message.\n"
                 f"I am not available right now.\n"
                 f"Last seen: {last_seen}\n"
-                f"Here's why: ```{AFK_REASON.upper()}```\n"
+                f"Reason: ```{AFK_REASON.upper()}```\n"
                 f"See you after I'm done doing whatever I'm doing.`"
             )
             await UserBot.send_message(
@@ -66,7 +66,7 @@ async def collect_afk_messages(_, message: Message):
                 text = (
                     f"`Hey I'm still not back yet.\n"
                     f"Last seen: {last_seen}\n"
-                    f"Still busy with ```{AFK_REASON.upper()}```\n"
+                    f"Still busy: ```{AFK_REASON.upper()}```\n"
                     f"Try pinging a bit later.`"
                 )
                 await UserBot.send_message(
