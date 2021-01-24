@@ -23,7 +23,7 @@ def subtract_time(start, end):
 
 
 @UserBot.on_message(
-    ((filters.group & filters.mentioned) | filters.private) & ~filters.me, group=3
+    ((filters.group & filters.mentioned) | filters.private) & ~filters.me & ~filters.service, group=3
 )
 async def collect_afk_messages(_, message: Message):
     if AFK:
