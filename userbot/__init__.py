@@ -54,6 +54,10 @@ if bool(os.environ.get("ENV", False)):
     YOURLS_URL = os.environ.get("YOURLS_URL", None)
     YOURLS_KEY = os.environ.get("YOURLS_KEY", None)
     YANDEX_API_KEY = os.environ.get("YANDEX_API_KEY", None)
+    
+    SPOTIFY_USERNAME = os.environ.get("SPOTIFY_USERNAME", None)
+    SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", None)
+    SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", None)
 
     # Get the Values from our .env
     PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
@@ -79,6 +83,9 @@ else:
     YOURLS_URL = config.get("misc", "yourls_url", fallback=None)
     YOURLS_KEY = config.get("misc", "yourls_key", fallback=None)
     YANDEX_API_KEY = config.get("yandex", "key", fallback=None)
+    SPOTIFY_USERNAME = config.get("spotify","username", fallback=None)
+    SPOTIFY_CLIENT_ID = config.get("spotify", "client_id", fallback=None)
+    SPOTIFY_CLIENT_SECRET = config.get("spotify", "client_secret", fallback=None)
 
     # Get the Values from our .env
     PM_PERMIT = config.get("pm_permit", "pm_permit")
