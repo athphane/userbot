@@ -12,6 +12,9 @@ async def now_playing(_, message: Message):
     if not current_track:
         await message.edit("I am not playing any music right now!")
         return
+    if current_track == "API details not set":
+        await message.edit("API details not set. Please read the README!")
+        return
     track = current_track['item']
     artist = track['artist'][0]['name']
     song = track['name']
