@@ -19,4 +19,4 @@ async def now_playing(_, message: Message):
     artist = track['artist'][0]['name']
     song = track['name']
     link = current_track['context']['external_urls']['spotify']
-    await message.edit(f"Currently Playing: <a href="{link}">{song}</a> by {artist}")
+    await message.edit(f'Currently Playing: <a href="{link}">{song}</a> by {artist}')
