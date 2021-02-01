@@ -20,3 +20,4 @@ thisapidoesnotexist
 aiofiles
 svglib
 reportlab
+spotipy
