@@ -16,7 +16,7 @@ async def now_playing(_, message: Message):
         await message.edit("API details not set. Please read the README!")
         return
     track = current_track['item']
-    artist = track['artist'][0]['name']
+    artist = track['artists'][0]['name']
     song = track['name']
     link = current_track['context']['external_urls']['spotify']
     await message.edit(f'Currently Playing: <a href="{link}">{song}</a> by {artist}')
