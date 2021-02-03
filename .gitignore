@@ -7,3 +7,4 @@ __pycache__/
 userbot.ini
 unknown_errors.txt
 file_ids.txt
+.cache-*

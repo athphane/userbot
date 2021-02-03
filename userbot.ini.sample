@@ -22,3 +22,8 @@ key = your-key-but-Yandex-no-longer-gives
 [misc]
 yourls_url = http://your-domain.test/yourls-api.php
 yourls_key = your key here
+
+[spotify]
+username =
+client_id =
+client_secret =
