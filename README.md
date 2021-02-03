@@ -60,6 +60,22 @@ pip install -r requirements.txt
 python -m userbot.
 ```
 
+## Spotify integration
+To get the Spotify commands working on the Userbot, you need to get a CLIENT_ID and CLIENT_SECRET
+form the [Spotify Developer Portal]('https://developer.spotify.com/dashboard/applications) and add
+them into your userbot.ini file.
+
+On the Spotify developer portal, make sure to set your application `Redirect URL` to 
+'http://localhost:8888/callback'. 
+
+Now is a good time 
+Then go ahead and run the command `python spotify.py` 
+in the projects root directory. 
+
+This will create a file called `.cache-yourusername`. You need to transfer this file to the
+project root of the server that will be running your userbot. This is a one time setup.
+
+
 ## Developing
 To add extra modules to the bot, simply add the code into [userbot/plugins](userbot/plugins). Each file
 that is added to the plugins directory should have the following code at a minimum.
