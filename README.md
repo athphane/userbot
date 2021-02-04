@@ -65,7 +65,7 @@ To get the Spotify commands working on the Userbot, you need to get a CLIENT_ID 
 form the [Spotify Developer Portal]('https://developer.spotify.com/dashboard/applications) and add
 them into your userbot.ini file.
 
-On the Spotify developer portal, make sure to set your application `Redirect URL` to 
+On the Spotify developer portal, make sure to set your application `Redirect URI` to 
 'http://localhost:8888/callback'. 
 
 Now is a good time 
