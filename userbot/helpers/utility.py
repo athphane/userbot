@@ -14,7 +14,7 @@ def split_list(input_list, n):
     :return:
     """
     n = max(1, n)
-    return [input_list[i : i + n] for i in range(0, len(input_list), n)]
+    return [input_list[i: i + n] for i in range(0, len(input_list), n)]
 
 
 def human_time(*args, **kwargs):
@@ -65,10 +65,10 @@ def get_mock_text(sentence):
                 new_sentence += letter
         else:
             if (
-                new_sentence[number - 2].isupper()
-                and new_sentence[number - 1].isupper()
-                or new_sentence[number - 2].islower()
-                and new_sentence[number - 1].islower()
+                    new_sentence[number - 2].isupper()
+                    and new_sentence[number - 1].isupper()
+                    or new_sentence[number - 2].islower()
+                    and new_sentence[number - 1].islower()
             ):
                 # Checks if the two letters before are both upper or lowercase
                 if new_sentence[

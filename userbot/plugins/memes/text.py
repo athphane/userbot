@@ -24,6 +24,13 @@ async def reverse(_, message: Message):
     )
 
 
+@UserBot.on_message(filters.command("cock", ".") & filters.me)
+async def cock(_, message: Message):
+    await message.edit(
+        text=MEMES.COCK,
+    )
+
+
 @UserBot.on_message(filters.command("slap", ".") & filters.me)
 async def slap(_, message: Message):
     if message.reply_to_message is None:
