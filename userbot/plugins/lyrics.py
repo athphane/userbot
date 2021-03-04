@@ -45,7 +45,7 @@ async def send_lyrics(_, message: Message):
             await UserBot.copy_message(
                 chat_id=message.chat.id,
                 from_chat_id="me",
-                message_ids=saved.updates[1].message.id,
+                message_id=saved.updates[1].message.id,
             )
 
             # delete the message from Saved Messages
