@@ -26,7 +26,7 @@ async def now_playing(_, message: Message):
 
 
 @UserBot.on_message(filters.command(["sdev", "sdevices", "spotifydevices", "sd"], ".") & (filters.me | filters.user(ALLOWED_USERS)))
-async def now_playing(_, message: Message):
+async def list_devices(_, message: Message):
     current_devices = await spotify.list_devices()
 
     if not current_devices:
@@ -39,10 +39,36 @@ async def now_playing(_, message: Message):
 
     devices = []
     for index, device in enumerate(current_devices['devices'], start=1):
-        devices.append(f"{index}) {device['name']} - {device['type']}\n")
+        devices.append(f"{index}) {device['name']} - {device['type']}")
 
     device_msg = '\n'.join(devices)
     await message.edit(device_msg)
+
+
+@UserBot.on_message(filters.command(["spause", "pause"], ".") & (filters.me))
+async def pause(_, message: Message):
+    pause = await spotify.pause()
+    if pause:
+        await message.edit("Spotify playback paused")
+    else:
+        await message.edit("Nothing is playing on Spotify")
+
+    if pause == "API details not set":
+        await message.edit("API details not set. Please read the README!")
+        return
+
+
+@UserBot.on_message(filters.command(["splay", "play"], ".") & (filters.me))
+async def play(_, message: Message):
+    play = await spotify.play()
+    if play:
+        await message.edit("Spotify playback started")
+    else:
+        await message.edit("Playing something already?")
+
+    if play == "API details not set":
+        await message.edit("API details not set. Please read the README!")
+        return
 
 
 # Command help section
@@ -56,6 +82,14 @@ add_command_help(
         [
             ".spotifydevices | .sdevices | .sdev | .sd",
             "Send your Spotify active device list into chat.",
+        ],
+        [
+            ".spause | .pause",
+            "Pause your currently playing in Spotify.",
+        ],
+        [
+            ".splay | .play",
+            "Resume playback on Spotify",
         ],
     ],
 )
