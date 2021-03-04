@@ -1,6 +1,5 @@
 from userbot import spotify
 
-
 async def now_playing():
     if spotify:
         return "API details not set"
