@@ -41,7 +41,8 @@ async def now_playing(_, message: Message):
     for index, device in enumerate(current_devices['devices'], start=1):
         devices.append(f"{index}) {device['name']} - {device['type']}\n")
 
-    await message.edit(f"{'\n'.join(devices)}")
+    device_msg = '\n'.join(devices)
+    await message.edit(device_msg)
 
 
 # Command help section
