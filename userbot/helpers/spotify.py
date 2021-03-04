@@ -1,4 +1,5 @@
 from userbot import spotify
+from spotipy import SpotifyException
 
 
 async def now_playing():
@@ -24,7 +25,7 @@ async def pause():
     try:
         spotify.pause_playback()
         return True
-    except spotify.SpotifyException:
+    except SpotifyException:
         return False
 
 
@@ -35,5 +36,5 @@ async def play():
     try:
         spotify.start_playback()
         return True
-    except spotify.SpotifyException:
+    except SpotifyException:
         return False
