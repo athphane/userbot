@@ -7,6 +7,9 @@ from logging.handlers import TimedRotatingFileHandler
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
+import spotipy
+import spotipy.util as util
+
 from userbot.userbot import UserBot
 
 # Logging at the start to catch everything
@@ -48,13 +51,14 @@ if bool(os.environ.get("ENV", False)):
         ALLOWED_USERS = ast.literal_eval(os.environ.get("ALLOWED_USERS", "[]"))
     except ValueError:
         ALLOWED_USERS = []
-        raise Exception("Your allowed users list does not contain valid integers.")
+        raise Exception(
+            "Your allowed users list does not contain valid integers.")
 
     # MISC APIs
     YOURLS_URL = os.environ.get("YOURLS_URL", None)
     YOURLS_KEY = os.environ.get("YOURLS_KEY", None)
     YANDEX_API_KEY = os.environ.get("YANDEX_API_KEY", None)
-    
+
     SPOTIFY_USERNAME = os.environ.get("SPOTIFY_USERNAME", None)
     SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", None)
     SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", None)
@@ -83,9 +87,10 @@ else:
     YOURLS_URL = config.get("misc", "yourls_url", fallback=None)
     YOURLS_KEY = config.get("misc", "yourls_key", fallback=None)
     YANDEX_API_KEY = config.get("yandex", "key", fallback=None)
-    SPOTIFY_USERNAME = config.get("spotify","username", fallback=None)
+    SPOTIFY_USERNAME = config.get("spotify", "username", fallback=None)
     SPOTIFY_CLIENT_ID = config.get("spotify", "client_id", fallback=None)
-    SPOTIFY_CLIENT_SECRET = config.get("spotify", "client_secret", fallback=None)
+    SPOTIFY_CLIENT_SECRET = config.get(
+        "spotify", "client_secret", fallback=None)
 
     # Get the Values from our .env
     PM_PERMIT = config.get("pm_permit", "pm_permit")
@@ -98,6 +103,18 @@ __author__ = "athphane"
 
 # Scheduler
 scheduler = AsyncIOScheduler()
+
+# Spotify
+redirect_uri = "http://localhost:8888/callback"
+scope = 'user-read-currently-playing'
+
+if [x for x in (SPOTIFY_USERNAME, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET) if x]:
+    token = util.prompt_for_user_token(
+        SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri)
+
+    spotify = spotipy.Spotify(auth=token)
+else:
+    spotify = None
 
 # Global Variables
 CMD_HELP = {}

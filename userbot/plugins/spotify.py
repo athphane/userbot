@@ -25,6 +25,25 @@ async def now_playing(_, message: Message):
     await message.edit(f'{emoji.MUSICAL_NOTE} Currently Playing: <a href="{link}">{song}</a>')
 
 
+@UserBot.on_message(filters.command(["sdev", "sdevices", "spotifydevices", "sd"], ".") & (filters.me | filters.user(ALLOWED_USERS)))
+async def now_playing(_, message: Message):
+    current_devices = await spotify.list_devices()
+
+    if not current_devices:
+        await message.edit("No devices active right now!")
+        return
+
+    if current_devices == "API details not set":
+        await message.edit("API details not set. Please read the README!")
+        return
+
+    devices = []
+    for index, device in enumerate(current_devices['devices'], start=1):
+        devices.append(f"{index}) {device['name']} - {device['type']}\n")
+
+    await message.edit(f"{'\n'.join(devices)}")
+
+
 # Command help section
 add_command_help(
     "spotify",
@@ -32,6 +51,10 @@ add_command_help(
         [
             ".nowplaying | .now | .np",
             "Send your currently playing Spotify song into chat.",
+        ],
+        [
+            ".spotifydevices | .sdevices | .sdev | .sd",
+            "Send your Spotify active device list into chat.",
         ],
     ],
 )
