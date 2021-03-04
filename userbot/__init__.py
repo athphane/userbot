@@ -113,10 +113,8 @@ if [x for x in (SPOTIFY_USERNAME, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET) if x
         SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri)
 
     spotify = spotipy.Spotify(auth=token)
-    print(spotify)
 else:
     spotify = None
-    LOGS.WARNING("Spotify details not set")
 
 # Global Variables
 CMD_HELP = {}
