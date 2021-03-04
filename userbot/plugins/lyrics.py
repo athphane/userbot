@@ -42,11 +42,10 @@ async def send_lyrics(_, message: Message):
             await asyncio.sleep(3)
 
             # forward from Saved Messages
-            await UserBot.forward_messages(
+            await UserBot.copy_message(
                 chat_id=message.chat.id,
                 from_chat_id="me",
                 message_ids=saved.updates[1].message.id,
-                as_copy=True,
             )
 
             # delete the message from Saved Messages
