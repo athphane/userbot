@@ -16,7 +16,8 @@ async def list_devices():
     current_devices = spotify.devices()
     return current_devices
 
-asyn def pause():
+
+async def pause():
     if not spotify:
         return "API details not set"
 
@@ -26,7 +27,8 @@ asyn def pause():
     except spotify.SpotifyException:
         return False
 
-asyn def play():
+
+async def play():
     if not spotify:
         return "API details not set"
 
