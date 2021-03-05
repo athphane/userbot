@@ -37,7 +37,7 @@ async def list_devices(_, message: Message):
         await message.edit("API details not set. Please read the README!")
         return
 
-    devices = []
+    devices = ["My devices active on Spotify right now:"]
     for index, device in enumerate(current_devices['devices'], start=1):
         devices.append(f"{index}) {device['name']} - {device['type']}")
 
