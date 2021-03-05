@@ -7,9 +7,6 @@ from logging.handlers import TimedRotatingFileHandler
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-import spotipy
-import spotipy.util as util
-
 from userbot.userbot import UserBot
 
 # Logging at the start to catch everything
@@ -105,14 +102,7 @@ __author__ = "athphane"
 scheduler = AsyncIOScheduler()
 
 # Spotify
-redirect_uri = "http://localhost:8888/callback"
-scope = 'user-read-currently-playing'
 
-if [x for x in (SPOTIFY_USERNAME, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET) if x is not None]:
-    token = util.prompt_for_user_token(
-        SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri)
-
-    spotify = spotipy.Spotify(auth=token)
 else:
     spotify = None
 
