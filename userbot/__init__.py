@@ -101,11 +101,6 @@ __author__ = "athphane"
 # Scheduler
 scheduler = AsyncIOScheduler()
 
-# Spotify
-
-else:
-    spotify = None
-
 # Global Variables
 CMD_HELP = {}
 client = None
