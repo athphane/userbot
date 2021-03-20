@@ -1,7 +1,6 @@
 import asyncio
-import random
 import re
-from random import choice
+from random import choice, randint
 
 from pyrogram import filters
 from pyrogram.types import Message
@@ -205,7 +204,7 @@ async def stretch(_, message: Message):
         await message.delete()
         return
 
-    count = random.randint(3, 10)
+    count = randint(3, 10)
     reply_text = re.sub(
         r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), stretch_text
     )
@@ -246,7 +245,12 @@ async def text_reverse(_, message: Message):
 
 @UserBot.on_message(filters.me & filters.command(["shg", "shrug"], "."))
 async def shrug(_, message):
-    await message.edit(random.choice(MEMES.SHRUGS))
+    await message.edit(choice(MEMES.SHRUGS))
+
+
+@UserBot.on_message(filters.me & filters.command(["tableflip", "tflip"], "."))
+async def table_flip(_, message):
+    await message.edit(choice(MEMES.TABLE_FLIPS))
 
 
 @UserBot.on_message(filters.me & filters.command("flip", "."))
@@ -308,5 +312,6 @@ add_command_help(
         [".ht", "Heads or Tails"],
         [".reverset", "Reverses the text"],
         [".shrug", "Random shrug"],
+        [".tableflip", "Flip the table"],
     ],
 )
