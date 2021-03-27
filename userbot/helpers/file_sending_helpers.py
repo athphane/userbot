@@ -45,7 +45,6 @@ async def send_saved_animation(message: Message, name: str, image: str, caption=
             await UserBot.send_animation(
                 message.chat.id,
                 old_message.file_id,
-                file_ref=old_message.file_ref,
                 reply_to_message_id=ReplyCheck(message),
                 caption=caption if caption is not None else "",
             )
@@ -73,7 +72,6 @@ async def send_saved_image(message: Message, name: str, image: str, caption=None
             await UserBot.send_photo(
                 GetChatID(message),
                 old_message.file_id,
-                file_ref=old_message.file_ref,
                 reply_to_message_id=ReplyCheck(message),
                 caption=caption if caption is not None else "",
             )
