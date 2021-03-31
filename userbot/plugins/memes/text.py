@@ -33,7 +33,12 @@ async def cock(_, message: Message):
 @UserBot.on_message(filters.command("slap", ".") & filters.me)
 async def slap(_, message: Message):
     if message.reply_to_message is None:
+        await message.edit(
+                "`WHO SHOULD I SLAP?`"
+            )
+        await asyncio.sleep(5)
         await message.delete()
+        return
     else:
         replied_user = message.reply_to_message.from_user
 
