@@ -1,5 +1,5 @@
 import os
-
+import shutil
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -23,7 +23,7 @@ async def ftp_list(bot: UserBot, message: Message):
         await message.reply_chat_action('upload_document')
         await bot.send_document('self', document=f)
 
-    os.removedirs('downloads/ftp')
+    shutil.rmtree('downloads/ftp')
 
 add_command_help(
     "ftp",
