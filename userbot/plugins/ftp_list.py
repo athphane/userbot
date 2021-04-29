@@ -15,7 +15,7 @@ async def ftp_list(bot: UserBot, message: Message):
     await get_ftp_files()
 
     files = []
-    for r, d, f in os.walk("downloads/ftp"):
+    for r, _, f in os.walk("downloads/ftp"):
         for file in f:
             files.append(os.path.join(r, file))
 
