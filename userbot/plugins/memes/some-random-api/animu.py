@@ -1,5 +1,4 @@
 import asyncio
-import re
 
 from pyrogram import filters
 from pyrogram.types import Message
@@ -62,6 +61,7 @@ async def animu_fact(_, message: Message):
         )
 
         await message.edit(quote)
+
 
 # Animu gif help
 animu_gif_help = []

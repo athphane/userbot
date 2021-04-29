@@ -20,7 +20,6 @@ async def quotly(_, message: Message):
     while not is_sticker:
         try:
             msg = await UserBot.get_history("@QuotLyBot", 1)
-            check = msg[0]["sticker"]["file_id"]
             is_sticker = True
         except:
             await sleep(0.5)
