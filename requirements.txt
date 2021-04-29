@@ -21,3 +21,4 @@ aiofiles
 svglib
 reportlab
 spotipy
+ftpretty

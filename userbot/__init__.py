@@ -9,6 +9,11 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from userbot.userbot import UserBot
 
+
+# Created logs folder if it is not there. Needed for logging.
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
 # Logging at the start to catch everything
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",

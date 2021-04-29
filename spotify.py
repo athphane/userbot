@@ -12,7 +12,7 @@ username = config.get('spotify', 'username')
 CLIENT_ID = config.get('spotify', 'client_id')
 CLIENT_SECRET = config.get('spotify', 'client_secret')
 redirect_uri = "http://localhost:8888/callback"
-scope = 'user-read-currently-playing app-remote-control'
+scope = 'user-read-currently-playing app-remote-control streaming'
 
 print(username)
 print(CLIENT_ID)
