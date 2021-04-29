@@ -44,12 +44,7 @@ I assume you already have NPM installed.
     MacOS: I assume almost the same as linux ¯\_(ツ)_/¯
     ``` 
 
-## Installing
-*One Click Deploy*
-Quick Deploy on Heroku using the button down below:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/athphane/userbot)
-
+## Installation and Deployment
 *The way I deploy*
 ```bash
 git clone https://github.com/athphane/userbot.git
@@ -78,7 +73,7 @@ project root of the server that will be running your userbot. This is a one time
 
 ## Developing
 To add extra modules to the bot, simply add the code into [userbot/plugins](userbot/plugins). Each file
-that is added to the plugins directory should have the following code at a minimum.
+that is added to the `plugins` directory should have the following code at a minimum.
 ```python
 from pyrogram import Message, Filters
 

@@ -4,28 +4,23 @@ from configparser import ConfigParser
 
 import psutil
 from pyrogram import Client
-
-API_ID = os.environ.get("API_ID", None)
-API_HASH = os.environ.get("API_HASH", None)
-USERBOT_SESSION = os.environ.get("USERBOT_SESSION", None)
+from pyrogram.raw.all import layer
 
 
 class UserBot(Client):
-    def __init__(self, name):
-        name = name.lower()
+    def __init__(self, version='0.0.0'):
+        self.version = version
+        self.name = name = self.__class__.__name__.lower()
         config_file = f"{name}.ini"
 
-        config = ConfigParser()
-        config.read(config_file)
+        self.config = ConfigParser().read(config_file)
 
         super().__init__(
-            USERBOT_SESSION if USERBOT_SESSION is not None else name,
-            api_id=API_ID,
-            api_hash=API_HASH,
+            name,
             config_file=config_file,
             plugins=dict(root=f"{name}/plugins"),
             workdir="./",
-            app_version="Userbot v1.1",
+            app_version=self.version
         )
 
     async def start(self):
@@ -34,21 +29,27 @@ class UserBot(Client):
         restart_reply_details = super().search_messages("me", query="#userbot_restart")
         async for x in restart_reply_details:
             _, chat_id, message_id = x.text.split(", ")
+
             await super().edit_message_text(
                 int(chat_id), int(message_id), "`Userbot Restarted!`"
             )
+
             await super().delete_messages("me", x.message_id)
+
             break
 
-        print("Userbot started. Hi.")
+        me = await self.get_me()
+
+        print(f"{self.__class__.__name__} v{self.version} (Layer {layer}) started on @{me.username}.\n"
+              f"Hi!")
 
     async def stop(self, *args):
         await super().stop()
-        print("Userbot stopped. Bye.")
+        print(f"{self.__class__.__name__} v{self.version} Stopped. Bye.")
 
     async def restart(self, *args, git_update=False, pip=False):
-        """ Shoutout to the Userg team for this."""
         await self.stop()
+
         try:
             c_p = psutil.Process(os.getpid())
             for handler in c_p.open_files() + c_p.connections():
