@@ -9,10 +9,10 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command(["unread", "un"], ".") & filters.me)
-async def mark_chat_unread(_, message: Message):
+async def mark_chat_unread(bot, message: Message):
     await asyncio.gather(
         message.delete(),
-        UserBot.send(
+        bot.send(
             functions.messages.MarkDialogUnread(
                 peer=await UserBot.resolve_peer(message.chat.id), unread=True
             )

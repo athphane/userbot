@@ -41,7 +41,7 @@ for x in sticker_data:
 
 
 @UserBot.on_message(filters.command(sticker_commands, ".") & filters.me)
-async def sticker_super_func(_, message: Message):
+async def sticker_super_func(bot: UserBot, message: Message):
     try:
         sticker = {}
         command = message.command[0]
@@ -79,16 +79,16 @@ async def sticker_super_func(_, message: Message):
             choice = values
 
         if choice:
-            sticker_results = await UserBot.get_inline_bot_results(
+            sticker_results = await bot.get_inline_bot_results(
                 "stickerizerbot", f"#{choice}" + sticker_text
             )
         else:
-            sticker_results = await UserBot.get_inline_bot_results(
+            sticker_results = await bot.get_inline_bot_results(
                 "stickerizerbot", sticker_text
             )
 
         try:
-            await UserBot.send_inline_bot_result(
+            await bot.send_inline_bot_result(
                 chat_id=message.chat.id,
                 query_id=sticker_results.query_id,
                 result_id=sticker_results.results[0].id,

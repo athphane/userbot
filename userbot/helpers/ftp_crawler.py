@@ -4,9 +4,9 @@ from ftpretty import ftpretty
 
 from userbot import config
 
-host = config.get('seedbox', 'host')
-username = config.get('seedbox', 'username')
-password = config.get('seedbox', 'password')
+host = config.get('seedbox', 'host', fallback=None)
+username = config.get('seedbox', 'username', fallback=None)
+password = config.get('seedbox', 'password', fallback=None)
 ftp = ftpretty(host=host, user=username, password=password)
 
 
