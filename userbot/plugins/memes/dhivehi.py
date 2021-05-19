@@ -13,6 +13,7 @@ dhivehi_text_memes = {
     "amf": {"alts": ["a"], "meme": "އަމާފޫޅު", "help": "އަމާފޫޅު"},
     "fdb": {"alts": [], "meme": "ފަޑަބޮއެ", "help": "ފަޑަބޮއެ"},
     "kg": {"alts": [], "meme": "ކަލޯގަޔާ", "help": "ކަލޯގަޔާ"},
+    "shee": {"alts": ["sheesh"], "meme": "ޝީޝް", "help": "ޝީޝް"},
 }
 
 dhivehi_text_memes_commands = []
