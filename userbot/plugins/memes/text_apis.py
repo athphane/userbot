@@ -29,8 +29,8 @@ text_apis_data = {
         "help": "Kanye used to say",
     },
     "programmer": {
-        "url": "https://programming-quotes-api.herokuapp.com/quotes/random",
-        "target_key": "en",
+        "url": "http://quotes.stormconsultancy.co.uk/random.json",
+        "target_key": "quote",
         "help": "Programmers be like.",
     },
     "affirmation": {
