@@ -13,7 +13,7 @@ text_apis_data = {
         "help": "Sends a nice compliment.",
     },
     "devexcuse": {
-        "url": "https://dev-excuses-api.herokuapp.com/",
+        "url": "https://api.devexcus.es/",
         "target_key": "text",
         "help": "It works on my machine!",
     },
