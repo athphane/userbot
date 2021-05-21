@@ -14,6 +14,7 @@ dhivehi_text_memes = {
     "fdb": {"alts": [], "meme": "ފަޑަބޮއެ", "help": "ފަޑަބޮއެ"},
     "kg": {"alts": [], "meme": "ކަލޯގަޔާ", "help": "ކަލޯގަޔާ"},
     "shee": {"alts": ["sheesh"], "meme": "ޝީޝް", "help": "ޝީޝް"},
+    "sdga": {"alts": ["sdg"], "meme": " صدق الله العظيم", "help": " صدق الله العظيم"},
 }
 
 dhivehi_text_memes_commands = []
