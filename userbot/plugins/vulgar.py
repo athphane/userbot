@@ -27,7 +27,7 @@ async def toggle(_, message: Message):
     await message.delete()
 
 
-@UserBot.on_message(~filters.regex(r"^\.\w*") & filters.me, group=10)
+@UserBot.on_message(~filters.regex(r"^\.\w*") & filters.me & ~filters.media, group=10)
 async def i_am_not_allowed_to_say_this(_, message: Message):
     if vulgar_filter:
         try:
