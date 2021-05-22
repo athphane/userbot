@@ -15,6 +15,7 @@ dhivehi_text_memes = {
     "kg": {"alts": [], "meme": "ކަލޯގަޔާ", "help": "ކަލޯގަޔާ"},
     "shee": {"alts": ["sheesh"], "meme": "ޝީޝް", "help": "ޝީޝް"},
     "sdga": {"alts": ["sdg"], "meme": "ehenmei dhen  صدق الله العظيم", "help": " صدق الله العظيم"},
+    "drespect": {"alts": ["dead", 'loss'], "meme": "انا لله وانا اليه راجعون"},
 }
 
 dhivehi_text_memes_commands = []
