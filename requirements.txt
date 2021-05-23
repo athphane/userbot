@@ -12,7 +12,7 @@ pyrogram
 python-dotenv
 python-git
 requests-async
-speedtest-cli
+speedtest-cli==2.1.3
 tgcrypto
 yourls
 humanize
