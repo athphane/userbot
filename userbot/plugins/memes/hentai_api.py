@@ -55,7 +55,7 @@ for x in cf_api_data:
 
 
 @UserBot.on_message(
-    filters.command(text_api_commands, ".") & (filters.me | filters.user(ALLOWED_USERS))
+    filters.command(text_api_commands, ".") & filters.me
 )
 async def hentai_api(_, message: Message):
     cmd = message.command
