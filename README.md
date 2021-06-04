@@ -55,7 +55,6 @@ pip install -r requirements.txt
 python -m userbot
 ```
 
-
 ## Spotify integration
 To get the Spotify commands working on the Userbot, you need to get a CLIENT_ID and CLIENT_SECRET
 form the [Spotify Developer Portal]('https://developer.spotify.com/dashboard/applications) and add
@@ -90,7 +89,7 @@ async def module_name(bot: UserBot, message: Message):
 This example is only for Pyrogram on_message events. 
 
 ## Known issues
-* `.restart` command do not work on Termux as psutils is not supported on android. \
+* `.restart` command do not work on Termux as psutils is not supported on Android [See more](https://github.com/giampaolo/psutil/issues/913). \
 CTRL+C, run `git pull` and `python -m userbot` to update bot on termux.
 
 ## Credits, and Thanks to
