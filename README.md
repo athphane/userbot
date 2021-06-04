@@ -88,6 +88,10 @@ async def module_name(bot: UserBot, message: Message):
 
 This example is only for Pyrogram on_message events. 
 
+## Known issues
+* `.restart` command do not work on Termux as [psutils is not supported on Android](https://github.com/giampaolo/psutil/issues/913). \
+CTRL+C, run `git pull` and `python -m userbot` to update bot on termux.
+
 ## Credits, and Thanks to
 *  [Dan](https://t.me/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
 
