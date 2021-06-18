@@ -9,15 +9,15 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command("pin", ".") & filters.me)
-async def pin_message(_, message: Message):
+async def pin_message(bot: UserBot, message: Message):
     # First of all check if its a group or not
     if message.chat.type in ["group", "supergroup"]:
         # Here lies the sanity checks
-        admins = await UserBot.get_chat_members(
+        admins = await bot.get_chat_members(
             message.chat.id, filter=ChatMemberFilters.ADMINISTRATORS
         )
         admin_ids = [user.user.id for user in admins]
-        me = await UserBot.get_me()
+        me = await bot.get_me()
 
         # If you are an admin
         if me.id in admin_ids:
@@ -34,7 +34,7 @@ async def pin_message(_, message: Message):
                     disable_notification = False
 
                 # Pin the fucking message.
-                await UserBot.pin_chat_message(
+                await bot.pin_chat_message(
                     message.chat.id,
                     message.reply_to_message.message_id,
                     disable_notification=disable_notification,
@@ -52,7 +52,7 @@ async def pin_message(_, message: Message):
         # Are you fucking dumb this is not a group ffs.
         await message.edit("`This is not a place where I can pin shit.`")
 
-    # And of course delete your lame attempt at changing the group picture.
+    # And of course delete your lame attempt at pinning a message.
     # RIP you.
     # You're probably gonna get ridiculed by everyone in the group for your failed attempt.
     # RIP.
