@@ -1,3 +1,4 @@
+import asyncio
 import time
 
 from pyrogram import filters
@@ -11,20 +12,22 @@ from userbot.helpers.adminHelpers import CheckAdmin, CheckReplyAdmin, RestrictFa
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command("ban", ".") & filters.me)
-async def ban_hammer(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
+@UserBot.on_message(filters.command('ban', '.') & filters.me)
+async def ban_hammer(bot: UserBot, message: Message):
+    duration = int(message.command[1]) if len(message.command) > 1 else False
+
+    if await CheckReplyAdmin(message) and await CheckAdmin(message):
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            if message.command == ["ban", "24"]:
-                await UserBot.kick_chat_member(
+            if duration:
+                await bot.kick_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
-                    until_date=int(time.time() + 86400),
+                    until_date=int(time.time() + (duration * 3600)),
                 )
-                await message.edit(f"{mention} has been banned for 24hrs.")
+                await message.edit(f"{mention} has been banned for {duration} Hours.")
             else:
-                await UserBot.kick_chat_member(
+                await bot.kick_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                 )
@@ -34,13 +37,15 @@ async def ban_hammer(_, message: Message):
 
 
 @UserBot.on_message(filters.command("unban", ".") & filters.me)
-async def unban(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
+async def unban(bot: UserBot, message: Message):
+    if await CheckReplyAdmin(message) and await CheckAdmin(message):
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            await UserBot.unban_chat_member(
+
+            await bot.unban_chat_member(
                 chat_id=message.chat.id, user_id=message.reply_to_message.from_user.id
             )
+
             await message.edit(
                 f"Congratulations {mention} you have been unbanned."
                 " Follow the rules and be careful from now on."
@@ -65,21 +70,23 @@ mute_permission = ChatPermissions(
 )
 
 
-@UserBot.on_message(filters.command(["mute", "mute 24"], ".") & filters.me)
-async def mute_hammer(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
+@UserBot.on_message(filters.command('mute', '.') & filters.me)
+async def mute_hammer(bot: UserBot, message: Message):
+    duration = int(message.command[1]) if len(message.command) > 1 else False
+
+    if await CheckReplyAdmin(message) and await CheckAdmin(message):
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            if message.command == ["mute", "24"]:
-                await UserBot.restrict_chat_member(
+            if duration:
+                await bot.restrict_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     permissions=mute_permission,
-                    until_date=int(time.time() + 86400),
+                    until_date=int(time.time() + (duration * 3600)),
                 )
-                await message.edit(f"{mention} has been muted for 24hrs.")
+                await message.edit(f"{mention} has been muted for {duration} Hours.")
             else:
-                await UserBot.restrict_chat_member(
+                await bot.restrict_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     permissions=mute_permission,
@@ -106,30 +113,34 @@ unmute_permissions = ChatPermissions(
 
 
 @UserBot.on_message(filters.command("unmute", ".") & filters.me)
-async def unmute(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
+async def unmute(bot: UserBot, message: Message):
+    if await CheckReplyAdmin(message) and await CheckAdmin(message):
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            await UserBot.restrict_chat_member(
+
+            await bot.restrict_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
                 permissions=unmute_permissions,
             )
+
             await message.edit(f"{mention}, you may send messages here now.")
         except UserAdminInvalid:
             await RestrictFailed(message)
 
 
 @UserBot.on_message(filters.command("kick", ".") & filters.me)
-async def kick_user(_, message: Message):
-    if await CheckReplyAdmin(message) is True and await CheckAdmin(message) is True:
+async def kick_user(bot: UserBot, message: Message):
+    if await CheckReplyAdmin(message) and await CheckAdmin(message):
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
-            await UserBot.kick_chat_member(
+
+            await bot.kick_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
             )
-            await message.edit(f"{mention}, Sayonara motherfucker.")
+
+            await message.edit(f"Goodbye, {mention}.")
         except UserAdminInvalid:
             await RestrictFailed(message)
 
@@ -137,11 +148,9 @@ async def kick_user(_, message: Message):
 add_command_help(
     "ban",
     [
-        [".ban", "Bans user indefinitely."],
-        [".ban 24", "Bans user for 24hrs."],
+        [".ban", "Bans user for specified hours or indefinitely."],
         [".unban", "Unbans the user."],
-        [".mute", "Mutes user indefinitely."],
-        [".mute 24", "Bans user for 24hrs."],
+        [".mute", "Bans user for specified hours or indefinitely."],
         [".unmute", "Unmutes the user."],
         [".kick", "Kicks the user out of the group."],
     ],

@@ -1,3 +1,4 @@
+import asyncio
 from time import sleep, time
 
 from pyrogram.types import Message
@@ -18,7 +19,7 @@ async def CheckAdmin(message: Message):
 
     if SELF.status not in ranks:
         await message.edit("__I'm not Admin!__")
-        sleep(2)
+        await asyncio.sleep(2)
         await message.delete()
 
     else:
@@ -28,22 +29,24 @@ async def CheckAdmin(message: Message):
             return True
         else:
             await message.edit("__No Permissions to restrict Members__")
-            sleep(2)
+            await asyncio.sleep(2)
             await message.delete()
 
 
 async def CheckReplyAdmin(message: Message):
     """Check if the message is a reply to another user."""
     if not message.reply_to_message:
-        await message.edit(f"`?{message.command[0]}` needs to be a reply")
-        sleep(2)
+        await message.edit("The command needs to be a reply")
+        await asyncio.sleep(2)
         await message.delete()
     elif message.reply_to_message.from_user.is_self:
         await message.edit(f"I can't {message.command[0]} myself.")
-        sleep(2)
+        await asyncio.sleep(2)
         await message.delete()
     else:
         return True
+
+    return False
 
 
 async def Timer(message: Message):
@@ -61,5 +64,5 @@ async def TimerString(message: Message):
 
 async def RestrictFailed(message: Message):
     await message.edit(f"I can't {message.command} this user.")
-    sleep(2)
+    await asyncio.sleep(2)
     await message.delete()
