@@ -38,11 +38,6 @@ async def download_tiktok(_, message: Message):
 
 
 
-
-    
-
-
-
 add_command_help(
     "TikTok",
     [[".t ", "given a link to a tiktok video download and send it"]],
