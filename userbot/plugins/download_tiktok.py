@@ -10,7 +10,7 @@ import os
 
 
 @UserBot.on_message(filters.command("t", ".") & filters.me)
-async def download_tiktok(_, message: Message):
+async def download_tiktok(bot: UserBot, message: Message):
     if message.reply_to_message:
         txt = message.reply_to_message.text or message.reply_to_message.caption
     elif len(message.command) > 1:
@@ -24,7 +24,7 @@ async def download_tiktok(_, message: Message):
     try:
         await message.edit("Processing link...")
         tiktok_video = await TikTok.download_tiktok(txt)
-        await _.send_video(message.chat.id, tiktok_video)
+        await bot.send_video(message.chat.id, tiktok_video)
         #await message.reply_video(tiktok_video)
         await message.delete()
         os.remove(tiktok_video)
