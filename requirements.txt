@@ -22,3 +22,4 @@ svglib
 reportlab
 spotipy
 ftpretty
+youtube_dl
