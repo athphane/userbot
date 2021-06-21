@@ -8,8 +8,6 @@ from userbot.plugins.help import add_command_help
 from userbot.helpers.tiktokHelper import TikTok
 import os
 
-#tts = ttsHelper()
-
 
 @UserBot.on_message(filters.command("t", ".") & filters.me)
 async def download_tiktok(_, message: Message):
@@ -35,7 +33,6 @@ async def download_tiktok(_, message: Message):
         print(f"{e}")
         await message.edit("Error while processing tiktok link")
         await asyncio.sleep(3)
-        await message.delete()
         await message.delete()
         return 
 
