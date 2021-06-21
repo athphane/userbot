@@ -24,17 +24,18 @@ async def download_tiktok(_, message: Message):
     try:
         await message.edit("Processing link...")
         tiktok_video = await TikTok.download_tiktok(txt)
-        await message.reply_video(tiktok_video)
+        await _.send_video(message.chat.id, tiktok_video)
+        #await message.reply_video(tiktok_video)
         await message.delete()
         os.remove(tiktok_video)
-        return 
+        return
     
     except Exception as e:
         print(f"{e}")
         await message.edit("Error while processing tiktok link")
         await asyncio.sleep(3)
         await message.delete()
-        return 
+        return
 
 
 
