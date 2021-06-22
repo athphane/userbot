@@ -24,7 +24,7 @@ async def download_tiktok(bot: UserBot, message: Message):
     try:
         await message.edit("Processing link...")
         tiktok_video = await TikTok.download_tiktok(txt)
-        await bot.send_video(message.chat.id, tiktok_video, supports_streaming=True)
+        await bot.send_video(message.chat.id, tiktok_video, caption=txt, supports_streaming=True)
         await message.delete()
         os.remove(tiktok_video)
         return
