@@ -12,7 +12,10 @@ from userbot.plugins.help import add_command_help
 
 @UserBot.on_message(filters.command(['t', 'tiktok'], '.') & filters.me)
 async def download_tiktok(bot: UserBot, message: Message):
-    if message.reply_to_message:
+
+    if len(message.command) == 2:
+        txt = message.command[1]
+    elif message.reply_to_message:
         txt = message.reply_to_message.text or message.reply_to_message.caption
     elif len(message.command) > 1:
         txt = " ".join(message.command[1:])
