@@ -1,3 +1,4 @@
+import asyncio
 import os
 import sys
 from configparser import ConfigParser
@@ -5,6 +6,7 @@ from configparser import ConfigParser
 import psutil
 from pyrogram import Client
 from pyrogram.raw.all import layer
+from pyrogram.types import Message
 
 
 class UserBot(Client):
@@ -65,3 +67,27 @@ class UserBot(Client):
 
         os.execl(sys.executable, sys.executable, "-m", self.__class__.__name__.lower())
         sys.exit()
+
+    @staticmethod
+    async def extract_command_text(message: Message, error_message=None):
+        """
+        Extracts the command text. Either command params passed to the message
+        or replied to message text.
+        """
+        if not error_message:
+            error_message = 'No input text provided'
+
+        cmd = message.command
+
+        command_text = ""
+        if len(cmd) > 1:
+            command_text = " ".join(cmd[1:])
+        elif message.reply_to_message and len(cmd) == 1:
+            command_text = message.reply_to_message.text
+        elif not message.reply_to_message and len(cmd) == 1:
+            await message.edit(error_message)
+            await asyncio.sleep(2)
+            await message.delete()
+            return
+
+        return command_text
