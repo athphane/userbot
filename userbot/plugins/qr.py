@@ -1,3 +1,5 @@
+import asyncio
+
 import cv2
 import qrcode
 from pyrogram import filters
@@ -8,14 +10,17 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command('qr', '.') & filters.me)
-async def generate_qr(_, message: Message):
+async def generate_qr(bot: UserBot, message: Message):
     if qr_text := await UserBot.extract_command_text(message):
         img = qrcode.make(qr_text)
 
         with open('downloads/qr.png', 'wb') as f:
             img.save(f)
 
-        await message.reply_photo('downloads/qr.png')
+        await asyncio.gather(
+            bot.send_photo(message.chat.id, 'downloads/qr.png'),
+            message.delete()
+        )
 
 
 @UserBot.on_message(filters.command('qrscan', '.') & filters.reply & filters.me)
