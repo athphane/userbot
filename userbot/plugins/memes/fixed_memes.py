@@ -5,6 +5,13 @@ from userbot.helpers.file_sending_helpers import send_saved_image, send_saved_an
 from userbot.plugins.help import add_command_help
 
 memes_data = {
+    "judgement": {
+        "name": "crow_of_judgement",
+        "image": "crow-of-judgement.jpg",
+        "type": "image",
+        "caption": None,
+        "help": "You will be judged.",
+    },
     "fast": {
         "name": "fast_image",
         "image": "fast.jpg",
