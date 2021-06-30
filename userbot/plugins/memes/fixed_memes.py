@@ -6,6 +6,7 @@ from userbot.plugins.help import add_command_help
 
 memes_data = {
     "judgement": {
+        "alts": ['judge', 'crow'],
         "name": "crow_of_judgement",
         "image": "crow-of-judgement.jpg",
         "type": "image",
