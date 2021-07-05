@@ -13,7 +13,7 @@ async def progress_callback(current, total, bot: UserBot, message: Message):
 
 
 @UserBot.on_message(filters.command('upload', '.') & filters.me)
-async def subreddit_link(bot: UserBot, message: Message):
+async def upload_helper(bot: UserBot, message: Message):
     if len(message.command) > 1:
         await bot.send_document('self', message.command[1], progress=progress_callback, progress_args=(bot, message))
     else:
