@@ -24,6 +24,7 @@ async def quotly(bot: UserBot, message: Message):
 
     while not is_sticker:
         try:
+            await sleep(4)
             msg = await bot.get_history("@QuotLyBot", 1)
             print(msg)
             is_sticker = True
