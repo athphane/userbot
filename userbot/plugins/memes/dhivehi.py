@@ -11,6 +11,7 @@ dhivehi_text_memes = {
     "gerey": {"alts": ["g"], "meme": "ގެރޭ", "help": "ގެރޭ"},
     "ngb": {"alts": ["n"], "meme": "ނަގޫބަޅާ", "help": "ނަގޫބަޅާ"},
     "amf": {"alts": ["a"], "meme": "އަމާފޫޅު", "help": "އަމާފޫޅު"},
+    "felha": {"alts": ["fel"], "meme": "ފެޅަ", "help": "ފެޅަ"},
     "fdb": {"alts": [], "meme": "ފަޑަބޮއެ", "help": "ފަޑަބޮއެ"},
     "kg": {"alts": [], "meme": "ކަލޯގަޔާ", "help": "ކަލޯގަޔާ"},
     "shee": {"alts": ["sheesh"], "meme": "ޝީޝް", "help": "ޝީޝް"},
