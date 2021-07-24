@@ -233,7 +233,7 @@ async def heads_tails(_, message: Message):
 
 @UserBot.on_message(filters.command(["otherwise", 'other'], ".") & filters.me)
 async def youd_think_so_but_this_says_otherwise(_, message: Message):
-    await message.edit(f"You\'d thing so, but this says <a href='https://i.imgur.com/nzncews.jpg'>otherwise</a>.")
+    await message.edit(f"You\'d think so, but this says <a href='https://i.imgur.com/nzncews.jpg'>otherwise</a>.")
 
 
 @UserBot.on_message(filters.command("reverset", ".") & filters.me)
