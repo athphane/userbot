@@ -7,14 +7,23 @@ from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetUserMentionable
+from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.helpers.constants import Fs, MEMES, Weebify
 from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
 
 
+@UserBot.on_message(filters.command("lorem", ".") & filters.me)
+async def lorem(_, message: Message):
+    response = await AioHttp().get_text('https://loripsum.net/api/plaintext')
+    print(response)
+    await message.edit(response)
+
+
 @UserBot.on_message(filters.command("nice", ".") & filters.me)
 async def nice(_, message: Message):
     await message.edit("NICENICENICENICE")
+
 
 
 @UserBot.on_message(filters.command("reverse", ".") & filters.me)
