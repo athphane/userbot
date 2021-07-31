@@ -1,7 +1,8 @@
-from pyrogram import filters, emoji
+from pyrogram import emoji, filters
 from pyrogram.types import Message
+
 from userbot import UserBot
-from userbot.helpers.file_sending_helpers import send_saved_image, send_saved_animation
+from userbot.helpers.file_sending_helpers import send_saved_animation, send_saved_image
 from userbot.plugins.help import add_command_help
 
 memes_data = {
@@ -112,6 +113,14 @@ memes_data = {
         "type": "image",
         "caption": None,
         "help": "Are you dumb?.",
+    },
+    "confused": {
+        "alts": ["confuse", 'huh', 'what'],
+        "name": "confused",
+        "image": "confused.jpg",
+        "type": "image",
+        "caption": None,
+        "help": "Que?",
     },
 }
 
