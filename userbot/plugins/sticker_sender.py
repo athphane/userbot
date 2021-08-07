@@ -19,6 +19,7 @@ SETS = {
 
 @UserBot.on_message(filters.command(["sticker"], ".") & filters.me)
 async def sticker_sender(bot: UserBot, message: Message):
+    await message.delete()
     if len(message.command) > 1:
         set_to_send = message.command[1]
 
