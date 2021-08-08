@@ -1,6 +1,6 @@
 from pyrogram import filters
 from pyrogram.types import Message
-
+from pyrogram.errors import ChatSendStickersForbidden
 from userbot import UserBot
 
 SETS = {
@@ -19,7 +19,6 @@ SETS = {
 
 @UserBot.on_message(filters.command(["sticker"], ".") & filters.me)
 async def sticker_sender(bot: UserBot, message: Message):
-    await message.delete()
     if len(message.command) > 1:
         set_to_send = message.command[1]
 
@@ -29,8 +28,14 @@ async def sticker_sender(bot: UserBot, message: Message):
         stickers = SETS[set_to_send]
 
         for x in stickers:
-            await bot.send_sticker(message.chat.id, x)
+            try:
+                await bot.send_sticker(message.chat.id, x)
+            except ChatSendStickersForbidden:
+                await message.edit("```Cannot send stickers here```")
+                await message.delete()
+                return
 
+        await message.delete()
 
 @UserBot.on_message(filters.sticker & filters.me)
 async def sticker_sender(_, message: Message):
