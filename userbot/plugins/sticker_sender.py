@@ -37,6 +37,7 @@ async def sticker_sender(bot: UserBot, message: Message):
 
         await message.delete()
 
-@UserBot.on_message(filters.sticker & filters.me)
-async def sticker_sender(_, message: Message):
-    print(message.sticker.file_id)
+
+# @UserBot.on_message(filters.sticker & filters.me)
+# async def sticker_sender(_, message: Message):
+#     print(message.sticker.file_id)
