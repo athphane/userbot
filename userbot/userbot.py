@@ -5,12 +5,14 @@ from configparser import ConfigParser
 
 import psutil
 from pyrogram import Client
+from pyrogram.raw import functions
 from pyrogram.raw.all import layer
 from pyrogram.types import Message
 
 
 class UserBot(Client):
     def __init__(self, version='0.0.0'):
+        self.bio = None
         self.version = version
         self.name = name = self.__class__.__name__.lower()
         config_file = f"{name}.ini"
@@ -40,12 +42,24 @@ class UserBot(Client):
 
             break
 
-        me = await self.get_me()
+        await self.load_bio()
 
+        me = await self.get_me()
         print(f"{self.__class__.__name__} v{self.version} (Layer {layer}) started on @{me.username}.\n"
               f"Hi!")
 
+    async def load_bio(self):
+        my_chat = await self.get_chat('self')
+        self.bio = my_chat.description
+
+    async def unload_bio(self):
+        await self.send(functions.account.UpdateProfile(
+            about=self.bio
+        ))
+
     async def stop(self, *args):
+        await self.unload_bio()
+
         await super().stop()
         print(f"{self.__class__.__name__} v{self.version} Stopped. Bye.")
 

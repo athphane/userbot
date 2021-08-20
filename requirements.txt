@@ -1,5 +1,5 @@
 aiohttp
-apscheduler
+APScheduler==3.7.0
 cowpy
 dnspython
 git-python

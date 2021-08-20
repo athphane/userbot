@@ -3,6 +3,7 @@ import asyncio
 from pyrogram import filters
 from pyrogram.types import Message
 from userbot import UserBot, ALLOWED_USERS
+from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
 
 
@@ -47,7 +48,7 @@ async def send_music(_, message: Message):
             await UserBot.send_audio(
                 chat_id=message.chat.id,
                 audio=str(saved.audio.file_id),
-                reply_to_message_id=reply_to,
+                reply_to_message_id=ReplyCheck(message),
             )
 
             # delete the message from Saved Messages

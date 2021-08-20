@@ -6,7 +6,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from userbot import UserBot
-from userbot.helpers.PyroHelpers import GetChatID
+from userbot.helpers.PyroHelpers import GetChatID, ReplyCheck
 from userbot.plugins.help import add_command_help
 
 AFK = False
@@ -42,7 +42,7 @@ async def collect_afk_messages(_, message: Message):
             await UserBot.send_message(
                 chat_id=GetChatID(message),
                 text=text,
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=ReplyCheck(message),
             )
             CHAT_TYPE[GetChatID(message)] = 1
             return
@@ -58,7 +58,7 @@ async def collect_afk_messages(_, message: Message):
                 await UserBot.send_message(
                     chat_id=GetChatID(message),
                     text=text,
-                    reply_to_message_id=message.message_id,
+                    reply_to_message_id=ReplyCheck(message),
                 )
             elif CHAT_TYPE[GetChatID(message)] > 50:
                 return
@@ -72,7 +72,7 @@ async def collect_afk_messages(_, message: Message):
                 await UserBot.send_message(
                     chat_id=GetChatID(message),
                     text=text,
-                    reply_to_message_id=message.message_id,
+                    reply_to_message_id=ReplyCheck(message),
                 )
 
         CHAT_TYPE[GetChatID(message)] += 1
@@ -139,10 +139,7 @@ async def auto_afk_unset(_, message: Message):
 add_command_help(
     "afk",
     [
-        [
-            ".afk",
-            "Activates AFK mode with reason as anything after .afk\nUsage: ```.afk <reason>```",
-        ],
+        [".afk", "Activates AFK mode with reason as anything after .afk\nUsage: ```.afk <reason>```"],
         ["!afk", "Deactivates AFK mode."],
     ],
 )
