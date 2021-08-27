@@ -50,7 +50,7 @@ async def stickered(_, message: Message):
             if chat_details["chat_id"] == message.chat.id\
                     and chat_details['sticker_id'] == message.sticker.file_unique_id:
                 await message.delete()
-    catch Exception as e:
+    except Exception as e:
         print("Sticker Deleter: MongoDB not configured")
 
 
