@@ -25,7 +25,6 @@ async def nice(_, message: Message):
     await message.edit("NICENICENICENICE")
 
 
-
 @UserBot.on_message(filters.command("reverse", ".") & filters.me)
 async def reverse(_, message: Message):
     await message.edit(
@@ -308,6 +307,11 @@ async def flip_text(_, message):
         await message.edit(text)
 
 
+@UserBot.on_message(filters.me & filters.command('silence', '.'))
+async def silence_wench(_, message):
+    await message.edit("Silence wench. Do not speak of the forbidden scripture to me. I was there when it was written.")
+
+
 # Command help section
 add_command_help(
     "text",
@@ -316,14 +320,8 @@ add_command_help(
         [".compliment", "Replaces command with a nice compliment."],
         [".devexcuse", "Replaces command with an excuse that a developer would give."],
         [".reverse", "Sends ASCII version of the Uno reverse card."],
-        [
-            ".slap",
-            "Sends a randomly generated slap text. Can become very random at some times.",
-        ],
-        [
-            ".insult",
-            "Sends a randomly generated insult. Can become very random at some times.",
-        ],
+        [".slap", "Sends a randomly generated slap text. Can become very random at some times."],
+        [".insult", "Sends a randomly generated insult. Can become very random at some times."],
         [".vapor", "Vaporizes the text."],
         [".weeb `or` .weebify", "Weebifies the text."],
         [".ok", "Sends -_____- with a fast animation."],
@@ -340,5 +338,6 @@ add_command_help(
         [".reverset", "Reverses the text"],
         [".shrug", "Random shrug"],
         [".tableflip", "Flip the table"],
+        [".silence", "Silence wench"],
     ],
 )
