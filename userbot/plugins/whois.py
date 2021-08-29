@@ -99,8 +99,9 @@ async def who_is(bot: UserBot, message: Message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    desc = await bot.get_chat(get_user)
-    desc = desc.description
+
+    user_details = await bot.get_chat(get_user)
+    bio = user_details.bio
     user_pic = await bot.get_profile_photos(user.id)
     pic_count = await bot.get_profile_photos_count(user.id)
     common = await GetCommon(bot, user.id)
@@ -115,7 +116,7 @@ async def who_is(bot: UserBot, message: Message):
                 username=user.username if user.username else "",
                 last_online=LastOnline(user),
                 common_groups=len(common.chats),
-                bio=desc if desc else "`No bio set up.`",
+                bio=bio if bio else "`No bio set up.`",
             ),
             disable_web_page_preview=True,
         )
@@ -132,7 +133,7 @@ async def who_is(bot: UserBot, message: Message):
                 last_online=LastOnline(user),
                 profile_pics=pic_count,
                 common_groups=len(common.chats),
-                bio=desc if desc else "`No bio set up.`",
+                bio=bio if bio else "`No bio set up.`",
                 profile_pic_update=ProfilePicUpdate(user_pic),
             ),
             reply_to_message_id=ReplyCheck(message),
