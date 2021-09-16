@@ -30,7 +30,7 @@ async def prep_animal_image(input_animal):
     return image
 
 
-@UserBot.on_message(filters.command(animals_without_facts, [".", ""]) & filters.me)
+@UserBot.on_message(filters.command(animals_without_facts, ["."]) & filters.me)
 async def animal_image(_, message: Message):
     cmd = message.command
 
