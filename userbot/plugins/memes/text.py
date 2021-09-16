@@ -16,7 +16,6 @@ from userbot.plugins.help import add_command_help
 @UserBot.on_message(filters.command("lorem", ".") & filters.me)
 async def lorem(_, message: Message):
     response = await AioHttp().get_text('https://loripsum.net/api/plaintext')
-    print(response)
     await message.edit(response)
 
 
