@@ -33,13 +33,16 @@ class UserBot(Client):
         restart_reply_details = super().search_messages("me", query="#userbot_restart")
         async for x in restart_reply_details:
             _, chat_id, message_id = x.text.split(", ")
+            
+            try:
+                await super().edit_message_text(
+                    int(chat_id), int(message_id), "`Userbot Restarted!`"
+                )
 
-            await super().edit_message_text(
-                int(chat_id), int(message_id), "`Userbot Restarted!`"
-            )
-
-            await super().delete_messages("me", x.message_id)
-
+                await super().delete_messages("me", x.message_id)
+            except Exception as c_e:
+                print(c_e)
+            
             break
 
         await self.load_bio()
