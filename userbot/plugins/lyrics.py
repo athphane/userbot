@@ -55,7 +55,6 @@ async def send_lyrics(_, message: Message):
             await asyncio.sleep(2)
         await message.delete()
     except Exception as e:
-        print(e)
         await message.edit("`Failed to find lyrics`")
         await asyncio.sleep(2)
         await message.delete()

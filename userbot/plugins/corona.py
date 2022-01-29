@@ -37,7 +37,6 @@ async def corona_all(_, message: Message):
         await message.edit(f"```{str(ac)}```\nLast updated on: {last_updated}")
     except Exception as e:
         await message.edit("`The corona API could not be reached`")
-        print(e)
         await asyncio.sleep(3)
         await message.delete()
 
