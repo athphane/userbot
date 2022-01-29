@@ -114,7 +114,7 @@ async def define(_, message: Message):
         last_output = out_print(r_dec)
         if last_output:
             await message.edit(
-                "`Search reasult for   `" + f" {v_word}\n\n" + last_output
+                "`Search result for   `" + f" {v_word}\n\n" + last_output
             )
         else:
             await message.edit("`No result found from the database.`")
