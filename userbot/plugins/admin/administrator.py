@@ -98,7 +98,7 @@ unmute_permissions = ChatPermissions(
     can_send_other_messages=True,
     can_add_web_page_previews=True,
     can_send_polls=True,
-    can_change_info=True,
+    can_change_info=False,
     can_invite_users=True,
     can_pin_messages=False,
 )
