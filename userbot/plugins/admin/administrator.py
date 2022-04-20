@@ -2,7 +2,7 @@ import time
 
 from pyrogram import filters
 from pyrogram.errors import UserAdminInvalid
-from pyrogram.types import Message, ChatPermissions
+from pyrogram.types import ChatPermissions, Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetUserMentionable
@@ -18,14 +18,14 @@ async def ban_hammer(bot: UserBot, message: Message):
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
             if duration:
-                await bot.kick_chat_member(
+                await bot.ban_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     until_date=int(time.time() + (duration * 3600)),
                 )
                 await message.edit(f"{mention} has been banned for {duration} Hours.")
             else:
-                await bot.kick_chat_member(
+                await bot.ban_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                 )
@@ -127,9 +127,10 @@ async def kick_user(bot: UserBot, message: Message):
         try:
             mention = GetUserMentionable(message.reply_to_message.from_user)
 
-            await bot.kick_chat_member(
+            await bot.ban_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
+                until_date=int(time.time() + (int(time.time()) * 3600)),
             )
 
             await message.edit(f"Goodbye, {mention}.")

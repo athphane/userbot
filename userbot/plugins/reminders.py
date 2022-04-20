@@ -1,14 +1,15 @@
 from time import sleep
 
-from pyrogram import filters, emoji
+from pyrogram import emoji, filters
 from pyrogram.types import Message
+
 from userbot import UserBot
 from userbot.database.reminders import Reminders
 from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command("reminders", ".") & filters.me)
-async def show_all_reminders(_, message: Message):
+async def show_all_reminders(bot: UserBot, message: Message):
     reminders = Reminders().get_all_reminders()
     if len(reminders) != 0:
         send_text = "**==== My Reminders ====** \n"
@@ -26,7 +27,7 @@ async def show_all_reminders(_, message: Message):
 
 
 @UserBot.on_message(filters.command("remind", ".") & filters.me)
-async def remind(_, message: Message):
+async def remind(bot: UserBot, message: Message):
     cmd = message.command
     remind_text = ""
     if len(cmd) > 1:
@@ -48,7 +49,7 @@ async def remind(_, message: Message):
 
 
 @UserBot.on_message(filters.command("reminder", "!") & filters.me)
-async def delete_reminder(_, message: Message):
+async def delete_reminder(bot: UserBot, message: Message):
     cmd = message.command
     reminder_id = ""
     if len(cmd) > 1:

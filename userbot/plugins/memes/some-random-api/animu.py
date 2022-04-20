@@ -12,7 +12,7 @@ gif_categories = ['wink', 'pat', 'hug', 'face-palm']
 
 
 @UserBot.on_message(filters.command(["animu-gif", "anime-gif"], ".") & filters.me)
-async def animu_gifs(_, message: Message):
+async def animu_gifs(bot: UserBot, message: Message):
     cmd = message.command
 
     if not (len(cmd) >= 2):
@@ -35,7 +35,7 @@ async def animu_gifs(_, message: Message):
             await message.delete()
         else:
             await message.delete()
-            await UserBot.send_animation(
+            await bot.send_animation(
                 chat_id=message.chat.id,
                 animation=gif,
                 reply_to_message_id=ReplyCheck(message)
@@ -47,7 +47,7 @@ async def animu_gifs(_, message: Message):
 
 
 @UserBot.on_message(filters.command(["animu-quote", "anime-quote"], ".") & filters.me)
-async def animu_fact(_, message: Message):
+async def animu_fact(bot: UserBot, message: Message):
     try:
         data = await AioHttp().get_json('https://some-random-api.ml/animu/quote')
     except Exception:

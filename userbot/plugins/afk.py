@@ -25,7 +25,7 @@ def subtract_time(start, end):
 @UserBot.on_message(
     ((filters.group & filters.mentioned) | filters.private) & ~filters.me & ~filters.service, group=3
 )
-async def collect_afk_messages(_, message: Message):
+async def collect_afk_messages(bot: UserBot, message: Message):
     if AFK:
         last_seen = subtract_time(datetime.now(), AFK_TIME)
         is_group = True if message.chat.type in ["supergroup", "group"] else False
@@ -39,7 +39,7 @@ async def collect_afk_messages(_, message: Message):
                 f"Reason: ```{AFK_REASON.upper()}```\n"
                 f"See you after I'm done doing whatever I'm doing.`"
             )
-            await UserBot.send_message(
+            await bot.send_message(
                 chat_id=GetChatID(message),
                 text=text,
                 reply_to_message_id=ReplyCheck(message),
@@ -55,7 +55,7 @@ async def collect_afk_messages(_, message: Message):
                     f"I'll get to you when I get to you.\n"
                     f"No more auto messages for you`"
                 )
-                await UserBot.send_message(
+                await bot.send_message(
                     chat_id=GetChatID(message),
                     text=text,
                     reply_to_message_id=ReplyCheck(message),
@@ -69,7 +69,7 @@ async def collect_afk_messages(_, message: Message):
                     f"Still busy: ```{AFK_REASON.upper()}```\n"
                     f"Try pinging a bit later.`"
                 )
-                await UserBot.send_message(
+                await bot.send_message(
                     chat_id=GetChatID(message),
                     text=text,
                     reply_to_message_id=ReplyCheck(message),
@@ -79,7 +79,7 @@ async def collect_afk_messages(_, message: Message):
 
 
 @UserBot.on_message(filters.command("afk", ".") & filters.me, group=3)
-async def afk_set(_, message: Message):
+async def afk_set(bot: UserBot, message: Message):
     global AFK_REASON, AFK, AFK_TIME
 
     cmd = message.command
@@ -98,7 +98,7 @@ async def afk_set(_, message: Message):
 
 
 @UserBot.on_message(filters.command("afk", "!") & filters.me, group=3)
-async def afk_unset(_, message: Message):
+async def afk_unset(bot: UserBot, message: Message):
     global AFK, AFK_TIME, AFK_REASON, USERS, GROUPS
 
     if AFK:
@@ -118,7 +118,7 @@ async def afk_unset(_, message: Message):
 
 
 @UserBot.on_message(filters.me, group=3)
-async def auto_afk_unset(_, message: Message):
+async def auto_afk_unset(bot: UserBot, message: Message):
     global AFK, AFK_TIME, AFK_REASON, USERS, GROUPS
 
     if AFK:

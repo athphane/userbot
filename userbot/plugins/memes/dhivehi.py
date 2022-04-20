@@ -1,5 +1,6 @@
 from pyrogram import filters
 from pyrogram.types import Message
+
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
@@ -17,8 +18,9 @@ dhivehi_text_memes = {
     "kg": {"alts": [], "meme": "ކަލޯގަޔާ", "help": "ކަލޯގަޔާ"},
     "shee": {"alts": ["sheesh"], "meme": "ޝީޝް", "help": "ޝީޝް"},
     "sdga": {"alts": ["sdg"], "meme": "ehenmei dhen  صدق الله العظيم", "help": " صدق الله العظيم"},
-    "drespect": {"alts": ["dead", 'loss', 'prayers'], "meme": "انا لله وانا اليه راجعون", 'help': 'When someone dies and you '
-                                                                                       'want to show respect.'},
+    "drespect": {"alts": ["dead", 'loss', 'prayers'], "meme": "انا لله وانا اليه راجعون",
+                 'help': 'When someone dies and you '
+                         'want to show respect.'},
 }
 
 dhivehi_text_memes_commands = []
@@ -38,7 +40,7 @@ for dv in dhivehi_text_memes:
 
 
 @UserBot.on_message(filters.command(dhivehi_text_memes_commands, ".") & filters.me)
-async def dhivehi_memes(_, message: Message):
+async def dhivehi_memes(bot: UserBot, message: Message):
     cmd = message.command[0]
 
     meme = None

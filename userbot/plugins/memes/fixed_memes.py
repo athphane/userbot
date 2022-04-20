@@ -141,7 +141,7 @@ for meme in memes_data:
 
 
 @UserBot.on_message(filters.command(memes, ".") & filters.me)
-async def fixed_memes(_, message: Message):
+async def fixed_memes(bot: UserBot, message: Message):
     await message.delete()
 
     cmd = message.command[0]

@@ -11,7 +11,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command("c", ".") & filters.me)
-async def corona_all(_, message: Message):
+async def corona_all(bot: UserBot, message: Message):
     try:
         r = await AioHttp().get_json("https://corona.lmao.ninja/v2/all?yesterday=true")
         last_updated = datetime.datetime.fromtimestamp(r["updated"] / 1000).strftime(
@@ -42,7 +42,7 @@ async def corona_all(_, message: Message):
 
 
 @UserBot.on_message(filters.command("cs", ".") & filters.me)
-async def corona_search(_, message: Message):
+async def corona_search(bot: UserBot, message: Message):
     cmd = message.command
 
     if not (len(cmd) >= 2):

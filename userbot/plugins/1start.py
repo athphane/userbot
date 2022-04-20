@@ -2,17 +2,16 @@ import asyncio
 from datetime import datetime
 from platform import python_version
 
-from pyrogram import filters
+from pyrogram import __version__, filters
 from pyrogram.types import Message
-from pyrogram import __version__
 
-from userbot import UserBot, START_TIME
+from userbot import START_TIME, UserBot
 from userbot.helpers.constants import First
 from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command("alive", ".") & filters.me)
-async def alive(_, message: Message):
+async def alive(bot: UserBot, message: Message):
     txt = (
         f"**{UserBot.__class__.__name__}** ```RUNNING```\n"
         f"-> Current Uptime: `{str(datetime.now() - START_TIME).split('.')[0]}`\n"
@@ -23,24 +22,24 @@ async def alive(_, message: Message):
 
 
 @UserBot.on_message(filters.command("repo", ".") & filters.me)
-async def repo(_, message: Message):
+async def repo(bot: UserBot, message: Message):
     await message.edit(First.REPO)
 
 
 @UserBot.on_message(filters.command("creator", ".") & filters.me)
-async def creator(_, message: Message):
+async def creator(bot: UserBot, message: Message):
     await message.edit(First.CREATOR)
 
 
 @UserBot.on_message(filters.command(["uptime", "up"], ".") & filters.me)
-async def uptime(_, message: Message):
+async def uptime(bot: UserBot, message: Message):
     now = datetime.now()
     current_uptime = now - START_TIME
     await message.edit(f"Current Uptime\n" f"```{str(current_uptime).split('.')[0]}```")
 
 
 @UserBot.on_message(filters.command("id", ".") & filters.me)
-async def get_id(_, message: Message):
+async def get_id(bot: UserBot, message: Message):
     file_id = None
     user_id = None
 
@@ -49,17 +48,14 @@ async def get_id(_, message: Message):
 
         if rep.audio:
             file_id = f"**File ID**: `{rep.audio.file_id}`"
-            file_id += f"**File Ref**: `{rep.audio.file_ref}`"
             file_id += "**File Type**: `audio`"
 
         elif rep.document:
             file_id = f"**File ID**: `{rep.document.file_id}`"
-            file_id += f"**File Ref**: `{rep.document.file_ref}`"
             file_id += f"**File Type**: `{rep.document.mime_type}`"
 
         elif rep.photo:
             file_id = f"**File ID**: `{rep.photo.file_id}`"
-            file_id += f"**File Ref**: `{rep.photo.file_ref}`"
             file_id += "**File Type**: `photo`"
 
         elif rep.sticker:
@@ -77,22 +73,18 @@ async def get_id(_, message: Message):
 
         elif rep.video:
             file_id = f"**File ID**: `{rep.video.file_id}`\n"
-            file_id += f"**File Ref**: `{rep.video.file_ref}`\n"
             file_id += "**File Type**: `video`"
 
         elif rep.animation:
             file_id = f"**File ID**: `{rep.animation.file_id}`\n"
-            file_id += f"**File Ref**: `{rep.animation.file_ref}`\n"
             file_id += "**File Type**: `GIF`"
 
         elif rep.voice:
             file_id = f"**File ID**: `{rep.voice.file_id}`\n"
-            file_id += f"**File Ref**: `{rep.voice.file_ref}`\n"
             file_id += "**File Type**: `Voice Note`"
 
         elif rep.video_note:
             file_id = f"**File ID**: `{rep.animation.file_id}`\n"
-            file_id += f"**File Ref**: `{rep.animation.file_ref}`\n"
             file_id += "**File Type**: `Video Note`"
 
         elif rep.location:
@@ -136,9 +128,9 @@ async def get_id(_, message: Message):
 
 
 @UserBot.on_message(filters.command("restart", ".") & filters.me)
-async def restart(_, message: Message):
+async def restart(bot: UserBot, message: Message):
     await message.edit(f"Restarting {UserBot.__class__.__name__}.")
-    await UserBot.send_message(
+    await bot.send_message(
         "me", f"#userbot_restart, {message.chat.id}, {message.message_id}"
     )
 

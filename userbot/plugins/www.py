@@ -15,7 +15,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command(["speed", "speedtest"], ".") & filters.me)
-async def speed_test(_, message: Message):
+async def speed_test(bot: UserBot, message: Message):
     new_msg = await message.edit("`Running speed test . . .`")
     spd = speedtest.Speedtest()
 
@@ -47,13 +47,13 @@ async def speed_test(_, message: Message):
 
 
 @UserBot.on_message(filters.command("dc", ".") & filters.me)
-async def nearest_dc(_, message: Message):
-    dc = await UserBot.send(functions.help.GetNearestDc())
+async def nearest_dc(bot: UserBot, message: Message):
+    dc = await bot.send(functions.help.GetNearestDc())
     await message.edit(WWW.NearestDC.format(dc.country, dc.nearest_dc, dc.this_dc))
 
 
 @UserBot.on_message(filters.command("ping", ".") & filters.me)
-async def ping_me(_, message: Message):
+async def ping_me(bot: UserBot, message: Message):
     """Ping the assistant"""
     start = time.time()
     reply = await message.reply_text("...")
@@ -62,7 +62,7 @@ async def ping_me(_, message: Message):
 
 
 @UserBot.on_message(filters.command("expand", ".") & filters.me)
-async def expand(_, message: Message):
+async def expand(bot: UserBot, message: Message):
     if message.reply_to_message:
         url = message.reply_to_message.text or message.reply_to_message.caption
     elif len(message.command) > 1:
@@ -84,7 +84,7 @@ async def expand(_, message: Message):
 
 
 @UserBot.on_message(filters.command("shorten", ".") & filters.me)
-async def shorten(_, message: Message):
+async def shorten(bot: UserBot, message: Message):
     keyword = None
 
     if message.reply_to_message:

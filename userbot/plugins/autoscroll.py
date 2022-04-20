@@ -10,13 +10,13 @@ f = filters.chat([])
 
 
 @UserBot.on_message(f)
-async def auto_read(_, message: Message):
+async def auto_read(bot: UserBot, message: Message):
     await UserBot.read_history(message.chat.id)
     message.continue_propagation()
 
 
 @UserBot.on_message(filters.command("autoscroll", ".") & filters.me)
-async def add_to_auto_read(_, message: Message):
+async def add_to_auto_read(bot: UserBot, message: Message):
     if message.chat.id in f:
         f.remove(message.chat.id)
         await message.edit("Autoscroll deactivated")

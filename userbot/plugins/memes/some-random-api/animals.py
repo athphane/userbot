@@ -31,7 +31,7 @@ async def prep_animal_image(input_animal):
 
 
 @UserBot.on_message(filters.command(animals_without_facts, ["."]) & filters.me)
-async def animal_image(_, message: Message):
+async def animal_image(bot: UserBot, message: Message):
     cmd = message.command
 
     if len(message.command) > 1:
@@ -39,7 +39,7 @@ async def animal_image(_, message: Message):
 
     if cmd[0].lower() in animals_without_facts:
         await message.delete()
-        await UserBot.send_photo(
+        await bot.send_photo(
             chat_id=message.chat.id,
             photo=await prep_animal_image(cmd[0].lower()),
             reply_to_message_id=ReplyCheck(message),
@@ -47,7 +47,7 @@ async def animal_image(_, message: Message):
 
 
 @UserBot.on_message(filters.command("fact", ".") & filters.me)
-async def fact(_, message: Message):
+async def fact(bot: UserBot, message: Message):
     cmd = message.command
 
     if not (len(cmd) >= 2):

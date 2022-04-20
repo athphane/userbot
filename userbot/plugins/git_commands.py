@@ -19,7 +19,7 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command(["lastcommit", "lc"], ".") & filters.me)
-async def last_commit(_, message: Message):
+async def last_commit(bot: UserBot, message: Message):
     repo = git.Repo(os.getcwd())
     master = repo.head.reference
     commit = master.commit.message.strip()
@@ -35,7 +35,7 @@ async def last_commit(_, message: Message):
 
 
 @UserBot.on_message(filters.command(["ggraph", "commitgraph"], ".") & filters.me)
-async def commit_graph(_, message: Message):
+async def commit_graph(bot: UserBot, message: Message):
     if len(message.command) < 2:
         await message.edit(
             "Please provide a github profile username to generate the graph!"
@@ -64,7 +64,7 @@ async def commit_graph(_, message: Message):
         return
 
     await asyncio.gather(
-        UserBot.send_photo(
+        bot.send_photo(
             chat_id=message.chat.id,
             photo=f"{file_name}.png",
             caption=git_user,

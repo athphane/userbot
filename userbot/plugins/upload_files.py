@@ -5,6 +5,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from userbot import UserBot
+from userbot.plugins.help import add_command_help
 
 
 async def progress_callback(current, total, bot: UserBot, message: Message):
@@ -21,3 +22,12 @@ async def upload_helper(bot: UserBot, message: Message):
         await asyncio.sleep(3)
 
     await message.delete()
+
+
+# Command help section
+add_command_help(
+    "upload",
+    [
+        [".upload", "Upload the file to telegram from the given system file path."],
+    ],
+)

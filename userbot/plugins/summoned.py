@@ -2,16 +2,17 @@ import time
 
 from pyrogram import filters
 from pyrogram.types import Message
+
 from userbot import UserBot
 from userbot.database.summon import SUMMON
 from userbot.helpers.file_sending_helpers import send_saved_image
-from userbot.helpers.utility import random_interval, human_time
+from userbot.helpers.utility import human_time, random_interval
 from userbot.plugins.afk import AFK
 from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command("summonhere", ".") & filters.me)
-async def summon_here(_, message: Message):
+async def summon_here(bot: UserBot, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 
     if chat_details is not None:
@@ -32,7 +33,7 @@ async def summon_here(_, message: Message):
 
 
 @UserBot.on_message(filters.command("summonhere", "!") & filters.me)
-async def not_summoned_here(_, message: Message):
+async def not_summoned_here(bot: UserBot, message: Message):
     if SUMMON().delete_chat_id(message) is True:
         await message.edit("```Summon message disabled for this chat```")
     else:
@@ -43,7 +44,7 @@ async def not_summoned_here(_, message: Message):
 
 
 @UserBot.on_message(filters.incoming & filters.mentioned & ~filters.reply)
-async def summoned(_, message: Message):
+async def summoned(bot: UserBot, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 
     if chat_details is not None:
@@ -70,7 +71,7 @@ async def summoned(_, message: Message):
 
 
 @UserBot.on_message(filters.command("nextsummon", ".") & filters.me)
-async def next_summon(_, message: Message):
+async def next_summon(bot: UserBot, message: Message):
     chat_details = SUMMON().find_chat_id(message)
 
     if chat_details is not None:

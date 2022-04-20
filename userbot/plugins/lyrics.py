@@ -3,14 +3,14 @@ import asyncio
 from pyrogram import filters
 from pyrogram.types import Message
 
-from userbot import UserBot, ALLOWED_USERS
+from userbot import ALLOWED_USERS, UserBot
 from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(
     filters.command(["l", "lyrics"], ".") & (filters.me | filters.user(ALLOWED_USERS))
 )
-async def send_lyrics(_, message: Message):
+async def send_lyrics(bot: UserBot, message: Message):
     try:
         cmd = message.command
 
@@ -33,7 +33,7 @@ async def send_lyrics(_, message: Message):
 
         try:
             # send to Saved Messages because hide_via doesn't work sometimes
-            saved = await UserBot.send_inline_bot_result(
+            saved = await bot.send_inline_bot_result(
                 chat_id="me",
                 query_id=lyrics_results.query_id,
                 result_id=lyrics_results.results[0].id,

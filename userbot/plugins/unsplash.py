@@ -2,13 +2,14 @@ import asyncio
 
 from pyrogram import filters
 from pyrogram.types import Message
+
 from userbot import UserBot
 from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command(["unsplash", "pic"], ".") & filters.me)
-async def unsplash_pictures(_, message: Message):
+async def unsplash_pictures(bot: UserBot, message: Message):
     cmd = message.command
 
     if len(cmd) > 1 and isinstance(cmd[1], str):
@@ -26,7 +27,7 @@ async def unsplash_pictures(_, message: Message):
                     images.append(img)
 
             for img in images:
-                await UserBot.send_photo(message.chat.id, str(img))
+                await bot.send_photo(message.chat.id, str(img))
 
             await message.delete()
             return
@@ -36,7 +37,8 @@ async def unsplash_pictures(_, message: Message):
                 f"https://source.unsplash.com/1600x900/?{keyword}"
             )
             await asyncio.gather(
-                message.delete(), UserBot.send_photo(message.chat.id, str(img))
+                message.delete(), 
+                bot.send_photo(message.chat.id, str(img))
             )
 
 

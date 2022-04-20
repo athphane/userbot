@@ -11,10 +11,10 @@ from userbot.plugins.help import add_command_help
 @UserBot.on_message(
     filters.command(["screenshot", "ss"], ".") & filters.private & filters.me
 )
-async def screenshot(_, message: Message):
+async def screenshot(bot: UserBot, message: Message):
     await asyncio.gather(
         message.delete(),
-        UserBot.send(
+        bot.send(
             functions.messages.SendScreenshotNotification(
                 peer=await UserBot.resolve_peer(message.chat.id),
                 reply_to_msg_id=0,

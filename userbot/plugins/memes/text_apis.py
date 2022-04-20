@@ -2,7 +2,7 @@ from aiohttp.client_exceptions import ClientError
 from pyrogram import filters
 from pyrogram.types import Message
 
-from userbot import UserBot, ALLOWED_USERS
+from userbot import ALLOWED_USERS, UserBot
 from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
@@ -51,7 +51,7 @@ for x in text_apis_data:
 @UserBot.on_message(
     filters.command(text_api_commands, ".") & (filters.me | filters.user(ALLOWED_USERS))
 )
-async def text_api(_, message: Message):
+async def text_api(bot: UserBot, message: Message):
     cmd = message.command
     api_key = cmd[0]
     api = text_apis_data[api_key]

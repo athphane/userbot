@@ -89,7 +89,7 @@ async def aexec(code, b, m, r, d):
     & ~filters.edited
     & ~filters.via_bot
 )
-async def execution(_, message: Message):
+async def execution(bot: UserBot, message: Message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id

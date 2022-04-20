@@ -14,32 +14,32 @@ from userbot.plugins.help import add_command_help
 
 
 @UserBot.on_message(filters.command("lorem", ".") & filters.me)
-async def lorem(_, message: Message):
+async def lorem(bot: UserBot, message: Message):
     response = await AioHttp().get_text('https://loripsum.net/api/plaintext')
     await message.edit(response)
 
 
 @UserBot.on_message(filters.command("nice", ".") & filters.me)
-async def nice(_, message: Message):
+async def nice(bot: UserBot, message: Message):
     await message.edit("NICENICENICENICE")
 
 
 @UserBot.on_message(filters.command("reverse", ".") & filters.me)
-async def reverse(_, message: Message):
+async def reverse(bot: UserBot, message: Message):
     await message.edit(
         text=MEMES.REVERSE,
     )
 
 
 @UserBot.on_message(filters.command("cock", ".") & filters.me)
-async def cock(_, message: Message):
+async def cock(bot: UserBot, message: Message):
     await message.edit(
         text=MEMES.COCK,
     )
 
 
 @UserBot.on_message(filters.command("slap", ".") & filters.me)
-async def slap(_, message: Message):
+async def slap(bot: UserBot, message: Message):
     if message.reply_to_message is None:
         await message.edit(
             "`WHO SHOULD I SLAP?`"
@@ -76,7 +76,7 @@ async def slap(_, message: Message):
 @UserBot.on_message(
     (filters.command("-_-", "") | filters.command("ok", ".")) & filters.me
 )
-async def ok(_, message: Message):
+async def ok(bot: UserBot, message: Message):
     okay = "-_-"
     for _ in range(10):
         okay = okay[:-1] + "_-"
@@ -86,7 +86,7 @@ async def ok(_, message: Message):
 @UserBot.on_message(
     (filters.command(";_;", "") | filters.command(["sad", "cri"], ".")) & filters.me
 )
-async def sad_cri(_, message: Message):
+async def sad_cri(bot: UserBot, message: Message):
     cri = ";_;"
     for _ in range(10):
         cri = cri[:-1] + "_;"
@@ -94,7 +94,7 @@ async def sad_cri(_, message: Message):
 
 
 @UserBot.on_message(filters.regex(r"^\.?oof$") & filters.me)
-async def send_oof(_, message: Message):
+async def send_oof(bot: UserBot, message: Message):
     oof = "Oo "
     for _ in range(10):
         oof = oof[:-1] + "of"
@@ -102,7 +102,7 @@ async def send_oof(_, message: Message):
 
 
 @UserBot.on_message(filters.command("mockt", ".") & filters.me)
-async def mock_text(_, message: Message):
+async def mock_text(bot: UserBot, message: Message):
     cmd = message.command
 
     mock_t = ""
@@ -127,24 +127,24 @@ async def mock_text(_, message: Message):
 
 
 @UserBot.on_message(filters.command("brain", ".") & filters.me)
-async def brain(_, message: Message):
+async def brain(bot: UserBot, message: Message):
     for x in MEMES.BRAIN:
         await asyncio.sleep(0.35)
         await message.edit(x)
 
 
 @UserBot.on_message(filters.command("f", ".", case_sensitive=True) & filters.me)
-async def pay_respects(_, message: Message):
+async def pay_respects(bot: UserBot, message: Message):
     await message.edit(Fs().F)
 
 
 @UserBot.on_message(filters.command("F", ".", case_sensitive=True) & filters.me)
-async def pay_respects_new(_, message: Message):
+async def pay_respects_new(bot: UserBot, message: Message):
     await message.edit(Fs.BIG_F)
 
 
 @UserBot.on_message(filters.command("f", "#") & filters.me)
-async def calligraphic_f(_, message: Message):
+async def calligraphic_f(bot: UserBot, message: Message):
     await message.edit(Fs.FANCY_F)
 
 
@@ -157,7 +157,7 @@ def weebify_text(raw_text):
 
 
 @UserBot.on_message(filters.command(["weeb", "weebify"], ".") & filters.me)
-async def weebify(_, message: Message):
+async def weebify(bot: UserBot, message: Message):
     cmd = message.command
 
     raw_text = ""
@@ -175,7 +175,7 @@ async def weebify(_, message: Message):
 
 
 @UserBot.on_message(filters.command("vapor", ".") & filters.me)
-async def vapor(_, message: Message):
+async def vapor(bot: UserBot, message: Message):
     cmd = message.command
 
     vapor_text = ""
@@ -203,7 +203,7 @@ async def vapor(_, message: Message):
 
 
 @UserBot.on_message(filters.command("stretch", ".") & filters.me)
-async def stretch(_, message: Message):
+async def stretch(bot: UserBot, message: Message):
     cmd = message.command
 
     stretch_text = ""
@@ -225,21 +225,21 @@ async def stretch(_, message: Message):
 
 
 @UserBot.on_message(filters.command("beemoviescript", ".") & filters.me)
-async def bee_movie_script(_, message: Message):
+async def bee_movie_script(bot: UserBot, message: Message):
     await message.edit(
         "Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate"
     )
 
 
 @UserBot.on_message(filters.command(["ht"], ".") & filters.me)
-async def heads_tails(_, message: Message):
+async def heads_tails(bot: UserBot, message: Message):
     coin_sides = ["Heads", "Tails"]
     ht = f"Heads or Tails? `{choice(coin_sides)}`"
     await message.edit(ht)
 
 
 @UserBot.on_message(filters.command(["otherwise", 'other'], ".") & filters.me)
-async def youd_think_so_but_this_says_otherwise(_, message: Message):
+async def youd_think_so_but_this_says_otherwise(bot: UserBot, message: Message):
     disable_web_page_preview = True
     if len(message.command) > 1:
         disable_web_page_preview = False
@@ -251,7 +251,7 @@ async def youd_think_so_but_this_says_otherwise(_, message: Message):
 
 
 @UserBot.on_message(filters.command("reverset", ".") & filters.me)
-async def text_reverse(_, message: Message):
+async def text_reverse(bot: UserBot, message: Message):
     cmd = message.command
 
     reverse_text = ""
@@ -269,17 +269,17 @@ async def text_reverse(_, message: Message):
 
 
 @UserBot.on_message(filters.me & filters.command(["shg", "shrug"], "."))
-async def shrug(_, message):
+async def shrug(bot: UserBot, message):
     await message.edit(choice(MEMES.SHRUGS))
 
 
 @UserBot.on_message(filters.me & filters.command(["tableflip", "tflip"], "."))
-async def table_flip(_, message):
+async def table_flip(bot: UserBot, message):
     await message.edit(choice(MEMES.TABLE_FLIPS))
 
 
 @UserBot.on_message(filters.me & filters.command("flip", "."))
-async def flip_text(_, message):
+async def flip_text(bot: UserBot, message):
     cmd = message.command
 
     text = ""
@@ -307,7 +307,7 @@ async def flip_text(_, message):
 
 
 @UserBot.on_message(filters.me & filters.command('silence', '.'))
-async def silence_wench(_, message):
+async def silence_wench(bot: UserBot, message):
     await message.edit("Silence wench. Do not speak of the forbidden scripture to me. I was there when it was written.")
 
 

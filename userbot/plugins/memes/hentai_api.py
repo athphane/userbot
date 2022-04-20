@@ -2,7 +2,7 @@ from aiohttp.client_exceptions import ClientError
 from pyrogram import filters
 from pyrogram.types import Message
 
-from userbot import UserBot, ALLOWED_USERS
+from userbot import UserBot
 from userbot.helpers.aiohttp_helper import AioHttp
 from userbot.plugins.help import add_command_help
 
