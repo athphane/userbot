@@ -17,14 +17,16 @@ class UserBot(Client):
         self.name = name = self.__class__.__name__.lower()
         config_file = f"{name}.ini"
 
-        self.config = ConfigParser().read(config_file)
+        self.config = ConfigParser()
+        self.config.read(config_file)
 
         super().__init__(
             name,
-            config_file=config_file,
+            api_id=self.config.get('pyrogram', 'api_id'),
+            api_hash=self.config.get('pyrogram', 'api_hash'),
+            app_version=self.version,
             plugins=dict(root=f"{name}/plugins"),
             workdir="./",
-            app_version=self.version
         )
 
     async def start(self):
@@ -45,7 +47,7 @@ class UserBot(Client):
             
             break
 
-        await self.load_bio()
+        # await self.load_bio()
 
         me = await self.get_me()
         print(f"{self.__class__.__name__} v{self.version} (Layer {layer}) started on @{me.username}.\n"
@@ -55,13 +57,13 @@ class UserBot(Client):
         my_chat = await self.get_chat('self')
         self.bio = my_chat.description
 
-    async def unload_bio(self):
-        await self.send(functions.account.UpdateProfile(
-            about=self.bio
-        ))
+    # async def unload_bio(self):
+    #     await self.send(functions.account.UpdateProfile(
+    #         about=self.bio
+    #     ))
 
     async def stop(self, *args):
-        await self.unload_bio()
+        # await self.unload_bio()
 
         await super().stop()
         print(f"{self.__class__.__name__} v{self.version} Stopped. Bye.")
