@@ -40,7 +40,7 @@ pyaes==1.6.1
 pycodestyle==2.7.0
 pyflakes==2.3.1
 pymongo==4.1.1
-Pyrogram==1.4.16
+Pyrogram==2.0.24
 PySocks==1.7.1
 python-dateutil==2.8.1
 python-dotenv==0.20.0
@@ -49,7 +49,7 @@ pytz==2020.1
 qrcode==7.3.1
 reportlab==3.6.9
 Represent==1.6.0
-requests==2.24.0
+requests
 requests-async==0.6.2
 rfc3986==1.4.0
 Send2Trash==1.5.0
