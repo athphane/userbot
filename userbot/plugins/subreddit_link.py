@@ -1,3 +1,4 @@
+import pyrogram.enums
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -14,7 +15,7 @@ async def subreddit_link(bot: UserBot, message: Message):
     await message.edit(
         html.format(link="https://reddit.com/" + message.text, string=message.text),
         disable_web_page_preview=True,
-        parse_mode="html",
+        parse_mode=pyrogram.enums.ParseMode.HTML,
     )
 
 

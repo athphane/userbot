@@ -1,5 +1,6 @@
 import asyncio
 
+import pyrogram.enums.parse_mode
 from prettytable import PrettyTable
 from pyrogram import filters
 from pyrogram.types import Message
@@ -42,10 +43,10 @@ async def module_help(bot: UserBot, message: Message):
             for x in commands:
                 this_command += f"-> `{str(x)}`\n```{str(commands[x])}```\n"
 
-            await message.edit(this_command, parse_mode="markdown")
+            await message.edit(this_command, parse_mode=pyrogram.enums.ParseMode.MARKDOWN)
         else:
             await message.edit(
-                "`Please specify a valid module name.`", parse_mode="markdown"
+                "`Please specify a valid module name.`", parse_mode=pyrogram.enums.ParseMode.MARKDOWN
             )
 
     await asyncio.sleep(10)
