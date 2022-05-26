@@ -56,7 +56,6 @@ special_emoji_help = [
 ]
 
 for x in special_emojis_dict:
-    command = f".{x}"
-    special_emoji_help.append([command, special_emojis_dict[x]["help"]])
+    special_emoji_help.append([f".{x}", special_emojis_dict[x]["help"]])
 
 add_command_help("emoji", special_emoji_help)

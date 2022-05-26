@@ -29,7 +29,7 @@ async def get_old_message(message_id, media_type):
 # Save the sent media's ID to file to send faster next time
 def save_media_id(name, media: Message):
     file_json = json.load(open("file_ids.txt", "r"))
-    message_id = media.message_id
+    message_id = media.id
     file_json[name] = message_id
     with open("file_ids.txt", "w") as f:
         f.write(json.dumps(file_json))

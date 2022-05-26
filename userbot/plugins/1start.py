@@ -110,7 +110,7 @@ async def get_id(bot: UserBot, message: Message):
             )
         else:
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"
-        user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`"
+        user_detail += f"**Message ID**: `{message.reply_to_message.id}`"
         await message.edit(user_detail)
     elif file_id:
         if rep.forward_from:
@@ -119,7 +119,7 @@ async def get_id(bot: UserBot, message: Message):
             )
         else:
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"
-        user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`\n\n"
+        user_detail += f"**Message ID**: `{message.reply_to_message.id}`\n\n"
         user_detail += file_id
         await message.edit(user_detail)
 
@@ -131,7 +131,7 @@ async def get_id(bot: UserBot, message: Message):
 async def restart(bot: UserBot, message: Message):
     await message.edit(f"Restarting {UserBot.__class__.__name__}.")
     await bot.send_message(
-        "me", f"#userbot_restart, {message.chat.id}, {message.message_id}"
+        "me", f"#userbot_restart, {message.chat.id}, {message.id}"
     )
 
     if "p" in message.text and "g" in message.text:

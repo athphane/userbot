@@ -42,7 +42,7 @@ async def send_music(bot: UserBot, message: Message):
             # forward as a new message from Saved Messages
             saved = await UserBot.get_messages("me", int(saved.updates[1].message.id))
             reply_to = (
-                message.reply_to_message.message_id
+                message.reply_to_message.id
                 if message.reply_to_message
                 else None
             )
@@ -53,7 +53,7 @@ async def send_music(bot: UserBot, message: Message):
             )
 
             # delete the message from Saved Messages
-            await UserBot.delete_messages("me", saved.message_id)
+            await UserBot.delete_messages("me", saved.id)
         except TimeoutError:
             await message.edit("That didn't work out")
             await asyncio.sleep(2)

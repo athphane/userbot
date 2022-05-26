@@ -41,7 +41,7 @@ class UserBot(Client):
                     int(chat_id), int(message_id), "`Userbot Restarted!`"
                 )
 
-                await super().delete_messages("me", x.message_id)
+                await super().delete_messages("me", x.id)
             except Exception as c_e:
                 print(c_e)
             
