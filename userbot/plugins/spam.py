@@ -17,17 +17,9 @@ async def spam(bot: UserBot, message: Message):
     times = message.command[1]
     to_spam = " ".join(message.command[2:])
 
-    if message.chat.type in ["supergroup", "group"]:
-        for _ in range(int(times)):
-            await bot.send_message(
-                message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message)
-            )
-            await asyncio.sleep(0.20)
-
-    if message.chat.type == "private":
-        for _ in range(int(times)):
-            await bot.send_message(message.chat.id, to_spam)
-            await asyncio.sleep(0.20)
+    for _ in range(int(times)):
+        await bot.send_message(message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message))
+        await asyncio.sleep(0.20)
 
 
 # Command help section
