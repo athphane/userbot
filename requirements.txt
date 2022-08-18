@@ -28,7 +28,7 @@ humanize==4.1.0
 hyperframe==6.0.1
 idna==3.3
 Logbook==1.5.3
-lxml==4.8.0
+lxml==4.9.1
 mccabe==0.7.0
 multidict==6.0.2
 numpy==1.22.4
