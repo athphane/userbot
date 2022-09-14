@@ -12,6 +12,7 @@ from userbot.helpers.constants import Fs, MEMES, Weebify
 from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
 
+import uwuify
 
 @UserBot.on_message(filters.command("lorem", ".") & filters.me)
 async def lorem(bot: UserBot, message: Message):
@@ -147,6 +148,28 @@ async def pay_respects_new(bot: UserBot, message: Message):
 async def calligraphic_f(bot: UserBot, message: Message):
     await message.edit(Fs.FANCY_F)
 
+def uwu(raw_text):
+    flags = uwuify.SMILEY | uwuify.YU
+    text = uwuify.uwu(raw_text, flags=flags)
+    return text
+
+@UserBot.on_message(filters.command(["uwu", "uwuify"], ".") & filters.me)
+async def weebify(bot: UserBot, message: Message):
+    cmd = message.command
+
+    raw_text = ""
+    if len(cmd) > 1:
+        raw_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        raw_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit(f"`{weebify_text('Could not uwuify...')}`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+
+    await message.edit(uwu(raw_text))
+
 
 def weebify_text(raw_text):
     for normie_char in raw_text:
@@ -227,7 +250,7 @@ async def stretch(bot: UserBot, message: Message):
 @UserBot.on_message(filters.command("beemoviescript", ".") & filters.me)
 async def bee_movie_script(bot: UserBot, message: Message):
     await message.edit(
-        "Here is the entire Bee Movie script.\nhttps://nekobin.com/bevodokate"
+        "Here is the entire Bee Movie script.\nhttps://nekobin.com/yixofunaqa"
     )
 
 
