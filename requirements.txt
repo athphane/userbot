@@ -73,3 +73,4 @@ webencodings==0.5.1
 yarl==1.7.2
 yourls==1.2.3
 youtube-dl==2021.12.17
+uwuify==1.1.0
