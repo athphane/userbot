@@ -7,6 +7,7 @@ from userbot import SPOTIFY_USERNAME, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET
 redirect_uri = "http://localhost:8888/callback"
 scope = 'user-read-currently-playing app-remote-control'
 
+
 async def now_playing():
     if [x for x in (SPOTIFY_USERNAME, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET) if x is None]:
         return "API details not set"

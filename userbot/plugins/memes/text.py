@@ -2,6 +2,7 @@ import asyncio
 import re
 from random import choice, randint
 
+import uwuify
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -12,7 +13,6 @@ from userbot.helpers.constants import Fs, MEMES, Weebify
 from userbot.helpers.utility import get_mock_text
 from userbot.plugins.help import add_command_help
 
-import uwuify
 
 @UserBot.on_message(filters.command("lorem", ".") & filters.me)
 async def lorem(bot: UserBot, message: Message):
@@ -148,10 +148,12 @@ async def pay_respects_new(bot: UserBot, message: Message):
 async def calligraphic_f(bot: UserBot, message: Message):
     await message.edit(Fs.FANCY_F)
 
+
 def uwu(raw_text):
     flags = uwuify.SMILEY | uwuify.YU
     text = uwuify.uwu(raw_text, flags=flags)
     return text
+
 
 @UserBot.on_message(filters.command(["uwu", "uwuify"], ".") & filters.me)
 async def weebify(bot: UserBot, message: Message):

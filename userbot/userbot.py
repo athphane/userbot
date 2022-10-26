@@ -14,18 +14,17 @@ class UserBot(Client):
     def __init__(self, version='0.0.0'):
         self.bio = None
         self.version = version
-        self.name = name = self.__class__.__name__.lower()
-        config_file = f"{name}.ini"
+        config_file = "userbot.ini"
 
         self.config = ConfigParser()
         self.config.read(config_file)
 
         super().__init__(
-            name,
+            'userbot',
             api_id=self.config.get('pyrogram', 'api_id'),
             api_hash=self.config.get('pyrogram', 'api_hash'),
             app_version=self.version,
-            plugins=dict(root=f"{name}/plugins"),
+            plugins=dict(root=f"userbot/plugins"),
             workdir="./",
         )
 
