@@ -22,12 +22,10 @@ learn more about these topics.
 
 I assume you will read this whole README.md file before continuing.
 
-> Development in progress.
-
 ## Requirements
 You're gonna need to get the following programs and services either installed on your server
 or signed up for. You must do all. It is a cardinal sin if you don't.
-
+* Python 3.10 (requirements were generated for 3.10. Python 3.8 is supported from the looks of it.)
 * `virtualenv` installed so that the packages don't interfere with other system packages.
 
 * [MongoDB](https://www.mongodb.com) on your server or a free server from 
@@ -71,37 +69,16 @@ This will create a file called `.cache-yourusername`. You need to transfer this 
 project root of the server that will be running your userbot. This is a one time setup.
 
 
-## Developing
-To add extra modules to the bot, simply add the code into [userbot/plugins](userbot/plugins). Each file
-that is added to the `plugins` directory should have the following code at a minimum.
-```python
-from pyrogram import Message, Filters
-
-from userbot import UserBot
-
-@UserBot.on_message(Filters.command('sample', ['.']))
-async def module_name(bot: UserBot, message: Message):
-    await message.edit(
-        "This is a sample module"
-    )
-```
-
-This example is only for Pyrogram on_message events. 
-
 ## Known issues
 * `.restart` command do not work on Termux as [psutils is not supported on Android](https://github.com/giampaolo/psutil/issues/913). \
 CTRL+C, run `git pull` and `python -m userbot` to update bot on termux.
 
 ## Credits, and Thanks to
 *  [Dan](https://t.me/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
-
 *  [Colin Shark](https://t.me/ColinShark) for his [PyroBot](https://git.colinshark.de/PyroBot/PyroBot) which helped with
 most of the useful functions used.
-
 *  The people at [MyPaperPlane](https://github.com/MyPaperPlane) for their [Telegram-UserBot](https://github.com/MyPaperPlane/Telegram-UserBot)
-that gave a ton of ideas on how and what modules to include in this userbot. 
-
-*  [Baivaru](https://github.com/baivaru) for the ton of help that got me this far into making this repo. 
-
+that gave a ton of ideas on how and what modules to include in this userbot.
+*  [Baivaru](https://github.com/baivaru) for the ton of help that got me this far into making this repo.
 ---
 <p align="center">Made with love from the Maldives ❤</p>
