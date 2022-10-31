@@ -56,11 +56,11 @@ add_command_help(
     [
         [
             ".mention",
-            "Mention a user with a different name\nExample: `.mention @Athfan CTO`",
+            "Mention a user with a different name\nExample: `.mention @user CTO`",
         ],
         [
             ".hmention",
-            "Mention a user with a hidden text\nExample: `.hmention @Athfan`",
+            "Mention a user with a hidden text\nExample: `.hmention @user`",
         ],
     ],
 )
