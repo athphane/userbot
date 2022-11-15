@@ -18,7 +18,7 @@ Logbook==1.5.3
 lxml==4.9.1
 multidict==6.0.2
 packaging==21.3
-Pillow==9.2.0
+Pillow==9.3.0
 prettytable==3.4.1
 psutil==5.9.3
 pyaes==1.6.1
