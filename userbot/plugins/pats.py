@@ -11,7 +11,7 @@ from userbot.plugins.help import add_command_help
 
 @UserBot.on_message(filters.command(["pat", "pats"], ".") & filters.me)
 async def give_pats(bot: UserBot, message: Message):
-    URL = "https://some-random-api.ml/animu/pat"
+    URL = "https://some-random-api.com/animu/pat"
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
