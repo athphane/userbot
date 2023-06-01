@@ -8,8 +8,8 @@ from pyrogram.types import Message
 from userbot import LOGS, UserBot
 from userbot.plugins.help import add_command_help
 
-bad_words = ["nigga", "nigger", "coon", "retard"]
-
+bad_words = ["nigga", "nigger", "coon", "retard", "cock", "kiss"]
+good_words = ["black person", "black person", "bruh", "50...40...30...20...RETARD...RETARD", "coke", "keys"]
 vulgar_filter = True
 
 
@@ -39,7 +39,7 @@ async def i_am_not_allowed_to_say_this(bot: UserBot, message: Message):
 
             for word in bad_words:
                 try:
-                    txt = re.sub(word, "bruh", txt, flags=re.IGNORECASE)
+                    txt = re.sub(word, good_words[bad_words.index(word)], txt, flags=re.IGNORECASE)
                 except Exception as e:
                     LOGS.warn(e)
 
