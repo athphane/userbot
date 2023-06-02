@@ -23,7 +23,7 @@ async def prep_animal_image(input_animal):
     image = None
 
     while ext not in ok_exts:
-        data = await AioHttp().get_json(f"https://some-random-api.ml/animal/{input_animal}")
+        data = await AioHttp().get_json(f"https://some-random-api.com/animal/{input_animal}")
         image = data['image']
         ext = re.search(animal, image).group(1).lower()
 
@@ -59,7 +59,7 @@ async def fact(bot: UserBot, message: Message):
     if cmd[1].lower() in animals_with_facts:
         await message.edit(f"```Getting {cmd[1]} fact```")
 
-        link = "https://some-random-api.ml/facts/{animal}"
+        link = "https://some-random-api.com/facts/{animal}"
 
         fact_link = link.format(animal=cmd[1].lower())
 
