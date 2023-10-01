@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+#########################
+  userbot-x86: &userbot-arm
+    build:
+      context: ../
+      dockerfile: .build/Dockerfile
+    hostname: userbot
+    image: userbot
+    platform: linux/amd64/v3
+#  userbot-arm:
+#    <<: *userbot-arm
+#    platform: linux/arm64
