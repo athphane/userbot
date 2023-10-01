@@ -14,7 +14,7 @@ from userbot.plugins.help import add_command_help
 async def screenshot(bot: UserBot, message: Message):
     await asyncio.gather(
         message.delete(),
-        bot.send(
+        bot.invoke(
             functions.messages.SendScreenshotNotification(
                 peer=await UserBot.resolve_peer(message.chat.id),
                 reply_to_msg_id=0,

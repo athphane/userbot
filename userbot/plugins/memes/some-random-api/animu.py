@@ -24,7 +24,7 @@ async def animu_gifs(bot: UserBot, message: Message):
     if cmd[1].lower() in gif_categories:
         category = cmd[1].lower()
 
-        animu_link = f"https://some-random-api.ml/animu/{category}"
+        animu_link = f"https://some-random-api.com/animu/{category}"
 
         try:
             data = await AioHttp().get_json(animu_link)
@@ -49,7 +49,7 @@ async def animu_gifs(bot: UserBot, message: Message):
 @UserBot.on_message(filters.command(["animu-quote", "anime-quote"], ".") & filters.me)
 async def animu_fact(bot: UserBot, message: Message):
     try:
-        data = await AioHttp().get_json('https://some-random-api.ml/animu/quote')
+        data = await AioHttp().get_json('https://some-random-api.com/animu/quote')
     except Exception:
         await message.edit("```Couldn't get an anime quote```")
         await asyncio.sleep(3)
@@ -57,7 +57,7 @@ async def animu_fact(bot: UserBot, message: Message):
     else:
         quote = (
             f"\"{data['sentence'].strip()}\"\n\n"
-            f"{data['characther'].strip()} in {data['anime'].strip()}"
+            f"{data['character'].strip()} in {data['anime'].strip()}"
         )
 
         await message.edit(quote)
