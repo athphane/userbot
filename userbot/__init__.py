@@ -24,7 +24,7 @@ if os.path.exists('userbot.ini'):
 elif not os.path.exists('config/userbot.ini'):
     # If 'config/userbot.ini' also does not exist, print the message and exit the program
     print("Please create and configure config/userbot.ini and re-run the setup")
-    exit(1)
+    sys.exit(1)
 
 # Move the userbot.session file from root to config folder if it is not there.
 if not os.path.exists('config/userbot.session'):
