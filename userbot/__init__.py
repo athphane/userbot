@@ -13,6 +13,19 @@ from userbot.userbot import UserBot
 if not os.path.exists('logs'):
     os.makedirs('logs')
 
+# Create config folder if it is not there. Needed for config.
+if not os.path.exists('config'):
+    os.makedirs('config')
+
+# Move the userbot.ini file from root to config folder if it is not there.
+if not os.path.exists('config/userbot.ini'):
+    os.rename('userbot.ini', 'config/userbot.ini')
+
+# Move the userbot.session file from root to config folder if it is not there.
+if not os.path.exists('config/userbot.session'):
+    os.rename('userbot.session', 'config/userbot.session')
+
+
 # Logging at the start to catch everything
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -37,7 +50,7 @@ __author__ = "athphane"
 UserBot = UserBot(__version__)
 
 # Read from config file
-config_file = 'userbot.ini'
+config_file = 'config/userbot.ini'
 config = ConfigParser()
 config.read(config_file)
 

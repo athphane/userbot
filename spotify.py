@@ -3,7 +3,7 @@ from configparser import ConfigParser
 import spotipy
 import spotipy.util as util
 
-config_file = 'userbot.ini'
+config_file = 'config/userbot.ini'
 
 config = ConfigParser()
 config.read(config_file)
