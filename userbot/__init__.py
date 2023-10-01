@@ -19,12 +19,18 @@ if not os.path.exists('config'):
 
 # Move the userbot.ini file from root to config folder if it is not there.
 if not os.path.exists('config/userbot.ini'):
-    os.rename('userbot.ini', 'config/userbot.ini')
+    # Check if 'userbot.ini' exists
+    if os.path.exists('userbot.ini'):
+        # If 'userbot.ini' exists, move it to 'config/userbot.ini'
+        os.rename('userbot.ini', 'config/userbot.ini')
+    else:
+        print("Please create and configure config/userbot.ini and re-run the setup")
+        exit(1)
 
 # Move the userbot.session file from root to config folder if it is not there.
 if not os.path.exists('config/userbot.session'):
-    os.rename('userbot.session', 'config/userbot.session')
-
+    if os.path.exists('userbot.session'):
+        os.rename('userbot.session', 'config/userbot.session')
 
 # Logging at the start to catch everything
 logging.basicConfig(
