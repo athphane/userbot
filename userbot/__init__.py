@@ -1,6 +1,7 @@
 import ast
 import logging
 import os
+import sys
 from configparser import ConfigParser
 from datetime import datetime
 from logging.handlers import TimedRotatingFileHandler
@@ -18,13 +19,17 @@ if not os.path.exists('config'):
     os.makedirs('config')
 
 # Move the userbot.ini file from root to config folder if it is not there.
-if not os.path.exists('config/userbot.ini'):
+if os.path.exists('userbot.ini'):
+    # If 'userbot.ini' exists, move it to 'config/userbot.ini'
     os.rename('userbot.ini', 'config/userbot.ini')
+elif not os.path.exists('config/userbot.ini'):
+    # If 'config/userbot.ini' also does not exist, print the message and exit the program
+    print("Please create and configure config/userbot.ini and re-run the setup")
+    sys.exit(1)
 
 # Move the userbot.session file from root to config folder if it is not there.
-if not os.path.exists('config/userbot.session'):
+if not os.path.exists('config/userbot.session') and os.path.exists('userbot.session'):
     os.rename('userbot.session', 'config/userbot.session')
-
 
 # Logging at the start to catch everything
 logging.basicConfig(

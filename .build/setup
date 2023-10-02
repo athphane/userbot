@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$1" == "setup" ]; then
+  python -m userbot
+else
+  python -m userbot
+fi
+
