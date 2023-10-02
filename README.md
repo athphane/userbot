@@ -63,16 +63,11 @@ services:
     image: userbot
 
 ```
-- Make a new `config` folder
-```bash
-mkdir config
-```
-- Copy contents of [userbot.ini.sample](userbot.ini.sample) to `config/userbot.ini`
-- First run
+- First run:
 ```bash
 docker compose run userbot setup
 ```
-- Login to telegram and stop continer **CTRL+C**
+- Configure userbot and stop continer **CTRL+C**
 - Run the conatiner again de-attached:
 ```bash
 docker compose up -d
