@@ -28,9 +28,8 @@ elif not os.path.exists('config/userbot.ini'):
     sys.exit(1)
 
 # Move the userbot.session file from root to config folder if it is not there.
-if not os.path.exists('config/userbot.session'):
-    if os.path.exists('userbot.session'):
-        os.rename('userbot.session', 'config/userbot.session')
+if not os.path.exists('config/userbot.session') and os.path.exists('userbot.session'):
+    os.rename('userbot.session', 'config/userbot.session')
 
 # Logging at the start to catch everything
 logging.basicConfig(
