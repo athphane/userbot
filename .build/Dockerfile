@@ -22,8 +22,7 @@ WORKDIR /root/userbot
 
 COPY --from=build /root/userbot .
 COPY --from=build /usr/local /usr/local
-COPY .build/setup /usr/local/bin/setup
-
-RUN chmod +x /usr/local/bin/setup
+RUN cp -v setup /usr/local/bin/setup \
+ && chmod +x /usr/local/bin/setup
 
 CMD python -m userbot

@@ -51,7 +51,27 @@ source venv/bin/activate
 pip install -r requirements.txt
 python -m userbot
 ```
+*Using docker*
+- Save the following content as `docker-compose.yml`
+```yml
+version: '3.5'
+services:
+  userbot:
+    hostname: userbot
+    volumes:
+      - ./config:/root/userbot/config
+    image: userbot
 
+```
+- First run:
+```bash
+docker compose run userbot setup
+```
+- Configure userbot and stop container **CTRL+C**
+- Run the container again de-attached:
+```bash
+docker compose up -d
+```
 ## Spotify integration
 To get the Spotify commands working on the Userbot, you need to get a CLIENT_ID and CLIENT_SECRET
 form the [Spotify Developer Portal]('https://developer.spotify.com/dashboard/applications) and add
