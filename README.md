@@ -51,7 +51,32 @@ source venv/bin/activate
 pip install -r requirements.txt
 python -m userbot
 ```
+*Using docker*
+- Save the following content as `docker-compose.yml`
+```yml
+version: '3.5'
+services:
+  userbot:
+    hostname: userbot
+    volumes:
+      - ./config:/root/userbot/config
+    image: userbot
 
+```
+- Make a new `config` folder
+```bash
+mkdir config
+```
+- Copy contents of [userbot.ini.sample](userbot.ini.sample) to `config/userbot.ini`
+- First run
+```bash
+docker compose run userbot setup
+```
+- Login to telegram and stop continer **CTRL+C**
+- Run the conatiner again de-attached:
+```bash
+docker compose up -d
+```
 ## Spotify integration
 To get the Spotify commands working on the Userbot, you need to get a CLIENT_ID and CLIENT_SECRET
 form the [Spotify Developer Portal]('https://developer.spotify.com/dashboard/applications) and add
