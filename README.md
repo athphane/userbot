@@ -67,8 +67,8 @@ services:
 ```bash
 docker compose run userbot setup
 ```
-- Configure userbot and stop continer **CTRL+C**
-- Run the conatiner again de-attached:
+- Configure userbot and stop container **CTRL+C**
+- Run the container again de-attached:
 ```bash
 docker compose up -d
 ```
