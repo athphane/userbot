@@ -42,7 +42,7 @@ thisapidoesnotexist==0.2
 tinycss2==1.2.1
 tzdata==2022.5
 tzlocal==4.2
-urllib3==1.26.12
+urllib3==1.26.17
 uwuify==1.1.0
 wcwidth==0.2.5
 webencodings==0.5.1
