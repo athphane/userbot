@@ -20,5 +20,5 @@ jobs:
         IMAGE_NAME: userbot
       run: |
         docker-compose -f .build/docker-compose.yml build
-        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        docker login ghcr.io -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         docker-compose -f .build/docker-compose.yml push             
