@@ -1,59 +1,8 @@
-#!/usr/bin/env python
+#!/bin/bash
 
-import configparser
-import os
-import subprocess
+if [ "$1" == "setup" ]; then
+  python -m userbot
+else
+  python -m userbot
+fi
 
-# Define the configuration file path
-config_file = 'config/userbot.ini'
-
-# Initialize ConfigParser
-config = configparser.ConfigParser()
-
-# Check if the config file exists, if so read it
-if os.path.exists(config_file):
-    config.read(config_file)
-
-# Define sections and their keys
-sections = {
-    'pyrogram': ['api_id', 'api_hash'],
-    'mongo': ['is_atlas', 'url', 'db_name', 'db_username', 'db_password'],
-    'pm_permit': ['pm_permit', 'pm_limit'],
-    'logs': ['log_group'],
-    'yandex': ['key'],
-    'misc': ['yourls_url', 'yourls_key'],
-    'spotify': ['username', 'client_id', 'client_secret']
-}
-
-# Iterate over sections and keys to get user input
-for section, keys in sections.items():
-    if not config.has_section(section):
-        config.add_section(section)
-
-    for key in keys:
-        is_mandatory = section == 'pyrogram' and (key == 'api_id' or key == 'api_hash')
-        default_value = 'false' if key in ['is_atlas', 'pm_permit'] else ('0' if key == 'pm_limit' else None)
-        existing_value = config.get(section, key, fallback=default_value)
-
-        prompt = f"Enter value for {section} -> {key} [{'Mandatory' if is_mandatory else 'Optional'}] (Current: {existing_value if existing_value else 'null'}): "
-        value = input(prompt)
-
-        # If the user doesn't input anything, set the value to existing_value or 'null' if there is no existing_value, or to the default_value
-        if not value:
-            value = existing_value if existing_value else (default_value if default_value else 'null')
-
-        # If it's a mandatory field and there is no existing value, enforce input
-        while is_mandatory and (not value or value == 'null'):
-            print("This field is mandatory. Please enter a value.")
-            value = input(prompt)
-
-        config.set(section, key, value)
-
-# Write the updated configuration to the file
-with open(config_file, 'w') as f:
-    config.write(f)
-
-print(f"Configuration has been written to {config_file}")
-
-# Run the userbot module
-subprocess.run(["python", "-m", "userbot"])
