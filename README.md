@@ -60,7 +60,7 @@ services:
     hostname: userbot
     volumes:
       - ./config:/root/userbot/config
-    image: userbot
+    image: ghcr.io/athphane/userbot:latest
 
 ```
 - First run:
