@@ -1,9 +1,7 @@
 # Stage 1: Build
 FROM python:3.11.5-slim-bullseye AS build
 
-LABEL org.opencontainers.image.source https://github.com/athphane/userbot
-LABEL org.opencontainers.image.description "Telegram Userbot Container Image"
-LABEL org.opencontainers.image.licenses GPL-3.0
+
 
 WORKDIR /root/userbot
 
@@ -21,6 +19,10 @@ RUN --mount=type=cache,target=/var/cache/apt \
 
 # Stage 2: Run
 FROM python:3.11.5-slim-bullseye
+
+LABEL org.opencontainers.image.source https://github.com/athphane/userbot
+LABEL org.opencontainers.image.description "Telegram Userbot Container Image"
+LABEL org.opencontainers.image.licenses GPL-3.0
 
 WORKDIR /root/userbot
 
