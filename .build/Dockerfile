@@ -1,8 +1,6 @@
 # Stage 1: Build
 FROM python:3.11.5-slim-bullseye AS build
 
-
-
 WORKDIR /root/userbot
 
 COPY . .
