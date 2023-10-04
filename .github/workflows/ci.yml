@@ -19,6 +19,6 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         IMAGE_NAME: userbot
       run: |
-        docker build -f .build/Dockerfile -t ghcr.io/$DOCKER_USERNAME/$IMAGE_NAME ..
+        docker-compose -f .build/docker-compose.yml build
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        docker push $DOCKER_USERNAME/$IMAGE_NAME
+        docker-compose -f .build/docker-compose.yml push             
