@@ -5,7 +5,6 @@ on:
     branches:
       - master
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +17,6 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        IMAGE_NAME: userbot
       run: |
         docker-compose -f .build/docker-compose.yml build
         docker login ghcr.io -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
