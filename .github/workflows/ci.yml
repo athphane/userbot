@@ -1,0 +1,24 @@
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and push Docker image
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        IMAGE_NAME: userbot
+      run: |
+        docker build -f .build/Dockerfile -t ghcr.io/$DOCKER_USERNAME/$IMAGE_NAME ..
+        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        docker push $DOCKER_USERNAME/$IMAGE_NAME
