@@ -1,9 +1,9 @@
 # Stage 1: Build
 FROM python:3.11.5-slim-bullseye AS build
 
-LABEL org.opencontainers.image.source=https://github.com/athphane/userbot
-LABEL org.opencontainers.image.description="Telegram Userbot Container Image"
-LABEL org.opencontainers.image.licenses=GPL-3.0
+LABEL org.opencontainers.image.source https://github.com/athphane/userbot
+LABEL org.opencontainers.image.description "Telegram Userbot Container Image"
+LABEL org.opencontainers.image.licenses GPL-3.0
 
 WORKDIR /root/userbot
 
