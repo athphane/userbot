@@ -6,7 +6,7 @@ services:
       context: ../
       dockerfile: .build/Dockerfile
     hostname: userbot
-    image: userbot
+    image: ghcr.io/athphane/userbot
     platform: linux/amd64/v3
 #  userbot-arm:
 #    <<: *userbot-arm
