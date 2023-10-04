@@ -65,7 +65,7 @@ services:
 ```
 - First run:
 ```bash
-docker compose run userbot setup
+docker compose run --rm userbot python -m userbot
 ```
 - Configure userbot and stop container **CTRL+C**
 - Run the container again de-attached:
