@@ -1,13 +1,15 @@
 version: '3.5'
+
 services:
-#########################
-  userbot-x86: &userbot-arm
+  userbot:
     build:
       context: ../
       dockerfile: .build/Dockerfile
+      x-bake:
+        platforms:
+          - linux/amd64
+          - linux/arm64
+        pull: true
+        tags:
+          - ghcr.io/athphane/userbot
     hostname: userbot
-    image: ghcr.io/athphane/userbot
-    platform: linux/amd64/v3
-#  userbot-arm:
-#    <<: *userbot-arm
-#    platform: linux/arm64
