@@ -1,5 +1,8 @@
+"""
+Receives text or code and makes a carbon image using it
+"""
+
 import os
-from asyncio import sleep
 
 from pyrogram import filters
 from pyrogram.types import Message
@@ -9,7 +12,6 @@ from userbot.helpers.carbon_client import carbon_client
 from userbot.plugins.help import add_command_help
 
 CARBON_LANG = "py"
-CODE_TO_CARBONIZE = ""
 
 
 @UserBot.on_message(filters.command("carbon", ".") & filters.me)
@@ -18,11 +20,13 @@ async def carbon_test(bot: UserBot, message: Message):
     Receives text and makes a carbon image using the text
     Eg: .carbon your code here (multi line supported)
     """
+    code_to_carbonize = ""
+
     carbon_text = message.text[8:]
     if message.reply_to_message and message.reply_to_message.text:
-        CODE_TO_CARBONIZE = message.reply_to_message.text
+        code_to_carbonize = message.reply_to_message.text
     elif len(carbon_text) > 0:
-        CODE_TO_CARBONIZE = message.command[1]
+        code_to_carbonize = message.command[1]
     else:
         # top secret https://tinyurl.com/Donbestupid
         await message.edit_text(
@@ -31,15 +35,10 @@ async def carbon_test(bot: UserBot, message: Message):
         return
 
     await message.edit_text("Carbonizing code...")
-    """
-    the carbon client could be customized with message.commands
-    like `.carbon yeti` (to set what theme user wants)
-    but because `.carbon <code>` without replying needs to work also it is kinda complicated i think to make it work
-    """
 
     # Do the thing boom
     client = carbon_client()
-    img = await client.create(CODE_TO_CARBONIZE)
+    img = await client.create(code_to_carbonize)
     await message.edit_text("Carbonizing completed...")
     # Send the thing
     await bot.send_photo(message.chat.id, img)
