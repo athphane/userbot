@@ -23,7 +23,7 @@ prettytable==3.4.1
 psutil==5.9.3
 pyaes==1.6.1
 pygit==0.1
-pymongo==4.3.2
+pymongo==4.6.3
 pyparsing==3.0.9
 Pyrogram==2.0.106
 PySocks==1.7.1
