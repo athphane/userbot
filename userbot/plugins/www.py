@@ -109,7 +109,7 @@ async def shorten(bot: UserBot, message: Message):
             txt = "The URL or KEYWORD already exists!"
         else:
             txt = shortened
-            await message.edit(txt, disable_web_page_preview=True)
+            await message.edit(txt, disable_web_page_preview=False)
             return
     else:
         txt = "Please provide a URL to shorten"
