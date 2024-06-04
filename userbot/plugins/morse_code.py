@@ -55,7 +55,7 @@ async def morse_encrypt(bot: UserBot, message: Message):
         await message.edit("`give me something to encrypt`")
         return
 
-    await message.edit(encrypt(input_str.upper().replace(' ', '-')))
+    await message.edit(encrypt(input_str.upper().replace(' ', '-')), parse_mode=None)
 
 
 @UserBot.on_message(filters.command("morsed", ".") & filters.me)
