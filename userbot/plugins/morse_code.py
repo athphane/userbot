@@ -1,10 +1,10 @@
 import asyncio
 
 from pyrogram import filters
+from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 
 from userbot import UserBot
-from userbot.helpers.constants import First
 from userbot.plugins.help import add_command_help
 
 # Dictionary representing the morse code chart
@@ -22,7 +22,7 @@ MORSE_CODE_DICT = {'A': '.-', 'B': '-...',
                    '7': '--...', '8': '---..', '9': '----.',
                    '0': '-----', ', ': '--..--', '.': '.-.-.-',
                    '?': '..--..', '/': '-..-.', '-': '-....-',
-                   '(': '-.--.', ')': '-.--.-'}
+                   '(': '-.--.', ')': '-.--.-', ' ': '/'}
 
 
 @UserBot.on_message(filters.command("morse", ".") & filters.me)
@@ -55,7 +55,7 @@ async def morse_encrypt(bot: UserBot, message: Message):
         await message.edit("`give me something to encrypt`")
         return
 
-    await message.edit(encrypt(input_str.upper().replace(' ', '-')), parse_mode=None)
+    await message.edit(encrypt(input_str.upper()), parse_mode=ParseMode.DISABLED)
 
 
 @UserBot.on_message(filters.command("morsed", ".") & filters.me)
@@ -96,7 +96,7 @@ async def morse_decrypt(bot: UserBot, message: Message):
         await message.edit("`give me something to decrypt`")
         return
 
-    await message.edit(decrypt(input_str))
+    await message.edit(decrypt(input_str).lower(), parse_mode=ParseMode.DISABLED)
 
 
 # Command help section
