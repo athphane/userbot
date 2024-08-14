@@ -18,7 +18,8 @@ async def word_count(bot: UserBot, message: Message):
     words = Custom()
     progress = await bot.send_message(message.chat.id, "`Processed 0 messages...`")
     total = 0
-    async for msg in UserBot.iter_history(message.chat.id, 1000):
+    
+    async for msg in bot.get_chat_history(message.chat.id, 1000):
         total += 1
         if total % 100 == 0:
             await progress.edit_text(f"`Processed {total} messages...`")
