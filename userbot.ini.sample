@@ -3,7 +3,27 @@ api_id = 123456
 api_hash = your-hash
 
 [mongo]
+is_atlas = false
 url = localhost
 db_name = userbot
 db_username =
 db_password =
+
+[pm_permit]
+pm_permit = false
+pm_limit = 5
+
+[logs]
+log_group = None
+
+[yandex]
+key = your-key-but-Yandex-no-longer-gives
+
+[misc]
+yourls_url = http://your-domain.test/yourls-api.php
+yourls_key = your key here
+
+[spotify]
+username =
+client_id =
+client_secret =

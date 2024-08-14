@@ -1,14 +1,20 @@
 import pymongo
-from userbot import MONGO_URL, DB_USERNAME, DB_PASSWORD, DB_NAME
+
+from userbot import IS_ATLAS, MONGO_URL, DB_NAME
 
 
 def database():
     """Created Database connection"""
-    client = pymongo.MongoClient(
-        MONGO_URL,
-        username=DB_USERNAME,
-        password=DB_PASSWORD
-    )
+    if IS_ATLAS:
+        client = pymongo.MongoClient(
+            MONGO_URL,
+        )
+    else:
+        from userbot import DB_USERNAME, DB_PASSWORD
+
+        client = pymongo.MongoClient(
+            MONGO_URL, username=DB_USERNAME, password=DB_PASSWORD
+        )
+
     db = client[DB_NAME]
     return db
-

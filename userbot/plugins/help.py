@@ -1,50 +1,76 @@
-from userbot import UserBot, CMD_HELP
-from pyrogram import Filters, Message
+import asyncio
+
+import pyrogram.enums.parse_mode
+from prettytable import PrettyTable
+from pyrogram import filters
+from pyrogram.types import Message
+
+from userbot import CMD_HELP, UserBot
+from userbot.helpers.utility import split_list
+
+heading = "──「 **{0}** 」──\n"
 
 
-@UserBot.on_message(Filters.command("help", ".") & Filters.me)
+@UserBot.on_message(filters.command("help", ".") & filters.me)
 async def module_help(bot: UserBot, message: Message):
     cmd = message.command
 
+    help_arg = ""
     if len(cmd) > 1:
         help_arg = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) is 1:
+    elif message.reply_to_message and len(cmd) == 1:
         help_arg = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) is 1:
-        await message.edit("Please specify which module you want help for!! \nUsage: .help <module_name>", parse_mode=None)
-
+    elif not message.reply_to_message and len(cmd) == 1:
         all_commands = ""
-        for x in CMD_HELP:
-            all_commands += f"`{str(x)}`\n"
+        all_commands += "Please specify which module you want help for!! \nUsage: `.help [module_name]`\n\n"
 
-        await message.reply(all_commands)
-        return
+        ac = PrettyTable()
+        ac.header = False
+        ac.title = "UserBot Modules"
+        ac.align = "l"
+
+        for x in split_list(sorted(CMD_HELP.keys()), 2):
+            ac.add_row([x[0], x[1] if len(x) >= 2 else None])
+
+        await message.edit(f"```{str(ac)}```")
 
     if help_arg:
         if help_arg in CMD_HELP:
             commands: dict = CMD_HELP[help_arg]
-            this_command = ""
-            this_command += f"Help for {str(help_arg)} module\n\n"
+            this_command = "**Help for**\n"
+            this_command += heading.format(str(help_arg)).upper()
 
             for x in commands:
-                this_command += f"{str(commands[x]['command'])}: {str(commands[x]['description'])}\n\n"
+                this_command += f"-> `{str(x)}`\n```{str(commands[x])}```\n"
 
-            await message.edit(this_command)
+            await message.edit(this_command, parse_mode=pyrogram.enums.ParseMode.MARKDOWN)
         else:
-            await message.edit('`Please specify a valid module name.`')
+            await message.edit(
+                "`Please specify a valid module name.`", parse_mode=pyrogram.enums.ParseMode.MARKDOWN
+            )
+
+    await asyncio.sleep(10)
+    await message.delete()
 
 
-def add_command_help(module_name: str, commands: list):
+def add_command_help(module_name, commands):
     """
     Adds a modules help information.
     :param module_name: name of the module
     :param commands: list of lists, with command and description each.
     """
-    temp_dict = {}
-    count = 1
-    for x in commands:
-        another_dict = {'command': x[0], 'description': x[1]}
-        temp_dict[count] = another_dict
-        count += 1
 
-    CMD_HELP[module_name] = temp_dict
+    # Key will be group name
+    # values will be dict of dicts of key command and value description
+
+    if module_name in CMD_HELP.keys():
+        command_dict = CMD_HELP[module_name]
+    else:
+        command_dict = {}
+
+    for x in commands:
+        for y in x:
+            if y is not x:
+                command_dict[x[0]] = x[1]
+
+    CMD_HELP[module_name] = command_dict
