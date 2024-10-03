@@ -40,6 +40,24 @@ async def twitter_url_fixer(bot: UserBot, message: Message):
     )
 
 
+# Assuming UserBot is your Client instance
+instagram_regex = r'https?://(www\.)?instagram\.com/[^\s]+'
+
+@UserBot.on_message(filters.regex(instagram_regex) & filters.me)
+async def instagram_url_fixer(bot: UserBot, message: Message):
+    # Extract the text from the message
+    message_text = message.text
+
+    # Check and replace instagram.com with d.ddinstagram.com
+    modified_text = re.sub(r'(https?://)(instagram\.com)', r'\1d.ddinstagram.com', message_text)
+
+    # Edit the message with the modified link
+    await message.edit(
+        modified_text,
+        disable_web_page_preview=False  # Webpage preview enabled
+    )
+
+
 # Command help section
 add_command_help(
     "reddit",
