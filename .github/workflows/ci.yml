@@ -18,6 +18,6 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
-        docker-compose -f .build/docker-compose.yml build
+        docker compose -f .build/docker-compose.yml build
         docker login ghcr.io -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        docker-compose -f .build/docker-compose.yml push             
+        docker compose -f .build/docker-compose.yml push             
