@@ -2,7 +2,7 @@ import re
 
 import pyrogram.enums
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, LinkPreviewOptions
 
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
@@ -36,7 +36,7 @@ async def twitter_url_fixer(bot: UserBot, message: Message):
     # Edit the message with the modified link
     await message.edit(
         modified_text,
-        disable_web_page_preview=False  # Webpage preview enabled
+        link_preview_options=LinkPreviewOptions(show_above_text=True)
     )
 
 
@@ -48,13 +48,21 @@ async def instagram_url_fixer(bot: UserBot, message: Message):
     # Extract the text from the message
     message_text = message.text
 
-    # Check and replace instagram.com with d.ddinstagram.com
-    modified_text = re.sub(r'(https?://)(instagram\.com)', r'\1d.ddinstagram.com', message_text)
+    if "www.instagram.com" in message_text:
+        message_text = message_text.replace("www.instagram.com", "instagram.com")
 
-    # Edit the message with the modified link
-    await message.edit(
-        modified_text,
-        disable_web_page_preview=False  # Webpage preview enabled
+    if "instagram.com" in message_text:
+        message_text = message_text.replace("instagram.com", "ddinstagram.com")
+
+    if '?' in message_text:
+        message_text = message_text.split('?')[0]
+
+    await message.delete()
+
+    await bot.send_message(
+        message.chat.id,
+        message_text,
+        link_preview_options=LinkPreviewOptions(show_above_text=True)
     )
 
 
