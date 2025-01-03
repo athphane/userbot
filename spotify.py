@@ -19,6 +19,12 @@ print(CLIENT_ID)
 print(CLIENT_SECRET)
 
 token = util.prompt_for_user_token(
-    username, scope, CLIENT_ID, CLIENT_SECRET, redirect_uri)
+    username=username,
+    scope=scope,
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
+    redirect_uri=redirect_uri,
+    cache_path='config/.cache-' + username
+)
 
 spotify = spotipy.Spotify(auth=token)

@@ -13,7 +13,8 @@ async def now_playing():
         return "API details not set"
     else:
         token = util.prompt_for_user_token(
-            SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri)
+            SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri,
+            cache_path='config/.cache-' + SPOTIFY_USERNAME)
         spotify = spotipy.Spotify(auth=token)
 
     current_track = spotify.currently_playing()
@@ -25,7 +26,8 @@ async def list_devices():
         return "API details not set"
     else:
         token = util.prompt_for_user_token(
-            SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri)
+            SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri,
+            cache_path='config/.cache-' + SPOTIFY_USERNAME)
         spotify = spotipy.Spotify(auth=token)
 
     current_devices = spotify.devices()
@@ -37,7 +39,8 @@ async def pause():
         return "API details not set"
     else:
         token = util.prompt_for_user_token(
-            SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri)
+            SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri,
+            cache_path='config/.cache-' + SPOTIFY_USERNAME)
         spotify = spotipy.Spotify(auth=token)
 
     try:
@@ -52,7 +55,8 @@ async def play():
         return "API details not set"
     else:
         token = util.prompt_for_user_token(
-            SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri)
+            SPOTIFY_USERNAME, scope, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, redirect_uri,
+            cache_path='config/.cache-' + SPOTIFY_USERNAME)
         spotify = spotipy.Spotify(auth=token)
 
     try:
