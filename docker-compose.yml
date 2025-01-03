@@ -4,12 +4,12 @@ services:
     volumes:
       - ./:/root/userbot
     image: ghcr.io/athphane/userbot
-
+    restart: unless-stopped
 
   userbot-mongo:
     hostname: userbot-mongo
     image: mongo
-    restart: always
+    restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: userbot
       MONGO_INITDB_ROOT_PASSWORD: userbot-password
