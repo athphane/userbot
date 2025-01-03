@@ -5,6 +5,8 @@ services:
       - ./:/root/userbot
     image: ghcr.io/athphane/userbot
     restart: unless-stopped
+    networks:
+      - userbot
 
   userbot-mongo:
     hostname: userbot-mongo
@@ -13,3 +15,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: userbot
       MONGO_INITDB_ROOT_PASSWORD: userbot-password
+    networks:
+      - userbot
+
+networks:
+  userbot:
+    external: false
