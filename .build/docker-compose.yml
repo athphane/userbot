@@ -1,13 +1,8 @@
-version: '3.5'
 services:
-#########################
-  userbot-x86: &userbot-arm
+  userbot-x86:
     build:
       context: ../
       dockerfile: .build/Dockerfile
     hostname: userbot
     image: ghcr.io/athphane/userbot
     platform: linux/amd64/v3
-#  userbot-arm:
-#    <<: *userbot-arm
-#    platform: linux/arm64
