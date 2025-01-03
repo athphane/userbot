@@ -1,6 +1,4 @@
-version: '3.5'
 services:
-#########################
   userbot:
     hostname: userbot
     volumes:
