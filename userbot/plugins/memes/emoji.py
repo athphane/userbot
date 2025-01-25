@@ -18,7 +18,7 @@ emojis = {
 emoji_commands = [x for x in emojis]
 
 
-@UserBot.on_message(filters.command(emoji_commands, ".") & filters.me)
+@UserBot.on_message(filters=filters.command(emoji_commands, ".") & filters.me)
 async def emoji_cycle(bot: UserBot, message: Message):
     deq = deque(emojis[message.command[0]])
     try:
@@ -39,7 +39,7 @@ special_emojis_dict = {
 special_emoji_commands = [x for x in special_emojis_dict]
 
 
-@UserBot.on_message(filters.command(special_emoji_commands, ".") & filters.me)
+@UserBot.on_message(filters=filters.command(special_emoji_commands, ".") & filters.me)
 async def special_emojis(bot: UserBot, message: Message):
     emoji = special_emojis_dict[message.command[0]]
     await message.delete()

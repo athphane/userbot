@@ -10,7 +10,7 @@ from userbot.helpers.PyroHelpers import ReplyCheck
 from userbot.plugins.help import add_command_help
 
 
-@UserBot.on_message(filters.command(["skyrim", "skill"], ".") & filters.me)
+@UserBot.on_message(filters=filters.command(["skyrim", "skill"], ".") & filters.me)
 async def skyrim(bot: UserBot, message: Message):
     if len(message.command) >= 2:
         text = message.command[1]

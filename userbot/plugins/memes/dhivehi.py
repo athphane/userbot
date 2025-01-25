@@ -39,7 +39,7 @@ for dv in dhivehi_text_memes:
     fixed_memes_help.append([command, dhivehi_text_memes[dv]["help"]])
 
 
-@UserBot.on_message(filters.command(dhivehi_text_memes_commands, ".") & filters.me)
+@UserBot.on_message(filters=filters.command(dhivehi_text_memes_commands, ".") & filters.me)
 async def dhivehi_memes(bot: UserBot, message: Message):
     cmd = message.command[0]
 

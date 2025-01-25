@@ -30,7 +30,7 @@ async def prep_animal_image(input_animal):
     return image
 
 
-@UserBot.on_message(filters.command(animals_without_facts, ["."]) & filters.me)
+@UserBot.on_message(filters=filters.command(animals_without_facts, ["."]) & filters.me)
 async def animal_image(bot: UserBot, message: Message):
     cmd = message.command
 
@@ -46,7 +46,7 @@ async def animal_image(bot: UserBot, message: Message):
         )
 
 
-@UserBot.on_message(filters.command("fact", ".") & filters.me)
+@UserBot.on_message(filters=filters.command("fact", ".") & filters.me)
 async def fact(bot: UserBot, message: Message):
     cmd = message.command
 

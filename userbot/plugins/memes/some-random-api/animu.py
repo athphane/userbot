@@ -11,7 +11,7 @@ from userbot.plugins.help import add_command_help
 gif_categories = ['wink', 'pat', 'hug', 'face-palm']
 
 
-@UserBot.on_message(filters.command(["animu-gif", "anime-gif"], ".") & filters.me)
+@UserBot.on_message(filters=filters.command(["animu-gif", "anime-gif"], ".") & filters.me)
 async def animu_gifs(bot: UserBot, message: Message):
     cmd = message.command
 
@@ -46,7 +46,7 @@ async def animu_gifs(bot: UserBot, message: Message):
         await message.delete()
 
 
-@UserBot.on_message(filters.command(["animu-quote", "anime-quote"], ".") & filters.me)
+@UserBot.on_message(filters=filters.command(["animu-quote", "anime-quote"], ".") & filters.me)
 async def animu_fact(bot: UserBot, message: Message):
     try:
         data = await AioHttp().get_json('https://some-random-api.com/animu/quote')
