@@ -24,6 +24,8 @@ async def meme_command(client: UserBot, message: Message):
 
                 data = await resp.json()
 
+                print(data)
+
                 # Build and send response
                 await message.delete()
                 await client.send_photo(
