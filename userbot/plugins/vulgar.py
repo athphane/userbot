@@ -10,7 +10,7 @@ from userbot.plugins.help import add_command_help
 
 bad_words = ["nigga", "nigger", "coon", "cock", "kiss"]
 good_words = ["black person", "black person", "bruh", "coke", "keys"]
-vulgar_filter = True
+vulgar_filter = False
 
 
 def switch():
