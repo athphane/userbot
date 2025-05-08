@@ -1,10 +1,11 @@
 services:
   userbot:
+    build:
+      context: .
+      dockerfile: .build/dev.Dockerfile
     hostname: userbot
     volumes:
       - ./:/root/userbot
-    image: ghcr.io/athphane/userbot
-    restart: unless-stopped
     networks:
       - userbot
 
