@@ -2,7 +2,9 @@ import os
 import re
 import tempfile
 import subprocess
-from urllib.parse import urlparse
+import requests
+import urllib.parse
+from urllib.parse import urlparse, unquote
 from pyrogram import filters
 from pyrogram.types import Message, LinkPreviewOptions
 from userbot import UserBot
@@ -16,6 +18,32 @@ tiktok_regex = r'https?://(www\.|vm\.|vt\.)?tiktok\.com/(@[\w.-]+/video/\d+|[\w]
 
 # Combined regex for function trigger
 video_url_regex = f"({instagram_regex}|{tiktok_regex})"
+
+def get_final_tiktok_url(url):
+    """Get the final TikTok URL by following redirects and removing tracking params"""
+    try:
+        # Create a session that doesn't follow redirects automatically
+        session = requests.Session()
+        session.max_redirects = 5
+        
+        # Make HEAD request to get redirect without downloading content
+        response = session.head(url, allow_redirects=True)
+        
+        if response.status_code == 200 and "tiktok.com" in response.url:
+            # Get the final URL after all redirects
+            final_url = response.url
+            
+            # Remove tracking parameters (anything after the ?)
+            clean_url = final_url.split('?')[0]
+            
+            # Extract important parts (username and video ID)
+            if '@' in clean_url and '/video/' in clean_url:
+                return clean_url
+    except Exception:
+        pass
+    
+    # Return original if anything fails
+    return url
 
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
 async def video_downloader(bot: UserBot, message: Message):
@@ -46,6 +74,11 @@ async def video_downloader(bot: UserBot, message: Message):
         download_url = video_url
         display_url = video_url
     
+    # Get the final TikTok URL for display if it's a TikTok URL
+    display_tiktok_url = None
+    if platform == "TikTok":
+        display_tiktok_url = get_final_tiktok_url(video_url)
+    
     # Send a new status message (silently and without preview)
     status_msg = await bot.send_message(
         message.chat.id,
@@ -63,23 +96,32 @@ async def video_downloader(bot: UserBot, message: Message):
                 link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
             )
             
-            # Get video info first to extract title/caption
-            info_process = subprocess.run(
-                ["yt-dlp", "--print", "title,id", download_url],
-                capture_output=True,
-                text=True,
-                check=False
-            )
+            # For TikTok, use yt-dlp to get metadata first
+            # This will help us extract the correct username and video ID
+            tiktok_username = None
+            tiktok_video_id = None
             
-            video_title = ""
-            video_id = ""
-            
-            if info_process.returncode == 0 and info_process.stdout:
-                info_lines = info_process.stdout.strip().split('\n')
-                if len(info_lines) >= 1:
-                    video_title = info_lines[0]
-                if len(info_lines) >= 2:
-                    video_id = info_lines[1]
+            if platform == "TikTok":
+                # Get more info about the video
+                info_process = subprocess.run(
+                    ["yt-dlp", "--print", "title,id,webpage_url", download_url],
+                    capture_output=True,
+                    text=True,
+                    check=False
+                )
+                
+                if info_process.returncode == 0 and info_process.stdout:
+                    info_lines = info_process.stdout.strip().split('\n')
+                    if len(info_lines) >= 3:
+                        video_title = info_lines[0]
+                        video_id = info_lines[1]
+                        webpage_url = info_lines[2]
+                        
+                        # Extract username from webpage_url
+                        username_match = re.search(r'@([\w.-]+)', webpage_url)
+                        if username_match:
+                            tiktok_username = username_match.group(1)
+                            tiktok_video_id = video_id
             
             # Download the video using yt-dlp
             process = subprocess.run(
@@ -144,19 +186,19 @@ async def video_downloader(bot: UserBot, message: Message):
                 caption = f"{title}\n{domain}/{path_parts[-2]}/{video_id}/" if len(path_parts) > 1 else f"{title}\n{display_url}"
                 
             elif platform == "TikTok":
-                # Use the title we got from the info command
-                if video_title:
-                    caption = f"{video_title}\ntiktok.com/video/{video_id}" if video_id else f"{video_title}\n{display_url}"
+                # Extract title from filename
+                if "[" in file_name and "]" in file_name:
+                    title = file_name.split(" [")[0]
                 else:
-                    # Fallback to extracting from filename
-                    if "[" in file_name and "]" in file_name:
-                        title = file_name.split(" [")[0]
-                        video_id = file_name.split(" [")[1].split("]")[0]
-                    else:
-                        title = file_name
-                        video_id = ""
-                    
-                    caption = f"{title}\ntiktok.com/video/{video_id}" if video_id else f"{title}\n{display_url}"
+                    title = file_name
+                
+                # Use the display TikTok URL if available, or construct one with the username and video ID
+                if display_tiktok_url and '@' in display_tiktok_url:
+                    caption = f"{title}\n{display_tiktok_url}"
+                elif tiktok_username and tiktok_video_id:
+                    caption = f"{title}\ntiktok.com/@{tiktok_username}/video/{tiktok_video_id}"
+                else:
+                    caption = f"{title}\n{display_url}"
             
             # Determine if we should delete the original message
             should_delete = message_text.strip() == display_url.strip()
