@@ -3,8 +3,7 @@ import re
 import tempfile
 import subprocess
 import requests
-import urllib.parse
-from urllib.parse import urlparse, unquote
+from urllib.parse import urlparse
 from pyrogram import filters
 from pyrogram.types import Message, LinkPreviewOptions
 from userbot import UserBot
@@ -65,19 +64,19 @@ async def video_downloader(bot: UserBot, message: Message):
         
     video_url = match.group(0)
     
-    # For ddinstagram.com links, convert to instagram.com for yt-dlp
+    # Process URLs for downloading and display
     if "ddinstagram.com" in video_url:
+        # For ddinstagram.com links, use instagram.com for both download and status/caption
         download_url = video_url.replace("ddinstagram.com", "instagram.com")
-        # Keep the original display URL
-        display_url = video_url
+        display_url = download_url  # Use the cleaned URL without "dd" prefix
     else:
         download_url = video_url
         display_url = video_url
     
     # Get the final TikTok URL for display if it's a TikTok URL
-    display_tiktok_url = None
     if platform == "TikTok":
-        display_tiktok_url = get_final_tiktok_url(video_url)
+        display_url = get_final_tiktok_url(video_url)
+        download_url = display_url  # Use the same URL for downloading
     
     # Send a new status message (silently and without preview)
     status_msg = await bot.send_message(
@@ -174,7 +173,7 @@ async def video_downloader(bot: UserBot, message: Message):
                 path_parts = url_parts.path.strip('/').split('/')
                 video_id = path_parts[-1] if len(path_parts) > 1 else ""
                 
-                # Get the domain from the original URL (instagram.com or ddinstagram.com)
+                # Get the domain from the cleaned URL (always instagram.com)
                 domain = urlparse(display_url).netloc
                 
                 # Extract title from filename
@@ -192,16 +191,16 @@ async def video_downloader(bot: UserBot, message: Message):
                 else:
                     title = file_name
                 
-                # Use the display TikTok URL if available, or construct one with the username and video ID
-                if display_tiktok_url and '@' in display_tiktok_url:
-                    caption = f"{title}\n{display_tiktok_url}"
+                # Use the clean TikTok URL from display_url or construct one with the username and video ID
+                if '@' in display_url and '/video/' in display_url:
+                    caption = f"{title}\n{display_url}"
                 elif tiktok_username and tiktok_video_id:
                     caption = f"{title}\ntiktok.com/@{tiktok_username}/video/{tiktok_video_id}"
                 else:
                     caption = f"{title}\n{display_url}"
             
             # Determine if we should delete the original message
-            should_delete = message_text.strip() == display_url.strip()
+            should_delete = message_text.strip() == video_url.strip()
             
             # Update status (without preview)
             await status_msg.edit(
