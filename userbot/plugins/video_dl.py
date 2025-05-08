@@ -12,8 +12,8 @@ from userbot.plugins.help import add_command_help
 # Instagram URL regex pattern - updated to include ddinstagram.com
 instagram_regex = r'https?://(www\.)?(instagram\.com|ddinstagram\.com)/(p|reel|tv|stories)/[a-zA-Z0-9_-]+/?'
 
-# TikTok URL regex pattern
-tiktok_regex = r'https?://(www\.|vm\.|vt\.)?tiktok\.com/(@[\w.-]+/video/\d+|[\w]+/?).*'
+# TikTok URL regex pattern - updated to support empty usernames
+tiktok_regex = r'https?://(www\.|vm\.|vt\.)?tiktok\.com/(@[\w.-]*/video/\d+|@/video/\d+|[\w]+/?).*'
 
 # Combined regex for function trigger
 video_url_regex = f"({instagram_regex}|{tiktok_regex})"
