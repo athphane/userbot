@@ -59,6 +59,10 @@ def process_urls(url):
 async def video_downloader(bot: UserBot, message: Message):
     # Extract the video URL from the message
     message_text = message.text
+
+    # Don't download if there is additional content in the message
+    if not message_text.startswith("http"):
+        return
     
     # Determine which platform URL it is
     if re.search(instagram_regex, message_text):
