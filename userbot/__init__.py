@@ -85,6 +85,8 @@ PM_PERMIT = config.get("pm_permit", "pm_permit")
 PM_LIMIT = int(config.get("pm_permit", "pm_limit"))
 LOG_GROUP = config.get("logs", "log_group")
 
+SOCKS5_PROXY = config.get('proxy', 'socks5_proxy', fallback=None)
+
 # Scheduler
 scheduler = AsyncIOScheduler()
 
