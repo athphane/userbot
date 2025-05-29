@@ -106,9 +106,8 @@ async def video_downloader(bot: UserBot, message: Message):
 
         # Use SOCKS5 proxy if configured
         if SOCKS5_PROXY:
-            yt_dlp_args.append(
-                f"--proxy {SOCKS5_PROXY}",
-            )
+            yt_dlp_args.append("--proxy")
+            yt_dlp_args.append(SOCKS5_PROXY)
 
         try:
             # Update status (without preview)
