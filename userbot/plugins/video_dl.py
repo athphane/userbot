@@ -210,8 +210,8 @@ async def download_video_command(bot: UserBot, message: Message):
         return
 
     # Call the main video downloader function with the link
-    await video_downloader(bot, message.reply_to_message, from_reply=True)
     await message.delete()
+    await video_downloader(bot, message.reply_to_message, from_reply=True)
 
 # Command help section
 add_command_help(
