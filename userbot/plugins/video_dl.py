@@ -59,14 +59,13 @@ def process_urls(url):
 
     return download_url
 
-
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
-async def video_downloader(bot: UserBot, message: Message):
+async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     # Extract the video URL from the message
     message_text = message.text
 
     # Don't download if there is additional content in the message
-    if not message_text.startswith("http"):
+    if not message_text.startswith("http") and not from_reply:
         return
 
     # Determine which platform URL it is
@@ -181,19 +180,38 @@ async def video_downloader(bot: UserBot, message: Message):
                 video_path,
                 caption=caption
             )
+            
+            if not from_reply: await message.delete()
 
             # Delete the status message when complete
-            await asyncio.gather(
-                message.delete(),
-                status_msg.delete()
-            )
+            await status_msg.delete()
 
         except Exception as e:
             await status_msg.edit(
                 f"❌ Error: {str(e)[:500]}...",
                 link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
             )
+            await asyncio.sleep(5)
+            await status_msg.delete()
 
+@UserBot.on_message(filters.command("dl", ".") & filters.me)
+async def download_video_command(bot: UserBot, message: Message):
+    """Download the video from the link sent in the message."""
+    if not message.reply_to_message or not message.reply_to_message.text:
+        await message.edit_text("Please reply to a message containing a video link.")
+        return
+
+    # Extract the link from the replied message
+    reply_text = message.reply_to_message.text.strip()
+    
+    # Check if it matches the video URL regex
+    if not re.search(video_url_regex, reply_text):
+        await message.edit_text("The replied message does not contain a valid video link.")
+        return
+
+    # Call the main video downloader function with the link
+    await message.delete()
+    await video_downloader(bot, message.reply_to_message, from_reply=True)
 
 # Command help section
 add_command_help(
@@ -207,5 +225,9 @@ add_command_help(
             "https://tiktok.com/... or https://vt.tiktok.com/...",
             "Automatically downloads TikTok videos when you send a link and uploads them with the original caption and link.",
         ],
+        [
+            ".dl",
+            "Download the video from the link you sent. This command is useful to trigger it for a link someone else sends.",
+        ]
     ],
 )
