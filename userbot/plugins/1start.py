@@ -33,9 +33,9 @@ async def creator(bot: UserBot, message: Message):
 
 @UserBot.on_message(filters.command(["uptime", "up"], ".") & filters.me)
 async def uptime(bot: UserBot, message: Message):
-    now = datetime.now()
-    current_uptime = now - START_TIME
-    await message.edit(f"Current Uptime\n" f"```{str(current_uptime).split('.')[0]}```")
+    await message.edit(
+        f"Current Uptime: `{str(datetime.now() - START_TIME).split('.')[0]}`\n"
+    )
 
 
 @UserBot.on_message(filters.command("id", ".") & filters.me)
