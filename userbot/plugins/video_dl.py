@@ -60,12 +60,12 @@ def process_urls(url):
     return download_url
 
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
-async def video_downloader(bot: UserBot, message: Message):
+async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     # Extract the video URL from the message
     message_text = message.text
 
     # Don't download if there is additional content in the message
-    if not message_text.startswith("http"):
+    if not message_text.startswith("http") and not from_reply:
         return
 
     # Determine which platform URL it is
@@ -180,18 +180,19 @@ async def video_downloader(bot: UserBot, message: Message):
                 video_path,
                 caption=caption
             )
+            
+            if not from_reply: await message.delete()
 
             # Delete the status message when complete
-            await asyncio.gather(
-                message.delete(),
-                status_msg.delete()
-            )
+            await status_msg.delete()
 
         except Exception as e:
             await status_msg.edit(
                 f"❌ Error: {str(e)[:500]}...",
                 link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
             )
+            await asyncio.sleep(5)
+            await status_msg.delete()
 
 @UserBot.on_message(filters.command("dl", ".") & filters.me)
 async def download_video_command(bot: UserBot, message: Message):
@@ -209,7 +210,8 @@ async def download_video_command(bot: UserBot, message: Message):
         return
 
     # Call the main video downloader function with the link
-    await video_downloader(bot, message.reply_to_message)
+    await video_downloader(bot, message.reply_to_message, from_reply=True)
+    await message.delete()
 
 # Command help section
 add_command_help(
