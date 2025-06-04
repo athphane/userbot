@@ -193,7 +193,7 @@ async def video_downloader(bot: UserBot, message: Message):
                 link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
             )
 
-@UserBot.on_message(filters.command("dl") & filters.me)
+@UserBot.on_message(filters.command("dl", ".") & filters.me)
 async def download_video_command(bot: UserBot, message: Message):
     """Download the video from the link sent in the message."""
     if not message.reply_to_message or not message.reply_to_message.text:
