@@ -198,12 +198,12 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
 @UserBot.on_message(filters.command("dl", ".") & filters.me)
 async def download_video_command(bot: UserBot, message: Message):
     """Download the video from the link sent in the message."""
-    if not message.reply_to_message or not message.reply_to_message.text:
+    if not message.reply_to_message or not message.reply_to_message.text or not message.reply_to_message.caption:
         await message.edit_text("Please reply to a message containing a video link.")
         return
 
     # Extract the link from the replied message
-    reply_text = message.reply_to_message.text.strip()
+    reply_text = message.reply_to_message.text or message.reply_to_message.caption
     
     # Check if it matches the video URL regex
     if not re.search(video_url_regex, reply_text):
