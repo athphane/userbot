@@ -62,7 +62,7 @@ def process_urls(url):
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
 async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     # Extract the video URL from the message
-    message_text = message.text
+    message_text = message.text or message.caption
 
     # Don't download if there is additional content in the message
     if not message_text.startswith("http") and not from_reply:
@@ -143,6 +143,8 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                         f"❌ Download failed. Error: {process.stderr[:500]}...",
                         link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
                     )
+                    await asyncio.sleep(5)
+                    await status_msg.delete()
                     return
 
             # Get the downloaded file
@@ -152,6 +154,8 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                     "❌ No files downloaded.",
                     link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
                 )
+                await asyncio.sleep(5)
+                await status_msg.delete()
                 return
 
             video_path = os.path.join(temp_dir, downloaded_files[0])
@@ -178,7 +182,8 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
             await bot.send_video(
                 message.chat.id,
                 video_path,
-                caption=caption
+                caption=caption,
+                reply_to_message_id=message.id if from_reply else None
             )
             
             if not from_reply: await message.delete()
@@ -196,13 +201,16 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
 
 @UserBot.on_message(filters.command("dl", ".") & filters.me)
 async def download_video_command(bot: UserBot, message: Message):
-    """Download the video from the link sent in the message."""
-    if not message.reply_to_message or not message.reply_to_message.text:
+    if not message.reply_to_message:
+        await message.edit_text("Please reply to a message.")
+        return
+
+    if message.reply_to_message and not (message.reply_to_message.text or message.reply_to_message.caption):
         await message.edit_text("Please reply to a message containing a video link.")
         return
 
     # Extract the link from the replied message
-    reply_text = message.reply_to_message.text.strip()
+    reply_text = message.reply_to_message.text or message.reply_to_message.caption
     
     # Check if it matches the video URL regex
     if not re.search(video_url_regex, reply_text):
