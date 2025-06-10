@@ -62,7 +62,7 @@ def process_urls(url):
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
 async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     # Extract the video URL from the message
-    message_text = message.text
+    message_text = message.text or message.caption
 
     # Don't download if there is additional content in the message
     if not message_text.startswith("http") and not from_reply:
@@ -197,8 +197,11 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
 
 @UserBot.on_message(filters.command("dl", ".") & filters.me)
 async def download_video_command(bot: UserBot, message: Message):
-    """Download the video from the link sent in the message."""
-    if not message.reply_to_message or not message.reply_to_message.text or not message.reply_to_message.caption:
+    if not message.reply_to_message:
+        await message.edit_text("Please reply to a message.")
+        return
+
+    if message.reply_to_message and not (message.reply_to_message.text or message.reply_to_message.caption):
         await message.edit_text("Please reply to a message containing a video link.")
         return
 
