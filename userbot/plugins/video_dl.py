@@ -143,6 +143,8 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                         f"❌ Download failed. Error: {process.stderr[:500]}...",
                         link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
                     )
+                    await asyncio.sleep(5)
+                    await status_msg.delete()
                     return
 
             # Get the downloaded file
@@ -152,6 +154,8 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                     "❌ No files downloaded.",
                     link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
                 )
+                await asyncio.sleep(5)
+                await status_msg.delete()
                 return
 
             video_path = os.path.join(temp_dir, downloaded_files[0])
