@@ -178,7 +178,8 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
             await bot.send_video(
                 message.chat.id,
                 video_path,
-                caption=caption
+                caption=caption,
+                reply_to_message_id=message.id if from_reply else None
             )
             
             if not from_reply: await message.delete()
