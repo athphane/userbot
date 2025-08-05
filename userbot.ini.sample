@@ -29,3 +29,6 @@ yourls_key = your key here
 username =
 client_id =
 client_secret =
+
+[proxy]
+socks5_proxy = socks5://username:password@ip-address:port
