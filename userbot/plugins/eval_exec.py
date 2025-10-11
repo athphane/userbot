@@ -3,6 +3,7 @@ import io
 import os
 import sys
 import traceback
+from typing import Optional
 
 from pyrogram import filters
 from pyrogram.types import Message
@@ -32,9 +33,42 @@ async def eval_func_edited(bot, message):
     await evaluation_func(bot, message)
 
 
-async def evaluation_func(bot: UserBot, message: Message):
+@UserBot.on_message(
+    filters.command("math", ".")
+    & filters.me
+    & ~filters.forwarded
+    & ~filters.via_bot
+)
+async def math_func_init(bot, message):
+    await math_evaluation(bot, message)
+
+
+@UserBot.on_edited_message(
+    filters.command("math", ".")
+    & filters.me
+    & ~filters.forwarded
+    & ~filters.via_bot
+)
+async def math_func_edited(bot, message):
+    await math_evaluation(bot, message)
+
+
+async def evaluation_func(
+    bot: UserBot,
+    message: Message,
+    cmd_override: Optional[str] = None,
+    display_override: Optional[str] = None,
+):
     status_message = await message.reply_text("Processing ...")
-    cmd = message.text.split(" ", maxsplit=1)[1]
+    if cmd_override is not None:
+        cmd = cmd_override
+    else:
+        if len(message.text.split(" ", maxsplit=1)) < 2:
+            await status_message.edit("No expression provided.")
+            return
+        cmd = message.text.split(" ", maxsplit=1)[1]
+
+    display_cmd = display_override if display_override is not None else cmd
 
     reply_to_id = message.id
     if message.reply_to_message:
@@ -67,7 +101,7 @@ async def evaluation_func(bot: UserBot, message: Message):
         evaluation = "Success"
 
     final_output = "<b>Expression</b>:\n<code>{}</code>\n\n<b>Result</b>:\n<code>{}</code> \n".format(
-        cmd, evaluation.strip()
+        display_cmd, evaluation.strip()
     )
 
     if len(final_output) > 4096:
@@ -93,6 +127,17 @@ async def aexec(code, b, m, r, d):
         + "".join(f"\n {line}" for line in code.split("\n"))
     )
     return await locals()["__aexec"](b, m, r, d)
+
+
+async def math_evaluation(bot: UserBot, message: Message):
+    parts = message.text.split(" ", maxsplit=1)
+    if len(parts) < 2 or not parts[1].strip():
+        await message.reply_text("Please provide a mathematical expression to evaluate.")
+        return
+
+    expression = parts[1]
+    cmd = f"print({expression})"
+    await evaluation_func(bot, message, cmd_override=cmd, display_override=expression)
 
 
 @UserBot.on_edited_message(
