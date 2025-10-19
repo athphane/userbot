@@ -136,7 +136,7 @@ async def math_evaluation(bot: UserBot, message: Message):
         await message.reply_text("Please provide a mathematical expression to evaluate.")
         return
 
-    expression = re.sub(r"\+(\d+)%", "*1.\1", parts[1])
+    expression = re.sub(r"\+(\d+)%", lambda m: str(1+(int(m.group(1))/100)), parts[1])
     cmd = f"print({expression})"
     await evaluation_func(bot, message, cmd_override=cmd, display_override=expression)
 
