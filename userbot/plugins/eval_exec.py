@@ -3,6 +3,7 @@ import io
 import os
 import sys
 import traceback
+import re
 from typing import Optional
 
 from pyrogram import filters
@@ -136,7 +137,7 @@ async def math_evaluation(bot: UserBot, message: Message):
         return
 
     expression = parts[1]
-    cmd = f"print({expression})"
+    cmd = f"print({re.sub(r"+{\d+}%", "*1.\1", expression)})"
     await evaluation_func(bot, message, cmd_override=cmd, display_override=expression)
 
 
