@@ -3,6 +3,7 @@ import io
 import os
 import sys
 import traceback
+import re
 from typing import Optional
 
 from pyrogram import filters
@@ -135,7 +136,16 @@ async def math_evaluation(bot: UserBot, message: Message):
         await message.reply_text("Please provide a mathematical expression to evaluate.")
         return
 
-    expression = parts[1]
+    expression =  parts[1]
+    
+    def handle_percentage(match):
+        try:
+            number = int(match.group(1))
+            return f"*{1 + (number / 100)}"
+        except ValueError:
+            return match.group(0)
+
+    expression = re.sub(r"\+(\d+)%", handle_percentage, expression)
     cmd = f"print({expression})"
     await evaluation_func(bot, message, cmd_override=cmd, display_override=expression)
 
