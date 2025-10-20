@@ -52,8 +52,8 @@ def process_urls(url):
     real_url = get_final_url(url)
 
     # For ddinstagram.com links, always convert to instagram.com
-    if "ddinstagram.com" in real_url:
-        download_url = real_url.replace("ddinstagram.com", "instagram.com")
+    if ("ddinstagram.com" in real_url) or ("kkinstagram.com" in real_url):
+        download_url = real_url.replace("ddinstagram.com", "instagram.com").replace("kkinstagram.com", "instagram.com")
     else:
         download_url = real_url
 
