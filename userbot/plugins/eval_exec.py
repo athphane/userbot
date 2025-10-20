@@ -13,6 +13,9 @@ from userbot import UserBot
 from userbot.database import database
 from userbot.helpers.PyroHelpers import ReplyCheck
 
+# GST rate configuration (change this value to update GST percentage)
+GST_RATE = 8  # 8% GST
+
 
 @UserBot.on_message(
     filters.command("eval", ".")
@@ -137,7 +140,14 @@ async def math_evaluation(bot: UserBot, message: Message):
         return
 
     expression =  parts[1]
-    
+
+    # Handle GST calculations using GST_RATE variable
+    # 10+GST -> 10*1.08 (add GST to amount to get total)
+    gst_multiplier = 1 + (GST_RATE / 100)
+    expression = re.sub(r"\+GST\b", f"*{gst_multiplier}", expression, flags=re.IGNORECASE)
+    # 10.8-GST -> 10.8/1.08 (remove GST to get base amount)
+    expression = re.sub(r"-GST\b", f"/{gst_multiplier}", expression, flags=re.IGNORECASE)
+
     def handle_percentage(match):
         try:
             number = int(match.group(1))
