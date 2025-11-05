@@ -4,7 +4,7 @@ import re
 import subprocess
 import tempfile
 
-import requests
+import aiohttp
 from pyrogram import filters
 from pyrogram.types import Message, LinkPreviewOptions
 
@@ -27,35 +27,19 @@ facebook_regex = r'https?://(www\.|m\.|web\.)?facebook\.com/(watch/?\?v=\d+|[\w.
 video_url_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_regex}|{facebook_regex})"
 
 
-def get_final_url(url):
-    """Get the final URL by following redirects and cleaning it"""
-    try:
-        # Create a session that follows redirects
-        session = requests.Session()
-
-        # Make HEAD request to get redirect without downloading content
-        response = session.head(url, allow_redirects=True)
-
-        if response.status_code == 200:
-            # Get the final URL after all redirects
-            final_url = response.url
-
-            # Remove tracking parameters (anything after the ?)
-            clean_url = final_url.split('?')[0]
-
-            return clean_url
-
-    except Exception:
-        pass
-
-    # Return original if anything fails
+async def get_final_url(url):
+    timeout = aiohttp.ClientTimeout(total=10)
+    async with aiohttp.ClientSession(timeout=timeout) as session:
+        async with session.head(url, allow_redirects=True) as response:
+            if response.status == 200:
+                return str(response.url)
     return url
 
 
-def process_urls(url):
+async def process_urls(url):
     """Process URLs for both Instagram and TikTok"""
     # First, follow redirects to get the real URL
-    real_url = get_final_url(url)
+    real_url = await get_final_url(url)
 
     # For ddinstagram.com links, always convert to instagram.com
     if ("ddinstagram.com" in real_url) or ("kkinstagram.com" in real_url):
@@ -96,7 +80,7 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     original_url = match.group(0)
 
     # Process URL to get the download URL and display URL
-    download_url = process_urls(original_url)
+    download_url = await process_urls(original_url)
 
     # Send a new status message (silently and without preview)
     status_msg = await bot.send_message(
