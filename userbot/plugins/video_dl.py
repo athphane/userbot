@@ -56,9 +56,6 @@ async def process_urls(url):
 async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     global _bot_user_id
     
-    # Extract the video URL from the message
-    message_text = message.text or message.caption
-
     # Don't download if the message is sent to saved messages (to myself)
     if _bot_user_id is None:
         me = await bot.get_me()
@@ -66,6 +63,9 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     
     if message.chat.id == _bot_user_id:
         return
+    
+    # Extract the video URL from the message
+    message_text = message.text or message.caption
 
     # Don't download if there is additional content in the message
     if not message_text.startswith("http") and not from_reply:
