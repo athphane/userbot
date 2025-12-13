@@ -26,6 +26,9 @@ facebook_regex = r'https?://(www\.|m\.|web\.)?facebook\.com/(watch/?\?v=\d+|[\w.
 # Combined regex for function trigger
 video_url_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_regex}|{facebook_regex})"
 
+# Cache for the bot's user ID to avoid repeated API calls
+_bot_user_id = None
+
 
 async def get_final_url(url):
     timeout = aiohttp.ClientTimeout(total=10)
@@ -51,12 +54,17 @@ async def process_urls(url):
 
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
 async def video_downloader(bot: UserBot, message: Message, from_reply=False):
+    global _bot_user_id
+    
     # Extract the video URL from the message
     message_text = message.text or message.caption
 
     # Don't download if the message is sent to saved messages (to myself)
-    me = await bot.get_me()
-    if message.chat.id == me.id:
+    if _bot_user_id is None:
+        me = await bot.get_me()
+        _bot_user_id = me.id
+    
+    if message.chat.id == _bot_user_id:
         return
 
     # Don't download if there is additional content in the message
