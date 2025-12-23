@@ -100,6 +100,10 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     if platform == "YouTube" and not from_reply:
         return
 
+    # Double Safety: If not a reply, STRICTLY enforce that it must match the Shorts regex
+    if not from_reply and not re.search(youtube_shorts_regex, message_text):
+        return
+
     if not match:
         return
 
