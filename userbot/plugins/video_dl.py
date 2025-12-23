@@ -14,20 +14,11 @@ from userbot.plugins.help import add_command_help
 # User Agent for requests and yt-dlp
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
-# Instagram URL regex pattern - updated to include ddinstagram.com and share links
-instagram_regex = r'https?://(www\.)?(instagram\.com|ddinstagram\.com)/(p|reels|reel|tv|stories|share/reel|share/p)/[a-zA-Z0-9_-]+/?'
-
-# TikTok URL regex pattern - updated to support empty usernames and t.tiktok.com
-tiktok_regex = r'https?://(www\.|vm\.|vt\.|t\.)?tiktok\.com/(@[\w.-]*/video/\d+|@/video/\d+|[\w]+/?).*'
-
-# YouTube URL regex pattern - matches all YouTube video formats (shorts, watch, embed, etc.)
-youtube_regex = r'https?://(www\.)?(youtube\.com/(watch\?v=|shorts/|embed/|v/)|youtu\.be/)[a-zA-Z0-9_-]+/?(\?.*)?'
-
-# Facebook URL regex pattern - supports various Facebook video URL formats
-facebook_regex = r'https?://(www\.|m\.|web\.)?facebook\.com/(watch/?\?v=\d+|[\w.-]+/videos/\d+|reel/\d+|share/(v|r)/\d+|[\w.-]+/posts/\d+)/?.*'
+# YouTube Shorts URL regex pattern
+youtube_shorts_regex = r'https?://(www\.)?youtube\.com/shorts/[a-zA-Z0-9_-]+/?(\?.*)?'
 
 # Combined regex for function trigger
-video_url_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_regex}|{facebook_regex})"
+video_url_regex = youtube_shorts_regex
 
 
 async def get_final_url(url):
@@ -46,17 +37,10 @@ async def get_final_url(url):
 
 
 async def process_urls(url):
-    """Process URLs for both Instagram and TikTok"""
-    # First, follow redirects to get the real URL
+    """Process URLs for YouTube Shorts"""
+    # Follow redirects to get the real URL
     real_url = await get_final_url(url)
-
-    # For ddinstagram.com links, always convert to instagram.com
-    if ("ddinstagram.com" in real_url) or ("kkinstagram.com" in real_url):
-        download_url = real_url.replace("ddinstagram.com", "instagram.com").replace("kkinstagram.com", "instagram.com")
-    else:
-        download_url = real_url
-
-    return download_url
+    return real_url
 
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
 async def video_downloader(bot: UserBot, message: Message, from_reply=False):
@@ -67,19 +51,10 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     if not message_text.startswith("http") and not from_reply:
         return
 
-    # Determine which platform URL it is
-    if re.search(instagram_regex, message_text):
-        platform = "Instagram"
-        match = re.search(instagram_regex, message_text)
-    elif re.search(tiktok_regex, message_text):
-        platform = "TikTok"
-        match = re.search(tiktok_regex, message_text)
-    elif re.search(youtube_regex, message_text):
-        platform = "YouTube"
-        match = re.search(youtube_regex, message_text)
-    elif re.search(facebook_regex, message_text):
-        platform = "Facebook"
-        match = re.search(facebook_regex, message_text)
+    # Determine which platform URL it is (Only YouTube Shorts now)
+    if re.search(youtube_shorts_regex, message_text):
+        platform = "YouTube Shorts"
+        match = re.search(youtube_shorts_regex, message_text)
     else:
         return
 
@@ -232,20 +207,8 @@ add_command_help(
     "video_dl",
     [
         [
-            "https://instagram.com/reel/... or https://ddinstagram.com/reel/...",
-            "Automatically downloads Instagram videos/reels when you send a link and uploads them with a proper caption.",
-        ],
-        [
-            "https://tiktok.com/... or https://vt.tiktok.com/...",
-            "Automatically downloads TikTok videos when you send a link and uploads them with the original caption and link.",
-        ],
-        [
-            "https://youtube.com/watch?v=... or https://youtube.com/shorts/... or https://youtu.be/...",
-            "Automatically downloads YouTube videos (all formats including regular videos and shorts) when you send a link and uploads them with the title and link.",
-        ],
-        [
-            "https://facebook.com/watch?v=... or https://facebook.com/.../videos/...",
-            "Automatically downloads Facebook videos when you send a link and uploads them with the title and link.",
+            "https://youtube.com/shorts/...",
+            "Automatically downloads YouTube Shorts when you send a link and uploads them.",
         ],
         [
             ".dl",
