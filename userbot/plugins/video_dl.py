@@ -11,11 +11,14 @@ from pyrogram.types import Message, LinkPreviewOptions
 from userbot import UserBot, SOCKS5_PROXY
 from userbot.plugins.help import add_command_help
 
-# Instagram URL regex pattern - updated to include ddinstagram.com
-instagram_regex = r'https?://(www\.)?(instagram\.com|ddinstagram\.com)/(p|reels|reel|tv|stories)/[a-zA-Z0-9_-]+/?'
+# User Agent for requests and yt-dlp
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
-# TikTok URL regex pattern - updated to support empty usernames
-tiktok_regex = r'https?://(www\.|vm\.|vt\.)?tiktok\.com/(@[\w.-]*/video/\d+|@/video/\d+|[\w]+/?).*'
+# Instagram URL regex pattern - updated to include ddinstagram.com and share links
+instagram_regex = r'https?://(www\.)?(instagram\.com|ddinstagram\.com)/(p|reels|reel|tv|stories|share/reel|share/p)/[a-zA-Z0-9_-]+/?'
+
+# TikTok URL regex pattern - updated to support empty usernames and t.tiktok.com
+tiktok_regex = r'https?://(www\.|vm\.|vt\.|t\.)?tiktok\.com/(@[\w.-]*/video/\d+|@/video/\d+|[\w]+/?).*'
 
 # YouTube URL regex pattern - matches all YouTube video formats (shorts, watch, embed, etc.)
 youtube_regex = r'https?://(www\.)?(youtube\.com/(watch\?v=|shorts/|embed/|v/)|youtu\.be/)[a-zA-Z0-9_-]+/?(\?.*)?'
@@ -29,10 +32,16 @@ video_url_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_regex}|{facebook_
 
 async def get_final_url(url):
     timeout = aiohttp.ClientTimeout(total=10)
-    async with aiohttp.ClientSession(timeout=timeout) as session:
-        async with session.head(url, allow_redirects=True) as response:
-            if response.status == 200:
-                return str(response.url)
+    headers = {
+        "User-Agent": USER_AGENT
+    }
+    try:
+        async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+            async with session.head(url, allow_redirects=True) as response:
+                if response.status == 200:
+                    return str(response.url)
+    except Exception:
+        pass
     return url
 
 
@@ -94,6 +103,7 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     with tempfile.TemporaryDirectory() as temp_dir:
         yt_dlp_args = [
             "yt-dlp",
+            "--user-agent", USER_AGENT,
             download_url,
             "-o",
             os.path.join(temp_dir, "%(title)s [%(id)s].%(ext)s")
