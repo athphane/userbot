@@ -29,8 +29,8 @@ tiktok_regex = r'https?://(www\.|vm\.|vt\.|t\.)?tiktok\.com/(@[\w.-]*/video/\d+|
 # Facebook URL regex pattern - supports various Facebook video URL formats
 facebook_regex = r'https?://(www\.|m\.|web\.)?facebook\.com/(watch/?\?v=\d+|[\w.-]+/videos/\d+|reel/\d+|share/(v|r)/\d+|[\w.-]+/posts/\d+)/?.*'
 
-# Combined regex for function trigger (Auto-download listener matches ONLY Shorts)
-video_url_regex = youtube_shorts_regex
+# Combined regex for function trigger (Auto-download listener matches Shorts, TikTok, Instagram)
+video_url_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_shorts_regex})"
 
 # Combined regex for all supported platforms (for .dl command validation)
 all_platforms_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_shorts_regex}|{youtube_regex}|{facebook_regex})"
@@ -100,8 +100,9 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     if platform == "YouTube" and not from_reply:
         return
 
-    # Double Safety: If not a reply, STRICTLY enforce that it must match the Shorts regex
-    if not from_reply and not re.search(youtube_shorts_regex, message_text):
+    # Double Safety: If not a reply, STRICTLY enforce that it must match the allowed auto-download regexes
+    # (YouTube Shorts, Instagram, TikTok)
+    if not from_reply and not (re.search(youtube_shorts_regex, message_text) or re.search(instagram_regex, message_text) or re.search(tiktok_regex, message_text)):
         return
 
     if not match:
