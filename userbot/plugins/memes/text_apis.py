@@ -38,6 +38,11 @@ text_apis_data = {
         "target_key": "affirmation",
         "help": "Affirmative messages",
     },
+    "no": {
+        "url": "https://naas.isalman.dev/no",
+        "target_key": "reason",
+        "help": "No reasons",
+    },
 }
 
 text_api_commands = []
