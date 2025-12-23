@@ -96,6 +96,10 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     else:
         return
 
+    # Safety Guard: Ensure regular YouTube videos are NEVER auto-downloaded (must use .dl)
+    if platform == "YouTube" and not from_reply:
+        return
+
     if not match:
         return
 
