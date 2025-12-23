@@ -53,6 +53,10 @@ async def get_final_url(url):
 
 async def process_urls(url):
     """Process URLs for all supported platforms"""
+    # Skip redirect following for YouTube links to avoid unwanted redirects
+    if "youtube.com" in url or "youtu.be" in url:
+        return url
+
     # Follow redirects to get the real URL
     real_url = await get_final_url(url)
 
