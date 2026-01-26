@@ -63,6 +63,13 @@ services:
     image: ghcr.io/athphane/userbot:latest
 
 ```
+- Config \
+ Get your telegram App api_id: and App api_hash from [https://my.telegram.org/apps](https://my.telegram.org/apps) and configure them:
+```
+mkdir config
+wget -O config/userbot.ini https://raw.githubusercontent.com/athphane/userbot/refs/heads/master/userbot.ini.sample
+nano config/userbot.ini
+```
 - First run:
 ```bash
 docker compose run --rm userbot python -m userbot
@@ -74,7 +81,7 @@ docker compose up -d
 ```
 ## Spotify integration
 To get the Spotify commands working on the Userbot, you need to get a CLIENT_ID and CLIENT_SECRET
-form the [Spotify Developer Portal]('https://developer.spotify.com/dashboard/applications) and add
+form the [Spotify Developer Portal](https://developer.spotify.com/dashboard/applications) and add
 them into your userbot.ini file.
 
 On the Spotify developer portal, make sure to set your application `Redirect URI` to 
