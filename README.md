@@ -64,7 +64,7 @@ services:
 
 ```
 - Config \
- Get your telegram App api_id: and App api_hash from [https://my.telegram.org/apps](https://my.telegram.org/apps) and configure them:
+ Get your telegram api_id and api_hash from [https://my.telegram.org/apps](https://my.telegram.org/apps) and configure them:
 ```
 mkdir config
 wget -O config/userbot.ini https://raw.githubusercontent.com/athphane/userbot/refs/heads/master/userbot.ini.sample
