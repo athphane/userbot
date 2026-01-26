@@ -4,58 +4,61 @@ import re
 import subprocess
 import tempfile
 
-import requests
+import aiohttp
 from pyrogram import filters
 from pyrogram.types import Message, LinkPreviewOptions
 
 from userbot import UserBot, SOCKS5_PROXY
 from userbot.plugins.help import add_command_help
 
-# Instagram URL regex pattern - updated to include ddinstagram.com
-instagram_regex = r'https?://(www\.)?(instagram\.com|ddinstagram\.com)/(p|reels|reel|tv|stories)/[a-zA-Z0-9_-]+/?'
+# User Agent for requests and yt-dlp
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
-# TikTok URL regex pattern - updated to support empty usernames
-tiktok_regex = r'https?://(www\.|vm\.|vt\.)?tiktok\.com/(@[\w.-]*/video/\d+|@/video/\d+|[\w]+/?).*'
-
-# YouTube Shorts URL regex pattern - only matches /shorts/ URLs, not regular videos
+# YouTube Shorts URL regex pattern
 youtube_shorts_regex = r'https?://(www\.)?youtube\.com/shorts/[a-zA-Z0-9_-]+/?(\?.*)?'
+
+# General YouTube URL regex pattern (for .dl command)
+youtube_regex = r'https?://(www\.)?(youtube\.com/(watch\?v=|shorts/|embed/|v/)|youtu\.be/)[a-zA-Z0-9_-]+/?(\?.*)?'
+
+# Instagram URL regex pattern - updated to include ddinstagram.com and share links
+instagram_regex = r'https?://(www\.)?(instagram\.com|ddinstagram\.com)/(p|reels|reel|tv|stories|share/reel|share/p)/[a-zA-Z0-9_-]+/?'
+
+# TikTok URL regex pattern - updated to support empty usernames and t.tiktok.com
+tiktok_regex = r'https?://(www\.|vm\.|vt\.|t\.)?tiktok\.com/(@[\w.-]*/video/\d+|@/video/\d+|[\w]+/?).*'
 
 # Facebook URL regex pattern - supports various Facebook video URL formats
 facebook_regex = r'https?://(www\.|m\.|web\.)?facebook\.com/(watch/?\?v=\d+|[\w.-]+/videos/\d+|reel/\d+|share/(v|r)/\d+|[\w.-]+/posts/\d+)/?.*'
 
-# Combined regex for function trigger
-video_url_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_shorts_regex}|{facebook_regex})"
+# Combined regex for function trigger (Auto-download listener matches Shorts, TikTok, Instagram)
+video_url_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_shorts_regex})"
+
+# Combined regex for all supported platforms (for .dl command validation)
+all_platforms_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_shorts_regex}|{youtube_regex}|{facebook_regex})"
 
 
-def get_final_url(url):
-    """Get the final URL by following redirects and cleaning it"""
+async def get_final_url(url):
+    timeout = aiohttp.ClientTimeout(total=10)
+    headers = {
+        "User-Agent": USER_AGENT
+    }
     try:
-        # Create a session that follows redirects
-        session = requests.Session()
-
-        # Make HEAD request to get redirect without downloading content
-        response = session.head(url, allow_redirects=True)
-
-        if response.status_code == 200:
-            # Get the final URL after all redirects
-            final_url = response.url
-
-            # Remove tracking parameters (anything after the ?)
-            clean_url = final_url.split('?')[0]
-
-            return clean_url
-
+        async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+            async with session.head(url, allow_redirects=True) as response:
+                if response.status == 200:
+                    return str(response.url)
     except Exception:
         pass
-
-    # Return original if anything fails
     return url
 
 
-def process_urls(url):
-    """Process URLs for both Instagram and TikTok"""
-    # First, follow redirects to get the real URL
-    real_url = get_final_url(url)
+async def process_urls(url):
+    """Process URLs for all supported platforms"""
+    # Skip redirect following for YouTube links to avoid unwanted redirects
+    if "youtube.com" in url or "youtu.be" in url:
+        return url
+
+    # Follow redirects to get the real URL
+    real_url = await get_final_url(url)
 
     # For ddinstagram.com links, always convert to instagram.com
     if ("ddinstagram.com" in real_url) or ("kkinstagram.com" in real_url):
@@ -84,10 +87,22 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     elif re.search(youtube_shorts_regex, message_text):
         platform = "YouTube Shorts"
         match = re.search(youtube_shorts_regex, message_text)
+    elif re.search(youtube_regex, message_text):
+        platform = "YouTube"
+        match = re.search(youtube_regex, message_text)
     elif re.search(facebook_regex, message_text):
         platform = "Facebook"
         match = re.search(facebook_regex, message_text)
     else:
+        return
+
+    # Safety Guard: Ensure regular YouTube videos are NEVER auto-downloaded (must use .dl)
+    if platform == "YouTube" and not from_reply:
+        return
+
+    # Double Safety: If not a reply, STRICTLY enforce that it must match the allowed auto-download regexes
+    # (YouTube Shorts, Instagram, TikTok)
+    if not from_reply and not (re.search(youtube_shorts_regex, message_text) or re.search(instagram_regex, message_text) or re.search(tiktok_regex, message_text)):
         return
 
     if not match:
@@ -96,7 +111,7 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     original_url = match.group(0)
 
     # Process URL to get the download URL and display URL
-    download_url = process_urls(original_url)
+    download_url = await process_urls(original_url)
 
     # Send a new status message (silently and without preview)
     status_msg = await bot.send_message(
@@ -110,10 +125,16 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     with tempfile.TemporaryDirectory() as temp_dir:
         yt_dlp_args = [
             "yt-dlp",
+            "--user-agent", USER_AGENT,
             download_url,
             "-o",
             os.path.join(temp_dir, "%(title)s [%(id)s].%(ext)s")
         ]
+
+        # Apply 720p limit only for regular YouTube videos (not Shorts or other platforms)
+        if platform == "YouTube":
+            yt_dlp_args.insert(2, "-f")
+            yt_dlp_args.insert(3, "bestvideo[height<=720]+bestaudio/best[height<=720]")
 
         # Use SOCKS5 proxy if configured
         if SOCKS5_PROXY:
@@ -224,8 +245,8 @@ async def download_video_command(bot: UserBot, message: Message):
     # Extract the link from the replied message
     reply_text = message.reply_to_message.text or message.reply_to_message.caption
     
-    # Check if it matches the video URL regex
-    if not re.search(video_url_regex, reply_text):
+    # Check if it matches any supported video URL regex
+    if not re.search(all_platforms_regex, reply_text):
         await message.edit_text("The replied message does not contain a valid video link.")
         return
 
@@ -238,6 +259,10 @@ add_command_help(
     "video_dl",
     [
         [
+            "https://youtube.com/shorts/...",
+            "Automatically downloads YouTube Shorts when you send a link and uploads them.",
+        ],
+        [
             "https://instagram.com/reel/... or https://ddinstagram.com/reel/...",
             "Automatically downloads Instagram videos/reels when you send a link and uploads them with a proper caption.",
         ],
@@ -246,16 +271,12 @@ add_command_help(
             "Automatically downloads TikTok videos when you send a link and uploads them with the original caption and link.",
         ],
         [
-            "https://youtube.com/shorts/...",
-            "Automatically downloads YouTube Shorts (only /shorts/ URLs, not regular videos) when you send a link and uploads them with the title and link.",
-        ],
-        [
             "https://facebook.com/watch?v=... or https://facebook.com/.../videos/...",
             "Automatically downloads Facebook videos when you send a link and uploads them with the title and link.",
         ],
         [
             ".dl",
-            "Download the video from the link you sent. This command is useful to trigger it for a link someone else sends.",
+            "Download any supported video. 720p limit is applied ONLY to regular YouTube videos.",
         ]
     ],
 )
