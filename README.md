@@ -54,14 +54,25 @@ python -m userbot
 *Using docker*
 - Save the following content as `docker-compose.yml`
 ```yml
-version: '3.5'
 services:
   userbot:
     hostname: userbot
     volumes:
       - ./config:/root/userbot/config
     image: ghcr.io/athphane/userbot:latest
-
+    restart: always
+    depends_on:
+      - userbot-mongo
+  userbot-mongo:
+    image: mongo:latest
+    hostname: userbot-mongo
+    restart: always
+    volumes:
+      - ./mongo:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=userbot
+      - MONGO_INITDB_ROOT_USERNAME=userbot
+      - MONGO_INITDB_ROOT_PASSWORD=userbot-password
 ```
 - Config \
  Get your telegram api_id and api_hash from [https://my.telegram.org/apps](https://my.telegram.org/apps) and configure them:
