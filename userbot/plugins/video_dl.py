@@ -68,6 +68,74 @@ async def process_urls(url):
 
     return download_url
 
+
+async def download_tiktok_alternative(url, temp_dir, status_msg=None):
+    """Alternative TikTok download using third-party API"""
+    video_id = None
+    if "/video/" in url:
+        video_id = url.split("/video/")[1].split("?")[0].split("/")[0]
+
+    if not video_id:
+        raise Exception("Could not extract video ID from TikTok URL")
+
+    if status_msg:
+        await status_msg.edit(
+            f"🔄 Using alternative TikTok API...\n`{url}`",
+            link_preview_options=LinkPreviewOptions(is_disabled=True)
+        )
+
+    api = {
+        "name": "TikWM API",
+        "url": "https://www.tikwm.com/api/",
+        "method": "POST",
+        "data": {"url": url, "hd": 1}
+    }
+
+    timeout = aiohttp.ClientTimeout(total=30)
+    headers = {
+        "User-Agent": USER_AGENT
+    }
+
+    async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+        try:
+            if status_msg:
+                await status_msg.edit(
+                    f"🔄 Trying {api['name']}...\n`{url}`",
+                    link_preview_options=LinkPreviewOptions(is_disabled=True)
+                )
+
+            async with session.post(api["url"], json=api.get("data", {})) as response:
+                if response.status == 200:
+                    data = await response.json()
+
+                    if "data" in data and data["data"]:
+                        video_url = data["data"].get("hdplay") or data["data"].get("play")
+                        title = data["data"].get("title", "TikTok Video")
+
+                        if video_url:
+                            if status_msg:
+                                await status_msg.edit(
+                                    f"⬇️ Downloading from {api['name']}...\n`{url}`",
+                                    link_preview_options=LinkPreviewOptions(is_disabled=True)
+                                )
+
+                            async with session.get(video_url) as video_response:
+                                if video_response.status == 200:
+                                    filename = f"{title[:50]} [{video_id}].mp4"
+                                    filename = "".join(c for c in filename if c.isalnum() or c in (' ', '-', '_', '[', ']', '.')).strip()
+                                    filepath = os.path.join(temp_dir, filename)
+
+                                    with open(filepath, 'wb') as f:
+                                        f.write(await video_response.read())
+
+                                    return True
+
+        except Exception:
+            pass
+
+    raise Exception("Alternative TikTok download failed")
+
+
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
 async def video_downloader(bot: UserBot, message: Message, from_reply=False):
     # Extract the video URL from the message
@@ -123,6 +191,7 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
 
     # Create a temporary directory for downloading
     with tempfile.TemporaryDirectory() as temp_dir:
+        downloaded_via_alt = False
         yt_dlp_args = [
             "yt-dlp",
             "--user-agent", USER_AGENT,
@@ -142,28 +211,23 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
             yt_dlp_args.append(SOCKS5_PROXY)
 
         try:
-            # Update status (without preview)
-            await status_msg.edit(
-                f"⬇️ Downloading: {download_url}",
-                link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
-            )
+            if platform == "TikTok":
+                try:
+                    downloaded_via_alt = await download_tiktok_alternative(download_url, temp_dir, status_msg)
+                except Exception:
+                    await status_msg.edit(
+                        f"⚠️ Alternative TikTok method failed, trying yt-dlp...\n`{download_url}`",
+                        link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
+                    )
 
-            # Download the video using yt-dlp
-            process = subprocess.run(
-                yt_dlp_args,
-                capture_output=True,
-                text=True,
-                check=False
-            )
-
-            if process.returncode != 0:
+            if not downloaded_via_alt:
+                # Update status (without preview)
                 await status_msg.edit(
-                    f"⚠️ Failed to download: {process.stderr[:500]}...\n\nTrying with different options...",
+                    f"⬇️ Downloading: {download_url}",
                     link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
                 )
 
-                # Try with --no-check-certificate if it failed
-                yt_dlp_args.append('--no-check-certificate')
+                # Download the video using yt-dlp
                 process = subprocess.run(
                     yt_dlp_args,
                     capture_output=True,
@@ -173,12 +237,27 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
 
                 if process.returncode != 0:
                     await status_msg.edit(
-                        f"❌ Download failed. Error: {process.stderr[:500]}...",
+                        f"⚠️ Failed to download: {process.stderr[:500]}...\n\nTrying with different options...",
                         link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
                     )
-                    await asyncio.sleep(5)
-                    await status_msg.delete()
-                    return
+
+                    # Try with --no-check-certificate if it failed
+                    yt_dlp_args.append('--no-check-certificate')
+                    process = subprocess.run(
+                        yt_dlp_args,
+                        capture_output=True,
+                        text=True,
+                        check=False
+                    )
+
+                    if process.returncode != 0:
+                        await status_msg.edit(
+                            f"❌ Download failed. Error: {process.stderr[:500]}...",
+                            link_preview_options=LinkPreviewOptions(is_disabled=True)  # Disable link preview
+                        )
+                        await asyncio.sleep(5)
+                        await status_msg.delete()
+                        return
 
             # Get the downloaded file
             downloaded_files = os.listdir(temp_dir)
