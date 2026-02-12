@@ -1,0 +1,99 @@
+name: Update yt-dlp
+
+on:
+  schedule:
+    # Run daily at 3:00 AM UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-yt-dlp:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install packaging
+
+    - name: Get latest yt-dlp version
+      id: get-version
+      run: |
+        # Get the latest version from PyPI
+        LATEST_VERSION=$(curl -s https://pypi.org/pypi/yt-dlp/json | python -c "import sys, json; print(json.load(sys.stdin)['info']['version'])")
+        echo "latest_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+        echo "Latest yt-dlp version on PyPI: $LATEST_VERSION"
+        
+        # Extract current version from requirements.txt
+        CURRENT_VERSION=$(grep -oP 'yt-dlp\[default,curl-cffi\]>=\K[0-9.]+' requirements.txt || echo "")
+        
+        # Validate that we found a version
+        if [ -z "$CURRENT_VERSION" ]; then
+          echo "Error: Could not extract yt-dlp version from requirements.txt"
+          exit 1
+        fi
+        
+        echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+        echo "Current yt-dlp version in requirements.txt: $CURRENT_VERSION"
+        
+        # Compare versions using Python's packaging.version with error handling
+        # Using a temporary script file to avoid YAML escaping issues
+        echo "from packaging import version" > /tmp/compare_versions.py
+        echo "import sys" >> /tmp/compare_versions.py
+        echo "try:" >> /tmp/compare_versions.py
+        echo "    latest = sys.argv[1]" >> /tmp/compare_versions.py
+        echo "    current = sys.argv[2]" >> /tmp/compare_versions.py
+        echo "    if version.parse(latest) > version.parse(current):" >> /tmp/compare_versions.py
+        echo "        sys.exit(0)" >> /tmp/compare_versions.py
+        echo "    else:" >> /tmp/compare_versions.py
+        echo "        sys.exit(1)" >> /tmp/compare_versions.py
+        echo "except Exception as e:" >> /tmp/compare_versions.py
+        echo "    print(f'Error comparing versions: {e}', file=sys.stderr)" >> /tmp/compare_versions.py
+        echo "    sys.exit(2)" >> /tmp/compare_versions.py
+        
+        python /tmp/compare_versions.py "$LATEST_VERSION" "$CURRENT_VERSION"
+        EXIT_CODE=$?
+        
+        if [ $EXIT_CODE -eq 0 ]; then
+          echo "needs_update=true" >> $GITHUB_OUTPUT
+          echo "Update needed: $CURRENT_VERSION -> $LATEST_VERSION"
+        elif [ $EXIT_CODE -eq 1 ]; then
+          echo "needs_update=false" >> $GITHUB_OUTPUT
+          echo "yt-dlp is up to date"
+        else
+          echo "Error: Version comparison failed"
+          exit 1
+        fi
+
+    - name: Update requirements.txt
+      id: update-file
+      run: |
+        LATEST_VERSION="${{ steps.get-version.outputs.latest_version }}"
+        NEEDS_UPDATE="${{ steps.get-version.outputs.needs_update }}"
+        
+        if [ "$NEEDS_UPDATE" = "true" ]; then
+          echo "Updating yt-dlp to $LATEST_VERSION"
+          sed -i "s|yt-dlp\[default,curl-cffi\]>=.*|yt-dlp[default,curl-cffi]>=$LATEST_VERSION|" requirements.txt
+          echo "updated=true" >> $GITHUB_OUTPUT
+        else
+          echo "yt-dlp is already up to date"
+          echo "updated=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit and push changes
+      if: steps.update-file.outputs.updated == 'true'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add requirements.txt
+        git commit -m "chore: update yt-dlp to ${{ steps.get-version.outputs.latest_version }}"
+        git push
