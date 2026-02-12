@@ -46,18 +46,32 @@ jobs:
         echo "Current yt-dlp version in requirements.txt: $CURRENT_VERSION"
         
         # Compare versions using Python's packaging.version with error handling
-        if python -c "from packaging import version; import sys; latest='$LATEST_VERSION'; current='$CURRENT_VERSION'; sys.exit(0 if version.parse(latest) > version.parse(current) else 1)" 2>/dev/null; then
+        # Using a temporary script file to avoid YAML escaping issues
+        echo "from packaging import version" > /tmp/compare_versions.py
+        echo "import sys" >> /tmp/compare_versions.py
+        echo "try:" >> /tmp/compare_versions.py
+        echo "    latest = sys.argv[1]" >> /tmp/compare_versions.py
+        echo "    current = sys.argv[2]" >> /tmp/compare_versions.py
+        echo "    if version.parse(latest) > version.parse(current):" >> /tmp/compare_versions.py
+        echo "        sys.exit(0)" >> /tmp/compare_versions.py
+        echo "    else:" >> /tmp/compare_versions.py
+        echo "        sys.exit(1)" >> /tmp/compare_versions.py
+        echo "except Exception as e:" >> /tmp/compare_versions.py
+        echo "    print(f'Error comparing versions: {e}', file=sys.stderr)" >> /tmp/compare_versions.py
+        echo "    sys.exit(2)" >> /tmp/compare_versions.py
+        
+        python /tmp/compare_versions.py "$LATEST_VERSION" "$CURRENT_VERSION"
+        EXIT_CODE=$?
+        
+        if [ $EXIT_CODE -eq 0 ]; then
           echo "needs_update=true" >> $GITHUB_OUTPUT
           echo "Update needed: $CURRENT_VERSION -> $LATEST_VERSION"
+        elif [ $EXIT_CODE -eq 1 ]; then
+          echo "needs_update=false" >> $GITHUB_OUTPUT
+          echo "yt-dlp is up to date"
         else
-          EXIT_CODE=$?
-          if [ $EXIT_CODE -eq 1 ]; then
-            echo "needs_update=false" >> $GITHUB_OUTPUT
-            echo "yt-dlp is up to date"
-          else
-            echo "Error: Version comparison failed"
-            exit 1
-          fi
+          echo "Error: Version comparison failed"
+          exit 1
         fi
 
     - name: Update requirements.txt
@@ -68,7 +82,7 @@ jobs:
         
         if [ "$NEEDS_UPDATE" = "true" ]; then
           echo "Updating yt-dlp to $LATEST_VERSION"
-          sed -i "s/yt-dlp\[default,curl-cffi\]>=.*/yt-dlp[default,curl-cffi]>=$LATEST_VERSION/" requirements.txt
+          sed -i "s|yt-dlp\[default,curl-cffi\]>=.*|yt-dlp[default,curl-cffi]>=$LATEST_VERSION|" requirements.txt
           echo "updated=true" >> $GITHUB_OUTPUT
         else
           echo "yt-dlp is already up to date"
