@@ -54,4 +54,4 @@ wrapt==1.14.1
 yarl==1.18.0
 yourls==1.2.3
 youtube-dl==2021.12.17
-yt-dlp[default,curl-cffi]>=2025.12.8
+yt-dlp[default,curl-cffi]>=2026.02.04
