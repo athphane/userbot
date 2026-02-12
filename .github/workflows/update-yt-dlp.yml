@@ -1,0 +1,67 @@
+name: Update yt-dlp
+
+on:
+  schedule:
+    # Run daily at 3:00 AM UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-yt-dlp:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install packaging
+
+    - name: Get latest yt-dlp version
+      id: get-version
+      run: |
+        # Get the latest version from PyPI
+        LATEST_VERSION=$(curl -s https://pypi.org/pypi/yt-dlp/json | python -c "import sys, json; print(json.load(sys.stdin)['info']['version'])")
+        echo "latest_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+        echo "Latest yt-dlp version on PyPI: $LATEST_VERSION"
+        
+        # Extract current version from requirements.txt
+        CURRENT_VERSION=$(grep -oP 'yt-dlp\[default,curl-cffi\]>=\K[0-9.]+' requirements.txt || echo "")
+        echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+        echo "Current yt-dlp version in requirements.txt: $CURRENT_VERSION"
+        
+        # Compare versions using Python's packaging.version
+        NEEDS_UPDATE=$(python -c "from packaging import version; import sys; latest='$LATEST_VERSION'; current='$CURRENT_VERSION'; sys.exit(0 if version.parse(latest) > version.parse(current) else 1)" && echo "true" || echo "false")
+        echo "needs_update=$NEEDS_UPDATE" >> $GITHUB_OUTPUT
+
+    - name: Update requirements.txt
+      id: update-file
+      run: |
+        LATEST_VERSION="${{ steps.get-version.outputs.latest_version }}"
+        NEEDS_UPDATE="${{ steps.get-version.outputs.needs_update }}"
+        
+        if [ "$NEEDS_UPDATE" = "true" ]; then
+          echo "Updating yt-dlp to $LATEST_VERSION"
+          sed -i "s/yt-dlp\[default,curl-cffi\]>=.*/yt-dlp[default,curl-cffi]>=$LATEST_VERSION/" requirements.txt
+          echo "updated=true" >> $GITHUB_OUTPUT
+        else
+          echo "yt-dlp is already up to date"
+          echo "updated=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit and push changes
+      if: steps.update-file.outputs.updated == 'true'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add requirements.txt
+        git commit -m "chore: update yt-dlp to ${{ steps.get-version.outputs.latest_version }}"
+        git push
