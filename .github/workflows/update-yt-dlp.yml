@@ -69,6 +69,7 @@ jobs:
         elif [ $EXIT_CODE -eq 1 ]; then
           echo "needs_update=false" >> $GITHUB_OUTPUT
           echo "yt-dlp is up to date"
+          exit 0
         else
           echo "Error: Version comparison failed"
           exit 1
