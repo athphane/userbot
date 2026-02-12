@@ -35,12 +35,30 @@ jobs:
         
         # Extract current version from requirements.txt
         CURRENT_VERSION=$(grep -oP 'yt-dlp\[default,curl-cffi\]>=\K[0-9.]+' requirements.txt || echo "")
+        
+        # Validate that we found a version
+        if [ -z "$CURRENT_VERSION" ]; then
+          echo "Error: Could not extract yt-dlp version from requirements.txt"
+          exit 1
+        fi
+        
         echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
         echo "Current yt-dlp version in requirements.txt: $CURRENT_VERSION"
         
-        # Compare versions using Python's packaging.version
-        NEEDS_UPDATE=$(python -c "from packaging import version; import sys; latest='$LATEST_VERSION'; current='$CURRENT_VERSION'; sys.exit(0 if version.parse(latest) > version.parse(current) else 1)" && echo "true" || echo "false")
-        echo "needs_update=$NEEDS_UPDATE" >> $GITHUB_OUTPUT
+        # Compare versions using Python's packaging.version with error handling
+        if python -c "from packaging import version; import sys; latest='$LATEST_VERSION'; current='$CURRENT_VERSION'; sys.exit(0 if version.parse(latest) > version.parse(current) else 1)" 2>/dev/null; then
+          echo "needs_update=true" >> $GITHUB_OUTPUT
+          echo "Update needed: $CURRENT_VERSION -> $LATEST_VERSION"
+        else
+          EXIT_CODE=$?
+          if [ $EXIT_CODE -eq 1 ]; then
+            echo "needs_update=false" >> $GITHUB_OUTPUT
+            echo "yt-dlp is up to date"
+          else
+            echo "Error: Version comparison failed"
+            exit 1
+          fi
+        fi
 
     - name: Update requirements.txt
       id: update-file
