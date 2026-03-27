@@ -165,9 +165,7 @@ async def math_evaluation(bot: UserBot, message: Message):
     except Exception:
         evaluation = traceback.format_exc()
 
-    final_output = "<b>Expression</b>:\n<code>{}</code>\n\n<b>Result</b>:\n<code>{}</code> \n".format(
-        expression, evaluation.strip()
-    )
+    final_output = "{}={}".format(expression, evaluation.strip())
 
     await message.edit(final_output)
 
