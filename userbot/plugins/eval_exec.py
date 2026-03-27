@@ -88,7 +88,7 @@ async def evaluation_func(
         reply = message.reply_to_message or None
         await aexec(cmd, bot, message, reply, database)
     except Exception:
-        exc = traceback.format_exc().splitlines()[-1]
+        exc = traceback.format_exc()
 
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
@@ -161,7 +161,7 @@ async def math_evaluation(bot: UserBot, message: Message):
         result = eval(expression)
         evaluation = str(result)
     except Exception:
-        evaluation = traceback.format_exc()
+        evaluation = traceback.format_exc().splitlines()[-1]
 
     final_output = "{}={}".format(expression, evaluation.strip())
 
