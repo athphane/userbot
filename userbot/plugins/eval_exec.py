@@ -136,10 +136,10 @@ async def aexec(code, b, m, r, d):
 async def math_evaluation(bot: UserBot, message: Message):
     parts = message.text.split(" ", maxsplit=1)
     if len(parts) < 2 or not parts[1].strip():
-        await message.reply_text("Please provide a mathematical expression to evaluate.")
+        await message.edit("Please provide a mathematical expression to evaluate.")
         return
 
-    expression =  parts[1]
+    expression = parts[1]
 
     # Handle GST calculations using GST_RATE variable
     # 10+GST -> 10*1.08 (add GST to amount to get total)
@@ -156,8 +156,16 @@ async def math_evaluation(bot: UserBot, message: Message):
             return match.group(0)
 
     expression = re.sub(r"\+(\d+)%", handle_percentage, expression)
-    cmd = f"print({expression})"
-    await evaluation_func(bot, message, cmd_override=cmd, display_override=expression)
+
+    try:
+        result = eval(expression)
+        evaluation = str(result)
+    except Exception:
+        evaluation = traceback.format_exc().splitlines()[-1]
+
+    final_output = "{}={}".format(expression, evaluation.strip())
+
+    await message.edit(final_output)
 
 
 @UserBot.on_edited_message(
