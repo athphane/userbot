@@ -88,7 +88,7 @@ async def evaluation_func(
         reply = message.reply_to_message or None
         await aexec(cmd, bot, message, reply, database)
     except Exception:
-        exc = traceback.format_exc()
+        exc = traceback.format_exc().splitlines()[-1]
 
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
