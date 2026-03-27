@@ -157,8 +157,6 @@ async def math_evaluation(bot: UserBot, message: Message):
 
     expression = re.sub(r"\+(\d+)%", handle_percentage, expression)
 
-    await message.edit("Processing ...")
-
     try:
         result = eval(expression)
         evaluation = str(result)
