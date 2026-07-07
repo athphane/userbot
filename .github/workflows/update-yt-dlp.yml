@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      packages: write
 
     steps:
     - name: Checkout repository
@@ -99,17 +98,3 @@ jobs:
         git add requirements.txt
         git commit -m "chore: update yt-dlp to ${{ steps.get-version.outputs.latest_version }}"
         git push
-
-    - name: Set up Docker Buildx
-      if: steps.update-file.outputs.updated == 'true'
-      uses: docker/setup-buildx-action@v3
-
-    - name: Log in to GHCR
-      if: steps.update-file.outputs.updated == 'true'
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: Build and push Docker image
-      if: steps.update-file.outputs.updated == 'true'
-      run: |
-        docker compose -f .build/docker-compose.yml build
-        docker compose -f .build/docker-compose.yml push
