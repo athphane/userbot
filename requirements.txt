@@ -28,7 +28,7 @@ pyaes==1.6.1
 pygit==0.1
 pymongo==4.6.3
 pyparsing==3.0.9
-pyrotgfork==2.1.35
+pyrotgfork==2.2.24
 PySocks==1.7.1
 pytz==2022.5
 pytz-deprecation-shim==0.1.0.post0
