@@ -13,16 +13,16 @@ colorama==0.4.6
 cssselect2==0.7.0
 Deprecated==1.2.13
 dnspython==2.6.1
-frozenlist==1.5.0
+frozenlist==1.8.0
 humanize==4.4.0
 idna==3.20
 Logbook==1.5.3
 lxml==6.1.3
-multidict==6.1.0
+multidict==6.9.1
 packaging==24.2
 Pillow==12.3.0
 prettytable==3.4.1
-propcache==0.2.0
+propcache==0.5.4
 psutil==5.9.3
 pyaes==1.6.1
 pygit==0.1
@@ -51,6 +51,6 @@ uwuify==1.1.0
 wcwidth==0.2.5
 webencodings==0.5.1
 wrapt==1.14.1
-yarl==1.18.0
+yarl==1.25.1
 yourls==1.2.3
 yt-dlp[default,curl-cffi]>=2026.8.19
