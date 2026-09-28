@@ -15,4 +15,11 @@ RUN --mount=type=cache,target=/var/cache/apt \
     apt-get autoremove -y gcc build-essential && \
     apt-get clean
 
+# yt-dlp uses Deno for YouTube challenges and FFmpeg to merge audio/video.
+COPY --from=denoland/deno:bin-2.9.7 /deno /usr/local/bin/deno
+RUN apt-get update && \
+    apt-get install -y ffmpeg --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/* && \
+    deno --version
+
 CMD python -m userbot

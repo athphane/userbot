@@ -26,6 +26,13 @@ You're gonna need to get the following programs and services either installed on
 or signed up for. You must do all. It is a cardinal sin if you don't.
 * Python 3.10 (requirements were generated for 3.10. Python 3.8 is supported from the looks of it.)
 * `virtualenv` installed so that the packages don't interfere with other system packages.
+* [Deno](https://docs.deno.com/runtime/getting_started/installation/) 2.3+ on `PATH`
+  for YouTube downloads, plus FFmpeg for merging video and audio. Both are included
+  in the Docker images. The `yt-dlp[default]` requirement supplies the matching
+  [YouTube challenge scripts](https://github.com/yt-dlp/yt-dlp/wiki/EJS).
+  HTTP 429 means the service is rate-limiting requests; wait before retrying and
+  check the server/proxy's public IP if it persists. Installing Deno does not
+  remove a rate limit.
 
 * [MongoDB](https://www.mongodb.com) on your server or a free server from 
 [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). (I recommend Atlas as I used it during
