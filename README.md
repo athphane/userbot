@@ -61,12 +61,16 @@ services:
       - ./config:/root/userbot/config
     image: ghcr.io/athphane/userbot:latest
     restart: always
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     depends_on:
       - userbot-mongo
   userbot-mongo:
     image: mongo:latest
     hostname: userbot-mongo
     restart: always
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
     volumes:
       - ./mongo:/data/db
     environment:
@@ -74,6 +78,18 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=userbot
       - MONGO_INITDB_ROOT_PASSWORD=userbot-password
 ```
+If you already run Watchtower on this Docker host, these labels opt the userbot
+into automatic updates from `ghcr.io/athphane/userbot:latest` and exclude MongoDB.
+Watchtower must be configured to include this container and allow updates; the
+userbot is also opted in when Watchtower uses `--label-enable`. See the
+[Watchtower container selection documentation](https://containrrr.dev/watchtower/container-selection/)
+for name and scope filters. After adding the labels to an existing deployment,
+run `docker compose up -d userbot userbot-mongo` to apply them.
+
+This example uses the published image. The repository's root `docker-compose.yml`
+builds locally and mounts the source checkout, so its labels alone do not enable
+updates from the published image.
+
 - Config \
  Get your telegram api_id and api_hash from [https://my.telegram.org/apps](https://my.telegram.org/apps) and configure them:
 ```

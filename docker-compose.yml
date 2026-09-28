@@ -4,6 +4,9 @@ services:
       context: .
       dockerfile: .build/dev.Dockerfile
     hostname: userbot
+    restart: unless-stopped
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
     volumes:
       - ./:/root/userbot
     networks:
@@ -13,6 +16,8 @@ services:
     hostname: userbot-mongo
     image: mongo
     restart: unless-stopped
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
     environment:
       MONGO_INITDB_ROOT_USERNAME: userbot
       MONGO_INITDB_ROOT_PASSWORD: userbot-password

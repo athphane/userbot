@@ -11,3 +11,4 @@ file_ids.txt
 .cache-*
 config.ini
 userbot.ini
+node_modules/
