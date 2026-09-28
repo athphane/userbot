@@ -37,6 +37,19 @@ video_url_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_shorts_regex})"
 all_platforms_regex = f"({instagram_regex}|{tiktok_regex}|{youtube_shorts_regex}|{youtube_regex}|{facebook_regex})"
 
 
+def download_error(stderr: bytes, platform: str) -> str:
+    """Summarize yt-dlp failures without hiding errors behind warnings."""
+    output = stderr.decode("utf-8", errors="replace")
+    if "HTTP Error 429" in output or "Too Many Requests" in output:
+        return (
+            f"{platform} is rate-limiting requests (HTTP 429). "
+            "Wait before trying again. If this persists, check the server or "
+            "configured proxy's public IP."
+        )
+    errors = [line for line in output.splitlines() if line.startswith("ERROR:")]
+    return (errors[-1] if errors else output.strip())[:500] or "yt-dlp failed."
+
+
 async def get_final_url(url):
     timeout = aiohttp.ClientTimeout(total=10)
     headers = {"User-Agent": USER_AGENT}
@@ -156,8 +169,9 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
 
         # Apply 720p limit only for regular YouTube videos (not Shorts or other platforms)
         if platform == "YouTube":
-            yt_dlp_args.insert(2, "-f")
-            yt_dlp_args.insert(3, "bestvideo[height<=720]+bestaudio/best[height<=720]")
+            yt_dlp_args.extend(
+                ["-f", "bestvideo[height<=720]+bestaudio/best[height<=720]"]
+            )
 
         # Use SOCKS5 proxy if configured
         if SOCKS5_PROXY:
@@ -177,15 +191,11 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
             try:
                 returncode, _, stderr = await run_process(*yt_dlp_args)
                 if returncode != 0:
-                    await status_msg.edit(
-                        "Retrying download...",
-                        link_preview_options=LinkPreviewOptions(is_disabled=True),
+                    LOGS.warning(
+                        "yt-dlp download failed: %s",
+                        stderr.decode("utf-8", errors="replace"),
                     )
-                    yt_dlp_args.append("--no-check-certificate")
-                    returncode, _, stderr = await run_process(*yt_dlp_args)
-                    if returncode != 0:
-                        error = stderr.decode("utf-8", errors="replace")[:500]
-                        raise RuntimeError(f"Download failed: {error}")
+                    raise RuntimeError(download_error(stderr, platform))
 
                 downloaded_files = [
                     name

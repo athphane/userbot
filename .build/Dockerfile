@@ -32,4 +32,11 @@ RUN rm -rf /usr/local/lib/python3.11/site-packages
 COPY --from=build /root/userbot .
 COPY --from=build /usr/local /usr/local
 
+# yt-dlp uses Deno for YouTube challenges and FFmpeg to merge audio/video.
+COPY --from=denoland/deno:bin-2.9.7 /deno /usr/local/bin/deno
+RUN apt-get update && \
+    apt-get install -y ffmpeg --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/* && \
+    deno --version
+
 CMD python -m userbot
