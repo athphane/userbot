@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      aiohttp:
+        patterns:
+          - aiohttp
+          - aiohappyeyeballs
+          - aiosignal
+          - frozenlist
+          - multidict
+          - propcache
+          - yarl
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

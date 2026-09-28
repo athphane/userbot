@@ -33,7 +33,9 @@ class SkyrimStatusMeme:
         self.finalImage.save(filename)
 
     def GetSize(self):
-        return self.font.getsize(self.finalText)
+        """Return text dimensions using the supported Pillow bounding-box API."""
+        left, _, right, bottom = self.font.getbbox(self.finalText)
+        return right - left, bottom
 
 
 if __name__ == "__main__":

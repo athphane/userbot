@@ -10,7 +10,7 @@ This file contains guidelines for agentic coding agents working on this reposito
 - **Install dependencies:** `pip install -r requirements.txt`
 - **Update pip requirements:** `pip install -U -r requirements.txt`
 
-**Testing:** This project does not have automated tests. Test features manually by running the bot.
+**Testing:** Run offline dependency compatibility checks with `python -m unittest discover -s tests -v`. Test Telegram features manually by running the bot.
 
 **Linting/Formatting:** Use black, autopep8, and isort for formatting. DeepSource is configured to auto-format.
 

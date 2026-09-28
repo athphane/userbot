@@ -1,0 +1,46 @@
+name: Dependency security
+
+on:
+  pull_request:
+    paths:
+      - requirements.txt
+      - userbot/helpers/**
+      - tests/**
+      - .github/workflows/dependency-security.yml
+  push:
+    branches: [master]
+    paths:
+      - requirements.txt
+      - userbot/helpers/**
+      - tests/**
+      - .github/workflows/dependency-security.yml
+  schedule:
+    - cron: '30 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install application dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Check dependency compatibility
+        run: |
+          python -m pip check
+          python -m unittest discover -s tests -v
+      - name: Audit application requirements
+        run: |
+          python -m venv /tmp/userbot-audit
+          /tmp/userbot-audit/bin/python -m pip install pip-audit==2.10.1
+          /tmp/userbot-audit/bin/pip-audit -r requirements.txt --strict --progress-spinner off
