@@ -49,6 +49,9 @@ def download_error(stderr: bytes, platform: str) -> str:
     errors = [line for line in output.splitlines() if line.startswith("ERROR:")]
     return (errors[-1] if errors else output.strip())[:500] or "yt-dlp failed."
 
+# Cache for the bot's user ID to avoid repeated API calls
+_bot_user_id = None
+
 
 async def get_final_url(url):
     timeout = aiohttp.ClientTimeout(total=10)
@@ -99,6 +102,16 @@ async def send_instagram_photo(
 
 @UserBot.on_message(filters.regex(video_url_regex) & filters.me)
 async def video_downloader(bot: UserBot, message: Message, from_reply=False):
+    global _bot_user_id
+    
+    # Don't download if the message is sent to saved messages (to myself)
+    if _bot_user_id is None:
+        me = await bot.get_me()
+        _bot_user_id = me.id
+    
+    if message.chat.id == _bot_user_id:
+        return
+    
     # Extract the video URL from the message
     message_text = message.text or message.caption
 
