@@ -19,7 +19,7 @@ async def get_weather(bot: UserBot, message: Message):
     if len(message.command) > 1:
         location = message.command[1]
         headers = {"user-agent": "httpie"}
-        url = f"https://wttr.in/{location}?mnTC0&lang=en"
+        url = f"https://wttr.in/{location}?mnT0&lang=en"
         try:
             async with aiohttp.ClientSession(headers=headers) as session:
                 async with session.get(url) as resp:
