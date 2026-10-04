@@ -43,7 +43,7 @@ spotipy==2.26.0
 svglib==1.4.1
 TgCrypto==1.2.5
 thisapidoesnotexist==0.2
-tinycss2==1.2.1
+tinycss2==1.5.1
 tzdata==2022.5
 tzlocal==4.2
 urllib3
