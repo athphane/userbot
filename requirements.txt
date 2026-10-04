@@ -7,7 +7,7 @@ async-timeout==4.0.2
 attrs==22.1.0
 certifi==2024.7.4
 chardet==5.2.0
-charset-normalizer==2.1.1
+charset-normalizer==3.5.2
 click==8.5.0
 colorama==0.4.6
 cssselect2==0.7.0
