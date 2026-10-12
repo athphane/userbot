@@ -32,3 +32,11 @@ client_secret =
 
 [proxy]
 socks5_proxy = socks5://username:password@ip-address:port
+
+[social_dl]
+; Enable downloads from other group members and permitted private chats.
+enabled = false
+; Numeric Telegram group ID, for example -1001234567890.
+allowed_group = 0
+; Comma-separated Telegram user IDs to ignore for group auto-downloads.
+ignored_users =

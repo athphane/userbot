@@ -10,6 +10,7 @@ from pyrogram.types import LinkPreviewOptions, Message
 
 from userbot import LOGS, SOCKS5_PROXY, UserBot
 from userbot.helpers.instagram import download_instagram_photo, run_process
+from userbot.helpers.social_downloader import prepare_telegram_video
 from userbot.plugins.help import add_command_help
 
 # User Agent for requests and yt-dlp
@@ -168,6 +169,8 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
         ]
 
         # Apply 720p limit only for regular YouTube videos (not Shorts or other platforms)
+        if platform in {"YouTube", "YouTube Shorts"}:
+            yt_dlp_args.extend(["--no-playlist", "-S", "vcodec:h264,acodec:aac"])
         if platform == "YouTube":
             yt_dlp_args.extend(
                 ["-f", "bestvideo[height<=720]+bestaudio/best[height<=720]"]
@@ -211,6 +214,8 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                     "media_type": "video",
                     "title": file_name.split(" [")[0],
                 }
+                if platform in {"YouTube", "YouTube Shorts"}:
+                    media["file_path"] = await prepare_telegram_video(media["file_path"])
             except Exception:
                 if platform == "Instagram":
                     try:

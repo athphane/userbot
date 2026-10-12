@@ -113,7 +113,32 @@ docker compose run --rm userbot python -m userbot
 ```bash
 docker compose up -d
 ```
+## Social media downloads
+
+The downloader can automatically reply to TikTok, Instagram, and YouTube Shorts
+links posted by other members of one group. Anyone in a group can use
+`/dl <url>` for YouTube, Facebook, and other supported links. Group members
+can also send links in a private chat with the user account. The owner can add
+other private users with `.allow <user_id>`, remove them with
+`.disallow <user_id>`, and list them with `.allowlist`. The existing owner
+`.dl` reply command remains available.
+
+Configure `[social_dl]` in `config/userbot.ini`:
+
+```ini
+[social_dl]
+enabled = true
+allowed_group = -1001234567890
+ignored_users =
+```
+
+The allowlist is stored in `config/social_dl_allowlist.json`. FFmpeg and
+ffprobe are needed to make YouTube uploads streamable and to render Instagram
+photos with music. Media larger than 50 MB is rejected for the group and
+private downloader.
+
 ## Spotify integration
+
 To get the Spotify commands working on the Userbot, you need to get a CLIENT_ID and CLIENT_SECRET
 form the [Spotify Developer Portal](https://developer.spotify.com/dashboard/applications) and add
 them into your userbot.ini file.

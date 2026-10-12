@@ -5,6 +5,10 @@ venv/
 *.session-journal
 __pycache__/
 config/userbot.ini
+config/social_dl_allowlist.json
+config/social_dl_allowlist.json.tmp
+config/*.session-shm
+config/*.session-wal
 config/userbot.ini.something
 unknown_errors.txt
 file_ids.txt
