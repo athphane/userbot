@@ -27,7 +27,7 @@ psutil==5.9.3
 pyaes==1.6.1
 pygit==0.1
 pymongo==4.6.3
-pyparsing==3.0.9
+pyparsing==3.3.3
 pyrotgfork==2.2.24
 PySocks==1.7.1
 pytz==2022.5
