@@ -3,11 +3,11 @@ aiohappyeyeballs==2.7.1
 aiohttp==3.14.4
 aiosignal==1.4.0
 APScheduler==3.10.4
-async-timeout==4.0.2
+async-timeout==5.0.1
 attrs==22.1.0
 certifi==2024.7.4
 chardet==5.2.0
-charset-normalizer==2.1.1
+charset-normalizer==3.5.2
 click==8.5.0
 colorama==0.4.6
 cssselect2==0.7.0
@@ -27,7 +27,7 @@ psutil==5.9.3
 pyaes==1.6.1
 pygit==0.1
 pymongo==4.18.2
-pyparsing==3.0.9
+pyparsing==3.3.3
 pyrotgfork==2.2.24
 PySocks==1.7.1
 pytz==2022.5
@@ -43,7 +43,7 @@ spotipy==2.26.0
 svglib==1.4.1
 TgCrypto==1.2.5
 thisapidoesnotexist==0.2
-tinycss2==1.2.1
+tinycss2==1.5.1
 tzdata==2022.5
 tzlocal==4.2
 urllib3
