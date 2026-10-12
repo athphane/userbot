@@ -7,6 +7,8 @@ __pycache__/
 config/userbot.ini
 config/social_dl_allowlist.json
 config/social_dl_allowlist.json.tmp
+config/social_dl_chats.json
+config/social_dl_chats.json.tmp
 config/*.session-shm
 config/*.session-wal
 config/userbot.ini.something

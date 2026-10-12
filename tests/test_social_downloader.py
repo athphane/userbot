@@ -108,3 +108,21 @@ class AccessTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(await access.is_user_allowed(bot, 456, 1, -100))
                 self.assertTrue(access.remove_user(123))
                 self.assertFalse(access.remove_user(123))
+
+
+class ChatSettingsTests(unittest.TestCase):
+    def test_chats_are_disabled_until_enabled_and_changes_persist(self):
+        settings = load_module("social_chats_test", ROOT / "userbot/helpers/social_chats.py")
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory, "chats.json")
+            with patch.object(settings, "CHATS_PATH", str(path)):
+                self.assertFalse(settings.is_chat_enabled(-100))
+                self.assertFalse(settings.is_chat_enabled(456))
+                self.assertTrue(settings.set_chat_enabled(-100, True))
+                self.assertTrue(settings.set_chat_enabled(456, True))
+                self.assertFalse(settings.set_chat_enabled(456, True))
+                self.assertEqual(settings.list_chats(), [-100, 456])
+                self.assertEqual(json.loads(path.read_text()), {"enabled_chats": [-100, 456]})
+                self.assertTrue(settings.set_chat_enabled(-100, False))
+                self.assertFalse(settings.is_chat_enabled(-100))
+                self.assertTrue(settings.is_chat_enabled(456))

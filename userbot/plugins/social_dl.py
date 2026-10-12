@@ -1,4 +1,4 @@
-"""Group and private downloads adapted from the social downloader bot."""
+"""Opt-in downloads for links sent by other people."""
 
 import os
 import tempfile
@@ -7,27 +7,12 @@ from pyrogram import filters
 from pyrogram.errors import BadRequest
 from pyrogram.types import Message
 
-from userbot import LOGS, SOCKS5_PROXY, UserBot, config
-from userbot.helpers.social_access import add_user, is_user_allowed, list_users, remove_user
+from userbot import LOGS, SOCKS5_PROXY, UserBot
+from userbot.helpers.social_chats import is_chat_enabled, list_chats, set_chat_enabled
 from userbot.helpers.social_downloader import AUTO_DOWNLOAD_REGEX, detect_platform, download_video
 from userbot.plugins.help import add_command_help
 
 MAX_FILE_SIZE = 50 * 1024 * 1024
-ENABLED = config.getboolean("social_dl", "enabled", fallback=False)
-GROUP_ID = config.getint("social_dl", "allowed_group", fallback=0)
-IGNORED_USERS = {
-    int(value.strip())
-    for value in config.get("social_dl", "ignored_users", fallback="").split(",")
-    if value.strip()
-}
-
-
-async def _allowed(bot: UserBot, message: Message) -> bool:
-    """Check whether a private sender may use downloads."""
-    if not message.from_user:
-        return False
-    owner = await bot.get_me()
-    return await is_user_allowed(bot, message.from_user.id, owner.id, GROUP_ID)
 
 
 async def _send_photo(bot: UserBot, message: Message, path: str, caption: str) -> None:
@@ -78,10 +63,8 @@ async def process_and_upload(bot: UserBot, message: Message, url: str) -> None:
 
 @UserBot.on_message(filters.incoming & filters.group & filters.regex(AUTO_DOWNLOAD_REGEX))
 async def group_link(bot: UserBot, message: Message) -> None:
-    """Auto-download links from others in the configured group."""
-    if not ENABLED or message.chat.id != GROUP_ID:
-        return
-    if message.from_user and message.from_user.id in IGNORED_USERS:
+    """Auto-download links from others in enabled groups."""
+    if not is_chat_enabled(message.chat.id):
         return
     text = message.text or message.caption or ""
     if text.startswith(("/", ".")):
@@ -91,77 +74,44 @@ async def group_link(bot: UserBot, message: Message) -> None:
         await process_and_upload(bot, message, match.group(0))
 
 
-@UserBot.on_message(filters.incoming & filters.private & filters.text, group=1)
+@UserBot.on_message(filters.incoming & filters.private, group=1)
 async def private_link(bot: UserBot, message: Message) -> None:
-    """Handle permitted private links without intercepting commands."""
-    if not ENABLED or (message.text or "").startswith(("/", ".")):
+    """Handle links sent by others in enabled private chats."""
+    if not is_chat_enabled(message.chat.id):
         return
-    if not await _allowed(bot, message):
-        await message.reply_text("You are not authorised to use private downloads.")
+    text = message.text or message.caption or ""
+    if text.startswith(("/", ".")):
         return
-    _, match = detect_platform(message.text or "")
+    _, match = detect_platform(text)
     if match:
         await process_and_upload(bot, message, match.group(0))
-    else:
-        await message.reply_text("Send a TikTok, Instagram, YouTube, or Facebook video link.")
 
 
-@UserBot.on_message(filters.command("dl", "/"), group=2)
-async def slash_download(bot: UserBot, message: Message) -> None:
-    """Run a manual download in the configured group or a permitted DM."""
-    if not ENABLED or not message.from_user:
-        return
-    if message.chat.type.name == "PRIVATE" and not await _allowed(bot, message):
-        return
-    text = " ".join(message.command[1:])
-    _, match = detect_platform(text)
-    if not match:
-        await message.reply_text("Usage: /dl <url>. Supported: TikTok, Instagram, YouTube, Facebook.")
-        return
-    await process_and_upload(bot, message, match.group(0))
-
-
-@UserBot.on_message(filters.incoming & filters.command(["start", "help"], "/"))
-async def social_help(bot: UserBot, message: Message) -> None:
-    """Describe download usage in private chats."""
-    if ENABLED:
-        await message.reply_text(
-            "Send a TikTok, Instagram, YouTube Shorts, YouTube, or Facebook link here. "
-            "TikTok, Instagram, and YouTube Shorts download automatically in the configured group. "
-            "Use /dl <url> for manual downloads. Private access requires group membership or allowlist access."
+@UserBot.on_message(filters.me & filters.command("socialdl", "."))
+async def social_chat_settings(bot: UserBot, message: Message) -> None:
+    """Let the owner enable or disable downloads in the current chat."""
+    action = message.command[1].lower() if len(message.command) > 1 else "status"
+    chat_id = message.chat.id
+    if action == "list":
+        chats = list_chats()
+        await message.edit_text(
+            "Enabled chats: " + (", ".join(map(str, chats)) or "none")
         )
-
-
-@UserBot.on_message(filters.me & filters.command(["allow", "disallow", "allowlist"], [".", "/"]))
-async def social_allowlist(bot: UserBot, message: Message) -> None:
-    """Manage the private-download allowlist from the owner's account."""
-    command = message.command[0].split("@")[0].lstrip("./")
-    if command == "allowlist" or (command == "allow" and len(message.command) == 1):
-        users = list_users()
-        await message.edit_text("Allowed users: " + (", ".join(map(str, users)) or "none"))
-        return
-    if len(message.command) < 2:
-        await message.edit_text(f"Usage: .{command} <user_id>")
-        return
-    try:
-        user_id = int(message.command[1])
-    except ValueError:
-        await message.edit_text("Invalid user ID.")
-        return
-    if command == "allow":
-        changed = add_user(user_id)
-        await message.edit_text("User allowed." if changed else "User already allowed.")
+    elif action in {"on", "off"}:
+        set_chat_enabled(chat_id, action == "on")
+        state = "enabled" if action == "on" else "disabled"
+        await message.edit_text(f"Social downloads {state} here.")
+    elif action == "status":
+        state = "enabled" if is_chat_enabled(chat_id) else "disabled"
+        await message.edit_text(f"Social downloads are {state} here.")
     else:
-        changed = remove_user(user_id)
-        await message.edit_text("User removed." if changed else "User was not allowed.")
+        await message.edit_text("Usage: .socialdl on|off|status|list")
 
 
 add_command_help(
     "social_dl",
     [
-        ["/dl <url>", "Download a supported link in the configured group or permitted private chat."],
-        [".allow <user_id>", "Allow private downloads for a user."],
-        [".disallow <user_id>", "Remove private download access."],
-        [".allowlist", "List permitted private download users."],
+        [".socialdl on|off", "Enable or disable downloads for other senders in this chat."],
+        [".socialdl status|list", "Show this chat's setting or all enabled chat IDs."],
     ],
 )

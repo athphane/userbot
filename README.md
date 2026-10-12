@@ -115,27 +115,21 @@ docker compose up -d
 ```
 ## Social media downloads
 
-The downloader can automatically reply to TikTok, Instagram, and YouTube Shorts
-links posted by other members of one group. Anyone in a group can use
-`/dl <url>` for YouTube, Facebook, and other supported links. Group members
-can also send links in a private chat with the user account. The owner can add
-other private users with `.allow <user_id>`, remove them with
-`.disallow <user_id>`, and list them with `.allowlist`. The existing owner
-`.dl` reply command remains available.
+Your own TikTok, Instagram, and YouTube Shorts links download automatically in
+any chat. The owner `.dl` reply command also works in any chat. Links from other
+people are ignored until you send `.socialdl on` in that chat or group. Send
+`.socialdl off` there to disable them, `.socialdl status` to check the current
+chat, or `.socialdl list` to see enabled chat IDs. In enabled groups, TikTok,
+Instagram, and YouTube Shorts links download automatically; in enabled private
+chats, supported links download automatically. Only your account can use the
+`.socialdl` and `.dl` commands; incoming `/start`, `/help`, and `/dl` commands
+are ignored.
 
-Configure `[social_dl]` in `config/userbot.ini`:
-
-```ini
-[social_dl]
-enabled = true
-allowed_group = -1001234567890
-ignored_users =
-```
-
-The allowlist is stored in `config/social_dl_allowlist.json`. FFmpeg and
-ffprobe are needed to make YouTube uploads streamable and to render Instagram
-photos with music. Media larger than 50 MB is rejected for the group and
-private downloader.
+Chat settings are stored in `config/social_dl_chats.json` and survive restarts.
+The old `enabled`, `allowed_group`, `ignored_users`, and private user allowlist
+settings no longer affect downloads. FFmpeg and ffprobe are needed to make
+YouTube uploads streamable and to render Instagram
+photos with music. Media larger than 50 MB is rejected for chat downloads.
 
 ## Spotify integration
 
