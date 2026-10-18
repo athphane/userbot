@@ -23,7 +23,7 @@ packaging==24.2
 Pillow==12.3.0
 prettytable==3.4.1
 propcache==0.5.4
-psutil==5.9.3
+psutil==7.2.2
 pyaes==1.6.1
 pygit==0.1
 pymongo==4.18.2
