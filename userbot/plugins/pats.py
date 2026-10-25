@@ -2,7 +2,7 @@ import asyncio
 
 import aiohttp
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetChatID, ReplyCheck
@@ -21,7 +21,7 @@ async def give_pats(bot: UserBot, message: Message):
             await asyncio.gather(
                 message.delete(),
                 bot.send_video(
-                    GetChatID(message), url, reply_to_message_id=ReplyCheck(message)
+                    GetChatID(message), url, reply_parameters=ReplyParameters(message_id=ReplyCheck(message))
                 ),
             )
 

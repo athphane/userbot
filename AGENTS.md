@@ -43,7 +43,12 @@ async def now_playing(bot: UserBot, message: Message) -> None:
     ...
 ```
 
-### Pyrogram Plugin Pattern
+### Kurigram Plugin Pattern
+Kurigram provides the `pyrogram` import namespace. Install `kurigram` and
+`TgCrypto-pyrofork`; do not install another Pyrogram fork in the same environment.
+Use `LinkPreviewOptions` and `ReplyParameters` for preview and reply options,
+and compare chat types and member statuses with `pyrogram.enums` values.
+
 All plugins follow this structure:
 ```python
 from pyrogram import filters
@@ -132,7 +137,7 @@ from userbot.database import database
 
 ### Notes
 - Python 3.10+ required
-- This is a Telegram userbot based on Pyrogram
+- This is a Telegram userbot based on Kurigram (imported as `pyrogram`)
 - Commands are prefixed with `.` (e.g., `.alive`, `.help`)
 - Each plugin must call `add_command_help()` at the end to register help
 - Avoid committing secrets or `.cache-*` files

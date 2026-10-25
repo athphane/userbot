@@ -1,10 +1,7 @@
 import asyncio
-from datetime import datetime
-
-from pyrogram import filters
+from pyrogram import enums, filters
 from pyrogram.errors import PeerIdInvalid
-from pyrogram.raw import functions
-from pyrogram.types import Message, User
+from pyrogram.types import ChatPhoto, LinkPreviewOptions, Message, ReplyParameters, User
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
@@ -42,40 +39,37 @@ WHOIS_PIC = (
 )
 
 
-def LastOnline(user: User):
+def LastOnline(user: User) -> str:
+    """Format Kurigram's user status and datetime fields."""
     if user.is_bot:
         return ""
-    elif user.status == "recently":
+    elif user.status == enums.UserStatus.RECENTLY:
         return "Recently"
-    elif user.status == "within_week":
+    elif user.status == enums.UserStatus.LAST_WEEK:
         return "Within the last week"
-    elif user.status == "within_month":
+    elif user.status == enums.UserStatus.LAST_MONTH:
         return "Within the last month"
-    elif user.status == "long_time_ago":
+    elif user.status == enums.UserStatus.LONG_AGO:
         return "A long time ago :("
-    elif user.status == "online":
+    elif user.status == enums.UserStatus.ONLINE:
         return "Currently Online"
-    elif user.status == "offline":
-        return datetime.fromtimestamp(user.last_online_date).strftime(
-            "%a, %d %b %Y, %H:%M:%S"
-        )
+    elif user.status == enums.UserStatus.OFFLINE and user.last_online_date:
+        return user.last_online_date.strftime("%a, %d %b %Y, %H:%M:%S")
+    return "Unknown"
 
 
 async def GetCommon(bot: UserBot, get_user):
-    common = await bot.send(
-        functions.messages.GetCommonChats(
-            user_id=await bot.resolve_peer(get_user), max_id=0, limit=0
-        )
-    )
-    return common
+    return await bot.get_common_chats(get_user)
 
 
 def FullName(user: User):
     return user.first_name + " " + user.last_name if user.last_name else user.first_name
 
 
-def ProfilePicUpdate(user_pic):
-    return datetime.fromtimestamp(user_pic[0].date).strftime("%d.%m.%Y, %H:%M:%S")
+def ProfilePicUpdate(user_pic: list[ChatPhoto]) -> str:
+    """Format the date attached to a Kurigram chat photo."""
+    date = user_pic[0].added_date
+    return date.strftime("%d.%m.%Y, %H:%M:%S") if date else "Unknown"
 
 
 @UserBot.on_message(filters.command("whois", [".", ""]) & filters.me)
@@ -101,11 +95,11 @@ async def who_is(bot: UserBot, message: Message):
 
     user_details = await bot.get_chat(get_user)
     bio = user_details.bio
-    user_pic = await bot.get_profile_photos(user.id)
-    pic_count = await bot.get_profile_photos_count(user.id)
+    user_pic = [photo async for photo in bot.get_chat_photos(user.id, limit=1)]
+    pic_count = await bot.get_chat_photos_count(user.id)
     common = await GetCommon(bot, user.id)
 
-    if not user.photo:
+    if not user_pic:
         await message.edit(
             WHOIS.format(
                 full_name=FullName(user),
@@ -114,15 +108,15 @@ async def who_is(bot: UserBot, message: Message):
                 last_name=user.last_name if user.last_name else "",
                 username=user.username if user.username else "",
                 last_online=LastOnline(user),
-                common_groups=len(common.chats),
+                common_groups=len(common),
                 bio=bio if bio else "`No bio set up.`",
             ),
-            disable_web_page_preview=True,
+            link_preview_options=LinkPreviewOptions(is_disabled=True),
         )
-    elif user.photo:
+    else:
         await bot.send_photo(
             message.chat.id,
-            user_pic[0].file_id,
+            user_pic[0].big_file_id,
             caption=WHOIS_PIC.format(
                 full_name=FullName(user),
                 user_id=user.id,
@@ -131,11 +125,11 @@ async def who_is(bot: UserBot, message: Message):
                 username=user.username if user.username else "",
                 last_online=LastOnline(user),
                 profile_pics=pic_count,
-                common_groups=len(common.chats),
+                common_groups=len(common),
                 bio=bio if bio else "`No bio set up.`",
                 profile_pic_update=ProfilePicUpdate(user_pic),
             ),
-            reply_to_message_id=ReplyCheck(message),
+            reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
         )
 
         await message.delete()

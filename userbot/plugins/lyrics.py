@@ -32,7 +32,7 @@ async def send_lyrics(bot: UserBot, message: Message):
         lyrics_results = await UserBot.get_inline_bot_results("ilyricsbot", song_name)
 
         try:
-            # send to Saved Messages because hide_via doesn't work sometimes
+            # Copy from Saved Messages to omit the inline bot attribution.
             saved = await bot.send_inline_bot_result(
                 chat_id="me",
                 query_id=lyrics_results.query_id,
@@ -44,11 +44,11 @@ async def send_lyrics(bot: UserBot, message: Message):
             await bot.copy_message(
                 chat_id=message.chat.id,
                 from_chat_id="me",
-                message_id=saved.updates[1].message.id,
+                message_id=saved.id,
             )
 
             # delete the message from Saved Messages
-            await bot.delete_messages("me", saved.updates[1].message.id)
+            await bot.delete_messages("me", saved.id)
         except TimeoutError:
             await message.edit("That didn't work out")
             await asyncio.sleep(2)

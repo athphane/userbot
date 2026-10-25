@@ -7,7 +7,7 @@ import re
 from typing import Optional
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import UserBot
 from userbot.database import database
@@ -112,11 +112,12 @@ async def evaluation_func(
         with open("eval.txt", "w", encoding="utf8") as out_file:
             out_file.write(str(final_output))
 
-        await message.reply_document(
-            "eval.txt",
+        await bot.send_document(
+            chat_id=message.chat.id,
+            document="eval.txt",
             caption=cmd,
             disable_notification=True,
-            reply_to_message_id=ReplyCheck(message),
+            reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
         )
         os.remove("eval.txt")
         await status_message.delete()
@@ -214,11 +215,12 @@ async def execution(bot: UserBot, message: Message):
     if len(OUTPUT) > 4096:
         with open("exec.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(OUTPUT))
-        await message.reply_document(
+        await bot.send_document(
+            chat_id=message.chat.id,
             document="exec.text",
             caption=cmd,
             disable_notification=True,
-            reply_to_message_id=ReplyCheck(message),
+            reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
         )
         os.remove("exec.text")
     else:

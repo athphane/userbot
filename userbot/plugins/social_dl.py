@@ -5,7 +5,7 @@ import tempfile
 
 from pyrogram import filters
 from pyrogram.errors import BadRequest
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import LOGS, SOCKS5_PROXY, UserBot
 from userbot.helpers.social_chats import is_chat_enabled, list_chats, set_chat_enabled
@@ -19,10 +19,10 @@ async def _send_photo(bot: UserBot, message: Message, path: str, caption: str) -
     """Send an image or its original document when Telegram rejects the photo."""
     try:
         await bot.send_photo(message.chat.id, path, caption=caption,
-                             reply_to_message_id=message.id)
+                             reply_parameters=ReplyParameters(message_id=message.id))
     except BadRequest:
         await bot.send_document(message.chat.id, path, caption=caption,
-                                reply_to_message_id=message.id)
+                                reply_parameters=ReplyParameters(message_id=message.id))
 
 
 async def process_and_upload(bot: UserBot, message: Message, url: str) -> None:
@@ -48,7 +48,7 @@ async def process_and_upload(bot: UserBot, message: Message, url: str) -> None:
             else:
                 try:
                     await bot.send_video(message.chat.id, path, caption=caption,
-                                         reply_to_message_id=message.id,
+                                         reply_parameters=ReplyParameters(message_id=message.id),
                                          supports_streaming=True)
                 except Exception:
                     if not media.get("fallback_image_path"):

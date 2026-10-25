@@ -44,4 +44,4 @@ async def handle_ignored_message(client: Client, message: Message):
             await message.reply_text("This chat has been ignored and is not monitored by user")
             ignore_db.set_last_message_time(user_id)
     else:
-        await message.continue_propagation()
+        message.continue_propagation()

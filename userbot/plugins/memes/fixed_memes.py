@@ -1,4 +1,4 @@
-from pyrogram import emoji, filters
+from pyrogram import filters
 from pyrogram.types import Message
 
 from userbot import UserBot
@@ -40,7 +40,7 @@ memes_data = {
         "name": "lust_gif",
         "image": "lust.gif",
         "type": "animation",
-        "caption": f"I wanna do bad things with you {emoji.SMIRKING_FACE}",
+        "caption": "I wanna do bad things with you 😏",
         "help": "Gif of lustful things.",
     },
     "dmf": {

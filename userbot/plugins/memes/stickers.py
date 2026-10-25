@@ -2,7 +2,7 @@ import asyncio
 import random
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
@@ -89,13 +89,19 @@ async def sticker_super_func(bot: UserBot, message: Message):
             )
 
         try:
-            await bot.send_inline_bot_result(
-                chat_id=message.chat.id,
+            saved = await bot.send_inline_bot_result(
+                chat_id="me",
                 query_id=sticker_results.query_id,
                 result_id=sticker_results.results[0].id,
-                reply_to_message_id=ReplyCheck(message),
-                hide_via=True,
             )
+            try:
+                await bot.send_sticker(
+                    chat_id=message.chat.id,
+                    sticker=saved.sticker.file_id,
+                    reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
+                )
+            finally:
+                await bot.delete_messages("me", saved.id)
         except TimeoutError:
             await message.edit("`@StickerizerBot didn't respond in time...`")
             await asyncio.sleep(2)

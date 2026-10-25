@@ -28,8 +28,11 @@ class UserBot(Client):
             workdir="./config",
         )
 
-    async def start(self):
-        await super().start()
+    async def start(
+        self, *, use_qr: bool = False, except_ids: list[int] | None = None
+    ) -> "UserBot":
+        """Start Kurigram and restore the restart notification."""
+        await super().start(use_qr=use_qr, except_ids=except_ids)
 
         restart_reply_details = super().search_messages("me", query="#userbot_restart")
         async for x in restart_reply_details:
@@ -51,6 +54,7 @@ class UserBot(Client):
         me = await self.get_me()
         print(f"{self.__class__.__name__} v{self.version} (Layer {layer}) started on @{me.username}.\n"
               f"Hi!")
+        return self
 
     async def load_bio(self):
         my_chat = await self.get_chat('self')
@@ -61,11 +65,13 @@ class UserBot(Client):
     #         about=self.bio
     #     ))
 
-    async def stop(self, *args):
+    async def stop(self, block: bool = True, clear_handlers: bool = True) -> "UserBot":
+        """Stop Kurigram and its handlers."""
         # await self.unload_bio()
 
-        await super().stop()
+        await super().stop(block=block, clear_handlers=clear_handlers)
         print(f"{self.__class__.__name__} v{self.version} Stopped. Bye.")
+        return self
 
     async def restart(self, *args, git_update=False, pip=False):
         await self.stop()

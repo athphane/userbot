@@ -1,7 +1,7 @@
 import asyncio
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
@@ -38,7 +38,7 @@ async def animu_gifs(bot: UserBot, message: Message):
             await bot.send_animation(
                 chat_id=message.chat.id,
                 animation=gif,
-                reply_to_message_id=ReplyCheck(message)
+                reply_parameters=ReplyParameters(message_id=ReplyCheck(message))
             )
     else:
         await message.edit("`Unsupported category...`")

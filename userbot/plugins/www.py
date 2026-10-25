@@ -4,7 +4,7 @@ import time
 import speedtest
 from pyrogram import filters
 from pyrogram.raw import functions
-from pyrogram.types import Message
+from pyrogram.types import LinkPreviewOptions, Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import SpeedConvert
@@ -48,7 +48,7 @@ async def speed_test(bot: UserBot, message: Message):
 
 @UserBot.on_message(filters.command("dc", ".") & filters.me)
 async def nearest_dc(bot: UserBot, message: Message):
-    dc = await bot.send(functions.help.GetNearestDc())
+    dc = await bot.invoke(functions.help.GetNearestDc())
     await message.edit(WWW.NearestDC.format(dc.country, dc.nearest_dc, dc.this_dc))
 
 
@@ -75,7 +75,7 @@ async def expand(bot: UserBot, message: Message):
         if expanded:
             await message.edit(
                 f"<b>Shortened URL</b>: {url}\n<b>Expanded URL</b>: {expanded}",
-                disable_web_page_preview=True,
+                link_preview_options=LinkPreviewOptions(is_disabled=True),
             )
         else:
             await message.edit("No bro that's not what I do")
@@ -109,7 +109,7 @@ async def shorten(bot: UserBot, message: Message):
             txt = "The URL or KEYWORD already exists!"
         else:
             txt = shortened
-            await message.edit(txt, disable_web_page_preview=False)
+            await message.edit(txt, link_preview_options=LinkPreviewOptions(is_disabled=False))
             return
     else:
         txt = "Please provide a URL to shorten"

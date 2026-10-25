@@ -8,7 +8,7 @@ from random import randint
 import aiofiles
 # from git.repository import Repository
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 from reportlab.graphics import renderPM
 from svglib.svglib import svg2rlg
 
@@ -56,7 +56,7 @@ async def commit_graph(bot: UserBot, message: Message):
 
     try:
         drawing = svg2rlg(f"{file_name}.svg")
-        renderPM.drawToFile(drawing, f"{file_name}.png")
+        renderPM.drawToFile(drawing, f"{file_name}.png", dpi=96)
     except UnboundLocalError:
         await message.edit("Username does not exist!")
         await sleep(2)
@@ -68,7 +68,7 @@ async def commit_graph(bot: UserBot, message: Message):
             chat_id=message.chat.id,
             photo=f"{file_name}.png",
             caption=git_user,
-            reply_to_message_id=ReplyCheck(message),
+            reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
         ),
         message.delete(),
     )

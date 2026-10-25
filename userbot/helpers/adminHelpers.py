@@ -1,36 +1,33 @@
 import asyncio
 from time import time
 
+from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import Message
 
 from userbot import UserBot
 from userbot.helpers.interval import IntervalHelper
 
 
-async def CheckAdmin(message: Message):
+async def CheckAdmin(message: Message) -> bool:
     """Check if we are an admin."""
-    admin = "administrator"
-    creator = "creator"
-    ranks = [admin, creator]
-
     SELF = await UserBot.get_chat_member(
         chat_id=message.chat.id, user_id=message.from_user.id
     )
 
-    if SELF.status not in ranks:
+    if SELF.status == ChatMemberStatus.OWNER:
+        return True
+    if SELF.status != ChatMemberStatus.ADMINISTRATOR:
         await message.edit("__I'm not Admin!__")
         await asyncio.sleep(2)
         await message.delete()
 
+    elif SELF.privileges and SELF.privileges.can_restrict_members:
+        return True
     else:
-        if SELF.status is not admin:
-            return True
-        elif SELF.can_restrict_members:
-            return True
-        else:
-            await message.edit("__No Permissions to restrict Members__")
-            await asyncio.sleep(2)
-            await message.delete()
+        await message.edit("__No Permissions to restrict Members__")
+        await asyncio.sleep(2)
+        await message.delete()
+    return False
 
 
 async def CheckReplyAdmin(message: Message):

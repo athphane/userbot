@@ -1,7 +1,7 @@
 from time import sleep
 
-from pyrogram import emoji, filters
-from pyrogram.types import Message
+from pyrogram import filters
+from pyrogram.types import LinkPreviewOptions, Message
 
 from userbot import UserBot
 from userbot.database.reminders import Reminders
@@ -16,12 +16,12 @@ async def show_all_reminders(bot: UserBot, message: Message):
         for reminder in reminders:
             send_text = send_text + f"{reminder[0]} | **{reminder[1]}**\n"
 
-        await message.edit(send_text, disable_web_page_preview=True)
+        await message.edit(send_text, link_preview_options=LinkPreviewOptions(is_disabled=True))
         sleep(20)
         await message.delete()
     else:
         send_text = "__You do not have any reminders__"
-        await message.edit(send_text, disable_web_page_preview=True)
+        await message.edit(send_text, link_preview_options=LinkPreviewOptions(is_disabled=True))
         sleep(5)
         await message.delete()
 
@@ -36,7 +36,7 @@ async def remind(bot: UserBot, message: Message):
         remind_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
         await message.edit(
-            f"__I need something to remind you about {emoji.CRYING_FACE}__"
+            "__I need something to remind you about 😢__"
         )
         sleep(2)
         await message.delete()
@@ -57,7 +57,7 @@ async def delete_reminder(bot: UserBot, message: Message):
     elif message.reply_to_message and len(cmd) == 1:
         reminder_id = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit(f"I need the reminder ID to delete it {emoji.CRYING_FACE}")
+        await message.edit("I need the reminder ID to delete it 😢")
         sleep(2)
         await message.delete()
         return

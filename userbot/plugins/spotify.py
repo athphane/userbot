@@ -1,6 +1,6 @@
 import asyncio
 
-from pyrogram import emoji, filters
+from pyrogram import filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 
@@ -25,7 +25,7 @@ async def now_playing(bot: UserBot, message: Message):
     song = track['name']
     link = track['external_urls']['spotify']
 
-    await message.edit(f'{emoji.MUSICAL_NOTE} Currently Playing: <a href="{link}">{song}</a>')
+    await message.edit(f'🎵 Currently Playing: <a href="{link}">{song}</a>')
 
 
 @UserBot.on_message(filters.command(["npd"], ".") & (filters.me | filters.user(ALLOWED_USERS)))

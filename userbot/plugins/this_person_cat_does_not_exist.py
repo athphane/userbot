@@ -2,7 +2,7 @@ import os
 from random import randint
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 from thisapidoesnotexist import get_cat, get_person
 
 from userbot import UserBot
@@ -15,7 +15,7 @@ async def this_person_does_no_exist(bot: UserBot, message: Message):
     file_name = f"{randint(1, 999)}person.jpeg"
     person.save_image(file_name)
     await bot.send_photo(
-        message.chat.id, file_name, reply_to_message_id=ReplyCheck(message)
+        message.chat.id, file_name, reply_parameters=ReplyParameters(message_id=ReplyCheck(message))
     )
     os.remove(file_name)
     await message.delete()
@@ -27,7 +27,7 @@ async def this_cat_does_no_exist(bot: UserBot, message: Message):
     file_name = f"{randint(1, 999)}cat.jpeg"
     cat.save_image(file_name)
     await bot.send_photo(
-        message.chat.id, file_name, reply_to_message_id=ReplyCheck(message)
+        message.chat.id, file_name, reply_parameters=ReplyParameters(message_id=ReplyCheck(message))
     )
     os.remove(file_name)
     await message.delete()

@@ -3,7 +3,7 @@ import os
 import time
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
@@ -41,7 +41,7 @@ async def skyrim(bot: UserBot, message: Message):
             await bot.send_photo(
                 message.chat.id,
                 "userbot/downloads/skyrim.png",
-                reply_to_message_id=ReplyCheck(message),
+                reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
             )
             await message.delete()
         except Exception:

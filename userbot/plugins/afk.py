@@ -2,8 +2,8 @@ import asyncio
 from datetime import datetime
 
 import humanize
-from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram import enums, filters
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetChatID, ReplyCheck
@@ -28,7 +28,7 @@ def subtract_time(start, end):
 async def collect_afk_messages(bot: UserBot, message: Message):
     if AFK:
         last_seen = subtract_time(datetime.now(), AFK_TIME)
-        is_group = True if message.chat.type in ["supergroup", "group"] else False
+        is_group = message.chat.type in (enums.ChatType.SUPERGROUP, enums.ChatType.GROUP)
         CHAT_TYPE = GROUPS if is_group else USERS
 
         if GetChatID(message) not in CHAT_TYPE:
@@ -42,7 +42,7 @@ async def collect_afk_messages(bot: UserBot, message: Message):
             await bot.send_message(
                 chat_id=GetChatID(message),
                 text=text,
-                reply_to_message_id=ReplyCheck(message),
+                reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
             )
             CHAT_TYPE[GetChatID(message)] = 1
             return
@@ -58,7 +58,7 @@ async def collect_afk_messages(bot: UserBot, message: Message):
                 await bot.send_message(
                     chat_id=GetChatID(message),
                     text=text,
-                    reply_to_message_id=ReplyCheck(message),
+                    reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
                 )
             elif CHAT_TYPE[GetChatID(message)] > 50:
                 return
@@ -72,7 +72,7 @@ async def collect_afk_messages(bot: UserBot, message: Message):
                 await bot.send_message(
                     chat_id=GetChatID(message),
                     text=text,
-                    reply_to_message_id=ReplyCheck(message),
+                    reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
                 )
 
         CHAT_TYPE[GetChatID(message)] += 1

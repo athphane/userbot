@@ -1,9 +1,9 @@
-This is a Telegram Userbot built with Python and the Pyrogram library. It uses a MongoDB database for data storage and offers a variety of features through a plugin-based architecture.
+This is a Telegram Userbot built with Python and Kurigram, which provides the `pyrogram` import namespace. It uses a MongoDB database for data storage and offers a variety of features through a plugin-based architecture.
 
 **Key Technologies:**
 
-*   **Programming Language:** Python 3.10
-*   **Telegram Library:** Pyrogram
+*   **Programming Language:** Python 3.10+ (Docker uses Python 3.15)
+*   **Telegram Library:** Kurigram with TgCrypto-pyrofork
 *   **Database:** MongoDB
 *   **Dependency Management:** pip and `requirements.txt`
 *   **Deployment:** Can be run directly or with Docker.

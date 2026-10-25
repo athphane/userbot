@@ -1,7 +1,7 @@
 import asyncio
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import ALLOWED_USERS, UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
@@ -31,25 +31,18 @@ async def send_music(bot: UserBot, message: Message):
         song_results = await UserBot.get_inline_bot_results("deezermusicbot", song_name)
 
         try:
-            # send to Saved Messages because hide_via doesn't work sometimes
+            # Re-upload from Saved Messages to omit the inline bot attribution.
             saved = await bot.send_inline_bot_result(
                 chat_id="me",
                 query_id=song_results.query_id,
                 result_id=song_results.results[0].id,
-                hide_via=True,
             )
 
             # forward as a new message from Saved Messages
-            saved = await UserBot.get_messages("me", int(saved.updates[1].message.id))
-            reply_to = (
-                message.reply_to_message.id
-                if message.reply_to_message
-                else None
-            )
             await bot.send_audio(
                 chat_id=message.chat.id,
                 audio=str(saved.audio.file_id),
-                reply_to_message_id=ReplyCheck(message),
+                reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
             )
 
             # delete the message from Saved Messages

@@ -16,7 +16,7 @@ async def alive(bot: UserBot, message: Message):
         f"**{UserBot.__class__.__name__}** ```RUNNING```\n"
         f"-> Current Uptime: `{str(datetime.now() - START_TIME).split('.')[0]}`\n"
         f"-> Python: `{python_version()}`\n"
-        f"-> Pyrogram: `{__version__}`"
+        f"-> Kurigram: `{__version__}`"
     )
     await message.edit(txt)
 
@@ -45,6 +45,7 @@ async def get_id(bot: UserBot, message: Message):
 
     if message.reply_to_message:
         rep = message.reply_to_message
+        forward_user = getattr(rep.forward_origin, "sender_user", None)
 
         if rep.audio:
             file_id = f"**File ID**: `{rep.audio.file_id}`"
@@ -104,18 +105,18 @@ async def get_id(bot: UserBot, message: Message):
             user_id = rep.from_user.id
 
     if user_id:
-        if rep.forward_from:
+        if forward_user:
             user_detail = (
-                f"**Forwarded User ID**: `{message.reply_to_message.forward_from.id}`\n"
+                f"**Forwarded User ID**: `{forward_user.id}`\n"
             )
         else:
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"
         user_detail += f"**Message ID**: `{message.reply_to_message.id}`"
         await message.edit(user_detail)
     elif file_id:
-        if rep.forward_from:
+        if forward_user:
             user_detail = (
-                f"**Forwarded User ID**: `{message.reply_to_message.forward_from.id}`\n"
+                f"**Forwarded User ID**: `{forward_user.id}`\n"
             )
         else:
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"

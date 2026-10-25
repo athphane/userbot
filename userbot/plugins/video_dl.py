@@ -6,7 +6,7 @@ import tempfile
 import aiohttp
 from pyrogram import filters
 from pyrogram.errors import BadRequest
-from pyrogram.types import LinkPreviewOptions, Message
+from pyrogram.types import LinkPreviewOptions, Message, ReplyParameters
 
 from userbot import LOGS, SOCKS5_PROXY, UserBot
 from userbot.helpers.instagram import download_instagram_photo, run_process
@@ -90,11 +90,11 @@ async def send_instagram_photo(
     """Send the original image as a document if Telegram rejects it as a photo."""
     try:
         await bot.send_photo(
-            chat_id, file_path, caption=caption, reply_to_message_id=reply_id
+            chat_id, file_path, caption=caption, reply_parameters=ReplyParameters(message_id=reply_id)
         )
     except BadRequest:
         await bot.send_document(
-            chat_id, file_path, caption=caption, reply_to_message_id=reply_id
+            chat_id, file_path, caption=caption, reply_parameters=ReplyParameters(message_id=reply_id)
         )
 
 
@@ -243,7 +243,7 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                         message.chat.id,
                         media["file_path"],
                         caption=caption,
-                        reply_to_message_id=reply_id,
+                        reply_parameters=ReplyParameters(message_id=reply_id),
                     )
                 except Exception:
                     if not media.get("fallback_image_path"):

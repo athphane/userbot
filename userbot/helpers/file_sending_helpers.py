@@ -1,7 +1,7 @@
 import json
 import os.path
 
-from pyrogram.types import Message
+from pyrogram.types import Message, ReplyParameters
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck, GetChatID
@@ -45,7 +45,7 @@ async def send_saved_animation(message: Message, name: str, image: str, caption=
             await UserBot.send_animation(
                 message.chat.id,
                 old_message.file_id,
-                reply_to_message_id=ReplyCheck(message),
+                reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
                 caption=caption if caption is not None else "",
             )
         else:
@@ -56,7 +56,7 @@ async def send_saved_animation(message: Message, name: str, image: str, caption=
         sent_animation = await UserBot.send_animation(
             "self",
             "userbot/images/{}".format(image),
-            reply_to_message_id=ReplyCheck(message),
+            reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
         )
         save_media_id(name, sent_animation)
         await send_saved_animation(message, name, image, caption)
@@ -72,7 +72,7 @@ async def send_saved_image(message: Message, name: str, image: str, caption=None
             await UserBot.send_photo(
                 GetChatID(message),
                 old_message.file_id,
-                reply_to_message_id=ReplyCheck(message),
+                reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
                 caption=caption if caption is not None else "",
             )
         else:
@@ -83,7 +83,7 @@ async def send_saved_image(message: Message, name: str, image: str, caption=None
         sent_photo = await UserBot.send_photo(
             "self",
             photo="userbot/images/{}".format(image),
-            reply_to_message_id=ReplyCheck(message),
+            reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
         )
         save_media_id(name, sent_photo)
         await send_saved_image(message, name, image, caption)

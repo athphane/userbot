@@ -25,9 +25,8 @@ async def quotly(bot: UserBot, message: Message):
     while not is_sticker:
         try:
             await sleep(4)
-            msg = await bot.get_history("@QuotLyBot", 1)
-            print(msg)
-            is_sticker = True
+            msg = [item async for item in bot.get_chat_history("@QuotLyBot", limit=1)]
+            is_sticker = bool(msg and msg[0].sticker)
         except:
             await sleep(1)
 
@@ -42,7 +41,7 @@ async def quotly(bot: UserBot, message: Message):
             except:
                 await message.edit("ERROR")
 
-    if msg_id := msg[0]['message_id']:
+    if msg_id := msg[0].id:
         await asyncio.gather(
             message.delete(),
             bot.forward_messages(message.chat.id, "@QuotLyBot", msg_id)

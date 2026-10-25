@@ -4,7 +4,7 @@ from random import choice, randint
 
 import uwuify
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import LinkPreviewOptions, Message
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import GetUserMentionable
@@ -273,7 +273,7 @@ async def youd_think_so_but_this_says_otherwise(bot: UserBot, message: Message):
 
     await message.edit(
         f"You\'d think so, but this says <a href='https://i.imgur.com/nzncews.jpg'>otherwise</a>.",
-        disable_web_page_preview=disable_web_page_preview
+        link_preview_options=LinkPreviewOptions(is_disabled=disable_web_page_preview)
     )
 
 

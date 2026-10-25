@@ -1,5 +1,5 @@
-# Pyrogram Userbot
-![Python Version](https://img.shields.io/badge/Python-v3.8-blue)
+# Kurigram Userbot
+![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Repo Size](https://img.shields.io/github/repo-size/athphane/userbot)
 [![Commit Activity](https://img.shields.io/github/commit-activity/w/athphane/userbot)](https://github.com/athphane/userbot/pulse)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b10d40c60fc549299eeb7bda1c7501aa)](https://app.codacy.com/manual/athphane/userbot?utm_source=github.com&utm_medium=referral&utm_content=athphane/userbot&utm_campaign=Badge_Grade_Settings)
@@ -12,20 +12,29 @@
 
 <img src="https://i.imgur.com/WXUgDHT.png" width="160" align="right">
 
-> A Telegram Userbot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
+> A Telegram Userbot based on [Kurigram](https://github.com/KurimuzonAkuma/kurigram)
 
 This repository contains the source code of a Telegram Userbot and the instructions for running a
-copy yourself. Beside its main purpose, the bot is featuring [**Pyrogram Asyncio**](https:////github.com/pyrogram/pyrogram/issues/181) and
-[**Smart Plugins**](https://docs.pyrogram.org/topics/smart-plugins); feel free to explore the source code to
+copy yourself. The bot uses Kurigram's asynchronous client and
+[**Smart Plugins**](https://docs.kurigram.icu/topics/smart-plugins); feel free to explore the source code to
 learn more about these topics.
+
+Kurigram keeps the `pyrogram` import namespace. Existing `[pyrogram]` configuration
+and session files continue to use the same names. Native encryption is provided
+by `TgCrypto-pyrofork`, as in KinTab.
 
 I assume you will read this whole README.md file before continuing.
 
 ## Requirements
 You're gonna need to get the following programs and services either installed on your server
 or signed up for. You must do all. It is a cardinal sin if you don't.
-* Python 3.10 (requirements were generated for 3.10. Python 3.8 is supported from the looks of it.)
+* Python 3.10 or newer. Version-specific dependency pins select the newest compatible
+  releases for Python 3.10, 3.11, and 3.12+. The Docker images use Python 3.15.
 * `virtualenv` installed so that the packages don't interfere with other system packages.
+* A C compiler, Python headers, Cairo development headers, and `pkg-config` for
+  SVG-to-PNG rendering. On Debian/Ubuntu, install them with
+  `sudo apt-get install build-essential python3-dev libcairo2-dev pkg-config`.
+  The Docker images include these dependencies.
 * [Deno](https://docs.deno.com/runtime/getting_started/installation/) 2.3+ on `PATH`
   for YouTube downloads, plus FFmpeg for merging video and audio. Both are included
   in the Docker images. The `yt-dlp[default]` requirement supplies the matching
@@ -58,6 +67,14 @@ source venv/bin/activate
 pip install -r requirements.txt
 python -m userbot
 ```
+When upgrading an existing virtual environment from pyrotgfork, remove the old
+packages before reinstalling so their shared modules are replaced completely:
+```bash
+python -m pip uninstall -y pyrotgfork TgCrypto
+python -m pip install --upgrade --force-reinstall -r requirements.txt
+```
+Docker deployments install the new dependencies in a fresh image.
+
 *Using docker*
 - Save the following content as `docker-compose.yml`
 ```yml

@@ -1,4 +1,4 @@
-import time
+from datetime import datetime, timedelta
 
 from pyrogram import filters
 from pyrogram.errors import UserAdminInvalid
@@ -21,7 +21,7 @@ async def ban_hammer(bot: UserBot, message: Message):
                 await bot.ban_chat_member(
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
-                    until_date=int(time.time() + (duration * 3600)),
+                    until_date=datetime.now() + timedelta(hours=duration),
                 )
                 await message.edit(f"{mention} has been banned for {duration} Hours.")
             else:
@@ -55,7 +55,12 @@ async def unban(bot: UserBot, message: Message):
 # Mute Permissions
 mute_permission = ChatPermissions(
     can_send_messages=False,
-    can_send_media_messages=False,
+    can_send_audios=False,
+    can_send_documents=False,
+    can_send_photos=False,
+    can_send_videos=False,
+    can_send_video_notes=False,
+    can_send_voice_notes=False,
     can_send_other_messages=False,
     can_add_web_page_previews=False,
     can_send_polls=False,
@@ -77,7 +82,7 @@ async def mute_hammer(bot: UserBot, message: Message):
                     chat_id=message.chat.id,
                     user_id=message.reply_to_message.from_user.id,
                     permissions=mute_permission,
-                    until_date=int(time.time() + (duration * 3600)),
+                    until_date=datetime.now() + timedelta(hours=duration),
                 )
                 await message.edit(f"{mention} has been muted for {duration} Hours.")
             else:
@@ -94,7 +99,12 @@ async def mute_hammer(bot: UserBot, message: Message):
 # Unmute permissions
 unmute_permissions = ChatPermissions(
     can_send_messages=True,
-    can_send_media_messages=True,
+    can_send_audios=True,
+    can_send_documents=True,
+    can_send_photos=True,
+    can_send_videos=True,
+    can_send_video_notes=True,
+    can_send_voice_notes=True,
     can_send_other_messages=True,
     can_add_web_page_previews=True,
     can_send_polls=True,
@@ -130,7 +140,10 @@ async def kick_user(bot: UserBot, message: Message):
             await bot.ban_chat_member(
                 chat_id=message.chat.id,
                 user_id=message.reply_to_message.from_user.id,
-                until_date=int(time.time() + (int(time.time()) * 3600)),
+            )
+            await bot.unban_chat_member(
+                chat_id=message.chat.id,
+                user_id=message.reply_to_message.from_user.id,
             )
 
             await message.edit(f"Goodbye, {mention}.")

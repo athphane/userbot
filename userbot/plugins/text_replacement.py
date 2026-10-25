@@ -1,7 +1,7 @@
 import re
 import pyrogram.enums
 from pyrogram import filters
-from pyrogram.types import Message, LinkPreviewOptions
+from pyrogram.types import LinkPreviewOptions, Message
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
@@ -13,7 +13,7 @@ async def subreddit_link(bot: UserBot, message: Message):
     html = "<a href='{link}'>{string}</a>"
     await message.edit(
         html.format(link="https://reddit.com/" + message.text, string=message.text),
-        disable_web_page_preview=True,
+        link_preview_options=LinkPreviewOptions(is_disabled=True),
         parse_mode=pyrogram.enums.ParseMode.HTML,
     )
 

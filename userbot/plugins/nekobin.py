@@ -2,7 +2,7 @@ import asyncio
 
 import aiohttp
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import LinkPreviewOptions, Message
 
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
@@ -37,7 +37,7 @@ async def paste(bot: UserBot, message: Message):
         if delete:
             await asyncio.gather(
                 bot.send_message(
-                    message.chat.id, reply_text, disable_web_page_preview=True
+                    message.chat.id, reply_text, link_preview_options=LinkPreviewOptions(is_disabled=True)
                 ),
                 message.reply_to_message.delete(),
                 message.delete(),
@@ -45,7 +45,7 @@ async def paste(bot: UserBot, message: Message):
         else:
             await message.edit_text(
                 reply_text,
-                disable_web_page_preview=True,
+                link_preview_options=LinkPreviewOptions(is_disabled=True),
             )
 
 

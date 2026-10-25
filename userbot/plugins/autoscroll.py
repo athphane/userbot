@@ -11,7 +11,7 @@ f = filters.chat([])
 
 @UserBot.on_message(f)
 async def auto_read(bot: UserBot, message: Message):
-    await UserBot.read_history(message.chat.id)
+    await bot.read_chat_history(message.chat.id)
     message.continue_propagation()
 
 

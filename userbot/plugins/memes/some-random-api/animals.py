@@ -2,7 +2,7 @@ import asyncio
 import re
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import LinkPreviewOptions, Message, ReplyParameters
 
 from userbot import UserBot
 from userbot.helpers.PyroHelpers import ReplyCheck
@@ -44,7 +44,7 @@ async def animal_image(bot: UserBot, message: Message):
         await bot.send_photo(
             chat_id=message.chat.id,
             photo=await prep_animal_image(cmd[0].lower()),
-            reply_to_message_id=ReplyCheck(message),
+            reply_parameters=ReplyParameters(message_id=ReplyCheck(message)),
         )
 
 
@@ -73,7 +73,7 @@ async def fact(bot: UserBot, message: Message):
             await asyncio.sleep(3)
             await message.delete()
         else:
-            await message.edit(fact_text, disable_web_page_preview=True)
+            await message.edit(fact_text, link_preview_options=LinkPreviewOptions(is_disabled=True))
     else:
         await message.edit("`Unsupported animal...`")
         await asyncio.sleep(2)
