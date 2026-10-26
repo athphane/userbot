@@ -59,12 +59,8 @@ config_file = 'config/userbot.ini'
 config = ConfigParser()
 config.read(config_file)
 
-# MongoDB details
-MONGO_URL = config.get("mongo", "url")
-DB_NAME = config.get("mongo", "db_name", fallback="userbot")
-DB_USERNAME = config.get("mongo", "db_username")
-DB_PASSWORD = config.get("mongo", "db_password")
-IS_ATLAS = config.getboolean("mongo", "is_atlas", fallback=False)
+# Local database. Existing configs work without adding a database section.
+DB_PATH = config.get("database", "path", fallback="config/userbot.sqlite3")
 
 # Other Users
 ALLOWED_USERS = ast.literal_eval(

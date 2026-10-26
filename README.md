@@ -43,9 +43,8 @@ or signed up for. You must do all. It is a cardinal sin if you don't.
   check the server/proxy's public IP if it persists. Installing Deno does not
   remove a rate limit.
 
-* [MongoDB](https://www.mongodb.com) on your server or a free server from 
-[MongoDB Atlas](https://www.mongodb.com/cloud/atlas). (I recommend Atlas as I used it during
-development with no issues.)
+* Storage uses SQLite, included with Python. The database is created automatically
+  at `config/userbot.sqlite3`.
 
 * [carbon-now-cli](https://github.com/mixn/carbon-now-cli) on your server too generate code images for the
 [carbon.py](/userbot/plugins/carbon.py) module. I use this CLI tool cause I don't know and couldn't get selenium
@@ -87,28 +86,14 @@ services:
     restart: always
     labels:
       com.centurylinklabs.watchtower.enable: "true"
-    depends_on:
-      - userbot-mongo
-  userbot-mongo:
-    image: mongo:latest
-    hostname: userbot-mongo
-    restart: always
-    labels:
-      com.centurylinklabs.watchtower.enable: "false"
-    volumes:
-      - ./mongo:/data/db
-    environment:
-      - MONGO_INITDB_DATABASE=userbot
-      - MONGO_INITDB_ROOT_USERNAME=userbot
-      - MONGO_INITDB_ROOT_PASSWORD=userbot-password
 ```
 If you already run Watchtower on this Docker host, these labels opt the userbot
-into automatic updates from `ghcr.io/athphane/userbot:latest` and exclude MongoDB.
+into automatic updates from `ghcr.io/athphane/userbot:latest`.
 Watchtower must be configured to include this container and allow updates; the
 userbot is also opted in when Watchtower uses `--label-enable`. See the
 [Watchtower container selection documentation](https://containrrr.dev/watchtower/container-selection/)
 for name and scope filters. After adding the labels to an existing deployment,
-run `docker compose up -d userbot userbot-mongo` to apply them.
+run `docker compose up -d userbot` to apply them.
 
 This example uses the published image. The repository's root `docker-compose.yml`
 builds locally and mounts the source checkout, so its labels alone do not enable
@@ -130,6 +115,68 @@ docker compose run --rm userbot python -m userbot
 ```bash
 docker compose up -d
 ```
+## Local database
+
+PM approvals, ignored users, reminders, profiles, summon settings, sticker rules,
+and auto-replies are stored in `config/userbot.sqlite3`. Python's built-in
+`sqlite3` module handles storage, with no additional package or service.
+The existing `database()["collection"]` and helper APIs remain available.
+ID lookups are indexed; the adapter supports equality filters, string
+`$regex` searches with `$options`, projections, `$set`, `$inc`, `$unset`,
+and upserts. It is a small adapter for the bot's calls, not a full MongoDB driver;
+unsupported operators raise errors. Music, lyrics, and Telegram message searches
+continue to query their existing external services.
+
+The optional configuration below changes the file location. Relative paths are
+resolved from the working directory used to run the bot. Docker's existing
+`./config:/root/userbot/config` mount persists the default file.
+
+```ini
+[database]
+path = config/userbot.sqlite3
+```
+
+Existing configuration files work without this section; old `[mongo]` settings
+are ignored. A new SQLite file starts empty. Existing MongoDB records are **not
+copied automatically**. To preserve them before switching:
+
+1. Stop the bot so records cannot change during export and import.
+2. Export each collection with MongoDB Database Tools. Set `MONGODB_URI` to
+   your existing connection URI and replace `userbot` if your database name differs:
+
+   ```bash
+   mkdir -p exports
+   for collection in auto_replies ignored_users pmpermit profiles self_reminders settings sticker_deleter summon; do
+     mongoexport --uri="$MONGODB_URI" --db=userbot --collection="$collection" --jsonArray --out="exports/$collection.json"
+   done
+   ```
+
+3. Import on the host from the repository root:
+
+   ```bash
+   python userbot/database/migrate.py exports --database config/userbot.sqlite3
+   ```
+
+   For a published Docker image, mount the export directory for this one command:
+
+   ```bash
+   docker compose run --rm -v "$PWD/exports:/exports:ro" userbot python userbot/database/migrate.py /exports --database config/userbot.sqlite3
+   ```
+
+   The importer accepts JSON arrays or newline-delimited JSON and preserves
+   ObjectId values as strings, dates as Python datetimes, and numeric values.
+   It requires only Python's standard library and refuses to merge into
+   nonempty destination collections. All files import in one transaction; a
+   failed import leaves existing records unchanged.
+4. Start the bot and check your reminders and settings. Once verified, remove
+   the old MongoDB service from your deployment. Keep its data and exports
+   until you have verified the migration.
+
+To back up SQLite, stop the bot and copy the database file, or use SQLite's
+`Connection.backup()` API for a running bot. SQLite may create `-wal` and
+`-shm` files while running, so copying only the main file while it is open
+is not a complete backup. Use a local filesystem for the database.
+
 ## Social media downloads
 
 Your own TikTok, Instagram, and YouTube Shorts links download automatically in

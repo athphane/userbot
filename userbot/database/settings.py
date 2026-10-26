@@ -6,4 +6,6 @@ class Settings:
         self.pm_table = database()["settings"]
 
     def set_pm_permit(self, status: bool):
-        self.pm_table.update_one({"key": "pm_permit", "value": status}, "")
+        self.pm_table.update_one(
+            {"key": "pm_permit"}, {"$set": {"value": status}}, upsert=True
+        )

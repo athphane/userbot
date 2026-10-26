@@ -1,10 +1,10 @@
-This is a Telegram Userbot built with Python and Kurigram, which provides the `pyrogram` import namespace. It uses a MongoDB database for data storage and offers a variety of features through a plugin-based architecture.
+This is a Telegram Userbot built with Python and Kurigram, which provides the `pyrogram` import namespace. It uses a local SQLite file for data storage and offers a variety of features through a plugin-based architecture.
 
 **Key Technologies:**
 
 *   **Programming Language:** Python 3.10+ (Docker uses Python 3.15)
 *   **Telegram Library:** Kurigram with TgCrypto-pyrofork
-*   **Database:** MongoDB
+*   **Database:** SQLite via Python's built-in `sqlite3` module
 *   **Dependency Management:** pip and `requirements.txt`
 *   **Deployment:** Can be run directly or with Docker.
 
@@ -14,7 +14,7 @@ This is a Telegram Userbot built with Python and Kurigram, which provides the `p
     *   `userbot.py`: Core `UserBot` client class.
     *   `__main__.py`: Application entry point.
     *   `plugins/`: Contains the bot's command plugins.
-    *   `database/`: Manages the MongoDB database connection and collections.
+    *   `database/`: Manages SQLite storage with a collection API for existing helpers.
 *   `requirements.txt`: Lists all Python dependencies.
 *   `config/userbot.ini.sample`: Sample configuration file.
 *   `docker-compose.yml`: For Docker-based deployment.
@@ -32,14 +32,14 @@ The bot provides a wide range of features through its plugins, including:
 
 **Setup and Configuration:**
 
-1.  **Prerequisites:** Python 3.10, `virtualenv`, MongoDB, and `carbon-now-cli`.
+1.  **Prerequisites:** Python 3.10+, `virtualenv`, and `carbon-now-cli`.
 2.  **Installation:**
     *   Clone the repository.
     *   Create and activate a virtual environment.
     *   Install dependencies from `requirements.txt`.
 3.  **Configuration:**
     *   Copy `userbot.ini.sample` to `userbot.ini`.
-    *   Fill in the required API keys and settings (Telegram API, MongoDB connection string, etc.).
+    *   Fill in the required API keys and settings (Telegram API, etc.). The optional `[database] path` defaults to `config/userbot.sqlite3`.
 4.  **Running the Bot:**
     *   Run `python -m userbot` to start the bot.
     *   Alternatively, use the provided `docker-compose.yml` for a Docker-based setup.
@@ -55,7 +55,7 @@ To enable Spotify features, you need to:
 
 **Database:**
 
-The bot uses MongoDB for various features, including:
+The bot uses SQLite for various features, including:
 
 *   Auto-replies
 *   PM permit
@@ -64,3 +64,9 @@ The bot uses MongoDB for various features, including:
 *   Settings
 *   Sticker deleter
 *   Summon
+
+The shared `database()["collection"]` API supports the operations used by the
+helpers. ID lookups are indexed, datetimes survive restarts, and updates are
+transactional. The default file lives in the existing Docker config mount.
+For existing deployments, see README.md for importing MongoDB JSON exports with
+`python userbot/database/migrate.py exports`; old `[mongo]` config is ignored.

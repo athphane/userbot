@@ -113,7 +113,7 @@ def split_list(input_list, n):
 ### Config Access
 Access config values through the global `config` object in `userbot/__init__.py`:
 ```python
-from userbot import ALLOWED_USERS, MONGO_URL, DB_NAME, SPOTIFY_CLIENT_ID
+from userbot import ALLOWED_USERS, DB_PATH, SPOTIFY_CLIENT_ID
 ```
 
 ### Logging
@@ -130,10 +130,18 @@ LOGS.error("Something went wrong")
 - Combined: `& (filters.me | filters.user(ALLOWED_USERS))`
 
 ### Database
-MongoDB connection via `userbot.database`. Access the database instance:
+SQLite storage via Python's built-in `sqlite3`, defaulting to
+`config/userbot.sqlite3`. Access the shared database instance:
 ```python
 from userbot.database import database
 ```
+
+The adapter preserves the collection operations used by the helpers, including
+equality filters, projections, regex searches, and atomic updates. It implements
+only a subset of the former driver; unsupported operators raise errors.
+See `userbot/database/sqlite.py`. Keep the database file under the Docker config
+volume, and do not commit it. Existing MongoDB JSON exports can be imported with
+`python userbot/database/migrate.py exports`.
 
 ### Notes
 - Python 3.10+ required

@@ -2,14 +2,9 @@
 api_id = 123456
 api_hash = your-hash
 
-; You can leave this as is. This will work immediately with the mongodb instance in docker-compose.yml
-[mongo]
-; TODO: Remove is_atlas
-is_atlas = false
-url = userbot-mongo
-db_name = userbot
-db_username = userbot
-db_password = userbot-password
+; Optional. Relative paths are resolved from the bot's working directory.
+[database]
+path = config/userbot.sqlite3
 
 [pm_permit]
 pm_permit = false

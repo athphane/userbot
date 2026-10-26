@@ -1,4 +1,3 @@
-from pymongo import ReturnDocument
 from pyrogram.types import Message
 
 from userbot.database import database
@@ -25,9 +24,7 @@ class SUMMON:
 
         update = {"$set": {"last_send": last_send, "next_send": next_send}}
 
-        self.summon_table.find_one_and_update(
-            query, update, return_document=ReturnDocument.AFTER
-        )
+        self.summon_table.update_one(query, update)
 
     def find_chat_id(self, message: Message):
         query = {

@@ -13,8 +13,6 @@ colorama==0.4.6
 cssselect2==0.10.1
 Deprecated==1.3.1; python_version < "3.12"
 Deprecated==3.0.0; python_version >= "3.12"
-dnspython==2.8.0; python_version < "3.11"
-dnspython==2.9.0; python_version >= "3.11"
 frozenlist==1.8.0
 humanize==4.16.0
 idna==3.20
@@ -31,8 +29,6 @@ propcache==0.5.4
 psutil==7.2.2
 pyaes==1.6.1
 pygit==0.1
-pymongo==4.18.3; python_version < "3.11"
-pymongo==4.19.0; python_version >= "3.11"
 pyparsing==3.3.3
 python-socks[asyncio]==3.1.1
 pytz==2026.5

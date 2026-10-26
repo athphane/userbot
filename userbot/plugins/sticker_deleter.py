@@ -3,7 +3,7 @@ import asyncio
 from pyrogram import filters
 from pyrogram.types import Message
 
-from userbot import UserBot
+from userbot import LOGS, UserBot
 from userbot.database.sticker_deleter import StickerDeleter
 from userbot.plugins.help import add_command_help
 
@@ -51,8 +51,8 @@ async def stickered(bot: UserBot, message: Message):
             if chat_details["chat_id"] == message.chat.id \
                     and chat_details['sticker_id'] == message.sticker.file_unique_id:
                 await message.delete()
-    except Exception as e:
-        print("Sticker Deleter: MongoDB not configured")
+    except Exception:
+        LOGS.exception("Sticker deleter failed")
 
 
 add_command_help(

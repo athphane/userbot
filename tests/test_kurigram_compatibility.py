@@ -1,4 +1,4 @@
-"""Exercise the real Kurigram client and plugins without Telegram or MongoDB."""
+"""Exercise the real Kurigram client, plugins, and SQLite without Telegram."""
 
 import asyncio
 import importlib.util
@@ -12,7 +12,7 @@ import unittest
 from configparser import ConfigParser
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 
 from pyrogram import enums, raw
 from pyrogram.types import Chat, ChatMember, ChatPhoto, Message, User
@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class KurigramTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self) -> None:
-        """Load all plugins with a disconnected client and an in-memory database stub."""
+        """Load all plugins with a disconnected client and a real SQLite database."""
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)
         previous = os.getcwd()
@@ -56,18 +56,19 @@ class KurigramTests(unittest.IsolatedAsyncioTestCase):
             "SPOTIFY_USERNAME": None,
             "YOURLS_URL": None,
             "YOURLS_KEY": None,
+            "DB_PATH": ":memory:",
         }.items():
             setattr(self.package, name, value)
-        database = types.ModuleType("userbot.database")
-        database.__path__ = [str(ROOT / "userbot/database")]
-        database.database = MagicMock()
         previous_modules = {
             name: module
             for name, module in sys.modules.items()
             if name == "userbot" or name.startswith("userbot.")
         }
-        self.restore_modules({"userbot": self.package, "userbot.database": database})
+        self.restore_modules({"userbot": self.package})
         self.addCleanup(self.restore_modules, previous_modules)
+        from userbot.database import database
+
+        self.addCleanup(database().close)
         self.client.load_plugins()
         await asyncio.sleep(0)
 
