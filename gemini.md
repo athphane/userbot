@@ -25,14 +25,14 @@ This is a Telegram Userbot built with Python and Kurigram, which provides the `p
 The bot provides a wide range of features through its plugins, including:
 
 *   **Core:** AFK status, help, metrics, restart, and update functionality.
-*   **Tools:** Carbon code image generation, dictionary, translation, Urban Dictionary, weather, and more.
+*   **Tools:** Dictionary, Urban Dictionary, weather, and more.
 *   **Fun:** Memes, pats, text replacement, and other entertainment commands.
 *   **Music:** Spotify integration and lyrics fetching.
 *   **Admin:** Administrative commands for managing the bot.
 
 **Setup and Configuration:**
 
-1.  **Prerequisites:** Python 3.10+, `virtualenv`, and `carbon-now-cli`.
+1.  **Prerequisites:** Python 3.10+ and `virtualenv`.
 2.  **Installation:**
     *   Clone the repository.
     *   Create and activate a virtual environment.

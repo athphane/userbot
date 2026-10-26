@@ -46,16 +46,6 @@ or signed up for. You must do all. It is a cardinal sin if you don't.
 * Storage uses SQLite, included with Python. The database is created automatically
   at `config/userbot.sqlite3`.
 
-* [carbon-now-cli](https://github.com/mixn/carbon-now-cli) on your server too generate code images for the
-[carbon.py](/userbot/plugins/carbon.py) module. I use this CLI tool cause I don't know and couldn't get selenium
-and chromedriver to work nicely on my server/code. I'll be nice and even give you the command to install this.
-I assume you already have NPM installed. 
-    ```
-    Windows: npm install -g carbon-now-cli
-    Linux: sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
-    MacOS: I assume almost the same as linux ¯\_(ツ)_/¯
-    ``` 
-
 ## Installation and Deployment
 *The way I deploy*
 ```bash

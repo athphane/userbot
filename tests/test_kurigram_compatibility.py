@@ -14,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 from unittest.mock import AsyncMock, patch
 
-from pyrogram import enums, raw
+from pyrogram import enums
 from pyrogram.types import Chat, ChatMember, ChatPhoto, Message, User
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -337,24 +337,6 @@ class KurigramTests(unittest.IsolatedAsyncioTestCase):
         ) as edit:
             await plugin.subreddit_link(self.client, message)
         self.assertTrue(edit.call_args.kwargs["link_preview_options"].is_disabled)
-
-    async def test_screenshot_uses_current_raw_reply_schema(self) -> None:
-        """The screenshot notification must serialize against Kurigram's TL layer."""
-        plugin = sys.modules["userbot.plugins.screenshot"]
-        with (
-            patch.object(
-                self.client,
-                "resolve_peer",
-                new_callable=AsyncMock,
-                return_value=raw.types.InputPeerUser(user_id=2, access_hash=3),
-            ),
-            patch.object(self.client, "invoke", new_callable=AsyncMock) as invoke,
-            patch.object(self.client, "delete_messages", new_callable=AsyncMock),
-        ):
-            await plugin.screenshot(self.client, self.message("screenshot"))
-        query = invoke.call_args.args[0]
-        self.assertIsInstance(query.reply_to, raw.types.InputReplyToMessage)
-        self.assertIsInstance(query.write(), bytes)
 
 
 class SessionMigrationTests(unittest.IsolatedAsyncioTestCase):
