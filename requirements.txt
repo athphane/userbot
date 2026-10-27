@@ -54,4 +54,4 @@ webencodings==0.6.1
 wrapt==2.5.1
 yarl==1.25.1
 yourls==1.2.3
-yt-dlp[default,curl-cffi]>=2026.10.21
+yt-dlp[default,curl-cffi]>=2026.10.26
