@@ -229,7 +229,12 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                     raise
 
             caption = f"{media['title']}\n{download_url}"[:1024]
-            reply_id = message.id if from_reply else None
+            # Automatic uploads inherit the link's reply target; .dl targets the link.
+            reply_id = (
+                message.reply_to_message_id
+                if not from_reply and message.reply_to_message_id
+                else message.id
+            )
             await status_msg.edit(
                 f"⬆️ Uploading {media['media_type']}...",
                 link_preview_options=LinkPreviewOptions(is_disabled=True),
@@ -261,9 +266,6 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                         caption,
                         reply_id,
                     )
-
-            if not from_reply:
-                await message.delete()
 
             # Delete the status message when complete
             await status_msg.delete()
