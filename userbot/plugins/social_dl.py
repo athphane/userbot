@@ -10,6 +10,7 @@ from pyrogram.types import Message, ReplyParameters
 from userbot import LOGS, SOCKS5_PROXY, UserBot
 from userbot.helpers.social_chats import is_chat_enabled, list_chats, set_chat_enabled
 from userbot.helpers.social_downloader import AUTO_DOWNLOAD_REGEX, detect_platform, download_video
+from userbot.helpers.social_upload import send_photos
 from userbot.plugins.help import add_command_help
 
 MAX_FILE_SIZE = 50 * 1024 * 1024
@@ -43,7 +44,9 @@ async def process_and_upload(bot: UserBot, message: Message, url: str) -> None:
                 raise ValueError(f"Media is too large ({size / 1024 / 1024:.1f}MB; limit 50MB).")
             caption = f"{media['title']}\n{media['download_url']}"[:1024]
             await status.edit_text(f"⬆️ Uploading {kind}...")
-            if kind == "photo":
+            if kind == "photos":
+                await send_photos(bot, message.chat.id, message.id, media["file_paths"], caption)
+            elif kind == "photo":
                 await _send_photo(bot, message, path, caption)
             else:
                 try:

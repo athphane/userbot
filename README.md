@@ -183,7 +183,9 @@ Chat settings are stored in `config/social_dl_chats.json` and survive restarts.
 The old `enabled`, `allowed_group`, `ignored_users`, and private user allowlist
 settings no longer affect downloads. FFmpeg and ffprobe are needed to make
 YouTube uploads streamable and to render Instagram
-photos with music. Media larger than 50 MB is rejected for chat downloads.
+photos with music. Instagram photo-only carousels (up to 20 images) are sent
+in order as albums of up to 10 photos, with one caption per post. Mixed
+photo/video carousels are not supported by the photo fallback. Media larger than 50 MB is rejected for chat downloads.
 
 ## Spotify integration
 

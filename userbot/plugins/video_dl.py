@@ -11,6 +11,7 @@ from pyrogram.types import LinkPreviewOptions, Message, ReplyParameters
 from userbot import LOGS, SOCKS5_PROXY, UserBot
 from userbot.helpers.instagram import download_instagram_photo, run_process
 from userbot.helpers.social_downloader import prepare_telegram_video
+from userbot.helpers.social_upload import send_photos
 from userbot.plugins.help import add_command_help
 
 # User Agent for requests and yt-dlp
@@ -233,7 +234,9 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                 f"⬆️ Uploading {media['media_type']}...",
                 link_preview_options=LinkPreviewOptions(is_disabled=True),
             )
-            if media["media_type"] == "photo":
+            if media["media_type"] == "photos":
+                await send_photos(bot, message.chat.id, reply_id, media["file_paths"], caption)
+            elif media["media_type"] == "photo":
                 await send_instagram_photo(
                     bot, message.chat.id, media["file_path"], caption, reply_id
                 )
