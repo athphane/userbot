@@ -91,11 +91,11 @@ async def send_instagram_photo(
     """Send the original image as a document if Telegram rejects it as a photo."""
     try:
         await bot.send_photo(
-            chat_id, file_path, caption=caption, reply_parameters=ReplyParameters(message_id=reply_id)
+            chat_id, file_path, caption=caption, reply_parameters=ReplyParameters(message_id=reply_id) if reply_id else None
         )
     except BadRequest:
         await bot.send_document(
-            chat_id, file_path, caption=caption, reply_parameters=ReplyParameters(message_id=reply_id)
+            chat_id, file_path, caption=caption, reply_parameters=ReplyParameters(message_id=reply_id) if reply_id else None
         )
 
 
@@ -231,9 +231,7 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
             caption = f"{media['title']}\n{download_url}"[:1024]
             # Automatic uploads inherit the link's reply target; .dl targets the link.
             reply_id = (
-                message.reply_to_message_id
-                if not from_reply and message.reply_to_message_id
-                else message.id
+                message.id if from_reply else message.reply_to_message_id
             )
             await status_msg.edit(
                 f"⬆️ Uploading {media['media_type']}...",
@@ -251,7 +249,7 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                         message.chat.id,
                         media["file_path"],
                         caption=caption,
-                        reply_parameters=ReplyParameters(message_id=reply_id),
+                        reply_parameters=ReplyParameters(message_id=reply_id) if reply_id else None,
                     )
                 except Exception:
                     if not media.get("fallback_image_path"):
@@ -266,6 +264,9 @@ async def video_downloader(bot: UserBot, message: Message, from_reply=False):
                         caption,
                         reply_id,
                     )
+
+            if not from_reply and not reply_id:
+                await message.delete()
 
             # Delete the status message when complete
             await status_msg.delete()

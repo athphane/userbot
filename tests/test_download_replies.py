@@ -45,7 +45,7 @@ class DownloadReplyTests(unittest.IsolatedAsyncioTestCase):
         )
 
     async def check_upload(self, kind, fallback=False, command=False, reply_to=None):
-        """Every attempted upload must reply to the retained source link."""
+        """Uploads inherit reply targets and only successful standalone links are deleted."""
         self.source.reply_to_message_id = reply_to
         self.module.download_instagram_photo.return_value = {
             "media_type": kind, "file_path": "media.mp4", "title": "Title",
@@ -67,11 +67,16 @@ class DownloadReplyTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(uploads)
         for call in uploads:
             self.assertEqual(call.args[0], 123)
-            self.assertEqual(
-                call.kwargs["reply_parameters"].message_id,
-                reply_to if reply_to and not command else 42,
-            )
-        self.source.delete.assert_not_awaited()
+            parameters = call.kwargs["reply_parameters"]
+            expected_reply = 42 if command else reply_to
+            if expected_reply is None:
+                self.assertIsNone(parameters)
+            else:
+                self.assertEqual(parameters.message_id, expected_reply)
+        if not command and reply_to is None:
+            self.source.delete.assert_awaited_once()
+        else:
+            self.source.delete.assert_not_awaited()
         self.status.delete.assert_awaited_once()
         if fallback:
             self.bot.send_document.assert_awaited()
@@ -104,3 +109,13 @@ class DownloadReplyTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_explicit_command_keeps_target_when_link_is_reply(self):
         await self.check_upload("video", command=True, reply_to=17)
+
+    async def test_failed_standalone_upload_keeps_source(self):
+        self.module.download_instagram_photo.return_value = {
+            "media_type": "video", "file_path": "media.mp4", "title": "Title",
+        }
+        self.bot.send_video.side_effect = BadRequest("rejected")
+        with patch.object(self.module.asyncio, "sleep", new=AsyncMock()):
+            await self.module.video_downloader(self.bot, self.source)
+        self.source.delete.assert_not_awaited()
+        self.assertIn("Error:", self.status.edit.await_args.args[0])
