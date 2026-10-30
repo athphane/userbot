@@ -1,11 +1,15 @@
 import re
+from urllib.parse import urlsplit, urlunsplit
+
 import pyrogram.enums
 from pyrogram import filters
 from pyrogram.types import LinkPreviewOptions, Message
+
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
 subreddit_regex = r"^r\/([^\s\/])+"
+
 
 # Generate full Reddit link with subreddit
 @UserBot.on_message(filters.regex(subreddit_regex) & filters.me)
@@ -17,21 +21,29 @@ async def subreddit_link(bot: UserBot, message: Message):
         parse_mode=pyrogram.enums.ParseMode.HTML,
     )
 
-# Assuming UserBot is your Client instance
-twitter_regex = r'https?://(www\.)?(twitter\.com|x\.com)/[^\s]+'
+
+twitter_regex = re.compile(
+    r"https?://(?:www\.|mobile\.)?(?:twitter\.com|x\.com)/[^\s<>\"']+",
+    re.IGNORECASE,
+)
+
+
+def clean_twitter_url(match: re.Match) -> str:
+    """Convert a Twitter URL and remove its query without consuming punctuation."""
+    original = match.group(0)
+    url = original.rstrip(".,!;:)]}")
+    punctuation = original[len(url) :]
+    parts = urlsplit(url)
+    return urlunsplit(parts._replace(netloc="fxtwitter.com", query="")) + punctuation
+
 
 @UserBot.on_message(filters.regex(twitter_regex) & filters.me)
-async def twitter_url_fixer(bot: UserBot, message: Message):
-    # Extract the text from the message
-    message_text = message.text
-    
-    # Check and replace twitter.com or x.com with fxtwitter.com
-    modified_text = re.sub(r'(https?://)(twitter\.com|x\.com)', r'\1fxtwitter.com', message_text)
-    
-    # Edit the message with the modified link
+async def twitter_url_fixer(bot: UserBot, message: Message) -> None:
+    """Replace outgoing Twitter/X links with clean FxTwitter links."""
+    modified_text = twitter_regex.sub(clean_twitter_url, message.text)
     await message.edit(
         modified_text,
-        link_preview_options=LinkPreviewOptions(show_above_text=True)
+        link_preview_options=LinkPreviewOptions(show_above_text=True),
     )
 
 # Command help section
@@ -52,7 +64,7 @@ add_command_help(
         [
             "https://twitter.com/username",
             "If the message contains a Twitter link, it will automatically replace twitter.com or x.com with "
-            "fxtwitter.com.",
+            "fxtwitter.com and remove query parameters (including share tracking).",
         ],
     ],
 )

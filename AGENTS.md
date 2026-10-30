@@ -10,9 +10,16 @@ This file contains guidelines for agentic coding agents working on this reposito
 - **Install dependencies:** `pip install -r requirements.txt`
 - **Update pip requirements:** `pip install -U -r requirements.txt`
 
-**Testing:** Run offline dependency compatibility checks with `python -m unittest discover -s tests -v`. Test Telegram features manually by running the bot.
+**Testing:** Always run the test suite inside Docker; the host does not have all required dependencies. With the service running, use `docker compose exec -T userbot python -m unittest discover -s tests -v`. Otherwise, use `docker compose run --rm --no-deps userbot python -m unittest discover -s tests -v`. Test Telegram features manually by running the bot.
 
 **Linting/Formatting:** Use black, autopep8, and isort for formatting. DeepSource is configured to auto-format.
+
+## Commits and Deployment
+
+- Small, low-risk changes may be committed and deployed automatically after the Docker test suite passes. Restart the bot when needed to apply them, and verify that it starts successfully.
+- Larger or higher-risk changes require user review before committing or deploying. Prepare the implementation and Docker test results for review first.
+- Judge scope by behavior and risk, not just line count. Database migrations, broad refactors, dependency upgrades, and changes to authentication or permissions generally need review.
+- Include only task-related files in commits and report the commit and deployment status.
 
 ## Code Style Guidelines
 
