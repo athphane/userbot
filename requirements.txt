@@ -30,7 +30,7 @@ psutil==7.2.2
 pyaes==1.6.1
 pygit==0.1
 pyparsing==3.3.3
-python-socks[asyncio]==3.1.1
+python-socks[asyncio]==3.2.0
 pytz==2026.6
 pytz-deprecation-shim==0.1.0.post0
 redis==8.1.0
