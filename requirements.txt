@@ -45,7 +45,7 @@ svglib[bitmaps]==2.3.2
 TgCrypto-pyrofork==1.2.8
 thisapidoesnotexist==0.2
 tinycss2==1.5.1
-tzdata==2026.5
+tzdata==2026.6
 tzlocal==5.4.5
 urllib3==2.8.0
 uwuify==1.3.1
