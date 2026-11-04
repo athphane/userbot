@@ -2,7 +2,7 @@ This is a Telegram Userbot built with Python and Kurigram, which provides the `p
 
 **Key Technologies:**
 
-*   **Programming Language:** Python 3.10+ (Docker uses Python 3.15)
+*   **Programming Language:** Python 3.12+ (CI covers 3.12–3.15; Docker uses Python 3.15)
 *   **Telegram Library:** Kurigram with TgCrypto-pyrofork
 *   **Database:** SQLite via Python's built-in `sqlite3` module
 *   **Dependency Management:** pip and `requirements.txt`
@@ -32,10 +32,10 @@ The bot provides a wide range of features through its plugins, including:
 
 **Setup and Configuration:**
 
-1.  **Prerequisites:** Python 3.10+ and `virtualenv`.
+1.  **Prerequisites:** Python 3.12+ and the standard-library `venv` module.
 2.  **Installation:**
     *   Clone the repository.
-    *   Create and activate a virtual environment.
+    *   Create and activate a virtual environment with `python3.12 -m venv venv` and `source venv/bin/activate` (or use a newer supported Python).
     *   Install dependencies from `requirements.txt`.
 3.  **Configuration:**
     *   Copy `userbot.ini.sample` to `userbot.ini`.

@@ -6,6 +6,12 @@ from configparser import ConfigParser
 from datetime import datetime
 from logging.handlers import TimedRotatingFileHandler
 
+if sys.version_info < (3, 12):
+    raise SystemExit(
+        "Userbot requires Python 3.12 or newer. "
+        "Upgrade Python and recreate your virtual environment."
+    )
+
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from userbot.userbot import UserBot

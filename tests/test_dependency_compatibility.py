@@ -88,6 +88,54 @@ class ImageTests(unittest.TestCase):
 
 
 class StartupTests(unittest.IsolatedAsyncioTestCase):
+    def test_supported_python_reaches_configuration_check(self) -> None:
+        """Supported hosts load the bot and prompt for config without connecting."""
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run(
+                [sys.executable, "-m", "userbot"],
+                cwd=directory,
+                env={**os.environ, "PYTHONPATH": str(ROOT)},
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn("Please create and configure config/userbot.ini", result.stdout)
+        self.assertNotIn("Traceback", result.stderr)
+
+    def test_old_python_exits_before_dependencies_or_config(self) -> None:
+        """Unsupported hosts get an upgrade message even without dependencies."""
+        script = textwrap.dedent("""
+            import runpy
+            import sys
+
+            sys.version_info = tuple(map(int, sys.argv[2].split(".")))
+            runpy.run_path(sys.argv[1])
+            """)
+        for version in ("3.10.0", "3.11.0"):
+            with (
+                self.subTest(version=version),
+                tempfile.TemporaryDirectory() as directory,
+            ):
+                result = subprocess.run(
+                    [
+                        sys.executable,
+                        "-S",
+                        "-c",
+                        script,
+                        str(ROOT / "userbot" / "__init__.py"),
+                        version,
+                    ],
+                    cwd=directory,
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                )
+                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+                self.assertIn("requires Python 3.12 or newer", result.stderr)
+                self.assertNotIn("Traceback", result.stderr)
+                self.assertEqual(list(Path(directory).iterdir()), [])
+
     async def test_client_and_scheduler_share_the_running_loop(self) -> None:
         """Kurigram and scheduled jobs must share the entry point's loop."""
         scheduler = AsyncIOScheduler()

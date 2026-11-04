@@ -151,7 +151,7 @@ volume, and do not commit it. Existing MongoDB JSON exports can be imported with
 `python userbot/database/migrate.py exports`.
 
 ### Notes
-- Python 3.10+ required
+- Python 3.12+ required; CI covers Python 3.12, 3.13, 3.14, and 3.15
 - This is a Telegram userbot based on Kurigram (imported as `pyrogram`)
 - Commands are prefixed with `.` (e.g., `.alive`, `.help`)
 - Each plugin must call `add_command_help()` at the end to register help

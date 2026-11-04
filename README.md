@@ -1,5 +1,5 @@
 # Kurigram Userbot
-![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Python Version](https://img.shields.io/badge/Python-3.12%2B-blue)
 ![Repo Size](https://img.shields.io/github/repo-size/athphane/userbot)
 [![Commit Activity](https://img.shields.io/github/commit-activity/w/athphane/userbot)](https://github.com/athphane/userbot/pulse)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b10d40c60fc549299eeb7bda1c7501aa)](https://app.codacy.com/manual/athphane/userbot?utm_source=github.com&utm_medium=referral&utm_content=athphane/userbot&utm_campaign=Badge_Grade_Settings)
@@ -28,12 +28,16 @@ I assume you will read this whole README.md file before continuing.
 ## Requirements
 You're gonna need to get the following programs and services either installed on your server
 or signed up for. You must do all. It is a cardinal sin if you don't.
-* Python 3.10 or newer. Version-specific dependency pins select the newest compatible
-  releases for Python 3.10, 3.11, and 3.12+. The Docker images use Python 3.15.
-* `virtualenv` installed so that the packages don't interfere with other system packages.
+* Python 3.12 or newer. CI tests dependency installation, bot compatibility, and
+  security on Python 3.12, 3.13, 3.14, and 3.15 for installations without Docker.
+  The Docker images use Python 3.15.
+* Python's `venv` module to keep packages separate from system packages. On
+  Debian/Ubuntu, install the matching package, such as `python3.12-venv`.
 * A C compiler, Python headers, Cairo development headers, and `pkg-config` for
   SVG-to-PNG rendering. On Debian/Ubuntu, install them with
   `sudo apt-get install build-essential python3-dev libcairo2-dev pkg-config`.
+  Use the Python development headers matching your interpreter, such as
+  `python3.12-dev` when running Python 3.12.
   The Docker images include these dependencies.
 * [Deno](https://docs.deno.com/runtime/getting_started/installation/) 2.3+ on `PATH`
   for YouTube downloads, plus FFmpeg for merging video and audio. Both are included
@@ -47,15 +51,21 @@ or signed up for. You must do all. It is a cardinal sin if you don't.
   at `config/userbot.sqlite3`.
 
 ## Installation and Deployment
-*The way I deploy*
+*Without Docker*
 ```bash
 git clone https://github.com/athphane/userbot.git
 cd userbot
-virtualenv venv
+python3.12 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 python -m userbot
 ```
+Use `python3.13`, `python3.14`, or `python3.15` instead of `python3.12` if that is
+the supported interpreter installed on your server. When upgrading from Python
+3.10 or 3.11, recreate the virtual environment with Python 3.12 or newer and
+reinstall the requirements before starting the bot.
+
 When upgrading an existing virtual environment from pyrotgfork, remove the old
 packages before reinstalling so their shared modules are replaced completely:
 ```bash
