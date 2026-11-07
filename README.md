@@ -230,6 +230,9 @@ CTRL+C, run `git pull` and `python -m userbot` to update bot on termux.
 
 
 ## Credits, and Thanks to
+*  Dictionary lookups use [FreeDictionaryAPI.com](https://freedictionaryapi.com/),
+   with [Wiktionary](https://en.wiktionary.org/) data under
+   [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 *  [Dan](https://t.me/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
 *  [Colin Shark](https://t.me/ColinShark) for his [PyroBot](https://git.colinshark.de/PyroBot/PyroBot) which helped with
 most of the useful functions used.
