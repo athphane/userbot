@@ -4,7 +4,7 @@ import logging
 import sys
 import types
 import unittest
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 
 from pyrogram.errors import BadRequest
 from test_social_downloader import ROOT, load_module
@@ -17,6 +17,78 @@ class CarouselTests(unittest.IsolatedAsyncioTestCase):
         with patch.dict(sys.modules, {"userbot": package}):
             self.instagram = load_module("carousel_instagram", ROOT / "userbot/helpers/instagram.py")
         self.upload = load_module("carousel_upload", ROOT / "userbot/helpers/social_upload.py")
+
+    async def test_current_extractor_downloads_music_post_as_original_photo(self):
+        """Use current media metadata and omit background audio by default."""
+        media = {
+            "media_type": 1,
+            "image_versions2": {
+                "candidates": [
+                    {
+                        "width": 100,
+                        "height": 100,
+                        "url": "https://example.com/small.jpg",
+                    },
+                    {
+                        "width": 1080,
+                        "height": 1350,
+                        "url": "https://example.com/original.jpg",
+                    },
+                ]
+            },
+            "music_metadata": {
+                "music_info": {
+                    "music_asset_info": {
+                        "progressive_download_url": "https://example.com/song.m4a",
+                    }
+                }
+            },
+        }
+
+        def extract(extractor, url):
+            return extractor._extract_product(media, video_id="ABC", get_comments=False)
+
+        client = MagicMock()
+        with (
+            patch.object(self.instagram, "YoutubeDL", return_value=client),
+            patch.object(
+                self.instagram.InstagramIE,
+                "extract",
+                autospec=True,
+                side_effect=extract,
+            ),
+            patch.object(self.instagram, "_download_asset") as download,
+            patch.object(self.instagram, "render_photo", new=AsyncMock()) as render,
+        ):
+            result = await self.instagram.download_instagram_photo(
+                "https://www.instagram.com/p/ABC/", "tmp", None, "agent"
+            )
+        self.assertEqual(result["media_type"], "photo")
+        self.assertEqual(result["file_path"], "tmp/instagram-photo.jpg")
+        download.assert_called_once_with(
+            client.__enter__.return_value,
+            "https://example.com/original.jpg",
+            "tmp/instagram-photo.jpg",
+        )
+        render.assert_not_awaited()
+
+    async def test_current_extractor_rejects_video_thumbnails(self):
+        """A failed video must never be reported as its cover photo."""
+        client = MagicMock()
+        extractor = self.instagram._InstagramPhotoIE(client)
+        with patch.object(
+            self.instagram.InstagramIE, "_extract_product", return_value={}
+        ):
+            extractor._extract_product(
+                {
+                    "media_type": 2,
+                    "video_versions": [{"url": "https://example.com/video.mp4"}],
+                    "image_versions2": {
+                        "candidates": [{"url": "https://example.com/cover.jpg"}]
+                    },
+                }
+            )
+        self.assertIsNone(extractor.photo_metadata)
 
     async def test_metadata_and_download_result(self):
         photos = [{"media_type": 1, "display_url": f"https://example.com/{i}.jpg"} for i in range(3)]

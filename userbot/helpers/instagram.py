@@ -6,14 +6,27 @@ import math
 import os
 import re
 import time
-from urllib.parse import urlencode
 
 from yt_dlp import YoutubeDL
+from yt_dlp.extractor.instagram import InstagramIE
 from yt_dlp.networking import Request
+from yt_dlp.utils import ExtractorError
 
 from userbot import LOGS
 
 MAX_ASSET_SIZE = 50 * 1024 * 1024
+
+
+class _InstagramPhotoIE(InstagramIE):
+    """Retain verified photo metadata from yt-dlp's current Instagram extractor."""
+
+    photo_metadata: dict | None = None
+
+    def _extract_product(self, product_info, *args, **kwargs) -> dict:
+        """Inspect the source media before yt-dlp discards still-image formats."""
+        media = product_info[0] if isinstance(product_info, list) else product_info
+        self.photo_metadata = photo_post_details(media)
+        return super()._extract_product(product_info, *args, **kwargs)
 
 
 async def run_process(*args: str, timeout: float = 300) -> tuple[int, bytes, bytes]:
@@ -140,13 +153,16 @@ def _download_asset(client: YoutubeDL, url: str, path: str) -> None:
 
 
 def _fetch_photo(
-    url: str, temp_dir: str, proxy: str | None, user_agent: str
+    url: str,
+    temp_dir: str,
+    proxy: str | None,
+    user_agent: str,
+    include_audio: bool = False,
 ) -> dict | None:
     """Fetch verified single-photo metadata and its image and optional audio."""
     match = re.search(r"instagram\.com/(?:p|reels?|tv)/([\w-]+)", url)
     if not match:
         return None
-    shortcode = match.group(1)
     headers = {
         "User-Agent": user_agent,
         "Referer": url,
@@ -155,40 +171,19 @@ def _fetch_photo(
     with YoutubeDL(
         {
             "quiet": True,
+            "no_warnings": True,
+            "ignore_no_formats_error": True,
             "proxy": proxy or "",
             "socket_timeout": 20,
             "http_headers": headers,
         }
     ) as client:
-        # The web-info query retains photo music metadata. Keep the legacy query
-        # as a fallback for posts served through the older response shape.
-        details = None
-        for doc_id in ("27128499623469141", "8845758582119845"):
-            query = urlencode(
-                {
-                    "doc_id": doc_id,
-                    "variables": json.dumps(
-                        {
-                            "shortcode": shortcode,
-                            "__relay_internal__pv__PolarisAIGMMediaWebLabelEnabledrelayprovider": False,
-                        }
-                    ),
-                }
-            )
-            try:
-                with client.urlopen(
-                    Request("https://www.instagram.com/graphql/query/?" + query)
-                ) as response:
-                    data = json.loads(response.read(8 * 1024 * 1024))["data"]
-                items = (data.get("xdt_api__v1__media__shortcode__web_info") or {}).get(
-                    "items"
-                ) or []
-                media = items[0] if items else data.get("xdt_shortcode_media") or {}
-                details = photo_post_details(media)
-                if details:
-                    break
-            except Exception:
-                LOGS.debug("Instagram photo metadata query failed", exc_info=True)
+        extractor = _InstagramPhotoIE(client)
+        try:
+            extractor.extract(url)
+        except ExtractorError:
+            LOGS.debug("Instagram photo metadata extraction failed", exc_info=True)
+        details = extractor.photo_metadata
         if not details:
             return None
         if details.get('photos'):
@@ -201,7 +196,7 @@ def _fetch_photo(
         image_path = os.path.join(temp_dir, "instagram-photo.jpg")
         _download_asset(client, details["image_url"], image_path)
         details["image_path"] = image_path
-        if details["audio_url"]:
+        if include_audio and details["audio_url"]:
             try:
                 audio_path = os.path.join(temp_dir, "instagram-audio.m4a")
                 _download_asset(client, details["audio_url"], audio_path)
@@ -283,12 +278,16 @@ async def render_photo(
 
 
 async def download_instagram_photo(
-    url: str, temp_dir: str, proxy: str | None, user_agent: str
+    url: str,
+    temp_dir: str,
+    proxy: str | None,
+    user_agent: str,
+    include_audio: bool = False,
 ) -> dict | None:
-    """Download a photo, rendering music when available with an image fallback."""
+    """Download original photos, optionally rendering music when requested."""
     # Shield the worker so cancellation cannot race with temp-directory cleanup.
     worker = asyncio.create_task(
-        asyncio.to_thread(_fetch_photo, url, temp_dir, proxy, user_agent)
+        asyncio.to_thread(_fetch_photo, url, temp_dir, proxy, user_agent, include_audio)
     )
     try:
         details = await asyncio.shield(worker)
@@ -313,7 +312,7 @@ async def download_instagram_photo(
         "download_url": url,
         "temp_dir": temp_dir,
     }
-    if details.get("audio_path"):
+    if include_audio and details.get("audio_path"):
         output = os.path.join(temp_dir, "instagram-photo-video.mp4")
         try:
             await render_photo(
