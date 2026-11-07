@@ -17,6 +17,34 @@ MAX_SENSES = 5
 MAX_LENGTH = 4096
 
 
+def render_html(parts: list[tuple[str, str, str]], footer: str) -> str:
+    """Limit escaped text without splitting HTML tags, entities, or UTF-16 pairs."""
+    remaining = MAX_LENGTH - len(footer.encode("utf-16-le")) // 2 - 1
+    output = []
+    for prefix, text, suffix in parts:
+        fragment = prefix + escape(text) + suffix
+        size = len(fragment.encode("utf-16-le")) // 2
+        if size <= remaining:
+            output.append(fragment)
+            remaining -= size
+            continue
+
+        budget = remaining - len((prefix + suffix).encode("utf-16-le")) // 2
+        if budget >= 0:
+            clipped = []
+            for char in text:
+                escaped = escape(char)
+                size = len(escaped.encode("utf-16-le")) // 2
+                if size > budget:
+                    break
+                clipped.append(escaped)
+                budget -= size
+            output.append(prefix + "".join(clipped) + suffix)
+        output.append("…")
+        break
+    return "".join(output) + footer
+
+
 async def fetch_entries(word: str) -> dict[str, Any]:
     """Return the Free Dictionary API response for an English word."""
     url = API_URL.format(word=quote(word, safe=""))
@@ -34,40 +62,44 @@ def format_entries(data: dict[str, Any]) -> str:
     if not entries:
         return ""
 
-    parts = [f"<b>{escape(data.get('word', ''))}</b>"]
+    parts = [("<b>", data.get("word", ""), "</b>")]
     for entry in entries:
-        block = [f"<b><i>{escape(entry.get('partOfSpeech', 'word').title())}</i></b>"]
+        parts.append(
+            ("\n\n<b><i>", entry.get("partOfSpeech", "word").title(), "</i></b>")
+        )
         ipa = next(
-            (p["text"] for p in entry.get("pronunciations", []) if p.get("type") == "ipa"),
+            (
+                p["text"]
+                for p in entry.get("pronunciations", [])
+                if p.get("type") == "ipa"
+            ),
             None,
         )
         if ipa:
-            block[0] += f"  <code>{escape(ipa)}</code>"
+            parts.append(("  <code>", ipa, "</code>"))
 
         senses = entry.get("senses", [])
         for index, sense in enumerate(senses[:MAX_SENSES], 1):
-            block.append(f"{index}. {escape(sense.get('definition', ''))}")
+            parts.append((f"\n{index}. ", sense.get("definition", ""), ""))
             if sense.get("examples"):
-                block.append(f"    <i>“{escape(sense['examples'][0])}”</i>")
+                parts.append(("\n    <i>“", sense["examples"][0], "”</i>"))
         if len(senses) > MAX_SENSES:
-            block.append(f"<i>…and {len(senses) - MAX_SENSES} more</i>")
+            parts.append(("\n<i>", f"…and {len(senses) - MAX_SENSES} more", "</i>"))
 
         for label in ("synonyms", "antonyms"):
             if entry.get(label):
-                block.append(f"<b>{label.title()}:</b> {escape(', '.join(entry[label]))}")
-        parts.append("\n".join(block))
+                parts.append(
+                    (f"\n<b>{label.title()}:</b> ", ", ".join(entry[label]), "")
+                )
 
+    footer = (
+        '\n\nVia <a href="https://freedictionaryapi.com/">FreeDictionaryAPI.com</a>'
+    )
     source = (data.get("source") or {}).get("url")
     if source:
         href = escape(quote(source, safe=":/%#?=&"), quote=True)
-        footer = f'\n\n<a href="{href}">Wiktionary</a>'
-    else:
-        footer = ""
-    body = "\n\n".join(parts)
-    if len(body) + len(footer) > MAX_LENGTH:
-        cut = MAX_LENGTH - len(footer) - 1
-        body = body[:cut].rsplit("\n", 1)[0] + "\n…"
-    return body + footer
+        footer += f' · <a href="{href}">Wiktionary</a>'
+    return render_html(parts, footer)
 
 
 @UserBot.on_message(filters.command(["define", "dict"], ".") & filters.me)
