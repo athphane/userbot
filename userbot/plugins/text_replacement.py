@@ -3,7 +3,17 @@ from urllib.parse import urlsplit, urlunsplit
 
 import pyrogram.enums
 from pyrogram import filters
-from pyrogram.types import LinkPreviewOptions, Message
+from pyrogram.types import Message
+
+try:
+    from pyrogram.types import LinkPreviewOptions
+except ImportError:
+    class LinkPreviewOptions:
+        """Fallback for Pyrogram builds lacking native LinkPreviewOptions."""
+
+        def __init__(self, is_disabled: bool = False, show_above_text: bool = False):
+            self.is_disabled = is_disabled
+            self.show_above_text = show_above_text
 
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
