@@ -1,6 +1,4 @@
 import asyncio
-import random
-from asyncio import sleep
 
 from pyrogram import filters
 from pyrogram.types import Message
@@ -8,49 +6,41 @@ from pyrogram.types import Message
 from userbot import UserBot
 from userbot.plugins.help import add_command_help
 
+QUOTLY_BOT = "@QuotLyBot"
+POLL_INTERVAL = 2
+MAX_POLLS = 15
 
-@UserBot.on_message(filters.me & filters.command(["q"], '.'))
+
+@UserBot.on_message(filters.me & filters.command(["q", "quote"], "."))
 async def quotly(bot: UserBot, message: Message):
     if not message.reply_to_message:
-        await message.edit("Reply to any users text message")
+        await message.edit("Reply to any user's text message")
         return
 
-    await message.edit("```Making a Quote```")
+    # Single-line ``` blocks parse as an empty message in Kurigram, so use inline code.
+    await message.edit("`Making a quote...`")
 
-    await message.reply_to_message.forward("@QuotLyBot")
+    forwarded = await message.reply_to_message.forward(QUOTLY_BOT)
 
-    is_sticker = False
-    progress = 0
+    for attempt in range(1, MAX_POLLS + 1):
+        await asyncio.sleep(POLL_INTERVAL)
+        latest = [item async for item in bot.get_chat_history(QUOTLY_BOT, limit=1)]
+        # Only accept a sticker that arrived after our forward, not an old quote.
+        if latest and latest[0].sticker and latest[0].id > forwarded.id:
+            await asyncio.gather(
+                message.delete(),
+                bot.forward_messages(message.chat.id, QUOTLY_BOT, latest[0].id),
+            )
+            return
+        await message.edit(f"`Making a quote... {attempt * 100 // MAX_POLLS}%`")
 
-    while not is_sticker:
-        try:
-            await sleep(4)
-            msg = [item async for item in bot.get_chat_history("@QuotLyBot", limit=1)]
-            is_sticker = bool(msg and msg[0].sticker)
-        except:
-            await sleep(1)
-
-            progress += random.randint(0, 5)
-
-            if progress > 100:
-                await message.edit('There was a long running error')
-                return
-
-            try:
-                await message.edit("```Making a Quote\nProcessing {}%```".format(progress))
-            except:
-                await message.edit("ERROR")
-
-    if msg_id := msg[0].id:
-        await asyncio.gather(
-            message.delete(),
-            bot.forward_messages(message.chat.id, "@QuotLyBot", msg_id)
-        )
+    await message.edit("`QuotLyBot did not respond in time`")
 
 
 # Command help section
 add_command_help(
-    'quotly', [
-        ['.q | .quote', 'Make a quote with reply to message.'],
-    ]
+    "quotly",
+    [
+        [".q | .quote", "Make a quote with reply to message."],
+    ],
 )
