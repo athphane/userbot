@@ -13,7 +13,7 @@ colorama==0.4.6
 cssselect2==0.10.1
 Deprecated==3.0.1
 frozenlist==1.8.0
-humanize==4.16.0
+humanize==4.17.0
 idna==3.20
 kurigram==2.2.26
 Logbook==1.10.1
