@@ -36,20 +36,44 @@ class TelegramDependencyTests(unittest.TestCase):
         """Check Kurigram and TgCrypto-pyrofork without a Telegram login."""
         script = textwrap.dedent("""
             import asyncio
+            from types import SimpleNamespace
+            from unittest.mock import patch
 
             import tgcrypto
             from pyrogram import Client
+            from pyrogram.crypto import aes
+            from pyrogram.raw.functions.updates import GetState
 
             async def check_loop():
+                loop = asyncio.get_running_loop()
                 client = Client("compatibility", api_id=1, api_hash="0" * 32, in_memory=True)
-                assert asyncio.get_running_loop() is client.loop
+                response = object()
+
+                async def invoke(**kwargs):
+                    assert asyncio.get_running_loop() is loop
+                    await asyncio.sleep(0)
+                    return response
+
+                # Replace only the network boundary; exercise the real async wrapper
+                # and in-memory peer storage without relying on client.loop.
+                client.session = SimpleNamespace(invoke=invoke)
+                client.is_connected = True
+                await client.storage.open()
+                try:
+                    assert await client.invoke(GetState()) is response
+                finally:
+                    await client.storage.close()
+                    client.executor.shutdown()
 
             asyncio.run(check_loop())
 
             data, key, iv = bytes(32), bytes(range(32)), bytes(32)
-            encrypted = tgcrypto.ige256_encrypt(data, key, iv)
+            # Verify Kurigram actually uses our installed native crypto backend.
+            with patch.object(tgcrypto, "ige256_encrypt", wraps=tgcrypto.ige256_encrypt) as encrypt:
+                encrypted = aes.ige256_encrypt(data, key, iv)
+                encrypt.assert_called_once_with(data, key, iv)
             assert encrypted != data
-            assert tgcrypto.ige256_decrypt(encrypted, key, iv) == data
+            assert aes.ige256_decrypt(encrypted, key, iv) == data
             """)
         result = subprocess.run(
             [sys.executable, "-c", script],
